@@ -6,6 +6,10 @@
     "start": "node server.js",
     "lint": "eslint src"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anta-semenov/ToDoProject.git"
+  },
   "author": "Anton Semenov",
   "license": "MIT",
   "devDependencies": {
