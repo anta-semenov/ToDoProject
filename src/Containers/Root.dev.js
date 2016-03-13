@@ -6,7 +6,9 @@ export default class Root extends Component {
   render() {
     return(
       <Provider >
-        <DevTool />
+        <div>
+          <DevTool />
+        </div>
       </Provider>
     );
   }
