@@ -2,7 +2,7 @@ import expect from 'expect'
 import * as actions from '../actions/TaskActions'
 import * as types from '../constants/ActionTypes'
 
-describe('actions', () => {
+describe('Task action creators', () => {
     it('Should create an action to add a task', () => {
         const properties = {
           title: 'New task',
