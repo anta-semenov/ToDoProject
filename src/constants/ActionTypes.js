@@ -16,7 +16,7 @@ export const EDIT_TASK = 'EDIT_TASK'
 export const ADD_TASK_TO_PROJECT = 'ADD_TASK_TO_PROJECT'
 export const ADD_TASK_CONTEXT = 'ADD_TASK_CONTEXT'
 export const REMOVE_TASK_CONTEXT = 'REMOVE_TASK_CONTEXT'
-export const ADD_TASK_TO_TODAY = 'ADD_TASK_TO_TODAY'
+export const SET_TASK_TODAY = 'SET_TASK_TODAY'
 
 /*
  * Context
