@@ -13,7 +13,7 @@
     "rules": {
       "quotes": [1, "single"],
       "strict": [2, "never"],
-      "semi": [2, "always"],
+      "semi": [0, "always"],
       "no-unused-vars": [1],
       "react/jsx-uses-react": 2,
       "react/jsx-uses-vars": 2,
