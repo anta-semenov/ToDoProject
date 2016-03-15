@@ -1,0 +1,13 @@
+import * as actionTypes from '../Constants/ActionTypes'
+
+ export function addContext(properties) {
+   return {type: actionTypes.ADD_CONTEXT, properties}
+ }
+
+ export function removeContext(id) {
+   return {type: actionTypes.REMOVE_CONTEXT, id}
+ }
+
+ export function editContext(id, properties) {
+   return {type: actionTypes.EDIT_CONTEXT, id, properties}
+ }
