@@ -1,4 +1,4 @@
-import expect from 'expect'
+import expect from 'chai'
 import { List, fromJS } from 'immutable'
 import reducer from '../reducer/Task'
 import * as types from '../constants/actionTypes'
@@ -55,7 +55,7 @@ describe('Task reducer', () => {
                 id: 0,
                 title: 'Test Task',
                 description: 'Task description',
-                completet: false,
+                completed: false,
                 today: false
 
             }
