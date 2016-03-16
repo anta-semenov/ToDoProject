@@ -1,4 +1,4 @@
-import expect from 'expect'
+import expect from 'chai'
 import * as types from '../src/constants/actionTypes'
 import * as actions from '../src/actions/contextActions'
 
@@ -11,7 +11,7 @@ describe('Context action creators', () => {
             type: types.ADD_CONTEXT,
             properties
         }
-        expect(actions.addContext(properties)).toEqual(expectedAction);
+        expect(actions.addContext(properties)).to.equal(expectedAction);
     })
 
     it('Should create an action to remove a context', () => {
@@ -20,7 +20,7 @@ describe('Context action creators', () => {
             type: types.REMOVE_CONTEXT,
             id
       }
-      expect(actions.removeContext(id)).toEqual(expectedAction);
+      expect(actions.removeContext(id)).to.equal(expectedAction);
     })
 
     it('Should create an action to edit a context', () => {
@@ -33,6 +33,6 @@ describe('Context action creators', () => {
             id,
             properties
         }
-        expect(actions.editContext(id, properties)).toEqual(expectedAction);
+        expect(actions.editContext(id, properties)).to.equal(expectedAction);
     })
 })

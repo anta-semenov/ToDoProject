@@ -1,7 +1,7 @@
-import expect from 'chai'
+import {expect} from 'chai'
 import { List, fromJS } from 'immutable'
-import reducer from '../reducer/Task'
-import * as types from '../constants/actionTypes'
+import reducer from '../src/reducer/taskReducer'
+import * as types from '../src/constants/actionTypes'
 
 describe('Task reducer', () => {
     // Empty action
@@ -9,7 +9,7 @@ describe('Task reducer', () => {
         const initialState = undefined
         const action = {}
         const nextState = fromJS([])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should return state for empty action', () => {
         const initialState = fromJS([
@@ -21,7 +21,7 @@ describe('Task reducer', () => {
             }
         ])
         const action = {}
-        expect(reducer(initialState, action)).toEqual(fromJS(initialState))
+        expect(reducer(initialState, action)).to.equal(initialState)
     })
 
 
@@ -39,7 +39,7 @@ describe('Task reducer', () => {
                 today: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle ADD_TASK with empty store', () => {
         const initialState = List()
@@ -60,7 +60,7 @@ describe('Task reducer', () => {
 
             }
         ])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should handle ADD_TASK with not empty store', () => {
         const initialState = fromJS([
@@ -91,7 +91,7 @@ describe('Task reducer', () => {
                 today: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle REMOVE_TASK', () => {
@@ -121,7 +121,7 @@ describe('Task reducer', () => {
                 today: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle EDIT_TASK', () => {
@@ -160,7 +160,7 @@ describe('Task reducer', () => {
                 today: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle COMPLETE_TASK', () => {
@@ -196,7 +196,7 @@ describe('Task reducer', () => {
                 today: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
 
@@ -237,7 +237,7 @@ describe('Task reducer', () => {
                 project: 1
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle ADD_TASK_TO_PROJECT with existing project', () => {
@@ -278,7 +278,7 @@ describe('Task reducer', () => {
                 project: 2
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle ADD_TASK_TO_PROJECT to an empty project', () => {
@@ -318,7 +318,7 @@ describe('Task reducer', () => {
                 today: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
 
@@ -348,7 +348,7 @@ describe('Task reducer', () => {
                 context: [1]
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle ADD_TASK_CONTEXT with existing contexts', () => {
         const initialState = fromJS([
@@ -376,7 +376,7 @@ describe('Task reducer', () => {
                 context: [1, 2]
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle ADD_TASK_CONTEXT with same contexts', () => {
         const initialState = fromJS([
@@ -404,7 +404,7 @@ describe('Task reducer', () => {
                 context: [1]
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle REMOVE_TASK_CONTEXT with empty context', () => {
         const initialState = fromJS([
@@ -430,7 +430,7 @@ describe('Task reducer', () => {
                 project: 1
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle REMOVE_TASK_CONTEXT', () => {
         const initialState = fromJS([
@@ -458,7 +458,7 @@ describe('Task reducer', () => {
                 context: [2]
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle REMOVE_TASK_CONTEXT with wrong context', () => {
         const initialState = fromJS([
@@ -486,7 +486,7 @@ describe('Task reducer', () => {
                 context: [1, 2]
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
 })

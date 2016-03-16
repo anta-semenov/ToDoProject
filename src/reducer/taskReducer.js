@@ -14,8 +14,8 @@ export default function task(state = fromJS([]), action) {
 
 function addTask(state, properties = {}) {
   const newId = state.reduce((id, item) => {
-    return Math.max(id, item)
-  }, 0) + 1
+    return Math.max(id, item.get('id'))
+  }, -1) + 1
   const newTask = fromJS({
     id: newId,
     title: NEW_TITLE,
