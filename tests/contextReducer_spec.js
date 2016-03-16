@@ -1,7 +1,7 @@
 import expect from 'expect'
 import { List, fromJS } from 'immutable'
-import reducer from '../Reducer/Context'
-import * as actionTypes from '../constants/ActionTypes'
+import reducer from '../reducer/Context'
+import * as types from '../constants/actionTypes'
 
 describe('Context reducer', () => {
     it('Should return initial state', () => {
@@ -26,7 +26,7 @@ describe('Context reducer', () => {
         const action = {
             type: types.ADD_CONTEXT
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New context'
@@ -42,7 +42,7 @@ describe('Context reducer', () => {
                 title: 'New context'
             }
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New context'

@@ -1,7 +1,7 @@
 import expect from 'expect'
 import { List, fromJS } from 'immutable'
-import reducer from '../Reducer/Project'
-import * as actionTypes from '../constants/ActionTypes'
+import reducer from '../reducer/Project'
+import * as types from '../constants/actionTypes'
 
 describe('Project reducer', () => {
     it('Should return initial state', () => {
@@ -27,7 +27,7 @@ describe('Project reducer', () => {
         const action = {
             type: types.ADD_PROJECT
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New Project',
@@ -45,7 +45,7 @@ describe('Project reducer', () => {
                 description: 'Project description'
             }
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New Project',

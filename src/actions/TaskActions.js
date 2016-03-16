@@ -1,4 +1,4 @@
-import * as actionTypes from '../Constants/ActionTypes'
+import * as actionTypes from '../constants/actionTypes'
 
 export function addTask(properties) {
   return {type: actionTypes.ADD_TASK, properties}

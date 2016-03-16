@@ -1,7 +1,7 @@
 import expect from 'expect'
 import { List, fromJS } from 'immutable'
-import reducer from '../Reducer/Task'
-import * as actionTypes from '../constants/ActionTypes'
+import reducer from '../reducer/Task'
+import * as types from '../constants/actionTypes'
 
 describe('Task reducer', () => {
     // Empty action
@@ -50,7 +50,7 @@ describe('Task reducer', () => {
                 description: 'Task description'
             }
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'Test Task',
@@ -314,8 +314,8 @@ describe('Task reducer', () => {
             {
                 id: 1,
                 title: 'New Task',
-                completed: false
-                today: false,
+                completed: false,
+                today: false
             }
         ])
         expect(reducer(initialState, action)).toEqual(nextState)

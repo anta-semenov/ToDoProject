@@ -1,6 +1,6 @@
 import expect from 'expect'
-import * as actions from '../actions/TaskActions'
-import * as types from '../constants/ActionTypes'
+import * as actions from '../actions/taskActions'
+import * as types from '../constants/actionTypes'
 
 describe('Task action creators', () => {
     it('Should create an action to add a task', () => {

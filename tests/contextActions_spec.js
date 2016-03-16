@@ -1,6 +1,6 @@
 import expect from 'expect'
-import * as types from '../src/constants/ActionTypes'
-import * as actions from '../src/actions/ContextActions'
+import * as types from '../src/constants/actionTypes'
+import * as actions from '../src/actions/contextActions'
 
 describe('Context action creators', () => {
     it('Should create an action to add a context', () => {
