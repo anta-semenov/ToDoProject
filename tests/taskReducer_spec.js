@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import { List, fromJS } from 'immutable'
-import reducer from '../src/reducer/taskReducer'
+import reducer from '../src/reducer/task'
 import * as types from '../src/constants/actionTypes'
 
 describe('Task reducer', () => {
