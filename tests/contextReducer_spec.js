@@ -2,6 +2,7 @@ import expect from 'chai'
 import { List, fromJS } from 'immutable'
 import reducer from '../reducer/Context'
 import * as types from '../constants/actionTypes'
+import { NEW_CONTEXT_TITLE } from '../constants/defaultNames'
 
 describe('Context reducer', () => {
     it('Should return initial state', () => {
@@ -29,7 +30,7 @@ describe('Context reducer', () => {
         const nextState = fromJS([
             {
                 id: 0,
-                title: 'New context'
+                title: NEW_CONTEXT_TITLE
             }
         ])
         expect(reducer(initialState, action)).to.equal(fromJS(nextState))
