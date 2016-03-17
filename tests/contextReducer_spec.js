@@ -40,13 +40,13 @@ describe('Context reducer', () => {
         const action = {
             type: types.ADD_CONTEXT,
             properties: {
-                title: 'New context'
+                title: 'New custom context'
             }
         }
         const nextState = fromJS([
             {
                 id: 0,
-                title: 'New context'
+                title: 'New custom context'
             }
         ])
         expect(reducer(initialState, action)).to.equal(fromJS(nextState))
@@ -61,7 +61,7 @@ describe('Context reducer', () => {
         const action = {
             type: types.ADD_CONTEXT,
             properties: {
-                title: 'New context'
+                title: 'New custom context'
             }
         }
         const nextState = fromJS([
@@ -71,7 +71,7 @@ describe('Context reducer', () => {
             },
             {
                 id: 1,
-                title: 'New context'
+                title: 'New custom context'
             }
         ])
         expect(reducer(initialState, action)).to.equal(nextState)

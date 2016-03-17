@@ -30,15 +30,12 @@ function addContext(state, properties = {}) {
 }
 
 function editContext(state, id, properties = {}) {
-  return state.update((item) => {
-    return item.id === id ? item.merge(properties) : item
-  })
+  const index = state.findIndex(item => {return item.get('id') === id})
+  return state.mergeIn([index], properties)
 }
 
 function removeContext(state, id) {
-  const index = state.reduce((contextIndex, item, i) => {
-    return item.id === id ? i : contextIndex
-  }, -1)
+  const index = state.findIndex(item => {return item.get('id') === id})
   if (index > -1) {
     return state.delete(index)
   }
