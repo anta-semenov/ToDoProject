@@ -548,4 +548,32 @@ describe('Task reducer', () => {
         expect(reducer(initialState, action)).to.equal(nextState)
     })
 
+    it('Should handle REMOVE_TASK_CONTEXT for the last context', () => {
+        const initialState = fromJS([
+            {
+                id: 1,
+                title: 'Existing Task',
+                completed: false,
+                today: false,
+                project: 1,
+                context: Set([1])
+            }
+        ])
+        const action = {
+            type: types.REMOVE_TASK_CONTEXT,
+            id: 1,
+            context: 1
+        }
+        const nextState = fromJS([
+            {
+                id: 1,
+                title: 'Existing Task',
+                completed: false,
+                today: false,
+                project: 1
+            }
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
 })
