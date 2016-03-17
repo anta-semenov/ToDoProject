@@ -11,7 +11,7 @@ describe('Context action creators', () => {
             type: types.ADD_CONTEXT,
             properties
         }
-        expect(actions.addContext(properties)).to.equal(expectedAction);
+        expect(actions.addContext(properties)).to.deep.equal(expectedAction);
     })
 
     it('Should create an action to remove a context', () => {
@@ -20,7 +20,7 @@ describe('Context action creators', () => {
             type: types.REMOVE_CONTEXT,
             id
       }
-      expect(actions.removeContext(id)).to.equal(expectedAction);
+      expect(actions.removeContext(id)).to.deep.equal(expectedAction);
     })
 
     it('Should create an action to edit a context', () => {
@@ -33,6 +33,6 @@ describe('Context action creators', () => {
             id,
             properties
         }
-        expect(actions.editContext(id, properties)).to.equal(expectedAction);
+        expect(actions.editContext(id, properties)).to.deep.equal(expectedAction);
     })
 })

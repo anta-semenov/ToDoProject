@@ -77,7 +77,7 @@ function removeTaskContext(state, {id, context}) {
     if (val) {
       return val.delete(context)
     } else {
-      return undefined
+      return val
     }
   })
 }

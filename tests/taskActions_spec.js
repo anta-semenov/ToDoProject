@@ -12,8 +12,8 @@ describe('Task action creators', () => {
             type: types.ADD_TASK,
             properties
         }
-        
-        expect(actions.addTask(properties)).to.equal(expectedAction)
+
+        expect(actions.addTask(properties)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to remove a task', () => {
@@ -22,7 +22,7 @@ describe('Task action creators', () => {
             type: types.REMOVE_TASK,
             id
         }
-        expect(actions.removeTask(id)).to.equal(expectedAction)
+        expect(actions.removeTask(id)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to edit a task', () => {
@@ -36,7 +36,7 @@ describe('Task action creators', () => {
             id,
             properties
         }
-        expect(actions.editTask(id, properties)).to.equal(expectedAction)
+        expect(actions.editTask(id, properties)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to complete a task', () => {
@@ -45,7 +45,7 @@ describe('Task action creators', () => {
             type: types.COMPLETE_TASK,
             id
         }
-        expect(actions.completeTask(id)).to.equal(expectedAction)
+        expect(actions.completeTask(id)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to add task to a project', () => {
@@ -56,7 +56,7 @@ describe('Task action creators', () => {
             id,
             project: projectId
         }
-        expect(actions.addTaskToProject(id, projectId)).to.equal(expectedAction);
+        expect(actions.addTaskToProject(id, projectId)).to.deep.equal(expectedAction);
     })
 
     it('Should create an action to add context to a task', () => {
@@ -67,7 +67,7 @@ describe('Task action creators', () => {
             id,
             context: contextId
         }
-        expect(actions.addTaskContext(id, contextId)).to.equal(expectedAction)
+        expect(actions.addTaskContext(id, contextId)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to remove context from a task', () => {
@@ -78,7 +78,7 @@ describe('Task action creators', () => {
             id,
             context: contextId
         }
-        expect(actions.removeTaskContext(id, contextId)).to.equal(expectedAction)
+        expect(actions.removeTaskContext(id, contextId)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to add task to today', () => {
@@ -87,7 +87,7 @@ describe('Task action creators', () => {
             type: types.SET_TASK_TODAY,
             id
         }
-        expect(actions.setTaskToday(id)).to.equal(expectedAction)
+        expect(actions.setTaskToday(id)).to.deep.equal(expectedAction)
     })
 
 })

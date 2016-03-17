@@ -16,18 +16,18 @@ export function editTask(id, properties) {
  return {type: actionTypes.EDIT_TASK, id, properties}
 }
 
-export function addTaskToProject(id, projectId) {
- return {type: actionTypes.ADD_TASK_TO_PROJECT, id, project: projectId}
+export function addTaskToProject(id, project) {
+ return {type: actionTypes.ADD_TASK_TO_PROJECT, id, project}
 }
 
-export function addTaskContext(id, contextId) {
- return {type: actionTypes.ADD_TASK_CONTEXT, id, context: contextId}
+export function addTaskContext(id, context) {
+ return {type: actionTypes.ADD_TASK_CONTEXT, id, context}
 }
 
-export function removeTaskContext(id, contextId) {
- return {type: actionTypes.REMOVE_TASK_CONTEXT, id, context: contextId}
+export function removeTaskContext(id, context) {
+ return {type: actionTypes.REMOVE_TASK_CONTEXT, id, context}
 }
 
-export function setTaskToday(id, todayFlag) {
-  return {type: actionTypes.SET_TASK_TODAY, id, todayFlag}
+export function setTaskToday(id) {
+  return {type: actionTypes.SET_TASK_TODAY, id}
 }

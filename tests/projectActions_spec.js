@@ -12,7 +12,7 @@ describe('Project action creators', () => {
             type: types.ADD_PROJECT,
             properties
         }
-        expect(actions.addProject(properties)).to.equal(expectedAction);
+        expect(actions.addProject(properties)).to.deep.equal(expectedAction);
     })
 
     it('Should create an action to remove a project', () => {
@@ -21,7 +21,7 @@ describe('Project action creators', () => {
             type: types.REMOVE_PROJECT,
             id
         }
-        expect(actions.removeProject(id)).to.equal(expectedAction);
+        expect(actions.removeProject(id)).to.deep.equal(expectedAction);
     })
 
     it('Should create an action to complete a project', () => {
@@ -30,7 +30,7 @@ describe('Project action creators', () => {
             type: types.COMPLETE_PROJECT,
             id
         }
-        expect(actions.completeProject(id)).to.equal(expectedAction)
+        expect(actions.completeProject(id)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to edit a project', () => {
@@ -44,6 +44,6 @@ describe('Project action creators', () => {
             id,
             properties
         }
-        expect(actions.editProject(id, properties)).to.equal(expectedAction);
+        expect(actions.editProject(id, properties)).to.deep.equal(expectedAction);
     })
 })
