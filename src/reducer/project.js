@@ -35,7 +35,13 @@ function addProject(state, properties = {}) {
 
 function removeProject(state, id) {
   const index = state.findIndex(item => item.get('id') === id)
-  return state.delete(index)
+  if (index > -1) {
+    return state.delete(index)
+  }
+  else {
+    return state
+  }
+
 }
 
 function editProject(state, id, properties = {}) {

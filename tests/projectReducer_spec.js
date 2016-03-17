@@ -111,6 +111,25 @@ describe('Project reducer', () => {
         ])
         expect(reducer(initialState, action)).to.equal(nextState)
     })
+    it('Should handle REMOVE_PROJECT with wrong id', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: false
+            }
+        ])
+        const action = {
+            type: types.REMOVE_PROJECT,
+            id: 3
+        }
+        expect(reducer(initialState, action)).to.equal(initialState)
+    })
 
     it('Should handle EDIT_PROJECT', () => {
         const initialState = fromJS([
