@@ -1,6 +1,6 @@
-import expect from 'expect'
-import * as types from '../src/constants/ActionTypes'
-import * as actions from '../src/actions/ProjectActions'
+import expect from 'chai'
+import * as types from '../src/constants/actionTypes'
+import * as actions from '../src/actions/projectActions'
 
 describe('Project action creators', () => {
     it('Should create an action to add a project', () => {
@@ -12,7 +12,7 @@ describe('Project action creators', () => {
             type: types.ADD_PROJECT,
             properties
         }
-        expect(actions.addProject(properties)).toEqual(expectedAction);
+        expect(actions.addProject(properties)).to.equal(expectedAction);
     })
 
     it('Should create an action to remove a project', () => {
@@ -21,7 +21,7 @@ describe('Project action creators', () => {
             type: types.REMOVE_PROJECT,
             id
         }
-        expect(actions.removeProject(id)).toEqual(expectedAction);
+        expect(actions.removeProject(id)).to.equal(expectedAction);
     })
 
     it('Should create an action to complete a project', () => {
@@ -30,7 +30,7 @@ describe('Project action creators', () => {
             type: types.COMPLETE_PROJECT,
             id
         }
-        expect(actions.completeProject(id)).toEqual(expectedAction)
+        expect(actions.completeProject(id)).to.equal(expectedAction)
     })
 
     it('Should create an action to edit a project', () => {
@@ -44,6 +44,6 @@ describe('Project action creators', () => {
             id,
             properties
         }
-        expect(actions.editProject(id, properties)).toEqual(expectedAction);
+        expect(actions.editProject(id, properties)).to.equal(expectedAction);
     })
 })

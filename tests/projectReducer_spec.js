@@ -1,14 +1,14 @@
-import expect from 'expect'
+import expect from 'chai'
 import { List, fromJS } from 'immutable'
-import reducer from '../Reducer/Project'
-import * as actionTypes from '../constants/ActionTypes'
+import reducer from '../reducer/Project'
+import * as types from '../constants/actionTypes'
 
 describe('Project reducer', () => {
     it('Should return initial state', () => {
         const initialState = undefined
         const action = {}
         const nextState = fromJS([])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should return state for empty action', () => {
         const initialState = fromJS([
@@ -19,7 +19,7 @@ describe('Project reducer', () => {
             }
         ])
         const action = {}
-        expect(reducer(initialState, action)).toEqual(fromJS(initialState))
+        expect(reducer(initialState, action)).to.equal(fromJS(initialState))
     })
 
     it('Should handle ADD_PROJECT with empty action', () => {
@@ -27,14 +27,14 @@ describe('Project reducer', () => {
         const action = {
             type: types.ADD_PROJECT
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New Project',
                 completed: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should handle ADD_PROJECT with empty store', () => {
         const initialState = List()
@@ -45,7 +45,7 @@ describe('Project reducer', () => {
                 description: 'Project description'
             }
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New Project',
@@ -53,7 +53,7 @@ describe('Project reducer', () => {
                 completed: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should handle ADD_PROJECT with not empty store', () => {
         const initialState = fromJS([
@@ -81,7 +81,7 @@ describe('Project reducer', () => {
                 completed: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle REMOVE_PROJECT', () => {
@@ -108,7 +108,7 @@ describe('Project reducer', () => {
                 completed: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle EDIT_PROJECT', () => {
@@ -143,7 +143,7 @@ describe('Project reducer', () => {
                 completed: false
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle COMPLETE_PROJECT', () => {
@@ -175,6 +175,6 @@ describe('Project reducer', () => {
                 completed: true
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 })

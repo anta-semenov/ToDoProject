@@ -1,14 +1,14 @@
-import expect from 'expect'
+import expect from 'chai'
 import { List, fromJS } from 'immutable'
-import reducer from '../Reducer/Context'
-import * as actionTypes from '../constants/ActionTypes'
+import reducer from '../reducer/Context'
+import * as types from '../constants/actionTypes'
 
 describe('Context reducer', () => {
     it('Should return initial state', () => {
         const initialState = undefined
         const action = {}
         const nextState = fromJS([])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should return state for empty action', () => {
         const initialState = fromJS([
@@ -18,7 +18,7 @@ describe('Context reducer', () => {
             }
         ])
         const action = {}
-        expect(reducer(initialState, action)).toEqual(fromJS(initialState))
+        expect(reducer(initialState, action)).to.equal(fromJS(initialState))
     })
 
     it('Should handle ADD_CONTEXT with empty action', () => {
@@ -26,13 +26,13 @@ describe('Context reducer', () => {
         const action = {
             type: types.ADD_CONTEXT
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New context'
             }
         ])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should handle ADD_CONTEXT with empty store', () => {
         const initialState = List()
@@ -42,13 +42,13 @@ describe('Context reducer', () => {
                 title: 'New context'
             }
         }
-        const nextState = from([
+        const nextState = fromJS([
             {
                 id: 0,
                 title: 'New context'
             }
         ])
-        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
+        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should handle ADD_CONTEXT with not empty store', () => {
         const initialState = fromJS([
@@ -73,7 +73,7 @@ describe('Context reducer', () => {
                 title: 'New context'
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle REMOVE_CONTEXT', () => {
@@ -97,7 +97,7 @@ describe('Context reducer', () => {
                 title: 'Existing context'
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle EDIT_CONTEXT', () => {
@@ -128,6 +128,6 @@ describe('Context reducer', () => {
                 title: 'Changed Context Tittle'
             }
         ])
-        expect(reducer(initialState, action)).toEqual(nextState)
+        expect(reducer(initialState, action)).to.equal(nextState)
     })
 })
