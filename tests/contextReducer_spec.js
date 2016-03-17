@@ -101,6 +101,24 @@ describe('Context reducer', () => {
         expect(reducer(initialState, action)).to.equal(nextState)
     })
 
+    it('Should handle REMOVE_CONTEXT with wrong id', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing context'
+            },
+            {
+                id: 1,
+                title: 'New context'
+            }
+        ])
+        const action = {
+            type: types.REMOVE_CONTEXT,
+            id: 3
+        }
+        expect(reducer(initialState, action)).to.equal(initialState)
+    })
+
     it('Should handle EDIT_CONTEXT', () => {
         const initialState = fromJS([
             {

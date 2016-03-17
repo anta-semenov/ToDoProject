@@ -125,6 +125,28 @@ describe('Task reducer', () => {
         expect(reducer(initialState, action)).to.equal(nextState)
     })
 
+    it('Should handle REMOVE_TASK', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Task',
+                completed: false,
+                today: false
+            },
+            {
+                id: 1,
+                title: 'New Task',
+                completed: false,
+                today: false
+            }
+        ])
+        const action = {
+            type: types.REMOVE_TASK,
+            id: 3
+        }
+        expect(reducer(initialState, action)).to.equal(initialState)
+    })
+
     it('Should handle EDIT_TASK', () => {
         const initialState = fromJS([
             {
