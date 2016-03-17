@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import { List, fromJS } from 'immutable'
 import reducer from '../src/reducer/project'
 import * as types from '../src/constants/actionTypes'
+import { NEW_PROJECT_TITLE } from '../src/constants/defaultNames'
 
 describe('Project reducer', () => {
     it('Should return initial state', () => {
@@ -30,7 +31,7 @@ describe('Project reducer', () => {
         const nextState = fromJS([
             {
                 id: 0,
-                title: 'New Project',
+                title: NEW_PROJECT_TITLE,
                 completed: false
             }
         ])
@@ -41,14 +42,14 @@ describe('Project reducer', () => {
         const action = {
             type: types.ADD_PROJECT,
             properties: {
-                title: 'New Project',
+                title: 'New Custom Project',
                 description: 'Project description'
             }
         }
         const nextState = fromJS([
             {
                 id: 0,
-                title: 'New Project',
+                title: 'New Custom Project',
                 description: 'Project description',
                 completed: false
             }
@@ -66,7 +67,7 @@ describe('Project reducer', () => {
         const action = {
             type: types.ADD_PROJECT,
             properties: {
-                title: 'New Project'
+                title: 'New Custom Project'
             }
         }
         const nextState = fromJS([
@@ -77,7 +78,7 @@ describe('Project reducer', () => {
             },
             {
                 id: 1,
-                title: 'New Project',
+                title: 'New Custom Project',
                 completed: false
             }
         ])
