@@ -1,12 +1,23 @@
-import { fromJS } from 'immutable'
+import { fromJS, Set } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
-
-const NEW_TITLE = 'New Task'
+import { NEW_TITLE } from '../constants/defaultNames'
 
 export default function task(state = fromJS([]), action) {
   switch (action.type) {
     case actionTypes.ADD_TASK:
       return addTask(state, action.properties)
+    case actionTypes.REMOVE_TASK:
+      return removeTask(state, action.id)
+    case actionTypes.EDIT_TASK:
+      return editTask(state, action.id, action.properties)
+    case actionTypes.COMPLETE_TASK:
+      return completeTask(state, action.id)
+    case actionTypes.ADD_TASK_TO_PROJECT:
+      return addTaskToProject(state, action.id, action.project)
+    case actionTypes.ADD_TASK_CONTEXT:
+      return addTaskContext(state, action.id, action.context)
+    case actionTypes.REMOVE_TASK_CONTEXT:
+      return removeTaskContext(state, action)
     default:
       return state
   }
@@ -22,6 +33,51 @@ function addTask(state, properties = {}) {
     completed: false,
     today: false
   })
+  return state.push(newTask.merge(properties))
+}
 
-  return state.push(newTask.mergeWith((prev, next) => next, properties))
+function removeTask(state, id) {
+  const index = state.findIndex(item => {return item.get('id') === id})
+  return state.delete(index)
+}
+
+function editTask(state, id, properties = {}) {
+  const index = state.findIndex(item => {return item.get('id') === id})
+  return state.mergeIn([index], properties)
+}
+
+function completeTask(state, id) {
+  const index = state.findIndex(item => {return item.get('id') === id})
+  return state.updateIn([index, 'completed'], val => !val)
+}
+
+function addTaskToProject(state, id, projectId) {
+  const index = state.findIndex(item => {return item.get('id') === id})
+  if (projectId) {
+    return state.setIn([index, 'project'], projectId)
+  } else {
+    return state.deleteIn([index, 'project'])
+  }
+}
+
+function addTaskContext(state, id, contextId) {
+  const index = state.findIndex(item => {return item.get('id') === id})
+  return state.updateIn([index, 'context'], val => {
+    if (val) {
+      return val.add(contextId)
+    } else {
+      return Set([contextId])
+    }
+  })
+}
+
+function removeTaskContext(state, {id, context}) {
+  const index = state.findIndex(item => {return item.get('id') === id})
+  return state.updateIn([index, 'context'], val => {
+    if (val) {
+      return val.delete(context)
+    } else {
+      return undefined
+    }
+  })
 }

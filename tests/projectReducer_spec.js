@@ -1,7 +1,7 @@
-import expect from 'chai'
+import { expect } from 'chai'
 import { List, fromJS } from 'immutable'
-import reducer from '../reducer/Project'
-import * as types from '../constants/actionTypes'
+import reducer from '../src/reducer/project'
+import * as types from '../src/constants/actionTypes'
 
 describe('Project reducer', () => {
     it('Should return initial state', () => {

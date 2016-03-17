@@ -1,8 +1,8 @@
-import expect from 'chai'
+import { expect } from 'chai'
 import { List, fromJS } from 'immutable'
-import reducer from '../reducer/Context'
-import * as types from '../constants/actionTypes'
-import { NEW_CONTEXT_TITLE } from '../constants/defaultNames'
+import reducer from '../src/reducer/context'
+import * as types from '../src/constants/actionTypes'
+import { NEW_CONTEXT_TITLE } from '../src/constants/defaultNames'
 
 describe('Context reducer', () => {
     it('Should return initial state', () => {
