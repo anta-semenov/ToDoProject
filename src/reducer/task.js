@@ -38,7 +38,11 @@ function addTask(state, properties = {}) {
 
 function removeTask(state, id) {
   const index = state.findIndex(item => {return item.get('id') === id})
-  return state.delete(index)
+  if (index > -1) {
+    return state.delete(index)
+  } else {
+    return state
+  }
 }
 
 function editTask(state, id, properties = {}) {
@@ -73,11 +77,16 @@ function addTaskContext(state, id, contextId) {
 
 function removeTaskContext(state, {id, context}) {
   const index = state.findIndex(item => {return item.get('id') === id})
-  return state.updateIn([index, 'context'], val => {
+  const temp =  state.updateIn([index, 'context'], val => {
     if (val) {
       return val.delete(context)
     } else {
       return val
     }
   })
+  if (temp.getIn([index, 'context']) && temp.getIn([index, 'context']).isEmpty()) {
+    return temp.deleteIn([index, 'context'])
+  } else {
+    return temp
+  }
 }
