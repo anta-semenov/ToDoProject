@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import { List, fromJS } from 'immutable'
-import reducer from '../src/reducer/project'
-import * as types from '../src/constants/actionTypes'
-import { NEW_PROJECT_TITLE } from '../src/constants/defaultNames'
+import reducer from '../../src/reducer/project'
+import * as types from '../../src/constants/actionTypes'
+import { NEW_PROJECT_TITLE } from '../../src/constants/defaults'
 
 describe('Project reducer', () => {
     it('Should return initial state', () => {

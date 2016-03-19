@@ -1,6 +1,6 @@
 import { fromJS, Set } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
-import { NEW_TITLE } from '../constants/defaultNames'
+import { NEW_TITLE } from '../constants/defaults'
 
 export default function task(state = fromJS([]), action) {
   switch (action.type) {

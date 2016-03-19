@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable'
-import { NEW_PROJECT_TITLE } from '../constants/defaultNames'
+import { NEW_PROJECT_TITLE } from '../constants/defaults'
 import * as actionTypes from '../constants/actionTypes'
 
 export default function project(state = fromJS([]), action) {

@@ -24,3 +24,10 @@ export const SET_TASK_TODAY = 'SET_TASK_TODAY'
 export const ADD_CONTEXT = 'ADD_CONTEXT'
 export const REMOVE_CONTEXT = 'REMOVE_CONTEXT'
 export const EDIT_CONTEXT = 'EDIT_CONTEXT'
+
+/*
+* UI State
+*/
+export const SET_SELECTED_SECTION = 'SET_SELECTED_SECTION'
+export const SET_SIDEBAR_SIZE = 'SET_SIDEBAR_SIZE'
+export const SET_ACTIVE_ITEM = 'SET_ACTIVE_ITEM'

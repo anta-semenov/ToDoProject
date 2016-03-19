@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import * as types from '../src/constants/actionTypes'
-import * as actions from '../src/actions/contextActions'
+import * as types from '../../src/constants/actionTypes'
+import * as actions from '../../src/actions/contextActions'
 
 describe('Context action creators', () => {
     it('Should create an action to add a context', () => {

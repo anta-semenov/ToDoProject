@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import * as actions from '../src/actions/taskActions'
-import * as types from '../src/constants/actionTypes'
+import * as actions from '../../src/actions/taskActions'
+import * as types from '../../src/constants/actionTypes'
 
 describe('Task action creators', () => {
     it('Should create an action to add a task', () => {

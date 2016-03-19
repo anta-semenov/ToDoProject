@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
-import { NEW_CONTEXT_TITLE } from '../constants/defaultNames'
+import { NEW_CONTEXT_TITLE } from '../constants/defaults'
 
 export default function context(state = fromJS([]), action) {
   switch (action.type) {

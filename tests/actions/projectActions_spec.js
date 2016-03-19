@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import * as types from '../src/constants/actionTypes'
-import * as actions from '../src/actions/projectActions'
+import * as types from '../../src/constants/actionTypes'
+import * as actions from '../../src/actions/projectActions'
 
 describe('Project action creators', () => {
     it('Should create an action to add a project', () => {

@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import { List, fromJS, Set } from 'immutable'
-import reducer from '../src/reducer/task'
-import * as types from '../src/constants/actionTypes'
-import { NEW_TITLE } from '../src/constants/defaultNames'
+import reducer from '../../src/reducer/task'
+import * as types from '../../src/constants/actionTypes'
+import { NEW_TITLE } from '../../src/constants/defaults'
 
 describe('Task reducer', () => {
     // Empty action
