@@ -81,6 +81,64 @@ describe('UI state reducer', () => {
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
+    it('Should clear active item when change selected section', () => {
+      const initialState = fromJS({
+        selectedSection: {
+          type: sectionTypes.PROJECT,
+          id: 0
+        },
+        sidebarSize: DEFAULT_SIDEBAR_SIZE,
+        activeItem: {
+          type: itemTypes.TASK,
+          id: 2
+        }
+      })
+      const action = {
+        type: actionTypes.SET_SELECTED_SECTION,
+        section: {
+          type: sectionTypes.PROJECTS
+        }
+      }
+      const nextState = fromJS({
+        selectedSection: {
+          type: sectionTypes.PROJECTS
+        },
+        sidebarSize: DEFAULT_SIDEBAR_SIZE
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should not clear active item when set the same selected section', () => {
+      const initialState = fromJS({
+        selectedSection: {
+          type: sectionTypes.PROJECT,
+          id: 0
+        },
+        sidebarSize: DEFAULT_SIDEBAR_SIZE,
+        activeItem: {
+          type: itemTypes.TASK,
+          id: 2
+        }
+      })
+      const action = {
+        type: actionTypes.SET_SELECTED_SECTION,
+        section: {
+          type: sectionTypes.PROJECT,
+          id: 0
+        }
+      }
+      const nextState = fromJS({
+        selectedSection: {
+          type: sectionTypes.PROJECT,
+          id: 0
+        },
+        sidebarSize: DEFAULT_SIDEBAR_SIZE,
+        activeItem: {
+          type: itemTypes.TASK,
+          id: 2
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
   })
 
   describe('Set sidebar size', () => {
