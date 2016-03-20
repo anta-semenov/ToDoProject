@@ -56,7 +56,9 @@ describe('UI state reducer', () => {
       })
       const action = {
         type: actionTypes.SET_SELECTED_SECTION,
-        section: sectionTypes.PROJECTS
+        section: {
+          type: sectionTypes.PROJECTS
+        }
       }
       const nextState = fromJS({
         selectedSection: {
@@ -70,7 +72,7 @@ describe('UI state reducer', () => {
       const initialState = fromJS({})
       const action = {
         type: actionTypes.SET_SELECTED_SECTION,
-        section: sectionTypes.PROJECTS
+        section: {type: sectionTypes.PROJECTS}
       }
       const nextState = fromJS({
         selectedSection: {
