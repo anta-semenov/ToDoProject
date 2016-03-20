@@ -14,7 +14,7 @@ describe('UI state action creators', () => {
       type: types.SET_SELECTED_SECTION,
       section
     }
-    expect(actions.setSelectedSection(section)).to.equal(expectedAction)
+    expect(actions.setSelectedSection(section)).to.deep.equal(expectedAction)
   })
 
   it('Should create an action to set sidebar size', () => {
@@ -23,7 +23,7 @@ describe('UI state action creators', () => {
       type: types.SET_SIDEBAR_SIZE,
       size
     }
-    expect(actions.setSidebarSize(size)).to.equal(expectedAction)
+    expect(actions.setSidebarSize(size)).to.deep.equal(expectedAction)
   })
 
   it('Should create an action to set active item', () => {
@@ -35,6 +35,6 @@ describe('UI state action creators', () => {
       type: types.SET_ACTIVE_ITEM,
       item
     }
-    expect(actions.setActiveItem(item)).to.equal(expectedAction)
+    expect(actions.setActiveItem(item)).to.deep.equal(expectedAction)
   })
 })
