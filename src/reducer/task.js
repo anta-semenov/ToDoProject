@@ -24,7 +24,9 @@ export default function task(state = fromJS({}), action) {
 }
 
 function addTask(state, properties = {}) {
-  const newId = state.size ? state.maxBy((value, key) => key).get('id') + 1 : 0
+  const newId = state.reduce((id, item, key) => {
+    return Math.max(id, key)
+  }, -1) + 1
   const newTask = fromJS({
     id: newId,
     title: NEW_TITLE,
