@@ -5,7 +5,9 @@ export default class Root extends Component {
   render() {
     return(
       <Provider >
-
+        <div>
+          
+        </div>
       </Provider>
     );
   }
