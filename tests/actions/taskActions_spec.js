@@ -89,15 +89,5 @@ describe('Task action creators', () => {
         }
         expect(actions.setTaskToday(id)).to.deep.equal(expectedAction)
     })
-    
-    it('Should create an action to edit task id', () => {
-        const id = 0;
-        const newId = 2;
-        const expectedAction = {
-            type: types.EDIT_TASK_ID,
-            id,
-            newId
-        }
-        expect(actions.editTaskId(id, newId)).to.deep.equal(expectedAction)
-    })
+
 })
