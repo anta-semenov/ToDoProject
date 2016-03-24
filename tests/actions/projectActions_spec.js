@@ -46,4 +46,16 @@ describe('Project action creators', () => {
         }
         expect(actions.editProject(id, properties)).to.deep.equal(expectedAction);
     })
+    
+    it('Should create an action to edit a project id', () => {
+        const id = 0
+        const newId = 1
+
+        const expectedAction = {
+            type: types.EDIT_PROJECT_ID,
+            id,
+            newId
+        }
+        expect(actions.editProjectId(id, newId)).to.deep.equal(expectedAction);
+    })
 })

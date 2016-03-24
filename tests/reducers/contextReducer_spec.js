@@ -194,4 +194,127 @@ describe('Context reducer', () => {
         ])
         expect(reducer(initialState, action)).to.equal(nextState)
     })
+
+    it('Should handle EDIT_CONTEXT_ID', () => {
+        const initialState = Map([
+          [
+            0,
+            fromJS({
+              id: 0,
+              title: 'Existing context'
+            })
+          ],
+          [
+            1,
+            fromJS({
+              id: 1,
+              title: 'New context'
+            })
+          ]
+        ])
+        const action = {
+            type: types.EDIT_CONTEXT_ID,
+            id: 1,
+            newId: 14
+        }
+        const nextState = Map([
+          [
+            0,
+            fromJS({
+              id: 0,
+              title: 'Existing context'
+            })
+          ],
+          [
+            14,
+            fromJS({
+              id: 14,
+              title: 'New context'
+            })
+          ]
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle EDIT_CONTEXT_ID with wrong ID', () => {
+        const initialState = Map([
+          [
+            0,
+            fromJS({
+              id: 0,
+              title: 'Existing context'
+            })
+          ],
+          [
+            1,
+            fromJS({
+              id: 1,
+              title: 'New context'
+            })
+          ]
+        ])
+        const action = {
+            type: types.EDIT_CONTEXT_ID,
+            id: 12,
+            newId: 14
+        }
+        const nextState = Map([
+          [
+            0,
+            fromJS({
+              id: 0,
+              title: 'Existing context'
+            })
+          ],
+          [
+            1,
+            fromJS({
+              id: 1,
+              title: 'New context'
+            })
+          ]
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle EDIT_CONTEXT_ID if new ID already is in state', () => {
+      const initialState = Map([
+        [
+          0,
+          fromJS({
+            id: 0,
+            title: 'Existing context'
+          })
+        ],
+        [
+          1,
+          fromJS({
+            id: 1,
+            title: 'New context'
+          })
+        ]
+      ])
+      const action = {
+          type: types.EDIT_CONTEXT_ID,
+          id: 1,
+          newId: 0
+      }
+      const nextState = Map([
+        [
+          0,
+          fromJS({
+            id: 0,
+            title: 'Existing context'
+          })
+        ],
+        [
+          1,
+          fromJS({
+            id: 1,
+            title: 'New context'
+          })
+        ]
+      ])
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
 })

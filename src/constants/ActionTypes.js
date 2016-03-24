@@ -5,6 +5,7 @@ export const ADD_PROJECT = 'ADD_PROJECT'
 export const REMOVE_PROJECT = 'REMOVE_PROJECT'
 export const COMPLETE_PROJECT = 'COMPLETE_PROJECT'
 export const EDIT_PROJECT = 'EDIT_PROJECT'
+export const EDIT_PROJECT_ID = 'EDIT_PROJECT_ID'
 
 /*
  * Task
@@ -17,6 +18,7 @@ export const ADD_TASK_TO_PROJECT = 'ADD_TASK_TO_PROJECT'
 export const ADD_TASK_CONTEXT = 'ADD_TASK_CONTEXT'
 export const REMOVE_TASK_CONTEXT = 'REMOVE_TASK_CONTEXT'
 export const SET_TASK_TODAY = 'SET_TASK_TODAY'
+export const EDIT_TASK_ID = 'EDIT_TASK_ID'
 
 /*
  * Context
@@ -24,6 +26,7 @@ export const SET_TASK_TODAY = 'SET_TASK_TODAY'
 export const ADD_CONTEXT = 'ADD_CONTEXT'
 export const REMOVE_CONTEXT = 'REMOVE_CONTEXT'
 export const EDIT_CONTEXT = 'EDIT_CONTEXT'
+export const EDIT_CONTEXT_ID = 'EDIT_CONTEXT_ID'
 
 /*
 * UI State

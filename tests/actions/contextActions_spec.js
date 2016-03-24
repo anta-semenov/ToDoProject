@@ -35,4 +35,15 @@ describe('Context action creators', () => {
         }
         expect(actions.editContext(id, properties)).to.deep.equal(expectedAction);
     })
+
+    it('Should create an action to edit a context id', () => {
+        const id = 0
+        const newId = 1
+        const expectedAction = {
+            type: types.EDIT_CONTEXT,
+            id,
+            newId
+        }
+        expect(actions.editContextId(id, newId)).to.deep.equal(expectedAction);
+    })
 })
