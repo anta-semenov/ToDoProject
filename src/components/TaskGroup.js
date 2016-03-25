@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import Task from './Task'
 
 export default class TaskGroup extends React.Component {
@@ -7,9 +7,8 @@ export default class TaskGroup extends React.Component {
   }
 
   render() {
-    const name = this.props.groupName ? <div className='group__name'>{this.props.groupName}</div> : null
     return (<div className='group'>
-      name
+      {this.props.groupName ? <div className='group__name'>{this.props.groupName}</div> : null}
       <ul className='group__list'>
         {this.props.tasks.map(task =>
           <Task
