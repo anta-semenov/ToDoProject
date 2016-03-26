@@ -1,0 +1,5 @@
+export const PRIORITY_NONE = 'none'
+export const PRIORITY_LOW = 'low'
+export const PRIORITY_MEDIUM = 'medium'
+export const PRIORITY_HIGH = 'high'
+export const PRIORITY_MAX = 'max'
