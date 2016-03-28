@@ -20,7 +20,7 @@ export default class NavigationItem extends React.Component {
 }
 
 NavigationItem.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.number,
   type: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
 

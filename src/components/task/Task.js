@@ -12,10 +12,10 @@ export default class Task extends React.Component {
   render() {
     return (
       <li className={`task ${this.props.completed ? `is-completed` : null} ${this.props.active ? `is-active` : null}`}>
-        <input type='checkbox' className='task__checkbox' checked={this.props.completed} onChange={this.props.onTaskCheckboxClick} />
-        <input type='checkbox' className='task__today' checked={this.props.today} onChange={this.props.onTaskTodayClick} />
-        <div className={`task__priority task__priority--${this.props.priority}`} onClick={this.props.onPriorityClick} />
-        <div className='task__body' onClick={this.props.onTaskClick}>
+        <input type='checkbox' className='task__checkbox' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id)} />
+        <input type='checkbox' className='task__today' checked={this.props.today} onChange={() => this.props.onTaskTodayClick(this.props.id)} />
+        <div className={`task__priority task__priority--${this.props.priority}`} onClick={() => this.props.onPriorityClick(this.props.id)} />
+        <div className='task__body' onClick={() => this.props.onTaskClick(this.props.id)}>
           <div className='task__title'>{this.props.title}</div>
           {this.props.description ? <div className='task__description'>{this.props.description}</div> : null}
           {this.props.date ? <div className='task__date'>{this.props.date}</div> : null}

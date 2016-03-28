@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag, findRenderedDOMComponentWithClass} from 'react-addons-test-utils'
+import { renderIntoDocument, scryRenderedDOMComponentsWithTag, findRenderedDOMComponentWithClass, Simulate} from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 import * as priorityLevels from '../../src/constants/priorityLevels'
 
@@ -34,18 +34,39 @@ describe('Task component tests', () => {
     expect(titleComponent.textContent).to.equal(testTasks.get(0).get('title'))
   })
 
-  it('Should render complete checkbox', () => {
-    const checkboxClass = 'task__checkbox'
-    const taskComponent = renderIntoDocument(<Task completed={testTasks.get(0).get('completed')} />)
-    const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
+  describe('Checkbox', () => {
+    it('Should render complete checkbox', () => {
+      const checkboxClass = 'task__checkbox'
+      const taskComponent = renderIntoDocument(<Task completed={testTasks.get(0).get('completed')} />)
+      const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
-    expect(checkboxComponent.checked).to.equal(testTasks.get(0).get('completed'))
-  })
-  it('Should render uncomplete checkbox', () => {
-    const checkboxClass = 'task__checkbox'
-    const taskComponent = renderIntoDocument(<Task completed={testTasks.get(1).get('completed')} />)
-    const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
+      expect(checkboxComponent.checked).to.equal(testTasks.get(0).get('completed'))
+    })
+    it('Should render uncomplete checkbox', () => {
+      const checkboxClass = 'task__checkbox'
+      const taskComponent = renderIntoDocument(<Task completed={testTasks.get(1).get('completed')} />)
+      const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
-    expect(checkboxComponent.checked).to.equal(testTasks.get(1).get('completed'))
+      expect(checkboxComponent.checked).to.equal(testTasks.get(1).get('completed'))
+    })
+    it('Should invoke complete callback when change event occurs', () => {
+      const checkboxClass = 'task__checkbox'
+      let checkedId = -12
+      const callback = (id) => checkedId = id
+
+      const taskComponent = renderIntoDocument(
+        <Task
+          completed={testTasks.getIn([0, 'completed'])}
+          id={testTasks.getIn([0, 'id'])}
+          onTaskCheckboxClick = {callback}
+        />
+      )
+      const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
+
+      expect(checkedId).to.equal(-12)
+
+      Simulate.change(checkboxComponent)
+      expect(checkedId).to.equal(0)
+    })
   })
 })

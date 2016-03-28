@@ -25,10 +25,10 @@ export default class TaskGroup extends React.Component {
             priority={task.get('prioroty')}
             date={task.get('date')}
 
-            onClick={() => this.props.onTaskClick(task.get('id'))}
-            onCheckboxClick={() => this.props.onTaskCheckboxClick(task.get('id'))}
-            onTaskTodayClick={() => this.props.onTaskTodayClick(task.get('id'))}
-            onPriorityClick={() => this.props.onPriorityClick(task.get('id'))}
+            onClick={this.props.onTaskClick}
+            onCheckboxClick={this.props.onTaskCheckboxClick}
+            onTaskTodayClick={this.props.onTaskTodayClick}
+            onPriorityClick={this.props.onPriorityClick}
           />
         )}
       </ul>
@@ -42,5 +42,5 @@ TaskGroup.propTypes = {
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
-  onPriorityClick: React.PropTypes.func.isRequired,
+  onPriorityClick: React.PropTypes.func.isRequired
 }
