@@ -11,7 +11,7 @@ export default class TaskGroup extends React.Component {
   }
 
   render() {
-    return (<div className='group'>
+    return (<li className='group'>
       {this.props.groupName ? <div className='group__name'>{this.props.groupName}</div> : null}
       <ul className='group__list'>
         {this.props.tasks.map(task =>
@@ -32,7 +32,7 @@ export default class TaskGroup extends React.Component {
           />
         )}
       </ul>
-    </div>)
+    </li>)
   }
 }
 
