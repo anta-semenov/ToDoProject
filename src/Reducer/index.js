@@ -1,9 +1,24 @@
-export default function reducer(state, action) {
-  switch (action.type) {
-    case expression:
+import { combineReducers } from 'redux'
+import context from './context'
+import project from './project'
+import task from './task'
+import uiState from './uiState'
+import { fromJS } from 'immutable'
 
-      break
-    default:
-      return state
-  }
+export default function rootReduser(state, action) {
+  return state.withMutations(map => map
+    .set('task', task(map.get('task'), action))
+    .set('context', context(map.get('context'), action))
+    .set('project', project(map.get('project'), action))
+    .set('uiState', uiState(map.get('uiState'), action))
+  )
 }
+
+// const rootReducer = combineReducers({
+//   context,
+//   project,
+//   task,
+//   uiState
+// })
+//
+// export default rootReducer

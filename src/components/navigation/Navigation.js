@@ -1,5 +1,5 @@
 import React from 'react'
-require('./Navigation.less')
+//require('./Navigation.less')
 import NavigationGroup from '../navigationGroup/NavigationGroup'
 
 export default class Navigation extends React.Component {

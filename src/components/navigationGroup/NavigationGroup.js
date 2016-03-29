@@ -1,6 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-require('./NavigationGroup.less')
+//require('./NavigationGroup.less')
 
 import NavigationItem from '../navigationItem/NavigationItem'
 
@@ -32,7 +32,7 @@ export default class NavigationGroup extends React.Component {
 }
 
 NavigationGroup.propTypes = {
-  items: React.PropTypes.array.isRequired,
+  //items: React.PropTypes.List.isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   title: React.PropTypes.string
 }

@@ -1,7 +1,7 @@
 import {createStore, compose} from 'redux';
 import {persistState} from 'redux-devtools';
 import rootReducer from '../reducer';
-import DevTools from '../containers/DevTools';
+import DevTools from '../containers/DevTool';
 
 const enhancer = compose(
   DevTools.instrument(),
@@ -16,8 +16,8 @@ export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (module.hot) {
-    module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers').default)
+    module.hot.accept('../reducer', () =>
+      store.replaceReducer(require('../reducer').default)
     );
   }
 

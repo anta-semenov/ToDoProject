@@ -1,7 +1,7 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-require('./NavigationItem.less')
+//require('./NavigationItem.less')
 
 export default class NavigationItem extends React.Component {
   constructor(props) {
