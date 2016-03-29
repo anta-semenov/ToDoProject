@@ -1,0 +1,5 @@
+export const INBOX = 'Inbox'
+export const NEXT = 'Next'
+export const TODAY = 'Today'
+export const CONTEXTS = 'Contexts'
+export const PROJECTS = 'Projects'
