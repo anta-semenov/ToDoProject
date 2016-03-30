@@ -18,6 +18,7 @@ export default class NavigationGroup extends React.Component {
           {this.props.items.map(item =>
             <NavigationItem
               key={item.get('id')}
+              id={item.get('id')}
               type={item.get('type')}
               title={item.get('title')}
               active={item.get('active')}

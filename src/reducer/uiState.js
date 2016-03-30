@@ -11,7 +11,7 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
     case actionTypes.SET_SIDEBAR_SIZE:
       return setSidebarSize(state, action.sidebarSize)
     case actionTypes.SET_ACTIVE_ITEM:
-      return setActiveItem(state, action.activeItem)
+      return setActiveItem(state, action.item)
     default:
     return state
   }

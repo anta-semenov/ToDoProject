@@ -2,6 +2,7 @@ import {createStore, compose} from 'redux';
 import {persistState} from 'redux-devtools';
 import rootReducer from '../reducer';
 import DevTools from '../containers/DevTool';
+import { fromJS } from 'immutable'
 
 const enhancer = compose(
   DevTools.instrument(),
@@ -10,9 +11,33 @@ const enhancer = compose(
       /[?&]debug_session=([^&#]+)\b/
     )
   )
-);
+)
 
-export default function configureStore(initialState) {
+const initialStateDev = fromJS({
+  task: [
+    {
+      id: 0,
+      title: 'Existing Task',
+      completed: false,
+      today: true
+    }
+  ],
+  project: [
+    {
+      id: 0,
+      title: 'Existing Project',
+      completed: false
+    }
+  ],
+  context: [
+    {
+      id: 0,
+      title: 'Existing context'
+    }
+  ]
+})
+
+export default function configureStore(initialState = initialStateDev) {
   const store = createStore(rootReducer, initialState, enhancer);
 
   if (module.hot) {

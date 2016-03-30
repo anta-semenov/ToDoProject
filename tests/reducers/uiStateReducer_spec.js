@@ -191,7 +191,7 @@ describe('UI state reducer', () => {
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
-    it('Should handle SET_SELECTED_SECTION with empty store', () => {
+    it('Should handle SET_SIDEBAR_SIZE with empty store', () => {
       const initialState = fromJS({})
       const action = {
         type: actionTypes.SET_SIDEBAR_SIZE,
@@ -239,7 +239,7 @@ describe('UI state reducer', () => {
       })
       const action = {
         type: actionTypes.SET_ACTIVE_ITEM,
-        activeItem: {
+        item: {
           type: itemTypes.TASK,
           id: 2
         }
@@ -253,11 +253,11 @@ describe('UI state reducer', () => {
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
-    it('Should handle SET_SELECTED_SECTION with empty store', () => {
+    it('Should handle SET_ACTIVE_ITEM with empty store', () => {
       const initialState = fromJS({})
       const action = {
         type: actionTypes.SET_ACTIVE_ITEM,
-        activeItem: {
+        item: {
           type: itemTypes.TASK,
           id: 2
         }

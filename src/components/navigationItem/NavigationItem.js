@@ -11,7 +11,7 @@ export default class NavigationItem extends React.Component {
 
   render() {
     return (
-      <li className={`nav-item ${this.props.active ? 'is-active' : ''}`} onClick={this.props.onItemClick(this.props.type, this.props.key)}>
+      <li className={`nav-item ${this.props.active ? 'is-active' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
         <span className='nav-item__title'>{this.props.title}</span>
         {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
       </li>
@@ -22,6 +22,7 @@ export default class NavigationItem extends React.Component {
 NavigationItem.propTypes = {
   type: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
+  id: React.PropTypes.number,
 
   onItemClick: React.PropTypes.func.isRequired,
 

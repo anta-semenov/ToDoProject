@@ -10,7 +10,7 @@ export const NEW_PROJECT_TITLE = 'New Project'
 export const DEFAULT_SIDEBAR_SIZE = '200px'
 
 export const INITIAL_UI_STATE = fromJS({
-  activeItem: {
+  selectedSection: {
     type: sectionTypes.INBOX
   }
 })

@@ -1,14 +1,14 @@
 import Navigation from '../components/navigation/Navigation'
 import { connect } from 'react-redux'
-import { setActiveItem } from '../actions/uiStateActions'
+import { setSelectedSection } from '../actions/uiStateActions'
 import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
 const mapStateToProps = (state) => {
-  const activeItemType = state.getIn(['uiState', 'activeItem', 'type'])
-  const activeItemID = state.getIn(['uiState', 'activeItem', 'id'], -1)
+  const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
+  const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'], -1)
   const groups = [
     {
       type: BASIC,
@@ -16,19 +16,19 @@ const mapStateToProps = (state) => {
         {
           type: sectionTypes.INBOX,
           title: sectionNames.INBOX,
-          active: activeItemType === sectionTypes.INBOX ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && !task.get('project') && !task.get('contexts')).size
+          active: selectedSectionType === sectionTypes.INBOX ? true : false,
+          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.get('project') && !task.get('contexts')).size
         },
         {
           type: sectionTypes.TODAY,
           title: sectionNames.TODAY,
-          active: activeItemType === sectionTypes.TODAY ? true : false,
+          active: selectedSectionType === sectionTypes.TODAY ? true : false,
           count: state.get('task').filter(task => !task.get('completed') && task.get('today')).size
         },
         {
           type: sectionTypes.NEXT,
           title: sectionNames.NEXT,
-          active: activeItemType === sectionTypes.TODAY ? true : false
+          active: selectedSectionType === sectionTypes.NEXT ? true : false
         }
       ])
     },
@@ -37,13 +37,13 @@ const mapStateToProps = (state) => {
       title: sectionNames.CONTEXTS,
       items: fromJS(state.get('context').map(item => {
         const id = item.get('id')
-        return {
+        return fromJS({
           id: id,
           type: sectionTypes.CONTEXT,
           title: item.get('title'),
-          active: activeItemType === sectionTypes.CONTEXT && activeItemID === id ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && task.get('contexts').has(id)).size
-        }
+          active: selectedSectionType === sectionTypes.CONTEXT && selectedSectionID === id ? true : false,
+          count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size
+        })
       }))
     },
     {
@@ -51,12 +51,12 @@ const mapStateToProps = (state) => {
       title: sectionNames.PROJECTS,
       items: fromJS(state.get('project').map(item => {
         const id = item.get('id')
-        return {
+        return fromJS({
           id: id,
           type: sectionTypes.PROJECT,
           title: item.get('title'),
-          active: activeItemType === sectionTypes.PROJECT && activeItemID === id ? true : false
-        }
+          active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false
+        })
       }))
     }
   ]
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onItemClick: (type, id) => {
-      dispatch(setActiveItem({type: type, id: id}))
+      dispatch(setSelectedSection({type: type, id: id}))
     }
   }
 }
