@@ -11,7 +11,7 @@ export default class Task extends React.Component {
 
   render() {
     return (
-      <li className={`task ${this.props.completed ? `is-completed` : null} ${this.props.active ? `is-active` : null}`}>
+      <li className={`task ${this.props.completed ? `is-completed` : ''} ${this.props.active ? `is-active` : ''}`}>
         <input type='checkbox' className='task__checkbox' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id)} />
         <input type='checkbox' className='task__today' checked={this.props.today} onChange={() => this.props.onTaskTodayClick(this.props.id)} />
         <div className={`task__priority task__priority--${this.props.priority}`} onClick={() => this.props.onPriorityClick(this.props.id)} />

@@ -1,7 +1,7 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-//require('./NavigationItem.less')
+require('./NavigationItem.less')
 
 export default class NavigationItem extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class NavigationItem extends React.Component {
 
   render() {
     return (
-      <li className={`nav-item ${this.props.active ? 'is-active' : null}`} onClick={this.props.onItemClick}>
+      <li className={`nav-item ${this.props.active ? 'is-active' : ''}`} onClick={this.props.onItemClick(this.props.type, this.props.key)}>
         <span className='nav-item__title'>{this.props.title}</span>
         {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
       </li>
@@ -20,12 +20,12 @@ export default class NavigationItem extends React.Component {
 }
 
 NavigationItem.propTypes = {
-  id: React.PropTypes.number,
   type: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
 
   onItemClick: React.PropTypes.func.isRequired,
 
+  key: React.PropTypes.number,
   active: React.PropTypes.bool.isRequired,
   count: React.PropTypes.number
 }

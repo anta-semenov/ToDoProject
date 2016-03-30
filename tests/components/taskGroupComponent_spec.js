@@ -11,7 +11,7 @@ describe('TaskGroup component tests', () => {
   it('Should render group name if it has one', () => {
     const groupName = 'Test group'
     const groupClassName='group__name'
-    const groupComponent = renderIntoDocument(<TaskGroup groupName={groupName} tasks={[]} />)
+    const groupComponent = renderIntoDocument(<TaskGroup groupName={groupName} tasks={fromJS([])} />)
     const groupTitles = scryRenderedDOMComponentsWithClass(groupComponent, groupClassName)
     expect(groupTitles.length).to.equal(1)
     expect(groupTitles[0].textContent).to.equal(groupName)
@@ -36,9 +36,8 @@ describe('TaskGroup component tests', () => {
       }
     ])
     const groupComponent = renderIntoDocument(<TaskGroup tasks={tasks} />)
-    const tasksComponents = scryRenderedDOMComponentsWithTag(groupComponent, 'li')
+    const tasksComponents = scryRenderedDOMComponentsWithClass(groupComponent, taskClass)
     expect(tasksComponents.length).to.equal(2)
-    expect(tasksComponents[0].className).to.equal(taskClass)
   })
 
   it('Should pass correct properties to task component', () => {

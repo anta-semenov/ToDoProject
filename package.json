@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "lint": "eslint src",
-    "test": "mocha --compilers js:babel-core/register --require ./tests/test_helper.js './tests/**/*_spec.@(js|jsx)'",
+    "test": "mocha --compilers js:babel-core/register --require ./tests/test_helper.js --require ignore-styles './tests/**/*_spec.@(js|jsx)'",
     "test:watch": "npm test -- --watch"
   },
   "repository": {
@@ -29,6 +29,7 @@
     "css-loader": "^0.23.1",
     "eslint": "2.2.0",
     "eslint-plugin-react": "^4.2.1",
+    "ignore-styles": "^1.2.0",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
     "mocha": "^2.4.5",

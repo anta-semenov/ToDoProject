@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onItemClick: (id, type) => {
+    onItemClick: (type, id) => {
       dispatch(setActiveItem({type: type, id: id}))
     }
   }

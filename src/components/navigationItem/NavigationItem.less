@@ -1,0 +1,31 @@
+@import '../../styles/variables.less';
+
+.nav-item {
+  position: relative;
+  box-sizing: border-box;
+  padding: 5px 0;
+
+  transition: @transition-basic;
+  cursor: pointer;
+}
+
+.nav-item__title {
+  position: relative;
+  font-size: @font-size-basic;
+  font-weight: 300;
+  color: @color-font-basic;
+
+  .nav-item.is-active & {
+    font-weight: 500;
+  }
+}
+
+.nav-item__count {
+  position: relative;
+  margin: 0 0 0 8px;
+
+  font-size: @font-size-basic / 1.5;
+  font-weight: 400;
+  color: @color-font-light;
+  vertical-align: top;
+}

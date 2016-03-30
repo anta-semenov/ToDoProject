@@ -1,9 +1,10 @@
 import * as actionTypes from '../constants/actionTypes'
 import * as sectionTypes from '../constants/sectionTypes'
 import { fromJS, is } from 'immutable'
+import { INITIAL_UI_STATE } from '../constants/defaults'
 
 
-export default function uiState(state = fromJS({}), action) {
+export default function uiState(state = INITIAL_UI_STATE, action) {
   switch (action.type) {
     case actionTypes.SET_SELECTED_SECTION:
       return setSection(state, action.section)

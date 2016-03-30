@@ -5,12 +5,13 @@ import * as actionTypes from '../../src/constants/actionTypes'
 import { DEFAULT_SIDEBAR_SIZE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as itemTypes from '../../src/constants/itemTypes'
+import { INITIAL_UI_STATE } from '../../src/constants/defaults'
 
 describe('UI state reducer', () => {
   it('Should return initial state', () => {
     const initialState = undefined
     const action = {}
-    const nextState = fromJS({})
+    const nextState = INITIAL_UI_STATE
     expect(reducer(initialState, action)).to.equal(nextState)
   })
   it('Should return state for empty action', () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-//require('./NavigationGroup.less')
+require('./NavigationGroup.less')
 
 import NavigationItem from '../navigationItem/NavigationItem'
 
@@ -14,17 +14,16 @@ export default class NavigationGroup extends React.Component {
     return (
       <li className='nav-group'>
         {this.props.title ? <div className='nav-group__title'>{this.props.title}</div> : null}
-        <ul>
-          {this.props.items.map(item => {
+        <ul className='nav-group__list'>
+          {this.props.items.map(item =>
             <NavigationItem
-              id={item.get('id')}
+              key={item.get('id')}
               type={item.get('type')}
               title={item.get('title')}
               active={item.get('active')}
               count={item.get('count')}
-
-              onItemClick={this.props.onItemClick(item.get('id'), item.get('type'))}/>
-          })}
+              onItemClick={this.props.onItemClick}/>
+          )}
         </ul>
       </li>
     )
@@ -32,7 +31,7 @@ export default class NavigationGroup extends React.Component {
 }
 
 NavigationGroup.propTypes = {
-  //items: React.PropTypes.List.isRequired,
+  items: React.PropTypes.object.isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   title: React.PropTypes.string
 }
