@@ -37,4 +37,18 @@ describe('UI state action creators', () => {
     }
     expect(actions.setActiveItem(item)).to.deep.equal(expectedAction)
   })
+
+  it('Should create an action to set editing item', () => {
+    const section = {
+      type: sections.PROJECT,
+      id: 1
+    }
+
+    const expectedAction = {
+      type: types.SET_EDITING_SECTION,
+      section
+    }
+
+    expect(actions.setEditingSection(section)).to.deep.equal(expectedAction)    
+  })
 })

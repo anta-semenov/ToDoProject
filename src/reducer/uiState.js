@@ -12,6 +12,8 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return setSidebarSize(state, action.sidebarSize)
     case actionTypes.SET_ACTIVE_ITEM:
       return setActiveItem(state, action.item)
+    case actionTypes.SET_EDITING_SECTION:
+      return setEditingSection(state, action.section)
     default:
     return state
   }
@@ -44,5 +46,13 @@ function setActiveItem(state, activeItem) {
     return state.set('activeItem', fromJS(activeItem))
   } else {
     return state.delete('activeItem')
+  }
+}
+
+function setEditingSection(state, section) {
+  if (section) {
+    return state.set('editingSection', fromJS(section))
+  } else {
+    return state.delete('editingSection')
   }
 }

@@ -11,3 +11,7 @@ export function setSidebarSize(size) {
 export function setActiveItem(item) {
   return {type: actionTypes.SET_ACTIVE_ITEM, item}
 }
+
+export function setEditingSection(section) {
+  return {type: actionTypes.SET_EDITING_SECTION, section}
+}

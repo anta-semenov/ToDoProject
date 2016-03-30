@@ -1,6 +1,8 @@
 import Navigation from '../components/navigation/Navigation'
 import { connect } from 'react-redux'
-import { setSelectedSection } from '../actions/uiStateActions'
+import { setSelectedSection, setEditingSection } from '../actions/uiStateActions'
+import { addProject, editProject } from '../actions/projectActions'
+import { addContext, editContext } from '../actions/contextActions'
 import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
@@ -9,6 +11,8 @@ import * as sectionNames from '../constants/sectionNames'
 const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
   const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'], -1)
+  const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
+  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'])
   const groups = [
     {
       type: BASIC,
@@ -35,6 +39,7 @@ const mapStateToProps = (state) => {
     {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
+      addNewTitle: '+ context',
       items: fromJS(state.get('context').map(item => {
         const id = item.get('id')
         return fromJS({
@@ -42,6 +47,7 @@ const mapStateToProps = (state) => {
           type: sectionTypes.CONTEXT,
           title: item.get('title'),
           active: selectedSectionType === sectionTypes.CONTEXT && selectedSectionID === id ? true : false,
+          editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
           count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size
         })
       }))
@@ -49,13 +55,15 @@ const mapStateToProps = (state) => {
     {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
+      addNewTitle: '+ project',
       items: fromJS(state.get('project').map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
           type: sectionTypes.PROJECT,
           title: item.get('title'),
-          active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false
+          active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false,
+          editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false
         })
       }))
     }
@@ -67,6 +75,32 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onItemClick: (type, id) => {
       dispatch(setSelectedSection({type: type, id: id}))
+    },
+    addNew: (type) => {
+      switch (type) {
+        case sectionTypes.PROJECT:
+          dispatch(addProject())
+          break
+        case sectionTypes.CONTEXT:
+          dispatch(addContext())
+          break
+        default:
+
+      }
+    },
+    onStopEditing: (item) => {
+      dispatch(setEditingSection())
+      if (item.newTitle) {
+        const properties = {title: item.newTitle}
+        switch (item.type) {
+          case sectionTypes.PROJECT:
+            dispatch(editProject(item.id, properties))
+            break
+          case sectionTypes.CONTEXT:
+            dispatch(editContext(item.id, properties))
+            break
+        }
+      }
     }
   }
 }

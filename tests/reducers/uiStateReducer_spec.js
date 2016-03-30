@@ -6,6 +6,7 @@ import { DEFAULT_SIDEBAR_SIZE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as itemTypes from '../../src/constants/itemTypes'
 import { INITIAL_UI_STATE } from '../../src/constants/defaults'
+import * as actionCreator from '../../src/actions/uiStateActions'
 
 describe('UI state reducer', () => {
   it('Should return initial state', () => {
@@ -268,6 +269,71 @@ describe('UI state reducer', () => {
           id: 2
         }
       })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
+  describe('Set editing section', () => {
+    it('Should handle SET_EDITING_SECTION with empty action parameter and empty store', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setEditingSection()
+      const nextState = fromJS({})
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_EDITING_SECTION with empty action parameter', () => {
+      const initialState = fromJS({
+        editingSection: {
+          type: sectionTypes.CONTEXT,
+          id: 0
+        },
+        sidebarSize: DEFAULT_SIDEBAR_SIZE
+      })
+      const action = actionCreator.setEditingSection()
+      const nextState = fromJS({
+        sidebarSize: DEFAULT_SIDEBAR_SIZE
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_EDITING_SECTION', () => {
+      const initialState = fromJS({
+        editingSection: {
+          type: sectionTypes.CONTEXT,
+          id: 0
+        },
+        sidebarSize: DEFAULT_SIDEBAR_SIZE
+      })
+      const action = actionCreator.setEditingSection({
+        type: sectionTypes.PROJECT,
+        id: 2
+      })
+      const nextState = fromJS({
+        editingSection: {
+          type: sectionTypes.PROJECT,
+          id: 2
+        },
+        sidebarSize: DEFAULT_SIDEBAR_SIZE
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_EDITING_SECTION with empty store', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setEditingSection({
+        type: sectionTypes.PROJECT,
+        id: 2
+      })
+      const nextState = fromJS({
+        editingSection: {
+          type: sectionTypes.PROJECT,
+          id: 2
+        }
+      })
+
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
