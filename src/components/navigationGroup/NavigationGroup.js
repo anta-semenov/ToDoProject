@@ -26,7 +26,7 @@ export default class NavigationGroup extends React.Component {
               onItemClick={this.props.onItemClick}/>
           )}
         </ul>
-        {this.props.addNew ? <div style={{'cursor': 'pointer'}} onClick={() => this.props.addNew(this.props.type)}>
+        {this.props.addNew ? <div className='nav-group__addButton' onClick={() => this.props.addNew(this.props.type)}>
           {this.props.addNewTitle}
         </div>:
         <div></div>
