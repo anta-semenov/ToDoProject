@@ -7,6 +7,7 @@ import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
+import makeNextIDSelector from '../selectors/nextID'
 
 const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
@@ -68,7 +69,16 @@ const mapStateToProps = (state) => {
       }))
     }
   ]
-  return {groups: groups}
+
+  return {
+    groups: groups,
+    nextProjectID: state.get('project').reduce((id, item) => {
+      return Math.max(id, item.get('id'))
+    }, -1) + 1,
+    nextContextID: state.get('context').reduce((id, item) => {
+      return Math.max(id, item.get('id'))
+    }, -1) + 1
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -76,13 +86,21 @@ const mapDispatchToProps = (dispatch) => {
     onItemClick: (type, id) => {
       dispatch(setSelectedSection({type: type, id: id}))
     },
-    addNew: (type) => {
+    addNew: (type, nextProjectID, nextContextID) => {
       switch (type) {
-        case sectionTypes.PROJECT:
-          dispatch(addProject())
+        case sectionTypes.PROJECTS:
+          dispatch(addProject({id: nextProjectID}))
+          dispatch(setEditingSection({
+            type: sectionTypes.PROJECT,
+            id: nextProjectID
+          }))
           break
-        case sectionTypes.CONTEXT:
-          dispatch(addContext())
+        case sectionTypes.CONTEXTS:
+          dispatch(addContext({id: nextContextID}))
+          dispatch(setEditingSection({
+            type: sectionTypes.CONTEXT,
+            id: nextContextID
+          }))
           break
         default:
 
@@ -105,9 +123,18 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  return Object.assign({}, ownProps, stateProps, {
+    onItemClick: dispatchProps.onItemClick,
+    addNew: (type) => dispatchProps.addNew(type, stateProps.nextProjectID, stateProps.nextContextID),
+    onStopEditing: dispatchProps.onStopEditing
+  })
+}
+
 const Sidebar = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(Navigation)
 
 export default Sidebar

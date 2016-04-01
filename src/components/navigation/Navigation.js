@@ -16,6 +16,9 @@ export default class Navigation extends React.Component {
             items={group.items}
             title={group.title}
             onItemClick={this.props.onItemClick}
+            type={group.type}
+            addNewTitle={group.addNewTitle}
+            addNew={this.props.addNew}
           />
         )}
       </ul>

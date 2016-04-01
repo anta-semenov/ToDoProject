@@ -26,6 +26,11 @@ export default class NavigationGroup extends React.Component {
               onItemClick={this.props.onItemClick}/>
           )}
         </ul>
+        {this.props.addNew ? <div style={{'cursor': 'pointer'}} onClick={() => this.props.addNew(this.props.type)}>
+          {this.props.addNewTitle}
+        </div>:
+        <div></div>
+        }
       </li>
     )
   }
@@ -34,5 +39,8 @@ export default class NavigationGroup extends React.Component {
 NavigationGroup.propTypes = {
   items: React.PropTypes.object.isRequired,
   onItemClick: React.PropTypes.func.isRequired,
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
+  type: React.PropTypes.string,
+  addNewTitle : React.PropTypes.string,
+  addNew: React.PropTypes.func
 }
