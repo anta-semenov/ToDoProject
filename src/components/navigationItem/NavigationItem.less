@@ -3,20 +3,28 @@
 .nav-item {
   position: relative;
   box-sizing: border-box;
-  padding: 5px 0;
-
-  transition: @transition-basic;
+  padding: 4px 0;
   cursor: pointer;
+
+  &.is-active {    
+    cursor: default;
+    pointer-events: none;
+  }
 }
 
 .nav-item__title {
   position: relative;
   font-size: @font-size-basic;
   font-weight: 300;
-  color: @color-font-basic;
+  color: lighten(@color-font-basic, 40%);
+  transition: @transition-basic;
 
+  .nav-item:hover & {
+    color: @color-font-basic;
+  }
   .nav-item.is-active & {
     font-weight: 500;
+    color: @color-font-basic;
   }
 }
 
