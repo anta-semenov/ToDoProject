@@ -1,4 +1,3 @@
-export const NONE = 'NONE'
 export const PROJECTS = 'PROJECTS'
 export const CONTEXTS = 'CONTEXTS'
 export const PROJECT = 'PROJECT'

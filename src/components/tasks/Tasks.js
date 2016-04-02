@@ -14,8 +14,9 @@ export default class Tasks extends Component {
       <div className='tasks'>
         <AddTask addTask={this.props.addTask} />
         <ul className='tasks__list'>
-          {this.props.groups.map(group => {
+          {this.props.groups.map((group, index) =>
             <TaskGroup
+              key={index}
               groupTitle={group.get('title')}
               tasks={group.get('items')}
               onTaskClick={this.props.onTaskClick}
@@ -23,7 +24,7 @@ export default class Tasks extends Component {
               onTaskTodayClick={this.props.onTaskTodayClick}
               onPriorityClick={this.props.onTaskPriorityClick}
             />
-          })}
+          )}
         </ul>
       </div>
     )

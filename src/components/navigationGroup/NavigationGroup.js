@@ -29,7 +29,7 @@ export default class NavigationGroup extends React.Component {
           )}
         </ul>
         {this.props.addNew ?
-          <div className='nav-group__addButton' onClick={() => this.props.addNew(this.props.type)}>
+          <div className='nav-group__add-button' onClick={() => this.props.addNew(this.props.type)}>
             {this.props.addNewTitle}
           </div>:
           null

@@ -5,12 +5,12 @@ import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
 import { setActiveItem } from '../actions/uiStateActions'
 import { TASK } from '../constants/itemTypes'
-import tasksGoups from '../selectors/tasksGroups'
+import { tasksGroups } from '../selectors/tasksGroups'
 import * as priorityLevels from '../constants/priorityLevels'
 
 const mapStateToProps = (state) => {
   return {
-    groups: tasksGoups(state)//fromJS([{items: state.get('task')}]) //
+    groups: tasksGroups(state)//fromJS([{items: state.get('task')}]) //
   }
 }
 
@@ -23,15 +23,20 @@ const mapDispatchToProps = (dispatch) => {
     onTaskPriorityClick: (taskId, taskPriority) => {
       switch (taskPriority) {
         case priorityLevels.PRIORITY_NONE:
-          dispath(editTask(taskId, {prioroty: priorityLevels.PRIORITY_LOW}))
+          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_LOW}))
+          break
         case priorityLevels.PRIORITY_LOW:
-          dispath(editTask(taskId, {prioroty: priorityLevels.PRIORITY_MEDIUM}))
+          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_MEDIUM}))
+          break
         case priorityLevels.PRIORITY_MEDIUM:
-          dispath(editTask(taskId, {prioroty: priorityLevels.PRIORITY_HIGH}))
+          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_HIGH}))
+          break
         case priorityLevels.PRIORITY_HIGH:
-          dispath(editTask(taskId, {prioroty: priorityLevels.PRIORITY_MAX}))
+          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_MAX}))
+          break
         case priorityLevels.PRIORITY_MAX:
-          dispath(editTask(taskId, {prioroty: priorityLevels.PRIORITY_NONE}))
+          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_NONE}))
+          break
       }
     }
   }

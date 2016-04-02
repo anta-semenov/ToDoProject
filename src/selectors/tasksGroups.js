@@ -1,16 +1,16 @@
-import { createSelector, createSelectorCreator } from 'reselect'
+import { createSelector, createSelectorCreator, defaultMemoize } from 'reselect'
 import Immutable, { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 
-const getActiveItemType = state => state.get(['uiState', 'activeItem', 'type'])
-const getActiveItemID = state => state.get(['uiState', 'activeItem', 'type'], -1)
-const getSelectedSectionType = state => state.get(['uiState', 'selectedSection', 'type'])
-const getSelectedSectionID = state => state.get(['uiState', 'selectedSection', 'type'])
-const getTasks = state => state.get(['task'])
-const getProjects = state => state.get(['project'])
-const immutableSelectorCreator = createSelectorCreator(Immutable.is)
+const getActiveItemType = state => state.getIn(['uiState', 'activeItem', 'type'])
+const getActiveItemID = state => state.getIn(['uiState', 'activeItem', 'type'], -1)
+const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
+const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'type'])
+const getTasks = state => state.get('task')
+const getProjects = state => state.get('project')
+const immutableSelectorCreator = createSelectorCreator(defaultMemoize, Immutable.is)
 
-export const tasksGoups = immutableSelectorCreator(
+export const tasksGroups = immutableSelectorCreator(
   [getActiveItemType, getActiveItemID, getSelectedSectionType, getSelectedSectionID, getTasks, getProjects],
   (activeItemType, activeItemID, selectedSectionType, selectedSectionID, tasks, projects) => {
     switch (selectedSectionType) {

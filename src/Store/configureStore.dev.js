@@ -20,6 +20,12 @@ const initialStateDev = fromJS({
       title: 'Existing Task',
       completed: false,
       today: true
+    },
+    {
+      id: 1,
+      title: 'Existing Task',
+      completed: false,
+      today: false
     }
   ],
   project: [
