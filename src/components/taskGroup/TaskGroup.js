@@ -13,9 +13,9 @@ export default class TaskGroup extends React.Component {
   render() {
     console.log(this.props.tasks);
     return (
-      <li className='group'>
-        {this.props.groupName ? <div className='group__name'>{this.props.groupName}</div> : null}
-        <ul className='group__list'>
+      <li className='task-group'>
+        {this.props.groupTitle ? <div className='task-group__title'>{this.props.groupTitle}</div> : null}
+        <ul className='task-group__list'>
           {this.props.tasks.map(task =>
             <Task
               key={`task-${task.get('id')}`}
