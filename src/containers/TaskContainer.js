@@ -5,12 +5,12 @@ import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
 import { setActiveItem } from '../actions/uiStateActions'
 import { TASK } from '../constants/itemTypes'
-import { tasksGroups } from '../selectors/tasksGroups'
+import getTasksGroups from '../selectors/tasksGroups'
 import * as priorityLevels from '../constants/priorityLevels'
 
 const mapStateToProps = (state) => {
   return {
-    groups: tasksGroups(state)//fromJS([{items: state.get('task')}]) //
+    groups: getTasksGroups(state)//fromJS([{items: state.get('task')}]) //
   }
 }
 

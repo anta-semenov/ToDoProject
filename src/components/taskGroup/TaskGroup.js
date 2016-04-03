@@ -18,6 +18,7 @@ export default class TaskGroup extends React.Component {
         <ul className='group__list'>
           {this.props.tasks.map(task =>
             <Task
+              key={`task-${task.get('id')}`}
               id={task.get('id')}
               title={task.get('title')}
               completed={task.get('completed')}
@@ -29,7 +30,7 @@ export default class TaskGroup extends React.Component {
               active={this.props.activeItem === task.get('id')}
 
               onTaskClick={this.props.onTaskClick}
-              onCheckboxClick={this.props.onTaskCheckboxClick}
+              onTaskCheckboxClick={this.props.onTaskCheckboxClick}
               onTaskTodayClick={this.props.onTaskTodayClick}
               onPriorityClick={this.props.onPriorityClick}
             />
