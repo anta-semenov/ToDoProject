@@ -6,7 +6,7 @@
   padding: 4px 0;
   cursor: pointer;
 
-  &.is-active {    
+  &.is-active {
     cursor: default;
     pointer-events: none;
   }
@@ -32,9 +32,15 @@
   position: relative;
   font-size: @font-size-basic;
   font-weight: 300;
-  text-decoration: underline;
   color: @color-font-basic;
-  border-style: none;
+  border: solid 1px @color-font-light;
+  border-radius: 3px;
+  transition: border 0.3s;
+}
+
+.nav-item__input:focus {
+  outline: none;
+  border: solid 1px @color-font-basic;
 }
 
 .nav-item__count {

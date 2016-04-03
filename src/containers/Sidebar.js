@@ -7,12 +7,14 @@ import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
+import { makeNextIDSelector } from '../selectors/nextID'
 
 const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
   const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'], -1)
   const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
   const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'])
+
   const groups = [
     {
       type: BASIC,
@@ -71,12 +73,8 @@ const mapStateToProps = (state) => {
 
   return {
     groups: groups,
-    nextProjectID: state.get('project').reduce((id, item) => {
-      return Math.max(id, item.get('id'))
-    }, -1) + 1,
-    nextContextID: state.get('context').reduce((id, item) => {
-      return Math.max(id, item.get('id'))
-    }, -1) + 1
+    nextProjectID: makeNextIDSelector()(state.get('project')),
+    nextContextID: makeNextIDSelector()(state.get('context'))
   }
 }
 

@@ -37,14 +37,35 @@ export default class NavigationItem extends React.Component {
     }
   }
 
+  handleOnBlur = () => {
+    this.props.onStopEditing({
+      type: this.props.type,
+      id: this.props.id
+    })
+  }
+
   render() {
-    return (
-      <li className={`nav-item ${this.props.active ? 'is-active' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
-        {!this.props.editing ? <span className='nav-item__title'>{this.props.title}</span> : null}
-        {this.props.editing ? <input className='nav-item__input' type='text' value={this.state.text} onChange={this.handleTitleEdit} onKeyDown={this.handleKeyDown} ></input> : null}
-        {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
-      </li>
-    )
+    if (this.props.editing) {
+      return(
+        <li>
+          <input
+            className='nav-item__input'
+            type='text' value={this.state.text}
+            style={{width: (this.state.text.length +2)*8}}
+            onChange={this.handleTitleEdit}
+            onKeyDown={this.handleKeyDown}
+            onBlur={this.handleOnBlur}
+          />
+        </li>
+      )
+    } else {
+      return(
+        <li className={`nav-item ${this.props.active ? 'is-active' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
+          <span className='nav-item__title'>{this.props.title}</span>
+          {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
+        </li>
+      )
+    }
   }
 }
 

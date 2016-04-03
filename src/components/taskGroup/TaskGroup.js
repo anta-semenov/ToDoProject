@@ -11,7 +11,6 @@ export default class TaskGroup extends React.Component {
   }
 
   render() {
-    console.log(this.props.tasks);
     return (
       <li className='task-group'>
         {this.props.groupTitle ? <div className='task-group__title'>{this.props.groupTitle}</div> : null}
