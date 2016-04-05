@@ -11,11 +11,9 @@ export default class NavigationItem extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({text: this.props.title})
-  }
-
-  handleTitleEdit = (e) => {
-    this.setState({text: e.target.value})
+    if (this.titleInput) {
+      this.titleInput.focus()
+    }
   }
 
   handleKeyDown = (e) => {
@@ -24,7 +22,7 @@ export default class NavigationItem extends React.Component {
         this.props.onStopEditing({
           type: this.props.type,
           id: this.props.id,
-          newTitle: this.state.text
+          newTitle: e.target.value
         })
         break
       case 27:
@@ -50,11 +48,11 @@ export default class NavigationItem extends React.Component {
         <li>
           <input
             className='nav-item__input'
-            type='text' value={this.state.text}
-            style={{width: (this.state.text.length +2)*8}}
-            onChange={this.handleTitleEdit}
+            type='text'
+            placeholder={this.props.title}
             onKeyDown={this.handleKeyDown}
             onBlur={this.handleOnBlur}
+            ref={ref => this.titleInput = ref}
           />
         </li>
       )

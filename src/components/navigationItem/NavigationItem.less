@@ -33,14 +33,13 @@
   font-size: @font-size-basic;
   font-weight: 300;
   color: @color-font-basic;
-  border: solid 1px @color-font-light;
-  border-radius: 3px;
-  transition: border 0.3s;
+  width: ~'calc(0.65*@{size-width-sidebar})';
+  border: none;
+  border-bottom: solid 1px @color-border-light;
 }
 
 .nav-item__input:focus {
   outline: none;
-  border: solid 1px @color-font-basic;
 }
 
 .nav-item__count {
