@@ -1,8 +1,6 @@
 import { expect } from 'chai'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
-import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 
