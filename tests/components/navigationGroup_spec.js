@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import React, { Component } from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils'
+import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
@@ -78,6 +78,29 @@ describe('Navigation Group', () => {
       expect(itemElementProps.editing).to.equal(false)
       expect(itemElementProps.onItemClick).to.equal(itemClickCallback)
       expect(itemElementProps.onStopEditing).to.equal(itemStopEditCallback)
+    })
+  })
+
+  describe('Add button render', () => {
+    it('Should render addButton titile', () => {
+      const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
+      const addButtonComponent = findRenderedDOMComponentWithClass(groupComponent, 'nav-group__add-button')
+
+      expect(addButtonComponent.textContent).to.equal('+ context')
+    })
+
+    it('Should invoke addButton callback when clicked', () => {
+      let callback = -12
+      testGroup.addNew = () => {callback = 12}
+
+      const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
+      const addButton = findRenderedDOMComponentWithClass(groupComponent, 'nav-group__add-button')
+
+      expect(callback).to.equal(-12)
+
+      Simulate.click(addButton)
+
+      expect(callback).to.equal(12)
     })
   })
 })
