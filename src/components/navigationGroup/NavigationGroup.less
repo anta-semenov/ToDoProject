@@ -24,6 +24,13 @@
 
 .nav-group__add-button {
   position: relative;
-  color: @color-font-light;
+  color: @color-accent;
+  font-size: @font-size-small;
+  font-weight: 400;
   cursor: pointer;
+  transition: @transition-basic;
+
+  &:hover {
+    color: darken(@color-accent, 10%);
+  }
 }
