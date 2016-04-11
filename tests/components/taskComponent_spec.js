@@ -35,21 +35,21 @@ describe('Task component tests', () => {
 
   describe('Checkbox', () => {
     it('Should render complete checkbox', () => {
-      const checkboxClass = 'task__checkbox'
+      const checkboxClass = 'task__completed'
       const taskComponent = renderIntoDocument(<Task completed={testTasks.get(0).get('completed')} />)
       const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
       expect(checkboxComponent.checked).to.equal(testTasks.get(0).get('completed'))
     })
     it('Should render uncomplete checkbox', () => {
-      const checkboxClass = 'task__checkbox'
+      const checkboxClass = 'task__completed'
       const taskComponent = renderIntoDocument(<Task completed={testTasks.get(1).get('completed')} />)
       const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
       expect(checkboxComponent.checked).to.equal(testTasks.get(1).get('completed'))
     })
     it('Should invoke complete callback when change event occurs', () => {
-      const checkboxClass = 'task__checkbox'
+      const checkboxClass = 'task__completed'
       let checkedId = -12
       const callback = (id) => checkedId = id
 

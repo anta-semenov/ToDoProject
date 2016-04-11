@@ -4,7 +4,7 @@ import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
 import { setActiveItem } from '../actions/uiStateActions'
 import { TASK } from '../constants/itemTypes'
-import { getTasksGroups, getSectionName } from '../selectors/tasksSelector'
+import { getTasksGroups, getSectionName, getSelectedSectionID, getSelectedSectionType } from '../selectors/tasksSelector'
 import * as priorityLevels from '../constants/priorityLevels'
 
 const mapStateToProps = (state) => {
@@ -14,30 +14,29 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addTask: (taskTitle) => {dispatch(addTask({title: taskTitle}))},
     onTaskClick: (taskId) => {dispatch(setActiveItem({type: TASK, id: taskId}))},
     onTaskCheckboxClick: (taskId) => {dispatch(completeTask(taskId))},
     onTaskTodayClick: (taskId) => {dispatch(setTaskToday(taskId))},
     onTaskPriorityClick: (taskId, taskPriority) => {
+      let newPriority = priorityLevels.PRIORITY_LOW
       switch (taskPriority) {
-        case priorityLevels.PRIORITY_NONE:
-          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_LOW}))
-          break
         case priorityLevels.PRIORITY_LOW:
-          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_MEDIUM}))
+          newPriority = priorityLevels.PRIORITY_MEDIUM
           break
         case priorityLevels.PRIORITY_MEDIUM:
-          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_HIGH}))
+          newPriority = priorityLevels.PRIORITY_HIGH
           break
         case priorityLevels.PRIORITY_HIGH:
-          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_MAX}))
+          newPriority = priorityLevels.PRIORITY_MAX
           break
         case priorityLevels.PRIORITY_MAX:
-          dispatch(editTask(taskId, {prioroty: priorityLevels.PRIORITY_NONE}))
+          newPriority = priorityLevels.PRIORITY_NONE
           break
       }
+      dispatch(editTask(taskId, {priority: newPriority}))
     }
   }
 }

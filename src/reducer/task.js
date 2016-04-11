@@ -1,6 +1,7 @@
 import { fromJS, Set } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import { NEW_TITLE } from '../constants/defaults'
+import { PRIORITY_NONE } from '../constants/priorityLevels'
 
 export default function task(state = fromJS([]), action) {
   switch (action.type) {
@@ -18,6 +19,8 @@ export default function task(state = fromJS([]), action) {
       return addTaskContext(state, action.id, action.context)
     case actionTypes.REMOVE_TASK_CONTEXT:
       return removeTaskContext(state, action)
+    case actionTypes.SET_TASK_TODAY:
+      return setTaskToday(state, action.id)
     default:
       return state
   }
@@ -31,7 +34,8 @@ function addTask(state, properties = {}) {
     id: newId,
     title: NEW_TITLE,
     completed: false,
-    today: false
+    today: false,
+    priority: PRIORITY_NONE
   })
   return state.push(newTask.merge(properties))
 }
@@ -53,6 +57,11 @@ function editTask(state, id, properties = {}) {
 function completeTask(state, id) {
   const index = state.findIndex(item => {return item.get('id') === id})
   return state.updateIn([index, 'completed'], val => !val)
+}
+
+function setTaskToday(state, id) {
+  const index = state.findIndex(item => {return item.get('id') === id})
+  return state.updateIn([index, 'today'], val => !val)
 }
 
 function addTaskToProject(state, id, projectId) {

@@ -3,6 +3,7 @@ import { List, fromJS, Set } from 'immutable'
 import reducer from '../../src/reducer/task'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_TITLE } from '../../src/constants/defaults'
+import { PRIORITY_NONE } from '../../src/constants/priorityLevels'
 
 describe('Task reducer', () => {
   // Empty action
@@ -18,7 +19,8 @@ describe('Task reducer', () => {
         id: 0,
         title: 'Existing Task',
         completed: false,
-        today: false
+        today: false,
+        priority: PRIORITY_NONE
       }
     ])
     const action = {}
@@ -37,7 +39,8 @@ describe('Task reducer', () => {
         id: 0,
         title: NEW_TITLE,
         completed: false,
-        today: false
+        today: false,
+        priority: PRIORITY_NONE
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)
@@ -57,7 +60,8 @@ describe('Task reducer', () => {
         title: 'Test Task',
         description: 'Task description',
         completed: false,
-        today: false
+        today: false,
+        priority: PRIORITY_NONE
 
       }
     ])
@@ -89,7 +93,8 @@ describe('Task reducer', () => {
         id: 1,
         title: 'Test Task',
         completed: false,
-        today: false
+        today: false,
+        priority: PRIORITY_NONE
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)
@@ -239,6 +244,78 @@ describe('Task reducer', () => {
     ])
     const action = {
       type: types.COMPLETE_TASK,
+      id: 1
+    }
+    const nextState = fromJS([
+      {
+        id: 0,
+        title: 'Existing Task',
+        completed: false,
+        today: false
+      },
+      {
+        id: 1,
+        title: 'New Task',
+        completed: false,
+        today: false
+      }
+    ])
+    expect(reducer(initialState, action)).to.equal(nextState)
+  })
+
+  it('Should handle SET_TASK_TODAY', () => {
+    const initialState = fromJS([
+      {
+        id: 0,
+        title: 'Existing Task',
+        completed: false,
+        today: false
+      },
+      {
+        id: 1,
+        title: 'New Task',
+        completed: false,
+        today: false
+      }
+    ])
+    const action = {
+      type: types.SET_TASK_TODAY,
+      id: 1
+    }
+    const nextState = fromJS([
+      {
+        id: 0,
+        title: 'Existing Task',
+        completed: false,
+        today: false
+      },
+      {
+        id: 1,
+        title: 'New Task',
+        completed: false,
+        today: true
+      }
+    ])
+    expect(reducer(initialState, action)).to.equal(nextState)
+  })
+
+  it('Should handle SET_TASK_TODAY with completed task', () => {
+    const initialState = fromJS([
+      {
+        id: 0,
+        title: 'Existing Task',
+        completed: false,
+        today: false
+      },
+      {
+        id: 1,
+        title: 'New Task',
+        completed: false,
+        today: true
+      }
+    ])
+    const action = {
+      type: types.SET_TASK_TODAY,
       id: 1
     }
     const nextState = fromJS([
