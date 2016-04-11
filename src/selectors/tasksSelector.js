@@ -5,8 +5,8 @@ import * as sectionNames from '../constants/sectionNames'
 
 const getActiveItemType = state => state.getIn(['uiState', 'activeItem', 'type'])
 const getActiveItemID = state => state.getIn(['uiState', 'activeItem', 'type'], -1)
-const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
-const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], -1)
+export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
+export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], -1)
 const getTasks = state => state.get('task')
 const getProjects = state => state.get('project')
 const getContexts = state => state.get('context')
@@ -45,10 +45,11 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.TODAY: {
-        const projectTasks = tasks.filter(task => task.has('project'))
+        const sectionTasks = tasks.filter(task => task.get('today') === true)
+        const projectTasks = sectionTasks.filter(task => task.has('project'))
         const projectTasksGroup = projectTasks.count() > 0 ? groupTasksByProject(projectTasks, projects) : undefined
 
-        const noProjectTasks = tasks.filterNot(task => task.has('project'))
+        const noProjectTasks = sectionTasks.filterNot(task => task.has('project'))
         const noProjectTasksGroup = noProjectTasks.count() > 0 ? fromJS([{items: noProjectTasks}]) : undefined
 
         return noProjectTasksGroup ? noProjectTasksGroup.merge(projectTasksGroup) : projectTasksGroup
@@ -65,7 +66,7 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.INBOX: {
-        const sectionTasks = tasks.filter(task => !task.get('completed') && !task.get('today') && !task.get('project') && !task.get('contexts'))
+        const sectionTasks = tasks.filter(task => /*!task.get('completed') &&*/ !task.get('today') && !task.get('project') && !task.get('contexts'))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
       }
 

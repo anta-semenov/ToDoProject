@@ -24,7 +24,7 @@ export default class TaskGroup extends React.Component {
               today={task.get('today')}
 
               description={task.get('description')}
-              priority={task.get('prioroty')}
+              priority={task.get('priority')}
               date={task.get('date')}
               active={this.props.activeItem === task.get('id')}
 
