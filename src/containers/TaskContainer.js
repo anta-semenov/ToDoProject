@@ -1,16 +1,16 @@
 import { connect } from 'react-redux'
-import { fromJS } from 'immutable'
 
 import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
 import { setActiveItem } from '../actions/uiStateActions'
 import { TASK } from '../constants/itemTypes'
-import getTasksGroups from '../selectors/tasksGroups'
+import { getTasksGroups, getSectionName } from '../selectors/tasksSelector'
 import * as priorityLevels from '../constants/priorityLevels'
 
 const mapStateToProps = (state) => {
   return {
-    groups: getTasksGroups(state)//fromJS([{items: state.get('task')}]) //
+    groups: getTasksGroups(state),
+    header: getSectionName(state)
   }
 }
 

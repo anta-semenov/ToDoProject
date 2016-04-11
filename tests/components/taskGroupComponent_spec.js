@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { renderIntoDocument, scryRenderedDOMComponentsWithClass, scryRenderedDOMComponentsWithTag } from 'react-addons-test-utils'
+import { renderIntoDocument, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 
 import TaskGroup from '../../src/components/taskGroup/TaskGroup'
@@ -10,14 +9,14 @@ import TaskGroup from '../../src/components/taskGroup/TaskGroup'
 describe('TaskGroup component tests', () => {
   it('Should render group name if it has one', () => {
     const groupName = 'Test group'
-    const groupClassName='group__name'
-    const groupComponent = renderIntoDocument(<TaskGroup groupName={groupName} tasks={fromJS([])} />)
+    const groupClassName='task-group__title'
+    const groupComponent = renderIntoDocument(<TaskGroup groupTitle={groupName} tasks={fromJS([])} />)
     const groupTitles = scryRenderedDOMComponentsWithClass(groupComponent, groupClassName)
     expect(groupTitles.length).to.equal(1)
     expect(groupTitles[0].textContent).to.equal(groupName)
   })
   it('Should not render group name if it has not one', () => {
-    const groupClassName='group__name'
+    const groupClassName='task-group__title'
     const groupComponent = renderIntoDocument(<TaskGroup tasks={[]} />)
     const groupTitles = scryRenderedDOMComponentsWithClass(groupComponent, groupClassName)
     expect(groupTitles.length).to.equal(0)

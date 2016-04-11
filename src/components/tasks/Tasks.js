@@ -12,27 +12,34 @@ export default class Tasks extends Component {
   render() {
     return(
       <div className='tasks'>
+        {this.props.header ? <h1 className='tasks__header'>{this.props.header}</h1> : null}
         <AddTask addTask={this.props.addTask} />
-        <ul className='tasks__list'>
-          {this.props.groups.map((group, index) =>
-            <TaskGroup
-              key={index}
-              groupTitle={group.get('title')}
-              tasks={group.get('items')}
-              onTaskClick={this.props.onTaskClick}
-              onTaskCheckboxClick={this.props.onTaskCheckboxClick}
-              onTaskTodayClick={this.props.onTaskTodayClick}
-              onPriorityClick={this.props.onTaskPriorityClick}
-            />
-          )}
-        </ul>
+        {this.props.groups ?
+          <ul className='tasks__list'>
+            {this.props.groups.map((group, index) =>
+              <TaskGroup
+                key={index}
+                groupTitle={group.get('title')}
+                tasks={group.get('items')}
+                onTaskClick={this.props.onTaskClick}
+                onTaskCheckboxClick={this.props.onTaskCheckboxClick}
+                onTaskTodayClick={this.props.onTaskTodayClick}
+                onPriorityClick={this.props.onTaskPriorityClick}
+              />
+            )}
+          </ul>
+          :
+          <div className='tasks__empty-state'>This section doesn't have any tasks. This text should be replaced with a component for empty space.</div>
+        }
       </div>
     )
   }
 }
 
 Tasks.propTypes = {
-  groups: React.PropTypes.object.isRequired,
+  groups: React.PropTypes.object,
+  header: React.PropTypes.string,
+
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,

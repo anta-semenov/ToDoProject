@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag, findRenderedDOMComponentWithClass, Simulate} from 'react-addons-test-utils'
+import { renderIntoDocument, findRenderedDOMComponentWithClass, Simulate} from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 import * as priorityLevels from '../../src/constants/priorityLevels'
 
