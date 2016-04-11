@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import { NEW_TASK_TITLE } from '../../constants/defaults'
 require('./AddTask.less')
 
 export default class AddTask extends Component {
@@ -9,13 +10,24 @@ export default class AddTask extends Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
   }
 
-  getInitialState: () => {value: ''}
+  handleKeyDown = e => {
+    switch (e.keyCode) {
+      case 13: {
+        this.props.addTask(this.refs.input.value)
+        this.refs.input.value = ''
+      }
+    }
+  }
+  handleButtonClick = () => {
+    this.props.addTask(this.refs.input.value)
+    this.refs.input.value = ''
+  }
 
   render() {
     return (
       <div className='add-task'>
-        <input type='text' className='add-task__input' value={this.state.value} />
-        <button className='add-task__button' onClick={() => addTask(this.state.value)} >Add Task</button>
+        <input type='text' ref='input' className='add-task__input' onKeyDown={this.handleKeyDown} placeholder={NEW_TASK_TITLE}/>
+        <button className='add-task__button' onClick={this.handleButtonClick} >Add Task</button>
       </div>
     )
   }
