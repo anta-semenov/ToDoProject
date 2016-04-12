@@ -26,7 +26,7 @@ const groupTasksByProject = (tasks, projects) => {
 }
 
 export const getTasksGroups = createSelector(
-  [getActiveItemType, getActiveItemID, getSelectedSectionType, getSelectedSectionID, getTasks, getProjects, getContexts],
+  [getActiveItemType, getActiveItemID, getSelectedSectionType, getSelectedSectionID, getTasks, getProjects],
   (activeItemType, activeItemID, sectionType, sectionID, tasks, projects) => {
     switch (sectionType) {
       case sectionTypes.CONTEXT: {
@@ -36,7 +36,13 @@ export const getTasksGroups = createSelector(
           }
           return undefined
         })
-        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
+        const projectTasks = sectionTasks.filter(task => task.has('project'))
+        const projectTasksGroup = projectTasks.count() > 0 ? groupTasksByProject(projectTasks, projects) : undefined
+
+        const noProjectTasks = sectionTasks.filterNot(task => task.has('project'))
+        const noProjectTasksGroup = noProjectTasks.count() > 0 ? fromJS([{items: noProjectTasks}]) : undefined
+
+        return noProjectTasksGroup ? noProjectTasksGroup.concat(projectTasksGroup) : projectTasksGroup
       }
 
       case sectionTypes.PROJECT: {
@@ -52,7 +58,7 @@ export const getTasksGroups = createSelector(
         const noProjectTasks = sectionTasks.filterNot(task => task.has('project'))
         const noProjectTasksGroup = noProjectTasks.count() > 0 ? fromJS([{items: noProjectTasks}]) : undefined
 
-        return noProjectTasksGroup ? noProjectTasksGroup.merge(projectTasksGroup) : projectTasksGroup
+        return noProjectTasksGroup ? noProjectTasksGroup.concat(projectTasksGroup) : projectTasksGroup
       }
 
       case sectionTypes.NEXT: {
@@ -61,8 +67,9 @@ export const getTasksGroups = createSelector(
 
         const noProjectTasks = tasks.filterNot(task => task.has('project'))
         const noProjectTasksGroup = noProjectTasks.count() > 0 ? fromJS([{items: noProjectTasks}]) : undefined
+        console.log(noProjectTasks, noProjectTasksGroup)
 
-        return noProjectTasksGroup ? noProjectTasksGroup.merge(projectTasksGroup) : projectTasksGroup
+        return noProjectTasksGroup ? noProjectTasksGroup.concat(projectTasksGroup) : projectTasksGroup
       }
 
       case sectionTypes.INBOX: {

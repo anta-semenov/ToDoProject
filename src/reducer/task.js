@@ -1,6 +1,6 @@
 import { fromJS, Set } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
-import { NEW_TITLE } from '../constants/defaults'
+import { NEW_TASK_TITLE } from '../constants/defaults'
 import { PRIORITY_NONE } from '../constants/priorityLevels'
 
 export default function task(state = fromJS([]), action) {
@@ -26,13 +26,13 @@ export default function task(state = fromJS([]), action) {
   }
 }
 
-function addTask(state, properties = {}) {
+function addTask(state, properties = fromJS({})) {
   const newId = state.reduce((id, item) => {
     return Math.max(id, item.get('id'))
   }, -1) + 1
   const newTask = fromJS({
     id: newId,
-    title: NEW_TITLE,
+    title: NEW_TASK_TITLE,
     completed: false,
     today: false,
     priority: PRIORITY_NONE

@@ -2,9 +2,13 @@
 
 .nav-item {
   position: relative;
+  width: 100%;
   box-sizing: border-box;
   padding: 4px 0;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 
   &.is-active {
     cursor: default;
@@ -18,6 +22,11 @@
   font-weight: 300;
   color: lighten(@color-font-basic, 40%);
   transition: @transition-basic;
+
+  white-space: nowrap;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
 
   .nav-item:hover & {
     color: @color-font-basic;
@@ -45,6 +54,7 @@
 .nav-item__count {
   position: relative;
   margin: 0 0 0 8px;
+  flex-shrink: 0;
 
   font-size: @font-size-basic / 1.5;
   font-weight: 400;
