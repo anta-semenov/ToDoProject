@@ -26,7 +26,7 @@ export default class AddTask extends Component {
   render() {
     return (
       <div className='add-task'>
-        <input type='text' ref='input' className='add-task__input' onKeyDown={this.handleKeyDown} placeholder={NEW_TASK_TITLE}/>
+        <input type='text' ref='input' className='add-task__textfield' onKeyDown={this.handleKeyDown} placeholder={NEW_TASK_TITLE}/>
         <button className='add-task__button' onClick={this.handleButtonClick} >Add Task</button>
       </div>
     )
