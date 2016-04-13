@@ -75,7 +75,7 @@ function addTaskToProject(state, id, projectId) {
 
 function addTaskContext(state, id, contextId) {
   const index = state.findIndex(item => {return item.get('id') === id})
-  return state.updateIn([index, 'context'], val => {
+  return state.updateIn([index, 'contexts'], val => {
     if (val) {
       return val.add(contextId)
     } else {
@@ -86,15 +86,15 @@ function addTaskContext(state, id, contextId) {
 
 function removeTaskContext(state, {id, context}) {
   const index = state.findIndex(item => {return item.get('id') === id})
-  const temp =  state.updateIn([index, 'context'], val => {
+  const temp =  state.updateIn([index, 'contexts'], val => {
     if (val) {
       return val.delete(context)
     } else {
       return val
     }
   })
-  if (temp.getIn([index, 'context']) && temp.getIn([index, 'context']).isEmpty()) {
-    return temp.deleteIn([index, 'context'])
+  if (temp.getIn([index, 'contexts']) && temp.getIn([index, 'contexts']).isEmpty()) {
+    return temp.deleteIn([index, 'contexts'])
   } else {
     return temp
   }

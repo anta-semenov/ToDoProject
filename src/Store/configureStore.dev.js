@@ -1,8 +1,9 @@
-import {createStore, compose} from 'redux';
-import {persistState} from 'redux-devtools';
-import rootReducer from '../reducer';
-import DevTools from '../containers/DevTool';
+import {createStore, compose} from 'redux'
+import {persistState} from 'redux-devtools'
+import rootReducer from '../reducer'
+import DevTools from '../containers/DevTool'
 import { fromJS } from 'immutable'
+import { PRIORITY_HIGH } from '../constants/priorityLevels'
 
 const enhancer = compose(
   DevTools.instrument(),
@@ -26,6 +27,23 @@ const initialStateDev = fromJS({
       title: 'Existing Task',
       completed: false,
       today: false
+    },
+    {
+      id: 2,
+      title: 'Create TaskInfo component',
+      completed: false,
+      today: false,
+      description: 'This component should show the detaied infoe about active task',
+      priority: PRIORITY_HIGH,
+      date: new Date(2016, 3, 17)
+    },
+    {
+      id: 3,
+      title: 'Handle Date to local string',
+      completed: false,
+      today: false,
+      priority: PRIORITY_HIGH,
+      date: new Date(2016, 3, 17)
     }
   ],
   project: [

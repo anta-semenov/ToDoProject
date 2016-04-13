@@ -14,3 +14,9 @@ export const INITIAL_UI_STATE = fromJS({
     type: sectionTypes.INBOX
   }
 })
+
+export const DATE_FORMAT = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}
