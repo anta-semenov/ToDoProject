@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
           break
 
         case sectionTypes.CONTEXT:
-          properties.context = [sectionID]
+          properties.contexts = [sectionID]
           break
 
         case sectionTypes.PROJECT:

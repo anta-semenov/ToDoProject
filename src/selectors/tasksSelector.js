@@ -13,16 +13,17 @@ const getContexts = state => state.get('context')
 
 //Helper functions
 const groupTasksByProject = (tasks, projects) => {
-  return projects.map(project => {
-    const filteredTasks = tasks.filter(task => task.get('project') === project.get('id'))
-    if (filteredTasks.count() > 0) {
+  const groupedTasks = tasks.groupBy(task => task.get('project'))
+  return groupedTasks.map((tasks, projectID) => {
+    const projectIndex = projects.findIndex(project => project.get('id') === projectID)
+    if (projectIndex >= 0 ) {
       return fromJS({
-        title: project.get('title'),
-        items: filteredTasks
+        title: projects.getIn([projectIndex, 'title'], undefined),
+        items: tasks
       })
     }
-    return undefined
-  })
+    return fromJS({items: tasks})
+  }).toList()
 }
 
 export const getTasksGroups = createSelector(
@@ -36,13 +37,7 @@ export const getTasksGroups = createSelector(
           }
           return undefined
         })
-        const projectTasks = sectionTasks.filter(task => task.has('project'))
-        const projectTasksGroup = projectTasks.count() > 0 ? groupTasksByProject(projectTasks, projects) : undefined
-
-        const noProjectTasks = sectionTasks.filterNot(task => task.has('project'))
-        const noProjectTasksGroup = noProjectTasks.count() > 0 ? fromJS([{items: noProjectTasks}]) : undefined
-
-        return noProjectTasksGroup ? noProjectTasksGroup.concat(projectTasksGroup) : projectTasksGroup
+        return groupTasksByProject(sectionTasks, projects)
       }
 
       case sectionTypes.PROJECT: {
@@ -52,28 +47,16 @@ export const getTasksGroups = createSelector(
 
       case sectionTypes.TODAY: {
         const sectionTasks = tasks.filter(task => task.get('today') === true)
-        const projectTasks = sectionTasks.filter(task => task.has('project'))
-        const projectTasksGroup = projectTasks.count() > 0 ? groupTasksByProject(projectTasks, projects) : undefined
-
-        const noProjectTasks = sectionTasks.filterNot(task => task.has('project'))
-        const noProjectTasksGroup = noProjectTasks.count() > 0 ? fromJS([{items: noProjectTasks}]) : undefined
-
-        return noProjectTasksGroup ? noProjectTasksGroup.concat(projectTasksGroup) : projectTasksGroup
+        return groupTasksByProject(sectionTasks, projects)
       }
 
       case sectionTypes.NEXT: {
-        const projectTasks = tasks.filter(task => task.has('project'))
-        const projectTasksGroup = projectTasks.count() > 0 ? groupTasksByProject(projectTasks, projects) : undefined
-
-        const noProjectTasks = tasks.filterNot(task => task.has('project'))
-        const noProjectTasksGroup = noProjectTasks.count() > 0 ? fromJS([{items: noProjectTasks}]) : undefined
-        console.log(noProjectTasks, noProjectTasksGroup)
-
-        return noProjectTasksGroup ? noProjectTasksGroup.concat(projectTasksGroup) : projectTasksGroup
+        const sectionTasks = tasks.filter(task => !task.get('completed'))
+        return groupTasksByProject(sectionTasks, projects)
       }
 
       case sectionTypes.INBOX: {
-        const sectionTasks = tasks.filter(task => /*!task.get('completed') &&*/ !task.get('today') && !task.get('project') && !task.get('contexts'))
+        const sectionTasks = tasks.filter(task => /*!task.get('completed') &&*/ !task.get('today') && !task.has('project') && !task.has('contexts'))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
       }
 

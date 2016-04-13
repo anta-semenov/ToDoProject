@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { List, fromJS, Set } from 'immutable'
 import reducer from '../../src/reducer/task'
 import * as types from '../../src/constants/actionTypes'
-import { NEW_TITLE } from '../../src/constants/defaults'
+import { NEW_TASK_TITLE } from '../../src/constants/defaults'
 import { PRIORITY_NONE } from '../../src/constants/priorityLevels'
 
 describe('Task reducer', () => {
@@ -13,7 +13,7 @@ describe('Task reducer', () => {
     const nextState = fromJS([])
     expect(reducer(initialState, action)).to.equal(nextState)
   })
-  it('Should return state for empty action', () => {
+  it('should return state for empty action', () => {
     const initialState = fromJS([
       {
         id: 0,
@@ -29,7 +29,7 @@ describe('Task reducer', () => {
 
 
   //Add task
-  it('Should handle ADD_TASK with empty action', () => {
+  it('should handle ADD_TASK with empty action', () => {
     const initialState = List()
     const action = {
       type: types.ADD_TASK
@@ -37,7 +37,7 @@ describe('Task reducer', () => {
     const nextState = fromJS([
       {
         id: 0,
-        title: NEW_TITLE,
+        title: NEW_TASK_TITLE,
         completed: false,
         today: false,
         priority: PRIORITY_NONE
@@ -481,7 +481,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1])
+        contexts: Set([1])
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)
@@ -494,7 +494,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1])
+        contexts: Set([1])
       }
     ])
     const action = {
@@ -509,7 +509,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1, 2])
+        contexts: Set([1, 2])
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)
@@ -522,7 +522,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1])
+        contexts: Set([1])
       }
     ])
     const action = {
@@ -537,7 +537,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1])
+        contexts: Set([1])
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)
@@ -576,7 +576,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1, 2])
+        contexts: Set([1, 2])
       }
     ])
     const action = {
@@ -591,7 +591,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([2])
+        contexts: Set([2])
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)
@@ -604,7 +604,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1, 2])
+        contexts: Set([1, 2])
       }
     ])
     const action = {
@@ -619,7 +619,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1, 2])
+        contexts: Set([1, 2])
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)
@@ -633,7 +633,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        context: Set([1])
+        contexts: Set([1])
       }
     ])
     const action = {

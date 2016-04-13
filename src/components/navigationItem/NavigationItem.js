@@ -17,7 +17,6 @@ export default class NavigationItem extends React.Component {
   }
 
   handleKeyDown = (e) => {
-    console.log(e, e.target.value, 'keydown')
     switch (e.keyCode) {
       case 13:
         this.props.onStopEditing({
@@ -37,7 +36,6 @@ export default class NavigationItem extends React.Component {
   }
 
   handleOnBlur = (e) => {
-    console.log(e, e.target.value, 'onBlur')
     this.props.onStopEditing({
       type: this.props.type,
       id: this.props.id,
