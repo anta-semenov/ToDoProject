@@ -32,8 +32,8 @@ export const getTasksGroups = createSelector(
     switch (sectionType) {
       case sectionTypes.CONTEXT: {
         const sectionTasks = tasks.filter(task => {
-          if (task.get('context')) {
-            return task.get('context').includes(sectionID)
+          if (task.get('contexts')) {
+            return task.get('contexts').includes(sectionID)
           }
           return undefined
         })

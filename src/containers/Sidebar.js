@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
   const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'], -1)
   const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
-  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'])
+  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'], -1)
 
   const groups = [
     {
