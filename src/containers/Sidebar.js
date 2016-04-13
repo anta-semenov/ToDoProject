@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
           type: sectionTypes.INBOX,
           title: sectionNames.INBOX,
           active: selectedSectionType === sectionTypes.INBOX ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.get('project') && !task.get('contexts')).size
+          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.has('project') && !task.has('contexts')).size
         },
         {
           type: sectionTypes.TODAY,
