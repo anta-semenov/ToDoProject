@@ -23,7 +23,7 @@ const groupTasksByProject = (tasks, projects) => {
       })
     }
     return fromJS({items: tasks})
-  }).toList()
+  }).toList().sortBy(group => group.get('title'), (a, b) => a && b ? (a > b ? 1 : a < b ? -1 : 0) : (a ? 1 : -1))
 }
 
 export const getTasksGroups = createSelector(
@@ -33,30 +33,30 @@ export const getTasksGroups = createSelector(
       case sectionTypes.CONTEXT: {
         const sectionTasks = tasks.filter(task => {
           if (task.get('contexts')) {
-            return task.get('contexts').includes(sectionID)
+            return task.get('contexts').includes(sectionID) && !task.get('completed')
           }
-          return undefined
+          return false
         })
-        return groupTasksByProject(sectionTasks, projects)
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }
 
       case sectionTypes.PROJECT: {
-        const sectionTasks = tasks.filter(task => task.get('project') === sectionID)
+        const sectionTasks = tasks.filter(task => task.get('project') === sectionID && !task.get('completed'))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
       }
 
       case sectionTypes.TODAY: {
-        const sectionTasks = tasks.filter(task => task.get('today') === true)
-        return groupTasksByProject(sectionTasks, projects)
+        const sectionTasks = tasks.filter(task => task.get('today') === true && !task.get('completed'))
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }
 
       case sectionTypes.NEXT: {
         const sectionTasks = tasks.filter(task => !task.get('completed'))
-        return groupTasksByProject(sectionTasks, projects)
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }
 
       case sectionTypes.INBOX: {
-        const sectionTasks = tasks.filter(task => /*!task.get('completed') &&*/ !task.get('today') && !task.has('project') && !task.has('contexts'))
+        const sectionTasks = tasks.filter(task => !task.get('completed') && !task.get('today') && !task.has('project') && !task.has('contexts'))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
       }
 

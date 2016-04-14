@@ -5,7 +5,6 @@ import { fromJS } from 'immutable'
 
 import TaskGroup from '../../src/components/taskGroup/TaskGroup'
 
-
 describe('TaskGroup component tests', () => {
   it('Should render group name if it has one', () => {
     const groupName = 'Test group'
