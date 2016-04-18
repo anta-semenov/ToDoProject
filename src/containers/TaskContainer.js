@@ -2,15 +2,15 @@ import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
-import { setActiveItem } from '../actions/uiStateActions'
-import { TASK } from '../constants/itemTypes'
-import { getTasksGroups, getSectionName, getSelectedSectionID, getSelectedSectionType } from '../selectors/tasksSelector'
+import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
+import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType } from '../selectors/tasksSelector'
 import * as sectionTypes from '../constants/sectionTypes'
 
 const mapStateToProps = (state) => {
   return {
     groups: getTasksGroups(state),
     header: getSectionName(state),
+    activeItem: getActiveItemID(state),
     selectedSectionID: getSelectedSectionID(state),
     selectedSectionType: getSelectedSectionType(state)
   }
@@ -38,8 +38,11 @@ const mapDispatchToProps = (dispatch) => {
       }
       dispatch(addTask(properties))
     },
-    onTaskClick: (taskId) => {dispatch(setActiveItem({type: TASK, id: taskId}))},
-    onTaskCheckboxClick: (taskId) => {dispatch(completeTask(taskId))},
+    onTaskClick: (taskId) => {dispatch(setActiveItem(taskId))},
+    onTaskCheckboxClick: (taskId) => {
+      dispatch(toggleTaskLatency(taskId))
+      dispatch(completeTask(taskId))
+    },
     onTaskTodayClick: (taskId) => {dispatch(setTaskToday(taskId))},
     onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))}
   }

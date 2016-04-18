@@ -3,7 +3,7 @@ import { fromJS } from 'immutable'
 import { PRIORITY_NONE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
-import { getTasksGroups, getSectionName } from '../../src/selectors/tasksSelector'
+import { getTasksGroups, getSectionName, getActiveItemID } from '../../src/selectors/tasksSelector'
 
 
 const testTasks1 = fromJS([
@@ -463,6 +463,33 @@ describe('Tasks Selectors', () => {
       })
       expect(getTasksGroups(state)).to.equal(undefined)
     })
+
+    it('Should return latent tasks even if they are completed', () => {
+      const state = fromJS({
+        task: testTasks2,
+        project: testProjects,
+        context: testContexts,
+        uiState: {
+          selectedSection: {
+            type: sectionTypes.INBOX
+          },
+          sectionLatentTasks: [0]
+        }
+      })
+      const groups = fromJS([{
+        items: [
+          {
+            id: 0,
+            title: 'Test task 0',
+            completed: true,
+            today: false,
+            priority: PRIORITY_NONE
+          }
+        ]
+      }])
+
+      expect(getTasksGroups(state)).to.equal(groups)
+    })
   })
   describe('getSectionName selector', () => {
     it('Should return name for INBOX', () => {
@@ -518,6 +545,22 @@ describe('Tasks Selectors', () => {
         }
       })
       expect(getSectionName(state)).to.equal('Test context 0')
+    })
+  })
+  describe('getActiveItemID selector', () => {
+    it('Should return active item id', () => {
+      const state = fromJS({
+        uiState: {
+          activeItem: 2
+        }
+      })
+      expect(getActiveItemID(state)).to.equal(2)
+    })
+    it('Should return -1 for empty active item', () => {
+      const state = fromJS({
+        uiState: {}
+      })
+      expect(getActiveItemID(state)).to.equal(-1)
     })
   })
 })

@@ -49,6 +49,19 @@ describe('UI state action creators', () => {
       section
     }
 
-    expect(actions.setEditingSection(section)).to.deep.equal(expectedAction)    
+    expect(actions.setEditingSection(section)).to.deep.equal(expectedAction)
+  })
+  it('Should create an action to toggle task latency', () => {
+    const expectedAction = {
+      type: types.TOGGLE_TASK_LATENCY,
+      id: 0
+    }
+    expect(actions.toggleTaskLatency(0)).to.deep.equal(expectedAction)
+  })
+  it('Should create an action to clear latent tasks', () => {
+    const expectedAction = {
+      type: types.CLEAR_LATENT_TASKS
+    }
+    expect(actions.clearLatentTasks()).to.deep.equal(expectedAction)
   })
 })

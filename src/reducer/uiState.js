@@ -1,5 +1,4 @@
 import * as actionTypes from '../constants/actionTypes'
-import * as sectionTypes from '../constants/sectionTypes'
 import { fromJS, is } from 'immutable'
 import { INITIAL_UI_STATE } from '../constants/defaults'
 
@@ -14,8 +13,12 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return setActiveItem(state, action.item)
     case actionTypes.SET_EDITING_SECTION:
       return setEditingSection(state, action.section)
+    case actionTypes.TOGGLE_TASK_LATENCY:
+      return toggleTaskLatency(state, action.id)
+    case actionTypes.CLEAR_LATENT_TASKS:
+      return clearLatentTasks(state)
     default:
-    return state
+      return state
   }
 }
 
@@ -41,9 +44,9 @@ function setSidebarSize(state, size) {
   }
 }
 
-function setActiveItem(state, activeItem) {
-  if (activeItem) {
-    return state.set('activeItem', fromJS(activeItem))
+function setActiveItem(state, id) {
+  if (id) {
+    return state.set('activeItem', fromJS(id))
   } else {
     return state.delete('activeItem')
   }
@@ -55,4 +58,19 @@ function setEditingSection(state, section) {
   } else {
     return state.delete('editingSection')
   }
+}
+
+function toggleTaskLatency(state, id) {
+  return state.updateIn(['sectionLatentTasks'], val => {
+    if (val) {
+      const index = val.findIndex(item => item === id)
+      if (index >= 0) {return val.delete(index)}
+      else {return val.push(id)}
+    }
+    else {return fromJS([id])}
+  })
+}
+
+function clearLatentTasks(state) {
+  return state.delete('sectionLatentTasks')
 }

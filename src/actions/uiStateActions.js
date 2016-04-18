@@ -15,3 +15,10 @@ export function setActiveItem(item) {
 export function setEditingSection(section) {
   return {type: actionTypes.SET_EDITING_SECTION, section}
 }
+
+export function toggleTaskLatency(id) {
+  return {type: actionTypes.TOGGLE_TASK_LATENCY, id}
+}
+export function clearLatentTasks() {
+  return {type: actionTypes.CLEAR_LATENT_TASKS}
+}

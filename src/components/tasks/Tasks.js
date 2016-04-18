@@ -21,6 +21,7 @@ export default class Tasks extends Component {
                 key={index}
                 groupTitle={group.get('title')}
                 tasks={group.get('items')}
+                activeItem={this.props.activeItem}
                 onTaskClick={this.props.onTaskClick}
                 onTaskCheckboxClick={this.props.onTaskCheckboxClick}
                 onTaskTodayClick={this.props.onTaskTodayClick}
@@ -39,6 +40,7 @@ export default class Tasks extends Component {
 Tasks.propTypes = {
   groups: React.PropTypes.object,
   header: React.PropTypes.string,
+  activeItem: React.PropTypes.number,
 
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,

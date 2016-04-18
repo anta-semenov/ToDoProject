@@ -3,7 +3,7 @@
 .task {
   position: relative;
   margin: 0;
-  padding: 0 5px 0 8px;
+  padding: 0 8px;
 
   display: flex;
   flex-direction: row;
@@ -13,6 +13,19 @@
   border-bottom: 1px solid @color-border-light-gray;
   transition: @transition-basic;
 
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    width: 0;
+    height: 1px;
+    left: 32px;
+    top: 50%;
+    pointer-events: none;
+    transition: @transition-basic;
+    background-color: transparent;
+  }
+
   &:first-child {
     border-top: 1px solid @color-border-light-gray;
   }
@@ -21,10 +34,23 @@
   }
   &.is-active {
     background-color: @color-bg-light-gray;
+    &:hover {
+      background-color: @color-bg-light-gray;
+    }
+  }
+  &.is-completed {
+    background-color: transparent;
+
+    &::before {
+      z-index: 3;
+      width: ~"calc(100% - 32px)";
+      background-color: @color-accent;
+    }
   }
 }
 .task__completed {
   position: relative;
+  z-index: 1;
   width: 16px;
   height: 16px;
   margin: 0 12px 0 0;
@@ -52,6 +78,9 @@
     background-size: 80%;
     background-color: @color-accent;
     border-color: @color-accent;
+  }
+  .task.is-completed & {
+    z-index: 4
   }
 }
 .task__today {
@@ -88,6 +117,10 @@
       background-color: @color-accent;
     }
   }
+  .task.is-completed & {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
 .task__priority {
   position: relative;
@@ -109,6 +142,11 @@
     box-shadow: 0 2px 8px 0 fade(#000000, 20%);
     border-radius: 1px;
     transition: 0.3s ease-out 0.15s;
+  }
+
+  .task.is-completed & {
+    pointer-events: none;
+    opacity: 0.5;
   }
 }
 .task__priority-level {
@@ -172,6 +210,14 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  transition: opacity @transition-basic;
+
+  .task.is-active & {
+    cursor: default;
+  }
+  .task.is-completed & {
+    opacity: 0.2;
+  }
 }
 .task__main {
   position: relative;
