@@ -8,8 +8,8 @@ export function setSidebarSize(size) {
   return {type: actionTypes.SET_SIDEBAR_SIZE, size}
 }
 
-export function setActiveItem(item) {
-  return {type: actionTypes.SET_ACTIVE_ITEM, item}
+export function setActiveItem(id) {
+  return {type: actionTypes.SET_ACTIVE_ITEM, id}
 }
 
 export function setEditingSection(section) {

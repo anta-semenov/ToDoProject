@@ -10,7 +10,7 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
     case actionTypes.SET_SIDEBAR_SIZE:
       return setSidebarSize(state, action.sidebarSize)
     case actionTypes.SET_ACTIVE_ITEM:
-      return setActiveItem(state, action.item)
+      return setActiveItem(state, action.id)
     case actionTypes.SET_EDITING_SECTION:
       return setEditingSection(state, action.section)
     case actionTypes.TOGGLE_TASK_LATENCY:
@@ -45,7 +45,7 @@ function setSidebarSize(state, size) {
 }
 
 function setActiveItem(state, id) {
-  if (id) {
+  if (id >= 0) {
     return state.set('activeItem', fromJS(id))
   } else {
     return state.delete('activeItem')

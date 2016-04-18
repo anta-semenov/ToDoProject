@@ -27,15 +27,12 @@ describe('UI state action creators', () => {
   })
 
   it('Should create an action to set active item', () => {
-    const item = {
-      type: items.TASK,
-      id: 0
-    }
+    const id = 2
     const expectedAction = {
       type: types.SET_ACTIVE_ITEM,
-      item
+      id
     }
-    expect(actions.setActiveItem(item)).to.deep.equal(expectedAction)
+    expect(actions.setActiveItem(id)).to.deep.equal(expectedAction)
   })
 
   it('Should create an action to set editing item', () => {

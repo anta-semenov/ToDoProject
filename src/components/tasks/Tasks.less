@@ -10,8 +10,13 @@
   padding: 30px 30px;
   overflow: auto;
   font-family: 'Fira Sans', sans-serif;
+  transition: @transition-basic;
 
   max-width: 800px; //only for development purposes
+  &.has-active-item {
+    width: ~'calc(100% - @{size-width-sidebar} - @{size-width-task-info})';
+    max-width: 500px;
+  }
 }
 .tasks__header {
   margin: 0 0 10px 0;

@@ -11,7 +11,7 @@ export default class Tasks extends Component {
 
   render() {
     return(
-      <div className='tasks'>
+      <div className={`tasks ${this.props.activeItem >= 0 ? 'has-active-item' : ''}`}>
         {this.props.header ? <h1 className='tasks__header'>{this.props.header}</h1> : null}
         <AddTask addTask={this.props.addTask} />
         {this.props.groups ?

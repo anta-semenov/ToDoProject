@@ -216,10 +216,7 @@ describe('UI state reducer', () => {
     })
     it('Should handle SET_ACTIVE_ITEM with empty action parameter', () => {
       const initialState = fromJS({
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 0
-        },
+        activeItem: 0,
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
       const action = {
@@ -232,24 +229,15 @@ describe('UI state reducer', () => {
     })
     it('Should handle SET_ACTIVE_ITEM', () => {
       const initialState = fromJS({
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 0
-        },
+        activeItem: 0,
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
       const action = {
         type: actionTypes.SET_ACTIVE_ITEM,
-        item: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        id: 2
       }
       const nextState = fromJS({
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        },
+        activeItem: 2,
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -258,16 +246,10 @@ describe('UI state reducer', () => {
       const initialState = fromJS({})
       const action = {
         type: actionTypes.SET_ACTIVE_ITEM,
-        item: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        id: 2
       }
       const nextState = fromJS({
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 2
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
