@@ -576,7 +576,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        contexts: Set([1, 2])
+        contexts: Set([0, 2, 1, 3, 4])
       }
     ])
     const action = {
@@ -591,7 +591,7 @@ describe('Task reducer', () => {
         completed: false,
         today: false,
         project: 1,
-        contexts: Set([2])
+        contexts: Set([0, 2, 3, 4])
       }
     ])
     expect(reducer(initialState, action)).to.equal(nextState)

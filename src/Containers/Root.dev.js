@@ -3,6 +3,7 @@ import {Provider} from 'react-redux'
 import DevTool  from './DevTool'
 import Sidebar from './Sidebar'
 import TaskContainer from './TaskContainer'
+import TaskInfoContainer from './TaskInfoContainer'
 
 export default class Root extends Component {
   render() {
@@ -11,6 +12,7 @@ export default class Root extends Component {
         <div>
           <Sidebar />
           <TaskContainer />
+          <TaskInfoContainer />
           <DevTool />
         </div>
       </Provider>

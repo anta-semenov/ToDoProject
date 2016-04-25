@@ -3,7 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import * as priorityLevels from '../../constants/priorityLevels'
 import { DATE_FORMAT } from '../../constants/defaults'
 
-require('./Task.less')
+import './Task.less'
 
 export default class Task extends React.Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TaskGroup from '../taskGroup/TaskGroup'
 import AddTask from '../addTask/AddTask'
 
-require('./Tasks.less')
+import './Tasks.less'
 
 export default class Tasks extends Component {
   constructor(props) {

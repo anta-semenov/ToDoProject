@@ -1,6 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-require('./NavigationGroup.less')
+import './NavigationGroup.less'
 
 import NavigationItem from '../navigationItem/NavigationItem'
 

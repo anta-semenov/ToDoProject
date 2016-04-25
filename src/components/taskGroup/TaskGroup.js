@@ -2,7 +2,7 @@ import React from 'react'
 import Task from '../task/Task'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-require('./TaskGroup.less')
+import './TaskGroup.less'
 
 export default class TaskGroup extends React.Component {
   constructor(props) {

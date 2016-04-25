@@ -1,7 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-
-require('./NavigationItem.less')
+import './NavigationItem.less'
 
 export default class NavigationItem extends React.Component {
   state = {text: ''}

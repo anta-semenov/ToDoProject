@@ -7,7 +7,7 @@ export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], -
 export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
 export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], -1)
 const getLatentTasks = state => state.getIn(['uiState', 'sectionLatentTasks'])
-const getAllTasks = state => state.get('task')
+export const getAllTasks = state => state.get('task')
 const getProjects = state => state.get('project')
 const getContexts = state => state.get('context')
 

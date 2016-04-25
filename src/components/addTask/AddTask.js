@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { NEW_TASK_TITLE } from '../../constants/defaults'
-require('./AddTask.less')
+import './AddTask.less'
 
 export default class AddTask extends Component {
   state = {value: ''}

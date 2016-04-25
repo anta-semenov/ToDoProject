@@ -1,0 +1,18 @@
+@import '../../styles/variables.less';
+
+.task-info {
+  position: fixed;
+  box-sizing: border-box;
+  top: 0;
+  height: 100%;
+  right: 330px; //Only for development
+  width: @size-width-task-info;
+  padding: 30px;
+  margin: 0;
+  overflow-y: auto;
+
+  background-color: @color-bg-light-gray;
+  border-left: 1px solid @color-border-light-gray;
+  transition: @transition-basic;
+  font-family: 'Fira Sans', sans-serif;
+}
