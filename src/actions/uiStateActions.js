@@ -16,9 +16,16 @@ export function setEditingSection(section) {
   return {type: actionTypes.SET_EDITING_SECTION, section}
 }
 
-export function toggleTaskLatency(id) {
-  return {type: actionTypes.TOGGLE_TASK_LATENCY, id}
+export function toggleTaskCompletedLatency(id) {
+  return {type: actionTypes.TOGGLE_TASK_COMPLETED_LATENCY, id}
 }
-export function clearLatentTasks() {
-  return {type: actionTypes.CLEAR_LATENT_TASKS}
+export function clearCompletedLatentTasks() {
+  return {type: actionTypes.CLEAR_COMPLETED_LATENT_TASKS}
+}
+
+export function toggleTaskTodayLatency(id) {
+  return {type: actionTypes.TOGGLE_TASK_TODAY_LATENCY, id}
+}
+export function clearTodayLatentTasks() {
+  return {type: actionTypes.CLEAR_TODAY_LATENT_TASKS}
 }

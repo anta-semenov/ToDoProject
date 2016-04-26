@@ -4,7 +4,7 @@ import TaskInfo from '../components/taskInfo/TaskInfo'
 import { getActiveItemID } from '../selectors/tasksSelector'
 import * as activeTask from '../selectors/activeTaskSelector'
 import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask } from '../actions/taskActions'
-import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
+import { setActiveItem, toggleTaskCompletedLatency } from '../actions/uiStateActions'
 
 const mapStateToProps = (state) => ({
   id: getActiveItemID(state),
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
   onTaskCheckboxClick: taskId => {
-    dispatch(toggleTaskLatency(taskId))
+    dispatch(toggleTaskCompletedLatency(taskId))
     dispatch(completeTask(taskId))
   },
   onTaskTodayClick: taskId => dispatch(setTaskToday(taskId)),

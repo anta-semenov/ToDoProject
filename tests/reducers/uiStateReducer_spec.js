@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { fromJS } from 'immutable'
+import { fromJS, Set } from 'immutable'
 import reducer from '../../src/reducer/uiState'
 import * as actionTypes from '../../src/constants/actionTypes'
 import { DEFAULT_SIDEBAR_SIZE } from '../../src/constants/defaults'
@@ -319,58 +319,116 @@ describe('UI state reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
-  describe('Section Latent Tasks', () => {
-    describe('TOGGLE_TASK_LATENCY', () => {
-      it('Should handle TOGGLE_TASK_LATENCY with empty state', () => {
+  describe('Section Completed Latent Tasks', () => {
+    describe('TOGGLE_TASK_COMPLETED_LATENCY', () => {
+      it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with empty state', () => {
         const initialState = fromJS({})
-        const action = actionCreator.toggleTaskLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency(2)
         const nextState = fromJS({
-          sectionLatentTasks: [2]
+          sectionCompletedLatentTasks: Set([2])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
-      it('Should handle TOGGLE_TASK_LATENCY with undefined latent list', () => {
+      it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with undefined latent list', () => {
         const initialState = fromJS({
-          sectionLatentTasks: undefined
+          sectionCompletedLatentTasks: undefined
         })
-        const action = actionCreator.toggleTaskLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency(2)
         const nextState = fromJS({
-          sectionLatentTasks: [2]
+          sectionCompletedLatentTasks: Set([2])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
-      it('Should handle TOGGLE_TASK_LATENCY with existing latent list but without a task', () => {
+      it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with existing latent list but without a task', () => {
         const initialState = fromJS({
-          sectionLatentTasks: [0, 7]
+          sectionCompletedLatentTasks: Set([0, 7])
         })
-        const action = actionCreator.toggleTaskLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency(2)
         const nextState = fromJS({
-          sectionLatentTasks: [0, 7, 2]
+          sectionCompletedLatentTasks: Set([0, 7, 2])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
-      it('Should handle TOGGLE_TASK_LATENCY with existing latent list but with a task', () => {
+      it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with existing latent list but with a task', () => {
         const initialState = fromJS({
-          sectionLatentTasks: [0, 7, 3, 5, 2, 4]
+          sectionCompletedLatentTasks: Set([0, 7, 3, 5, 2, 4])
         })
-        const action = actionCreator.toggleTaskLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency(2)
         const nextState = fromJS({
-          sectionLatentTasks: [0, 7, 3, 5, 4]
+          sectionCompletedLatentTasks: Set([0, 7, 3, 5, 4])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
     })
-    describe('CLEAR_LATENT_TASKS', () => {
-      it('Should handle CLEAR_LATENT_TASKS with empty state', () => {
+    describe('CLEAR_COMPLETED_LATENT_TASKS', () => {
+      it('Should handle CLEAR_COMPLETED_LATENT_TASKS with empty state', () => {
         const initialState = fromJS({})
-        const action = actionCreator.clearLatentTasks()
+        const action = actionCreator.clearCompletedLatentTasks()
         expect(reducer(initialState, action)).to.equal(initialState)
       })
-      it('Should handle CLEAR_LATENT_TASKS with existing state', () => {
+      it('Should handle CLEAR_COMPLETED_LATENT_TASKS with existing state', () => {
         const initialState = fromJS({
-          sectionLatentTasks: [0, 7, 2, 5]
+          sectionCompletedLatentTasks: Set([0, 7, 2, 5])
         })
-        const action = actionCreator.clearLatentTasks()
+        const action = actionCreator.clearCompletedLatentTasks()
+        const nextState = fromJS({})
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+    })
+  })
+
+  describe('Section Today Latent Tasks', () => {
+    describe('TOGGLE_TASK_TODAY_LATENCY', () => {
+      it('Should handle TOGGLE_TASK_TODAY_LATENCY with empty state', () => {
+        const initialState = fromJS({})
+        const action = actionCreator.toggleTaskTodayLatency(2)
+        const nextState = fromJS({
+          sectionTodayLatentTasks: Set([2])
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+      it('Should handle TOGGLE_TASK_TODAY_LATENCY with undefined latent list', () => {
+        const initialState = fromJS({
+          sectionTodayLatentTasks: undefined
+        })
+        const action = actionCreator.toggleTaskTodayLatency(2)
+        const nextState = fromJS({
+          sectionTodayLatentTasks: Set([2])
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+      it('Should handle TOGGLE_TASK_TODAY_LATENCY with existing latent list but without a task', () => {
+        const initialState = fromJS({
+          sectionTodayLatentTasks: Set([0, 7])
+        })
+        const action = actionCreator.toggleTaskTodayLatency(2)
+        const nextState = fromJS({
+          sectionTodayLatentTasks: Set([0, 7, 2])
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+      it('Should handle TOGGLE_TASK_TODAY_LATENCY with existing latent list but with a task', () => {
+        const initialState = fromJS({
+          sectionTodayLatentTasks: Set([0, 7, 3, 5, 2, 4])
+        })
+        const action = actionCreator.toggleTaskTodayLatency(2)
+        const nextState = fromJS({
+          sectionTodayLatentTasks: Set([0, 7, 3, 5, 4])
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+    })
+    describe('CLEAR_TODAY_LATENT_TASKS', () => {
+      it('Should handle CLEAR_TODAY_LATENT_TASKS with empty state', () => {
+        const initialState = fromJS({})
+        const action = actionCreator.clearTodayLatentTasks()
+        expect(reducer(initialState, action)).to.equal(initialState)
+      })
+      it('Should handle CLEAR_TODAY_LATENT_TASKS with existing state', () => {
+        const initialState = fromJS({
+          sectionTodayLatentTasks: Set([0, 7, 2, 5])
+        })
+        const action = actionCreator.clearTodayLatentTasks()
         const nextState = fromJS({})
         expect(reducer(initialState, action)).to.equal(nextState)
       })

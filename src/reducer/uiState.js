@@ -1,5 +1,5 @@
 import * as actionTypes from '../constants/actionTypes'
-import { fromJS, is } from 'immutable'
+import { fromJS, is, Set } from 'immutable'
 import { INITIAL_UI_STATE } from '../constants/defaults'
 
 
@@ -13,10 +13,14 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return setActiveItem(state, action.id)
     case actionTypes.SET_EDITING_SECTION:
       return setEditingSection(state, action.section)
-    case actionTypes.TOGGLE_TASK_LATENCY:
-      return toggleTaskLatency(state, action.id)
-    case actionTypes.CLEAR_LATENT_TASKS:
-      return clearLatentTasks(state)
+    case actionTypes.TOGGLE_TASK_COMPLETED_LATENCY:
+      return toggleTaskCompletedLatency(state, action.id)
+    case actionTypes.CLEAR_COMPLETED_LATENT_TASKS:
+      return clearCompletedLatentTasks(state)
+    case actionTypes.TOGGLE_TASK_TODAY_LATENCY:
+      return toggleTaskTodayLatency(state, action.id)
+    case actionTypes.CLEAR_TODAY_LATENT_TASKS:
+      return clearTodayLatentTasks(state)
     default:
       return state
   }
@@ -60,17 +64,29 @@ function setEditingSection(state, section) {
   }
 }
 
-function toggleTaskLatency(state, id) {
-  return state.updateIn(['sectionLatentTasks'], val => {
+function toggleTaskCompletedLatency(state, id) {
+  return state.updateIn(['sectionCompletedLatentTasks'], val => {
     if (val) {
-      const index = val.findIndex(item => item === id)
-      if (index >= 0) {return val.delete(index)}
-      else {return val.push(id)}
+      if (val.has(id)) {return val.delete(id)}
+      else {return val.add(id)}
     }
-    else {return fromJS([id])}
+    else {return Set([id])}
   })
 }
 
-function clearLatentTasks(state) {
-  return state.delete('sectionLatentTasks')
+function clearCompletedLatentTasks(state) {
+  return state.delete('sectionCompletedLatentTasks')
+}
+
+function toggleTaskTodayLatency(state, id) {
+  return state.updateIn(['sectionTodayLatentTasks'], val => {
+    if (val) {
+      if (val.has(id)) {return val.delete(id)}
+      else {return val.add(id)}
+    }
+    else {return Set([id])}
+  })
+}
+function clearTodayLatentTasks(state) {
+  return state.delete('sectionTodayLatentTasks')
 }

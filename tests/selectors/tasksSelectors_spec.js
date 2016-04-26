@@ -464,7 +464,7 @@ describe('Tasks Selectors', () => {
       expect(getTasksGroups(state)).to.equal(undefined)
     })
 
-    it('Should return latent tasks even if they are completed', () => {
+    it('Should return completed latent tasks even if they are completed', () => {
       const state = fromJS({
         task: testTasks2,
         project: testProjects,
@@ -473,7 +473,7 @@ describe('Tasks Selectors', () => {
           selectedSection: {
             type: sectionTypes.INBOX
           },
-          sectionLatentTasks: [0]
+          sectionCompletedLatentTasks: [0]
         }
       })
       const groups = fromJS([{

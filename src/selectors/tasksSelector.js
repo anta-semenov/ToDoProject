@@ -6,14 +6,15 @@ import * as sectionNames from '../constants/sectionNames'
 export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], -1)
 export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
 export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], -1)
-const getLatentTasks = state => state.getIn(['uiState', 'sectionLatentTasks'])
+const getCompletedLatentTasks = state => state.getIn(['uiState', 'sectionCompletedLatentTasks'], fromJS([]))
+export const getTodayLatentTasks = state => state.getIn(['uiState', 'sectionTodayLatentTasks'], fromJS([]))
 export const getAllTasks = state => state.get('task')
 const getProjects = state => state.get('project')
 const getContexts = state => state.get('context')
 
 const getTasks = createSelector(
-  [getAllTasks, getLatentTasks],
-  (allTasks, latentTasks = fromJS([])) => {
+  [getAllTasks, getCompletedLatentTasks],
+  (allTasks, latentTasks) => {
     return allTasks.filter(task => !task.get('completed') || latentTasks.includes(task.get('id')))
   }
 )
@@ -34,8 +35,8 @@ const groupTasksByProject = (tasks, projects) => {
 }
 
 export const getTasksGroups = createSelector(
-  [getSelectedSectionType, getSelectedSectionID, getTasks, getProjects],
-  (sectionType, sectionID, tasks, projects) => {
+  [getSelectedSectionType, getSelectedSectionID, getTasks, getTodayLatentTasks, getProjects],
+  (sectionType, sectionID, tasks, todayLatentTasks, projects) => {
     switch (sectionType) {
       case sectionTypes.CONTEXT: {
         const sectionTasks = tasks.filter(task => {
@@ -53,7 +54,7 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.TODAY: {
-        const sectionTasks = tasks.filter(task => task.get('today') === true)
+        const sectionTasks = tasks.filter(task => task.get('today') === true || todayLatentTasks.includes(task.get('id')))
         return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }
 
@@ -62,7 +63,7 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.INBOX: {
-        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.has('contexts'))
+        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.has('contexts') || todayLatentTasks.includes(task.get('id')))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
       }
 

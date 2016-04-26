@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
-import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
-import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType } from '../selectors/tasksSelector'
+import { setActiveItem, toggleTaskCompletedLatency, toggleTaskTodayLatency } from '../actions/uiStateActions'
+import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType, getTodayLatentTasks } from '../selectors/tasksSelector'
 import * as sectionTypes from '../constants/sectionTypes'
 
 const mapStateToProps = (state) => {
@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
     header: getSectionName(state),
     activeItem: getActiveItemID(state),
     selectedSectionID: getSelectedSectionID(state),
-    selectedSectionType: getSelectedSectionType(state)
+    selectedSectionType: getSelectedSectionType(state),
+    todayLatentTasks: getTodayLatentTasks(state)
   }
 }
 
@@ -40,10 +41,15 @@ const mapDispatchToProps = (dispatch) => {
     },
     onTaskClick: (taskId) => {dispatch(setActiveItem(taskId))},
     onTaskCheckboxClick: (taskId) => {
-      dispatch(toggleTaskLatency(taskId))
+      dispatch(toggleTaskCompletedLatency(taskId))
       dispatch(completeTask(taskId))
     },
-    onTaskTodayClick: (taskId) => {dispatch(setTaskToday(taskId))},
+    onTaskTodayClick: (taskId, sectionType) => {
+      if (sectionType === sectionTypes.TODAY || sectionType === sectionTypes.INBOX) {
+        dispatch(toggleTaskTodayLatency(taskId))
+      }
+      dispatch(setTaskToday(taskId))
+    },
     onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))}
   }
 }
@@ -53,7 +59,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.selectedSectionType, stateProps.selectedSectionID),
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
-    onTaskTodayClick: dispatchProps.onTaskTodayClick,
+    onTaskTodayClick: taskId => dispatchProps.onTaskTodayClick(taskId, stateProps.selectedSectionType),
     onTaskPriorityClick: dispatchProps.onTaskPriorityClick
   })
 }

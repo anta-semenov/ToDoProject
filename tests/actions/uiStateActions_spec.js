@@ -2,7 +2,6 @@ import { expect } from 'chai'
 import * as types from '../../src/constants/actionTypes'
 import * as actions from '../../src/actions/uiStateActions'
 import * as sections from '../../src/constants/sectionTypes'
-import * as items from '../../src/constants/itemTypes'
 
 describe('UI state action creators', () => {
   it('Should create an action to set selected section', () => {
@@ -48,17 +47,31 @@ describe('UI state action creators', () => {
 
     expect(actions.setEditingSection(section)).to.deep.equal(expectedAction)
   })
-  it('Should create an action to toggle task latency', () => {
+  it('Should create an action to toggle completed task latency', () => {
     const expectedAction = {
-      type: types.TOGGLE_TASK_LATENCY,
+      type: types.TOGGLE_TASK_COMPLETED_LATENCY,
       id: 0
     }
-    expect(actions.toggleTaskLatency(0)).to.deep.equal(expectedAction)
+    expect(actions.toggleTaskCompletedLatency(0)).to.deep.equal(expectedAction)
   })
-  it('Should create an action to clear latent tasks', () => {
+  it('Should create an action to clear completed latent tasks', () => {
     const expectedAction = {
-      type: types.CLEAR_LATENT_TASKS
+      type: types.CLEAR_COMPLETED_LATENT_TASKS
     }
-    expect(actions.clearLatentTasks()).to.deep.equal(expectedAction)
+    expect(actions.clearCompletedLatentTasks()).to.deep.equal(expectedAction)
+  })
+
+  it('Should create an action to toggle today task latency', () => {
+    const expectedAction = {
+      type: types.TOGGLE_TASK_TODAY_LATENCY,
+      id: 0
+    }
+    expect(actions.toggleTaskTodayLatency(0)).to.deep.equal(expectedAction)
+  })
+  it('Should create an action to clear today latent tasks', () => {
+    const expectedAction = {
+      type: types.CLEAR_TODAY_LATENT_TASKS
+    }
+    expect(actions.clearTodayLatentTasks()).to.deep.equal(expectedAction)
   })
 })

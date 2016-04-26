@@ -13,7 +13,7 @@ export default class Task extends React.Component {
 
   render() {
     return (
-      <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''}`}>
+      <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latentToday ? 'is-latent-today' : ''} `}>
         <input type='checkbox' className='task__completed' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id)} />
         <div className={`task__today ${this.props.today ? 'is-checked' : ''}`} onClick={() => this.props.onTaskTodayClick(this.props.id)} />
         <div className={`task__priority task__priority--${this.props.priority ? this.props.priority : 'none'}`} >
@@ -49,5 +49,6 @@ Task.propTypes = {
   description: React.PropTypes.string,
   priority: React.PropTypes.string,
   date: React.PropTypes.object,
-  active: React.PropTypes.bool
+  active: React.PropTypes.bool,
+  latentToday: React.PropTypes.bool
 }
