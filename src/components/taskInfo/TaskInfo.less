@@ -5,7 +5,7 @@
   box-sizing: border-box;
   top: 0;
   height: 100%;
-  right: 330px; //Only for development
+  right: 310px - @size-width-task-info; //Only for development
   width: @size-width-task-info;
   padding: 30px;
   margin: 0;
@@ -15,4 +15,27 @@
   border-left: 1px solid @color-border-light-gray;
   transition: @transition-basic;
   font-family: 'Fira Sans', sans-serif;
+
+  &.is-open {
+    right: 310px;
+  }
+}
+
+.task-info__content {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.task-info__controls {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.task-info__body {
+  position: relative;
+  margin: 0 0 0 10px;
 }
