@@ -1,11 +1,13 @@
-import {createStore, compose} from 'redux'
-import {persistState} from 'redux-devtools'
+import { createStore, compose, applyMiddleware } from 'redux'
+import { persistState } from 'redux-devtools'
 import rootReducer from '../reducer'
 import DevTools from '../containers/DevTool'
 import { fromJS } from 'immutable'
 import { PRIORITY_HIGH } from '../constants/priorityLevels'
+import { setStateForUser } from '../backend/firebaseHelper'
 
 const enhancer = compose(
+  applyMiddleware(setStateForUser),
   DevTools.instrument(),
   persistState(
     window.location.href.match(

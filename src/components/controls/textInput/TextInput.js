@@ -31,7 +31,7 @@ export default class TextInput extends React.Component {
     )
   }
 }
-TextInput.componentWillReceiveProps()
+//TextInput.componentWillReceiveProps()
 
 TextInput.propTypes = {
   type: React.PropTypes.string.isRequired,
