@@ -1,9 +1,8 @@
 import React from 'react'
 import PureRenderMixins from 'react-addons-pure-render-mixin'
-import { ContentState } from 'draft-js'
-import TextInput from '../controls/textInput/TextInput'
+import TaskTitle from './taskTitle/TaskTitle'
+import TaskDescription from './taskDescription/TaskDescription'
 import * as priorityLevels from '../../constants/priorityLevels'
-import { TASK_TITLE_FIELD, TASK_DESCRIPTION_FIELD } from '../../constants/controlTypes'
 import './TaskInfo.less'
 
 export default class TaskInfo extends React.Component {
@@ -30,7 +29,8 @@ export default class TaskInfo extends React.Component {
               </div>
             </div>
             <div className='task-info__body'>
-              <TextInput type={TASK_TITLE_FIELD} content={ContentState.createFromText(this.props.title ? this.props.title : 'Type task title')} onChange={(editorState) => this.props.onTitleChange(this.props.id, editorState.getCurrentContent().getPlainText())} />
+              <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
+              <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} />
             </div>
           </div> : null
         }

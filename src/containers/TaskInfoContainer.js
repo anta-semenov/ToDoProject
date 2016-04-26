@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 
 import TaskInfo from '../components/taskInfo/TaskInfo'
-import { getActiveItemID } from '../selectors/tasksSelector'
+import { getActiveItemID, getSelectedSectionType } from '../selectors/tasksSelector'
 import * as activeTask from '../selectors/activeTaskSelector'
 import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask } from '../actions/taskActions'
-import { setActiveItem, toggleTaskCompletedLatency } from '../actions/uiStateActions'
+import { setActiveItem, toggleTaskCompletedLatency, toggleTaskTodayLatency } from '../actions/uiStateActions'
+import { INBOX, TODAY } from '../constants/sectionTypes'
 
 const mapStateToProps = (state) => ({
   id: getActiveItemID(state),
@@ -14,7 +15,8 @@ const mapStateToProps = (state) => ({
   description: activeTask.getDescription(state),
   priority: activeTask.getPriority(state),
   project: activeTask.getProject(state),
-  contexts: activeTask.getContexts(state)
+  contexts: activeTask.getContexts(state),
+  sectionType: getSelectedSectionType(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -22,7 +24,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(toggleTaskCompletedLatency(taskId))
     dispatch(completeTask(taskId))
   },
-  onTaskTodayClick: taskId => dispatch(setTaskToday(taskId)),
+  onTaskTodayClick: (taskId, sectionType) => {
+    if (sectionType === TODAY || sectionType === INBOX) {
+      dispatch(toggleTaskTodayLatency(taskId))
+    }
+    dispatch(setTaskToday(taskId))
+  },
   onPriorityClick: (taskId, priority) => dispatch(editTask(taskId, {priority})),
   onTitleChange: (taskId, title) => dispatch(editTask(taskId, {title})),
   onDescriptionChange: (taskId, description) => dispatch(editTask(taskId, {description})),
@@ -33,6 +40,10 @@ const mapDispatchToProps = dispatch => ({
   onCloseClick: () => dispatch(setActiveItem())
 })
 
-const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps)(TaskInfo)
+const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, ownProps, stateProps, Object.assign({}, dispatchProps, {
+  onTaskTodayClick: taskId => dispatchProps.onTaskTodayClick(taskId, stateProps.sectionType)
+}))
+
+const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskInfo)
 
 export default TaskInfoContainer

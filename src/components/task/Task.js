@@ -1,9 +1,12 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import { ContentState } from 'draft-js'
 import * as priorityLevels from '../../constants/priorityLevels'
 import { DATE_FORMAT } from '../../constants/defaults'
 
 import './Task.less'
+
+const descriptionText = description => typeof description === 'string' ? description : description.getPlainText(' ')
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -26,7 +29,7 @@ export default class Task extends React.Component {
         <div className='task__body' onClick={() => this.props.onTaskClick(this.props.id)}>
           <div className='task__main'>
             <div className='task__title'>{this.props.title}</div>
-            {this.props.description ? <div className='task__description'>{this.props.description}</div> : null}
+            {this.props.description ? <div className='task__description'>{descriptionText(this.props.description)}</div> : null}
           </div>
           {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
         </div>
@@ -46,7 +49,10 @@ Task.propTypes = {
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onPriorityClick: React.PropTypes.func.isRequired,
 
-  description: React.PropTypes.string,
+  description: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.instanceOf(ContentState)
+  ]),
   priority: React.PropTypes.string,
   date: React.PropTypes.object,
   active: React.PropTypes.bool,
