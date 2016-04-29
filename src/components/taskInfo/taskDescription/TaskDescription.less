@@ -2,16 +2,34 @@
 
 .task-info__description {
   position: relative;
-  margin-top: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 6px 3px 6px;
+  border: 1px dotted transparent;
+  border-radius: 2px;
+  transition: @transition-basic;
+
+  &:hover {
+    border-color: @color-border-gray;
+  }
 }
 .text-info__description-text-block {
   font-weight: @font-weight-light;
   font-size: @font-size-basic;
+  line-height: 1.4;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .task-info__description .public-DraftEditorPlaceholder-root {
+  position: absolute;
+  pointer-events: none;
   font-weight: @font-weight-light;
   font-style: italic;
   font-size: @font-size-basic;
   color: @color-font-light;
+  line-height: 1.4;
 }

@@ -42,7 +42,7 @@ Tasks.propTypes = {
   groups: React.PropTypes.object,
   header: React.PropTypes.string,
   activeItem: React.PropTypes.number,
-  todayLatentTasks: React.PropTypes.number,
+  todayLatentTasks: React.PropTypes.object,
 
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,

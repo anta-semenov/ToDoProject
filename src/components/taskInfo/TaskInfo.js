@@ -1,5 +1,6 @@
 import React from 'react'
 import PureRenderMixins from 'react-addons-pure-render-mixin'
+import { Map } from 'immutable'
 import TaskTitle from './taskTitle/TaskTitle'
 import TaskDescription from './taskDescription/TaskDescription'
 import * as priorityLevels from '../../constants/priorityLevels'
@@ -29,8 +30,11 @@ export default class TaskInfo extends React.Component {
               </div>
             </div>
             <div className='task-info__body'>
-              <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
-              <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} />
+              <div>
+                <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
+                <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} />
+              </div>
+              <button className='task-info__delete' onClick={() => this.props.onTaskDeleteClick(this.props.id)} tabIndex='0' >Delete task</button>
             </div>
           </div> : null
         }
@@ -45,7 +49,10 @@ TaskInfo.propTypes = {
   completed: React.PropTypes.bool,
   today: React.PropTypes.bool,
 
-  description: React.PropTypes.string,
+  description: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.instanceOf(Map)
+  ]),
   priority: React.PropTypes.string,
   date: React.PropTypes.object,
   project: React.PropTypes.number,

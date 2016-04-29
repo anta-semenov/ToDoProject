@@ -1,31 +1,27 @@
 import React from 'react'
-import { Editor, EditorState, ContentState } from 'draft-js'
+import { Editor, convertToRaw } from 'draft-js'
+import { Map } from 'immutable'
+import { descriptionToEditorState } from '../../../utils/descriptionTransform'
 import './TaskDescription.less'
 
 const descriptionBlockStyleFn = () => 'text-info__description-text-block'
-const descriptionEditorState = description => {
-  if (description) {
-    return typeof description === 'string' ? EditorState.createWithContent(ContentState.createFromText(description)) : EditorState.createWithContent(description)
-  }
-  return EditorState.createEmpty()
-}
 
 export default class TaskDescription extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {editorState: descriptionEditorState(this.props.description)}
+    this.state = {editorState: descriptionToEditorState(this.props.description)}
     this.onChange = editorState => this._onChange(editorState)
     this.focus = () => this.refs.editor.focus()
   }
 
   _onChange(editorState) {
     this.setState({editorState})
-    this.props.onChange(this.props.id, editorState.getCurrentContent())
+    this.props.onChange(this.props.id, Map(convertToRaw(editorState.getCurrentContent())))
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.id !== this.props.id) {
-      this.setState({editorState: descriptionEditorState(nextProps.description)})
+      this.setState({editorState: descriptionToEditorState(nextProps.description)})
     }
   }
 
@@ -42,7 +38,7 @@ TaskDescription.propTypes = {
   id: React.PropTypes.number.isRequired,
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,
-    React.PropTypes.instanceOf(ContentState)
+    React.PropTypes.instanceOf(Map)
   ]),
   onChange: React.PropTypes.func.isRequired
 }

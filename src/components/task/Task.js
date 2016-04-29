@@ -1,12 +1,11 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import { ContentState } from 'draft-js'
+import { Map } from 'immutable'
 import * as priorityLevels from '../../constants/priorityLevels'
 import { DATE_FORMAT } from '../../constants/defaults'
+import { descriptionToString } from '../../utils/descriptionTransform'
 
 import './Task.less'
-
-const descriptionText = description => typeof description === 'string' ? description : description.getPlainText(' ')
 
 export default class Task extends React.Component {
   constructor(props) {
@@ -29,7 +28,7 @@ export default class Task extends React.Component {
         <div className='task__body' onClick={() => this.props.onTaskClick(this.props.id)}>
           <div className='task__main'>
             <div className='task__title'>{this.props.title}</div>
-            {this.props.description ? <div className='task__description'>{descriptionText(this.props.description)}</div> : null}
+            {this.props.description ? <div className='task__description'>{descriptionToString(this.props.description)}</div> : null}
           </div>
           {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
         </div>
@@ -51,7 +50,7 @@ Task.propTypes = {
 
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,
-    React.PropTypes.instanceOf(ContentState)
+    React.PropTypes.instanceOf(Map)
   ]),
   priority: React.PropTypes.string,
   date: React.PropTypes.object,
