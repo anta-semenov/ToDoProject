@@ -1,6 +1,6 @@
 import React from 'react'
 import PureRenderMixins from 'react-addons-pure-render-mixin'
-import { Map } from 'immutable'
+import { Map, Set } from 'immutable'
 import TaskTitle from './taskTitle/TaskTitle'
 import TaskDescription from './taskDescription/TaskDescription'
 import * as priorityLevels from '../../constants/priorityLevels'
@@ -54,9 +54,9 @@ TaskInfo.propTypes = {
     React.PropTypes.instanceOf(Map)
   ]),
   priority: React.PropTypes.string,
-  date: React.PropTypes.object,
+  date: React.PropTypes.instanceOf(Date),
   project: React.PropTypes.number,
-  contexts: React.PropTypes.object,
+  contexts: React.PropTypes.instanceOf(Set),
 
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,

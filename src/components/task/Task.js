@@ -53,7 +53,7 @@ Task.propTypes = {
     React.PropTypes.instanceOf(Map)
   ]),
   priority: React.PropTypes.string,
-  date: React.PropTypes.object,
+  date: React.PropTypes.instanceOf(Date),
   active: React.PropTypes.bool,
   latentToday: React.PropTypes.bool
 }

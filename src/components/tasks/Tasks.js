@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { List, Set } from 'immutable'
 import TaskGroup from '../taskGroup/TaskGroup'
 import AddTask from '../addTask/AddTask'
 
@@ -39,10 +40,10 @@ export default class Tasks extends Component {
 }
 
 Tasks.propTypes = {
-  groups: React.PropTypes.object,
+  groups: React.PropTypes.instanceOf(List),
   header: React.PropTypes.string,
   activeItem: React.PropTypes.number,
-  todayLatentTasks: React.PropTypes.object,
+  todayLatentTasks: React.PropTypes.instanceOf(Set),
 
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
