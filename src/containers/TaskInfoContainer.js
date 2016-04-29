@@ -36,7 +36,10 @@ const mapDispatchToProps = dispatch => ({
   onProjectChange: (taskId, projectId) => dispatch(addTaskToProject(taskId, projectId)),
   onContextsChange: (taskId, contexts) => dispatch(editTask(taskId, {contexts})),
   onDateChange: (taskId, date) => dispatch(editTask(taskId, {date})),
-  onTaskDeleteClick: taskId => dispatch(removeTask(taskId)),
+  onTaskDeleteClick: taskId => {
+    dispatch(setActiveItem())
+    dispatch(removeTask(taskId))    
+  },
   onCloseClick: () => dispatch(setActiveItem())
 })
 

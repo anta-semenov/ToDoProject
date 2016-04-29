@@ -1,8 +1,21 @@
 @import '../../../styles/variables.less';
 
+.task-info__title {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3px 6px;
+  border: 1px dotted transparent;
+  border-radius: 2px;
+  transition: @transition-basic;
+
+  &:hover {
+    border-color: @color-border-gray;
+  }
+}
 .task-info__title-text-block {
   font-size: @font-size-task-title;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 .task-info__title .public-DraftEditorPlaceholder-root {
