@@ -25,9 +25,7 @@ if (authData) {
     email: 'anta.semenov@gmail.com',
     password: 'sungreen'
   }, (error, authData) => {
-    if (error) {
-      console.log(error);
-    } else {
+    if (!error) {
       authHandler(authData)
     }
   })
