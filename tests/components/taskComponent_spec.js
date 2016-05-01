@@ -66,7 +66,8 @@ describe('Task component', () => {
     it('Should invoke complete callback when change event occurs', () => {
       const checkboxClass = 'task__completed'
       let checkedId = -12
-      const callback = (id) => checkedId = id
+      let checkStatus = true
+      const callback = (id, status) => {checkedId = id, checkStatus = status}
 
       const taskComponent = renderIntoDocument(
         <Task
@@ -78,9 +79,11 @@ describe('Task component', () => {
       const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
       expect(checkedId).to.equal(-12)
+      expect(checkStatus).to.equal(true)
 
       Simulate.change(checkboxComponent)
       expect(checkedId).to.equal(0)
+      expect(checkStatus).to.equal(false)
     })
   })
   describe('Today', () => {
@@ -100,14 +103,17 @@ describe('Task component', () => {
     })
     it('Should invoke today callback when click occurs', () => {
       let callbackId = -12
-      const callback = id => callbackId = id
+      let callbackStatus = true
+      const callback = (id, status) => {callbackId = id, callbackStatus = status}
       const todayClass = 'task__today'
       const taskComponent = renderIntoDocument(<Task today={testTasks.get(0).get('today')} id={testTasks.get(0).get('id')} onTaskTodayClick={callback} />)
       const todayToggle = findRenderedDOMComponentWithClass(taskComponent, todayClass)
 
       expect(callbackId).to.equal(-12)
+      expect(callbackStatus).to.equal(true)
       Simulate.click(todayToggle)
       expect(callbackId).to.equal(testTasks.get(0).get('id'))
+      expect(callbackStatus).to.equal(!testTasks.get(0).get('today'))
     })
   })
   describe('Priority', () => {

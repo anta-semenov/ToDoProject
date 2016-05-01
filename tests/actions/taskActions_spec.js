@@ -41,11 +41,13 @@ describe('Task action creators', () => {
 
     it('Should create an action to complete a task', () => {
         const id = 0
+        const status = true
         const expectedAction = {
             type: types.COMPLETE_TASK,
-            id
+            id,
+            status
         }
-        expect(actions.completeTask(id)).to.deep.equal(expectedAction)
+        expect(actions.completeTask(id, status)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to add task to a project', () => {
@@ -82,12 +84,14 @@ describe('Task action creators', () => {
     })
 
     it('Should create an action to add task to today', () => {
-        const id = 0;
+        const id = 0
+        const status = true
         const expectedAction = {
             type: types.SET_TASK_TODAY,
-            id
+            id,
+            status
         }
-        expect(actions.setTaskToday(id)).to.deep.equal(expectedAction)
+        expect(actions.setTaskToday(id, status)).to.deep.equal(expectedAction)
     })
 
 })

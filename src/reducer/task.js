@@ -12,7 +12,7 @@ export default function task(state = fromJS([]), action) {
     case actionTypes.EDIT_TASK:
       return editTask(state, action.id, action.properties)
     case actionTypes.COMPLETE_TASK:
-      return completeTask(state, action.id)
+      return completeTask(state, action.id, action.status)
     case actionTypes.ADD_TASK_TO_PROJECT:
       return addTaskToProject(state, action.id, action.project)
     case actionTypes.ADD_TASK_CONTEXT:
@@ -20,7 +20,7 @@ export default function task(state = fromJS([]), action) {
     case actionTypes.REMOVE_TASK_CONTEXT:
       return removeTaskContext(state, action)
     case actionTypes.SET_TASK_TODAY:
-      return setTaskToday(state, action.id)
+      return setTaskToday(state, action.id, action.status)
     default:
       return state
   }
@@ -54,14 +54,14 @@ function editTask(state, id, properties = {}) {
   return state.mergeIn([index], properties)
 }
 
-function completeTask(state, id) {
+function completeTask(state, id, status = false) {
   const index = state.findIndex(item => {return item.get('id') === id})
-  return state.updateIn([index, 'completed'], val => !val)
+  return state.setIn([index, 'completed'], status)
 }
 
-function setTaskToday(state, id) {
+function setTaskToday(state, id, status = false) {
   const index = state.findIndex(item => {return item.get('id') === id})
-  return state.updateIn([index, 'today'], val => !val)
+  return state.setIn([index, 'today'], status)
 }
 
 function addTaskToProject(state, id, projectId) {
