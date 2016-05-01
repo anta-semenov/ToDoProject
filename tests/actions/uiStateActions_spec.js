@@ -74,4 +74,20 @@ describe('UI state action creators', () => {
     }
     expect(actions.clearTodayLatentTasks()).to.deep.equal(expectedAction)
   })
+
+  it('Should create an action to set syncing', () => {
+    const expectedAction = {
+      type: types.SET_SYNCING,
+      status: true
+    }
+    expect(actions.setSyncing(true)).to.deep.equal(expectedAction)
+  })
+
+  it('Should create an action to set offline', () => {
+    const expectedAction = {
+      type: types.SET_OFFLINE,
+      status: true
+    }
+    expect(actions.setOffline(true)).to.deep.equal(expectedAction)
+  })
 })

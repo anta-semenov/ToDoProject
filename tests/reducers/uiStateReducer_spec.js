@@ -319,6 +319,7 @@ describe('UI state reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
+
   describe('Section Completed Latent Tasks', () => {
     describe('TOGGLE_TASK_COMPLETED_LATENCY', () => {
       it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with empty state', () => {
@@ -432,6 +433,84 @@ describe('UI state reducer', () => {
         const nextState = fromJS({})
         expect(reducer(initialState, action)).to.equal(nextState)
       })
+    })
+  })
+
+  describe('Set syncing', () => {
+    it('Should handle SET_SYNCING with empty state and empty parameter', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setSyncing()
+      const nextState = fromJS({})
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_SYNCING with empty state', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setSyncing(true)
+      const nextState = fromJS({
+        syncing: true
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_SYNCING with empty parameter', () => {
+      const initialState = fromJS({
+        syncing: true,
+        activeItem: 0
+      })
+      const action = actionCreator.setSyncing()
+      const nextState = fromJS({
+        activeItem: 0
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_SYNCING with false parameter', () => {
+      const initialState = fromJS({
+        syncing: true,
+        activeItem: 0
+      })
+      const action = actionCreator.setSyncing(false)
+      const nextState = fromJS({
+        activeItem: 0
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
+  describe('Set offline', () => {
+    it('Should handle SET_OFFLINE with empty state and empty parameter', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setOffline()
+      const nextState = fromJS({})
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_OFFLINE with empty state', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setOffline(true)
+      const nextState = fromJS({
+        offline: true
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_OFFLINE with empty parameter', () => {
+      const initialState = fromJS({
+        offline: true,
+        activeItem: 0
+      })
+      const action = actionCreator.setOffline()
+      const nextState = fromJS({
+        activeItem: 0
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_OFFLINE with false parameter', () => {
+      const initialState = fromJS({
+        offline: true,
+        activeItem: 0
+      })
+      const action = actionCreator.setOffline(false)
+      const nextState = fromJS({
+        activeItem: 0
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
 })

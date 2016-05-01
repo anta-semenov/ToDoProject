@@ -29,3 +29,11 @@ export function toggleTaskTodayLatency(id) {
 export function clearTodayLatentTasks() {
   return {type: actionTypes.CLEAR_TODAY_LATENT_TASKS}
 }
+
+export function setSyncing(status) {
+  return {type: actionTypes.SET_SYNCING, status}
+}
+
+export function setOffline(status) {
+  return {type: actionTypes.SET_OFFLINE, status}
+}

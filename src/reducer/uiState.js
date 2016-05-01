@@ -21,6 +21,10 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return toggleTaskTodayLatency(state, action.id)
     case actionTypes.CLEAR_TODAY_LATENT_TASKS:
       return clearTodayLatentTasks(state)
+    case actionTypes.SET_SYNCING:
+      return setSyncing(state, action.status)
+    case actionTypes.SET_OFFLINE:
+      return setOffline(state, action.status)
     default:
       return state
   }
@@ -89,4 +93,20 @@ function toggleTaskTodayLatency(state, id) {
 }
 function clearTodayLatentTasks(state) {
   return state.delete('sectionTodayLatentTasks')
+}
+
+function setSyncing(state, status = false) {
+  if (status) {
+    return state.set('syncing', status)
+  } else {
+    return state.delete('syncing')
+  }
+}
+
+function setOffline(state, status = false) {
+  if (status) {
+    return state.set('offline', status)
+  } else {
+    return state.delete('offline')
+  }
 }
