@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable'
-import * as actionTypes from '../constants/ActionTypes'
+import * as actionTypes from '../constants/actionTypes'
 
 export default function userInfo(state = fromJS({}), action) {
   switch (action.type) {
