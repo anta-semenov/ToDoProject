@@ -65,7 +65,7 @@ describe('Navigation', () => {
       }
     ],
     nextProjectID: 13,
-    nextContextID: 13,
+    nextContextID: 12,
     onItemClick: () => {},
     addNew: () => {},
     onStopEditing: () => {}
@@ -79,6 +79,15 @@ describe('Navigation', () => {
 
   it('Should pass correct props to groupComponents', () => {
     const navGroupsProps = []
+
+    const onItemClickCallback = () => {return 1}
+    const addNewCallback = () => {return 2}
+    const onStopEditingCallback = () => {return 3}
+
+    testProps.onItemClick = onItemClickCallback
+    testProps.addNew = addNewCallback
+    testProps.onStopEditing = onStopEditingCallback
+
     Navigation.__Rewire__('NavigationGroup', class extends Component {
       render() {
         navGroupsProps.push(this.props)
@@ -91,5 +100,18 @@ describe('Navigation', () => {
     expect(navGroupsProps.length).to.equal(2)
     expect(navGroupsProps[0].type).to.equal(navGroupTypes.BASIC)
     expect(navGroupsProps[0].items.size).to.equal(3)
+    expect(navGroupsProps[1].type).to.equal(navGroupTypes.CONTEXTS)
+    expect(navGroupsProps[1].title).to.equal(sectionNames.CONTEXTS)
+    expect(navGroupsProps[1].items.size).to.equal(2)
+    expect(navGroupsProps[0].nextContextID).to.equal(undefined)
+    expect(navGroupsProps[0].nextProjectID).to.equal(undefined)
+    expect(navGroupsProps[0].onItemClick).to.equal(onItemClickCallback)
+    expect(navGroupsProps[0].addNew).to.equal(addNewCallback)
+    expect(navGroupsProps[0].onStopEditing).to.equal(onStopEditingCallback)
+    expect(navGroupsProps[1].nextContextID).to.equal(undefined)
+    expect(navGroupsProps[1].nextProjectID).to.equal(undefined)
+    expect(navGroupsProps[1].onItemClick).to.equal(onItemClickCallback)
+    expect(navGroupsProps[1].addNew).to.equal(addNewCallback)
+    expect(navGroupsProps[1].onStopEditing).to.equal(onStopEditingCallback)
   })
 })
