@@ -181,7 +181,8 @@ describe('Project reducer', () => {
         ])
         const action = {
             type: types.COMPLETE_PROJECT,
-            id: 1
+            id: 1,
+            status: true
         }
         const nextState = fromJS([
             {
@@ -193,6 +194,169 @@ describe('Project reducer', () => {
                 id: 1,
                 title: 'New Project',
                 completed: true
+            }
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle COMPLETE_PROJECT with true status and true complete', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: true
+            }
+        ])
+        const action = {
+            type: types.COMPLETE_PROJECT,
+            id: 1,
+            status: true
+        }
+        const nextState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: true
+            }
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle COMPLETE_PROJECT with false status and true complete', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: true
+            }
+        ])
+        const action = {
+            type: types.COMPLETE_PROJECT,
+            id: 1,
+            status: false
+        }
+        const nextState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: false
+            }
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle COMPLETE_PROJECT with false status and false complete', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: false
+            }
+        ])
+        const action = {
+            type: types.COMPLETE_PROJECT,
+            id: 1,
+            status: false
+        }
+        const nextState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: false
+            }
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle COMPLETE_PROJECT without status and true complete', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: true
+            }
+        ])
+        const action = {
+            type: types.COMPLETE_PROJECT,
+            id: 1
+        }
+        const nextState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: false
+            }
+        ])
+        expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle COMPLETE_PROJECT without status and false complete', () => {
+        const initialState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: false
+            }
+        ])
+        const action = {
+            type: types.COMPLETE_PROJECT,
+            id: 1
+        }
+        const nextState = fromJS([
+            {
+                id: 0,
+                title: 'Existing Project',
+                completed: false
+            },
+            {
+                id: 1,
+                title: 'New Project',
+                completed: false
             }
         ])
         expect(reducer(initialState, action)).to.equal(nextState)

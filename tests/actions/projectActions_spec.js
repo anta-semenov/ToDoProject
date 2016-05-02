@@ -26,11 +26,13 @@ describe('Project action creators', () => {
 
     it('Should create an action to complete a project', () => {
         const id = 0
+        const status = true
         const expectedAction = {
             type: types.COMPLETE_PROJECT,
-            id
+            id,
+            status
         }
-        expect(actions.completeProject(id)).to.deep.equal(expectedAction)
+        expect(actions.completeProject(id, status)).to.deep.equal(expectedAction)
     })
 
     it('Should create an action to edit a project', () => {

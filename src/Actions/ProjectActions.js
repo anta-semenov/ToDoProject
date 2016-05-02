@@ -8,8 +8,8 @@ export function removeProject(id) {
   return {type: actionTypes.REMOVE_PROJECT, id}
 }
 
-export function completeProject(id) {
-  return {type: actionTypes.COMPLETE_PROJECT, id}
+export function completeProject(id, status) {
+  return {type: actionTypes.COMPLETE_PROJECT, id, status}
 }
 
 export function editProject(id, properties) {

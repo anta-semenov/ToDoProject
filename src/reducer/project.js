@@ -14,7 +14,7 @@ export default function project(state = fromJS([]), action) {
       return editProject(state, action.id, action.properties)
 
     case actionTypes.COMPLETE_PROJECT:
-      return completeProject(state, action.id)
+      return completeProject(state, action.id, action.status)
 
     default:
       return state
@@ -49,7 +49,7 @@ function editProject(state, id, properties = {}) {
   return state.mergeIn([index], properties)
 }
 
-function completeProject(state, id) {
+function completeProject(state, id, status = false) {
   const index = state.findIndex(item => item.get('id') === id)
-  return state.updateIn([index, 'completed'], val => !val)
+  return state.setIn([index, 'completed'], status)
 }
