@@ -1,0 +1,60 @@
+@import '../../../styles/variables.less';
+
+.calendar {
+  position: relative;
+  box-sizing: border-box;
+  margin: 10px  0 0 6px;
+  width: 100%;
+}
+.calendar__day-names {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.calendar__day-name {
+  position: relative;
+  box-sizing: border-box;
+  width: 14.2857%;
+  padding: 5px;
+
+  text-align: center;
+  font-size: @font-size-small;
+  font-weight: @font-weight-light;
+  cursor: pointer;
+  color: @color-font-medium;
+}
+
+.calendar__week {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.calendar__day {
+  position: relative;
+  box-sizing: border-box;
+  width: 14.2857%;
+  padding: 5px;
+
+  text-align: center;
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+  cursor: pointer;
+
+  &:hover {
+
+  }
+
+  &.is-prev-month,
+  &.is-next-month {
+    color: @color-font-light;
+  }
+}

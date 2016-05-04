@@ -3,6 +3,7 @@ import PureRenderMixins from 'react-addons-pure-render-mixin'
 import { Map, Set } from 'immutable'
 import TaskTitle from './taskTitle/TaskTitle'
 import TaskDescription from './taskDescription/TaskDescription'
+import TaskCalendar from './taskCalendar/TaskCalendar'
 import * as priorityLevels from '../../constants/priorityLevels'
 import './TaskInfo.less'
 
@@ -30,9 +31,10 @@ export default class TaskInfo extends React.Component {
               </div>
             </div>
             <div className='task-info__body'>
-              <div>
+              <div className='task-info__body-top'>
                 <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
                 <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} />
+                <TaskCalendar selectedDate={this.props.date} onChange={this.props.onDateChange}/>
               </div>
               <button className='task-info__delete' onClick={() => this.props.onTaskDeleteClick(this.props.id)} tabIndex='0' >Delete task</button>
             </div>
