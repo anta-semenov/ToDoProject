@@ -4,6 +4,7 @@ import { Map, Set } from 'immutable'
 import TaskTitle from './taskTitle/TaskTitle'
 import TaskDescription from './taskDescription/TaskDescription'
 import TaskCalendar from './taskCalendar/TaskCalendar'
+import CloseBtn from '../controls/closeBtn/CloseBtn'
 import * as priorityLevels from '../../constants/priorityLevels'
 import './TaskInfo.less'
 
@@ -16,7 +17,7 @@ export default class TaskInfo extends React.Component {
   render() {
     return (
       <div className={`task-info ${this.props.id >= 0 ? 'is-open' : ''}` }>
-        <div className='task-info__close' onClick={() => this.props.onCloseClick()} />
+        <CloseBtn appearance='task-info' onClick={this.props.onCloseClick} />
         {this.props.id >= 0 ?
           <div className='task-info__content'>
             <div className='task-info__controls'>
@@ -34,7 +35,7 @@ export default class TaskInfo extends React.Component {
               <div className='task-info__body-top'>
                 <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
                 <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} />
-                <TaskCalendar selectedDate={this.props.date} onChange={this.props.onDateChange}/>
+                <TaskCalendar id={this.props.id} selectedDate={this.props.date} onChange={this.props.onDateChange}/>
               </div>
               <button className='task-info__delete' onClick={() => this.props.onTaskDeleteClick(this.props.id)} tabIndex='0' >Delete task</button>
             </div>
