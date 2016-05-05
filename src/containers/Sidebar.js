@@ -8,8 +8,9 @@ import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import { makeNextIDSelector } from '../selectors/nextID'
+import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defaults'
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
   const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'], -1)
   const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
@@ -41,7 +42,7 @@ const mapStateToProps = (state) => {
     {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
-      addNewTitle: '+ context',
+      addNewTitle: ADD_NEW_CONTEXT_TITLE,
       items: fromJS(state.get('context').map(item => {
         const id = item.get('id')
         return fromJS({
@@ -57,8 +58,8 @@ const mapStateToProps = (state) => {
     {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
-      addNewTitle: '+ project',
-      items: fromJS(state.get('project').map(item => {
+      addNewTitle: ADD_NEW_PROJECT_TITLE,
+      items: fromJS(state.get('project').filter(project => !project.get('completed')).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -78,7 +79,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     onItemClick: (type, id) => {
       dispatch(clearCompletedLatentTasks())
@@ -122,7 +123,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
+export const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return Object.assign({}, ownProps, stateProps, {
     onItemClick: dispatchProps.onItemClick,
     addNew: (type) => dispatchProps.addNew(type, stateProps.nextProjectID, stateProps.nextContextID),

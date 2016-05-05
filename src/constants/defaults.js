@@ -20,3 +20,6 @@ export const DATE_FORMAT = {
   month: 'long',
   day: 'numeric'
 }
+
+export const ADD_NEW_CONTEXT_TITLE = '+ context'
+export const ADD_NEW_PROJECT_TITLE = '+ project'
