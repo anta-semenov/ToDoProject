@@ -9,12 +9,12 @@
 .calendar__nav {
   position: relative;
   box-sizing: border-box;
+  width: 92.8572%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  width: 92.8572%;
   margin-bottom: 10px;
 }
 .calendar__title {
@@ -33,6 +33,7 @@
   margin-right: 10px;
   font-size: @font-size-basic;
 }
+
 .calendar__prev,
 .calendar__next {
   position: relative;
@@ -40,9 +41,41 @@
   height: 30px;
   background-color: transparent;
   border: none;
-  border-radius: 50%;
-  transition: @transition-basic;
-  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    border: 1px solid @color-bg-light-gray;
+    opacity: 0;
+    background-color: @color-bg-light-gray;
+    transition: @transition-basic;
+  }
+  &:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  &:active::before {
+    background-color: @color-border-light-gray;
+    border-color: @color-border-light-gray;
+  }
+}
+.calendar__prev {
+  left: -5px;
+}
+.calendar__next {
+  right: -5px;
+}
+.calendar__prev-sign {
+  position: relative;
+  width: 100%;
+  height: 100%;
 
   &::before,
   &::after {
@@ -55,48 +88,57 @@
     background-color: @color-font-light;
     transition: @transition-basic;
   }
+  &::before {
+    transform: translate(-5px, -100%) rotate(50deg);
+    transform-origin: left bottom;
+  }
+  &::after {
+    transform: translate(-5px, 0) rotate(-50deg);
+    transform-origin: left top;
+  }
 
-  &:hover {
-    background-color: @color-bg-light-gray;
+  .calendar__prev:hover &,
+  .calendar__prev:active & {
     &::before,
     &::after {
       background-color: @color-font-medium;
     }
   }
 }
-.calendar__prev {
-  &::before {
-    transform: translate(-5px, -100%) rotate(50deg);
-    transform-origin: left bottom;
-    /*width: 10px;
-    height: 10px;
-    background-color: transparent;
-    border-top: 1px solid @color-font-light;
-    border-left: 1px solid @color-font-light;
-    border-top-left-radius: 3px;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    height: 0;
-    width: 0;
-    background-color: transparent;
-    border-right: 10px solid @color-font-light;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;*/
-  }
+.calendar__next-sign {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &::before,
   &::after {
-    transform: translate(-5px, 0) rotate(-50deg);
-    transform-origin: left top;
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1px;
+    height: 10px;
+    background-color: @color-font-light;
+    transition: @transition-basic;
   }
-}
-.calendar__next {
   &::before {
-    transform: translate(5px, -100%) rotate(-50deg);
+    transform: translate(4px, -100%) rotate(-50deg);
     transform-origin: right bottom;
   }
   &::after {
-    transform: translate(5px, 0) rotate(50deg);
+    transform: translate(4px, 0) rotate(50deg);
     transform-origin: right top;
   }
+
+  .calendar__next:hover &,
+  .calendar__next:active & {
+    &::before,
+    &::after {
+      background-color: @color-font-medium;
+    }
+  }
 }
+
 .calendar__day-names {
   position: relative;
   box-sizing: border-box;

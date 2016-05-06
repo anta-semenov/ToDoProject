@@ -75,12 +75,12 @@ export default class TaskCalendar extends React.Component {
       <div className='calendar'>
         <div className='calendar__header'>
           <div className='calendar__nav'>
-            <button className='calendar__prev' onClick={() => this.prevPeriod()}></button>
+            <button className='calendar__prev' onClick={() => this.prevPeriod()}><div className='calendar__prev-sign'/></button>
             <div className='calendar__title'>
               <div className='calendar__month'>{MONTH_NAMES.get(this.state.currentMonth)}</div>
               <div className='calendar__year'>{this.state.currentYear}</div>
             </div>
-            <button className='calendar__next' onClick={() => this.nextPeriod()}></button>
+            <button className='calendar__next' onClick={() => this.nextPeriod()}><div className='calendar__next-sign'/></button>
           </div>
           <div className='calendar__day-names'>
             {weekdayNamesRow().map(dayName =>
