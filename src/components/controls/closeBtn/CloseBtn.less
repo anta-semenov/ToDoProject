@@ -16,6 +16,9 @@
     opacity: 1;
     transform: scale(1);
   }
+  &:active::before {
+    background-color: @color-border-light-gray;
+  }
   &.close--task-info {
     position: absolute;
     top: 5px;
