@@ -28,7 +28,7 @@ export default class Task extends React.Component {
         <div className='task__body' onClick={() => this.props.onTaskClick(this.props.id)}>
           <div className='task__main'>
             <div className='task__title'>{this.props.title}</div>
-            {this.props.description ? <div className='task__description'>{descriptionToString(this.props.description)}</div> : null}
+            {descriptionToString(this.props.description) ? <div className='task__description'>{descriptionToString(this.props.description)}</div> : null}
           </div>
           {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
         </div>

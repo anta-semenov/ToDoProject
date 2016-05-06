@@ -16,6 +16,7 @@ const mapStateToProps = (state) => ({
   priority: activeTask.getPriority(state),
   project: activeTask.getProject(state),
   contexts: activeTask.getContexts(state),
+  date: activeTask.getDate(state),
   sectionType: getSelectedSectionType(state)
 })
 
@@ -35,10 +36,10 @@ const mapDispatchToProps = dispatch => ({
   onDescriptionChange: (taskId, description) => dispatch(editTask(taskId, {description})),
   onProjectChange: (taskId, projectId) => dispatch(addTaskToProject(taskId, projectId)),
   onContextsChange: (taskId, contexts) => dispatch(editTask(taskId, {contexts})),
-  onDateChange: (taskId, date) => dispatch(editTask(taskId, {date})),
+  onDateChange: (taskId, date) => dispatch(editTask(taskId, {date: date})),
   onTaskDeleteClick: taskId => {
     dispatch(setActiveItem())
-    dispatch(removeTask(taskId))    
+    dispatch(removeTask(taskId))
   },
   onCloseClick: () => dispatch(setActiveItem())
 })

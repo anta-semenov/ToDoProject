@@ -37,21 +37,36 @@ export default class TaskCalendar extends React.Component {
     }
   }
   nextPeriod() {
+    if (this.state.currentMonth === 11) {
+      this.setState({
+        currentMonth: 0,
+        currentYear: this.state.currentYear + 1
+      })
+    } else {
+      this.setState({currentMonth: this.state.currentMonth + 1})
+    }
   }
   prevPeriod() {
-    switch (this.state.mode) {
-      case DATE_MODE:
-        if (this.state.currentMonth === 0) {this.setState({
-          currentMonth: 11,
-          currentYear: this.state.currentYear - 1
-        })}
-        else {this.setState({currentMonth: this.state.currentMonth - 1})}
-        break
-      case MONTH_MODE:
-        this.setState({currentYear: this.state.currentYear - 1})
-        break
-      case YEAR_MODE:
-        this.setState
+    if (this.state.currentMonth === 0) {
+      this.setState({
+        currentMonth: 11,
+        currentYear: this.state.currentYear - 1
+      })
+    } else {
+      this.setState({currentMonth: this.state.currentMonth - 1})
+    }
+  }
+  handleDayClick(date) {
+    if (areDatesEqual(date, this.props.selectedDate)) {this.props.onChange(this.props.id, undefined)}
+    else {this.props.onChange(this.props.id, date)}
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const today = new Date()
+    this.state = {
+      todayDate: today,
+      currentMonth: nextProps.selectedDate ? nextProps.selectedDate.getMonth() : today.getMonth(),
+      currentYear: nextProps.selectedDate ? nextProps.selectedDate.getFullYear() : today.getFullYear()
     }
   }
 
@@ -69,7 +84,7 @@ export default class TaskCalendar extends React.Component {
           </div>
           <div className='calendar__day-names'>
             {weekdayNamesRow().map(dayName =>
-              <div className='calendar__day-name'>{dayName}</div>
+              <div key={dayName} className='calendar__day-name'>{dayName}</div>
             )}
           </div>
         </div>
@@ -83,8 +98,9 @@ export default class TaskCalendar extends React.Component {
                     ${day.getMonth() < this.state.currentMonth ? 'is-prev-month' : ''}
                     ${day.getMonth() > this.state.currentMonth ? 'is-next-month' : ''}
                     ${areDatesEqual(day, this.state.todayDate) ? 'is-today' : '' }
-                    ${areDatesEqual(day, this.props.selectedDate) ? 'is-selcted' : '' }
-                  `}>
+                    ${areDatesEqual(day, this.props.selectedDate) ? 'is-selected' : '' }
+                  `}
+                  onClick={() => this.handleDayClick(day)}>
                   {day.getDate()}
                 </div>
               )}
@@ -97,6 +113,7 @@ export default class TaskCalendar extends React.Component {
 }
 
 TaskCalendar.propTypes = {
+  id: React.PropTypes.number.isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   tasks: React.PropTypes.object,
   onChange: React.PropTypes.func.isRequired

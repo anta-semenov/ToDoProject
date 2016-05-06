@@ -3,8 +3,99 @@
 .calendar {
   position: relative;
   box-sizing: border-box;
-  margin: 10px  0 0 6px;
+  margin: 30px  0 0 6px;
   width: 100%;
+}
+.calendar__nav {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 92.8572%;
+  margin-bottom: 10px;
+}
+.calendar__title {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+.calendar__month {
+  position: relative;
+  margin-right: 10px;
+  font-size: @font-size-basic;
+}
+.calendar__year {
+  position: relative;
+  margin-right: 10px;
+  font-size: @font-size-basic;
+}
+.calendar__prev,
+.calendar__next {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  transition: @transition-basic;
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1px;
+    height: 10px;
+    background-color: @color-font-light;
+    transition: @transition-basic;
+  }
+
+  &:hover {
+    background-color: @color-bg-light-gray;
+    &::before,
+    &::after {
+      background-color: @color-font-medium;
+    }
+  }
+}
+.calendar__prev {
+  &::before {
+    transform: translate(-5px, -100%) rotate(50deg);
+    transform-origin: left bottom;
+    /*width: 10px;
+    height: 10px;
+    background-color: transparent;
+    border-top: 1px solid @color-font-light;
+    border-left: 1px solid @color-font-light;
+    border-top-left-radius: 3px;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    height: 0;
+    width: 0;
+    background-color: transparent;
+    border-right: 10px solid @color-font-light;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;*/
+  }
+  &::after {
+    transform: translate(-5px, 0) rotate(-50deg);
+    transform-origin: left top;
+  }
+}
+.calendar__next {
+  &::before {
+    transform: translate(5px, -100%) rotate(-50deg);
+    transform-origin: right bottom;
+  }
+  &::after {
+    transform: translate(5px, 0) rotate(50deg);
+    transform-origin: right top;
+  }
 }
 .calendar__day-names {
   position: relative;
@@ -24,10 +115,14 @@
   padding: 5px;
 
   text-align: center;
-  font-size: @font-size-small;
-  font-weight: @font-weight-light;
-  cursor: pointer;
-  color: @color-font-medium;
+  font-size: @font-size-xsmall;
+  font-weight: @font-weight-medium;
+  color: @color-font-light;
+  letter-spacing: 0.04em;
+
+  &:first-child {
+    margin-left: -7.1428%;
+  }
 }
 
 .calendar__week {
@@ -42,19 +137,77 @@
   position: relative;
   box-sizing: border-box;
   width: 14.2857%;
-  padding: 5px;
+  padding: 10px 10px 8px 10px;
 
   text-align: center;
   font-size: @font-size-basic;
   font-weight: @font-weight-light;
+  color: @color-font-basic;
+  line-height: 1;
   cursor: pointer;
 
-  &:hover {
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid @color-bg-light-gray;
+    opacity: 0;
+    background-color: @color-bg-light-gray;
+    transition: @transition-basic;
+  }
 
+  &:hover {
+    &::before {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  &:first-child {
+    margin-left: -7.1428%;
   }
 
   &.is-prev-month,
   &.is-next-month {
     color: @color-font-light;
+    font-weight: @font-weight-light;
+  }
+  &.is-today {
+    font-weight: @font-weight-bold;
+    color: @color-accent;
+  }
+  &.is-selected {
+    color: #ffffff;
+    font-weight: @font-weight-bold;
+
+    &::before {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      background-color: @color-accent;
+      border-color: @color-accent;
+    }
+    &:hover {
+      color: #000000;
+      font-weight: @font-weight-medium;
+      &::before {
+        background-color: transparent;
+        border: 1px dotted @color-accent;
+        opacity: 1;
+      }
+    }
+    &.is-prev-month,
+    &.is-next-month {
+      &::before {
+        opacity: 0.3;
+      }
+      &:hover::before {
+        opacity: 0.6;
+      }
+    }
   }
 }
