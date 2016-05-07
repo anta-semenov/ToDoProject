@@ -10,405 +10,471 @@ describe('Task reducer', () => {
   it('Should return initial state', () => {
     const initialState = undefined
     const action = {}
-    const nextState = fromJS([])
+    const nextState = fromJS({})
     expect(reducer(initialState, action)).to.equal(nextState)
   })
   it('should return state for empty action', () => {
-    const initialState = fromJS([
-      {
-        id: 0,
+    const initialState = fromJS({
+      'b41sogy3s0oc': {
+        id: 'b41sogy3s0oc',
         title: 'Existing Task',
         completed: false,
         today: false,
         priority: PRIORITY_NONE
       }
-    ])
+    })
     const action = {}
     expect(reducer(initialState, action)).to.equal(initialState)
   })
 
 
   //Add task
-  it('should handle ADD_TASK with empty action', () => {
-    const initialState = List()
-    const action = {
-      type: types.ADD_TASK
-    }
-    const nextState = fromJS([
-      {
-        id: 0,
-        title: NEW_TASK_TITLE,
-        completed: false,
-        today: false,
-        priority: PRIORITY_NONE
+  describe('Add task', () => {
+    it('should handle ADD_TASK with empty action', () => {
+      const initialState = fromJS({})
+      const action = {
+        type: types.ADD_TASK
       }
-    ])
-    expect(reducer(initialState, action)).to.equal(nextState)
-  })
-  it('Should handle ADD_TASK with empty store', () => {
-    const initialState = List()
-    const action = {
-      type: types.ADD_TASK,
-      properties: {
-        title: 'Test Task',
-        description: 'Task description'
+      const nextState = fromJS({})
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle ADD_TASK with empty store', () => {
+      const initialState = List()
+      const action = {
+        type: types.ADD_TASK,
+        properties: {
+          id: 'b41sogy3s0oc',
+          title: 'Test Task',
+          description: 'Task description'
+        }
       }
-    }
-    const nextState = fromJS([
-      {
-        id: 0,
-        title: 'Test Task',
-        description: 'Task description',
-        completed: false,
-        today: false,
-        priority: PRIORITY_NONE
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Test Task',
+          description: 'Task description',
+          completed: false,
+          today: false,
+          priority: PRIORITY_NONE
 
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+    })
+    it('Should handle ADD_TASK with not empty store', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.ADD_TASK,
+        properties: {
+          id: 'b41sogy3s0ok',
+          title: 'Test Task'
+        }
       }
-    ])
-    expect(reducer(initialState, action)).to.equal(fromJS(nextState))
-  })
-  it('Should handle ADD_TASK with not empty store', () => {
-    const initialState = fromJS([
-      {
-        id: 0,
-        title: 'Existing Task',
-        completed: false,
-        today: false
-      }
-    ])
-    const action = {
-      type: types.ADD_TASK,
-      properties: {
-        title: 'Test Task'
-      }
-    }
-    const nextState = fromJS([
-      {
-        id: 0,
-        title: 'Existing Task',
-        completed: false,
-        today: false
-      },
-      {
-        id: 1,
-        title: 'Test Task',
-        completed: false,
-        today: false,
-        priority: PRIORITY_NONE
-      }
-    ])
-    expect(reducer(initialState, action)).to.equal(nextState)
-  })
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'Test Task',
+          completed: false,
+          today: false,
+          priority: PRIORITY_NONE
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
 
-  it('Should handle REMOVE_TASK', () => {
-    const initialState = fromJS([
-      {
-        id: 0,
-        title: 'Existing Task',
-        completed: false,
-        today: false
-      },
-      {
-        id: 1,
-        title: 'New Task',
-        completed: false,
-        today: false
+    it('Should add nothing when properties do not content id', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.ADD_TASK,
+        properties: {
+          title: 'Test Task'
+        }
       }
-    ])
-    const action = {
-      type: types.REMOVE_TASK,
-      id: 1
-    }
-    const nextState = fromJS([
-      {
-        id: 0,
-        title: 'Existing Task',
-        completed: false,
-        today: false
-      }
-    ])
-    expect(reducer(initialState, action)).to.equal(nextState)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
   })
 
-  it('Should handle REMOVE_TASK', () => {
-    const initialState = fromJS([
-      {
-        id: 0,
-        title: 'Existing Task',
-        completed: false,
-        today: false
-      },
-      {
-        id: 1,
-        title: 'New Task',
-        completed: false,
-        today: false
+  describe('Remove task', () => {
+    it('Should handle REMOVE_TASK', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.REMOVE_TASK,
+        id: 'b41sogy3s0ok'
       }
-    ])
-    const action = {
-      type: types.REMOVE_TASK,
-      id: 3
-    }
-    expect(reducer(initialState, action)).to.equal(initialState)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle REMOVE_TASK with wrong id', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.REMOVE_TASK,
+        id: 'b41sogy4s0ok'
+      }
+      expect(reducer(initialState, action)).to.equal(initialState)
+    })
   })
 
-  it('Should handle EDIT_TASK', () => {
-    const initialState = fromJS([
-      {
-        id: 0,
-        title: 'Existing Task',
-        completed: false,
-        today: false
-      },
-      {
-        id: 1,
-        title: 'New Task',
-        completed: false,
-        today: false
+  describe('Edit task', () => {
+    it('Should handle EDIT_TASK', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.EDIT_TASK,
+        id: 'b41sogy3s0ok',
+        properties: {
+          title: 'Changed Task Tittle'
+        }
       }
-    ])
-    const action = {
-      type: types.EDIT_TASK,
-      id: 1,
-      properties: {
-        title: 'Changed Task Tittle'
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'Changed Task Tittle',
+          completed: false,
+          today: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle EDIT_TASK when id changed', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.EDIT_TASK,
+        id: 'b41sogy3s0ok',
+        properties: {
+          id: 'b41sogy4s0ok',
+          title: 'Changed Task Tittle'
+        }
       }
-    }
-    const nextState = fromJS([
-      {
-        id: 0,
-        title: 'Existing Task',
-        completed: false,
-        today: false
-      },
-      {
-        id: 1,
-        title: 'Changed Task Tittle',
-        completed: false,
-        today: false
-      }
-    ])
-    expect(reducer(initialState, action)).to.equal(nextState)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy4s0ok: {
+          id: 'b41sogy4s0ok',
+          title: 'Changed Task Tittle',
+          completed: false,
+          today: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
   })
 
   describe('Complete', () => {
     it('Should handle COMPLETE_TASK', () => {
-      const initialState = fromJS([
-        {
-          id: 0,
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
           today: false
         }
-      ])
+      })
       const action = {
         type: types.COMPLETE_TASK,
-        id: 1,
+        id: 'b41sogy3s0ok',
         status: true
       }
-      const nextState = fromJS([
-        {
-          id: 0,
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
           today: false
         }
-      ])
+      })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle COMPLETE_TASK already completed', () => {
-      const initialState = fromJS([
-        {
-          id: 0,
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
           today: false
         }
-      ])
+      })
       const action = {
         type: types.COMPLETE_TASK,
-        id: 1,
+        id: 'b41sogy3s0ok',
         status: true
       }
-      const nextState = fromJS([
-        {
-          id: 0,
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
           today: false
         }
-      ])
+      })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle COMPLETE_TASK already completed and empty status', () => {
-      const initialState = fromJS([
-        {
-          id: 0,
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
           today: false
         }
-      ])
+      })
       const action = {
         type: types.COMPLETE_TASK,
-        id: 1
+        id: 'b41sogy3s0ok'
       }
-      const nextState = fromJS([
-        {
-          id: 0,
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
           today: false
         }
-      ])
+      })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle COMPLETE_TASK with completed task', () => {
-      const initialState = fromJS([
-        {
-          id: 0,
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
           today: false
         }
-      ])
+      })
       const action = {
         type: types.COMPLETE_TASK,
-        id: 1,
+        id: 'b41sogy3s0ok',
         status: false
       }
-      const nextState = fromJS([
-        {
-          id: 0,
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
           today: false
         }
-      ])
+      })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle COMPLETE_TASK with uncompleted task', () => {
-      const initialState = fromJS([
-        {
-          id: 0,
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
           today: false
         }
-      ])
+      })
       const action = {
         type: types.COMPLETE_TASK,
-        id: 1,
+        id: 'b41sogy3s0ok',
         status: false
       }
-      const nextState = fromJS([
-        {
-          id: 0,
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
           today: false
         }
-      ])
+      })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
 
     it('Should handle COMPLETE_TASK with uncompleted task and empty status', () => {
-      const initialState = fromJS([
-        {
-          id: 0,
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
           today: false
         }
-      ])
+      })
       const action = {
         type: types.COMPLETE_TASK,
-        id: 1
+        id: 'b41sogy3s0ok'
       }
-      const nextState = fromJS([
-        {
-          id: 0,
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
           title: 'Existing Task',
           completed: false,
           today: false
         },
-        {
-          id: 1,
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
           today: false
         }
-      ])
+      })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
