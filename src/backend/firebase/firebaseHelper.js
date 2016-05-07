@@ -1,5 +1,5 @@
 import Firebase from 'firebase'
-import { FIREBASE_APP_REFERENCE } from '../constants/thierdPartyKeys'
+import { FIREBASE_APP_REFERENCE } from '../../constants/thierdPartyKeys'
 import { fromJS } from 'immutable'
 
 export function getStateForUser(userID, callback) {

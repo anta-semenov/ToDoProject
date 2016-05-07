@@ -5,7 +5,7 @@ import configureStore from './store/configureStore'
 import { fromJS } from 'immutable'
 import Firebase from 'firebase'
 import { FIREBASE_APP_REFERENCE } from './constants/thierdPartyKeys'
-import { getStateForUser } from './backend/firebaseHelper'
+import { getStateForUser } from './backend/firebase/firebaseHelper'
 
 function authHandler(authData) {
   getStateForUser(authData.uid, (state) => {

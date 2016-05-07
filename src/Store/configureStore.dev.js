@@ -4,7 +4,7 @@ import rootReducer from '../reducer'
 import DevTools from '../containers/DevTool'
 import { fromJS } from 'immutable'
 import { PRIORITY_HIGH } from '../constants/priorityLevels'
-import { setStateForUser } from '../backend/firebaseHelper'
+import { setStateForUser } from '../backend/firebase/firebaseHelper'
 
 const enhancer = compose(
   applyMiddleware(setStateForUser),
