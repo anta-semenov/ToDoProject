@@ -3,7 +3,7 @@ import * as actionTypes from '../constants/actionTypes'
 import { NEW_TASK_TITLE } from '../constants/defaults'
 import { PRIORITY_NONE } from '../constants/priorityLevels'
 
-export default function task(state = fromJS([]), action) {
+export default function task(state = fromJS({}), action) {
   switch (action.type) {
     case actionTypes.ADD_TASK:
       return addTask(state, action.properties)
@@ -27,55 +27,51 @@ export default function task(state = fromJS([]), action) {
 }
 
 function addTask(state, properties = fromJS({})) {
-  const newId = state.reduce((id, item) => {
-    return Math.max(id, item.get('id'))
-  }, -1) + 1
+  if (!properties.id || state.has(properties.id)) {
+    return state
+  }
   const newTask = fromJS({
-    id: newId,
+    id: properties.id,
     title: NEW_TASK_TITLE,
     completed: false,
     today: false,
     priority: PRIORITY_NONE
   })
-  return state.push(newTask.merge(properties))
+  return state.set(properties.id, newTask.merge(properties))
 }
 
 function removeTask(state, id) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  if (index > -1) {
-    return state.delete(index)
-  } else {
-    return state
-  }
+  return state.delete(id)
 }
 
 function editTask(state, id, properties = {}) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  return state.mergeIn([index], properties)
+  if (properties.id && properties.id != id) {
+    const temp = state.get(id)
+    return state.delete(id).set(properties.id, temp).mergeIn([properties.id], properties)
+  } else {
+    return state.mergeIn([id], properties)
+  }
+
 }
 
 function completeTask(state, id, status = false) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  return state.setIn([index, 'completed'], status)
+  return state.setIn([id, 'completed'], status)
 }
 
 function setTaskToday(state, id, status = false) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  return state.setIn([index, 'today'], status)
+  return state.setIn([id, 'today'], status)
 }
 
 function addTaskToProject(state, id, projectId) {
-  const index = state.findIndex(item => {return item.get('id') === id})
   if (projectId) {
-    return state.setIn([index, 'project'], projectId)
+    return state.setIn([id, 'project'], projectId)
   } else {
-    return state.deleteIn([index, 'project'])
+    return state.deleteIn([id, 'project'])
   }
 }
 
 function addTaskContext(state, id, contextId) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  return state.updateIn([index, 'contexts'], val => {
+  return state.updateIn([id, 'contexts'], val => {
     if (val) {
       return val.add(contextId)
     } else {
@@ -85,16 +81,15 @@ function addTaskContext(state, id, contextId) {
 }
 
 function removeTaskContext(state, {id, context}) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  const temp =  state.updateIn([index, 'contexts'], val => {
+  const temp =  state.updateIn([id, 'contexts'], val => {
     if (val) {
       return val.delete(context)
     } else {
       return val
     }
   })
-  if (temp.getIn([index, 'contexts']) && temp.getIn([index, 'contexts']).isEmpty()) {
-    return temp.deleteIn([index, 'contexts'])
+  if (temp.getIn([id, 'contexts']) && temp.getIn([id, 'contexts']).isEmpty()) {
+    return temp.deleteIn([id, 'contexts'])
   } else {
     return temp
   }
