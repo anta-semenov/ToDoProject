@@ -8,9 +8,9 @@ export const getSelectedSectionType = state => state.getIn(['uiState', 'selected
 export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], -1)
 const getCompletedLatentTasks = state => state.getIn(['uiState', 'sectionCompletedLatentTasks'], fromJS([]))
 export const getTodayLatentTasks = state => state.getIn(['uiState', 'sectionTodayLatentTasks'], Set([]))
-export const getAllTasks = state => state.get('task')
-const getProjects = state => state.get('project')
-const getContexts = state => state.get('context')
+export const getAllTasks = state => (state.get('task') || fromJS({})).toList()
+const getProjects = state => (state.get('project') || fromJS({})).toList()
+const getContexts = state => (state.get('context') || fromJS({})).toList()
 
 const getTasks = createSelector(
   [getAllTasks, getCompletedLatentTasks],

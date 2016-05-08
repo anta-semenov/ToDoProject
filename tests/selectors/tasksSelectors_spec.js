@@ -6,146 +6,146 @@ import * as sectionNames from '../../src/constants/sectionNames'
 import { getTasksGroups, getSectionName, getActiveItemID } from '../../src/selectors/tasksSelector'
 
 
-const testTasks1 = fromJS([
-  {
-    id: 0,
+const testTasks1 = fromJS({
+  b41sogy3s0oc: {
+    id: 'b41sogy3s0oc',
     title: 'Test task 0',
     completed: false,
     today: false,
     priority: PRIORITY_NONE
   },
-  {
-    id: 1,
+  b41sogy3s0od: {
+    id: 'b41sogy3s0od',
     title: 'Test task 1',
     completed: false,
     today: true,
     priority: PRIORITY_NONE
   },
-  {
-    id: 2,
+  b41sogy3s0oe: {
+    id: 'b41sogy3s0oe',
     title: 'Test task 2',
     completed: true,
     today: true,
     priority: PRIORITY_NONE
   },
-  {
-    id: 3,
+  b41sogy3s0of: {
+    id: 'b41sogy3s0of',
     title: 'Test task 3',
     completed: true,
     today: false,
     priority: PRIORITY_NONE
   },
-  {
-    id: 4,
+  b41sogy3s0og: {
+    id: 'b41sogy3s0og',
     title: 'Test task 4',
     completed: true,
     today: false,
     priority: PRIORITY_NONE,
-    project: 0
+    project: 'bh52ogy5s0fm'
   },
-  {
-    id: 5,
+  b41sogy3s0oj: {
+    id: 'b41sogy3s0oj',
     title: 'Test task 5',
     completed: false,
     today: true,
     priority: PRIORITY_NONE,
-    project: 0,
-    contexts: [0]
+    project: 'bh52ogy5s0fm',
+    contexts: ['cf1sobz3s0oc']
   },
-  {
-    id: 6,
+  b41sogy3s0ok: {
+    id: 'b41sogy3s0ok',
     title: 'Test task 6',
     completed: false,
     today: false,
     priority: PRIORITY_NONE,
-    contexts: [0]
+    contexts: ['cf1sobz3s0oc']
   },
-  {
-    id: 7,
+  b41sogy3s0ol: {
+    id: 'b41sogy3s0ol',
     title: 'Test task 7',
     completed: false,
     today: true,
     priority: PRIORITY_NONE,
-    contexts: [0]
+    contexts: ['cf1sobz3s0oc']
   }
-])
-const testTasks2 = fromJS([
-  {
-    id: 0,
+})
+const testTasks2 = fromJS({
+  b41sogy3s0om: {
+    id: 'b41sogy3s0om',
     title: 'Test task 0',
     completed: true,
     today: false,
     priority: PRIORITY_NONE
   },
-  {
-    id: 1,
+  b41sogy3s0on: {
+    id: 'b41sogy3s0on',
     title: 'Test task 1',
     completed: true,
     today: true,
     priority: PRIORITY_NONE
   },
-  {
-    id: 2,
+  b41sogy3s0oo: {
+    id: 'b41sogy3s0oo',
     title: 'Test task 2',
     completed: true,
     today: true,
     priority: PRIORITY_NONE
   },
-  {
-    id: 3,
+  b41sogy3s0op: {
+    id: 'b41sogy3s0op',
     title: 'Test task 3',
     completed: true,
     today: false,
     priority: PRIORITY_NONE
   },
-  {
-    id: 4,
+  b41sogy3s0oq: {
+    id: 'b41sogy3s0oq',
     title: 'Test task 4',
     completed: true,
     today: false,
     priority: PRIORITY_NONE,
-    project: 0
+    project: 'bh52ogy5s0fm'
   },
-  {
-    id: 5,
+  b41sogy3s0or: {
+    id: 'b41sogy3s0or',
     title: 'Test task 5',
     completed: true,
     today: false,
     priority: PRIORITY_NONE,
-    project: 0,
-    contexts: [0]
+    project: 'bh52ogy5s0fm',
+    contexts: ['cf1sobz3s0oc']
   },
-  {
-    id: 6,
+  b41sogy3s0os: {
+    id: 'b41sogy3s0os',
     title: 'Test task 6',
     completed: true,
     today: false,
     priority: PRIORITY_NONE,
-    contexts: [0]
+    contexts: ['cf1sobz3s0oc']
   }
-])
-const testProjects = fromJS([
-  {
-    id: 0,
+})
+const testProjects = fromJS({
+  bh52ogy5s0fm: {
+    id: 'bh52ogy5s0fm',
     title: 'Test project 0',
     completed: false
   },
-  {
-    id: 1,
+  bh52ogy5s0f1: {
+    id: 'bh52ogy5s0f1',
     title: 'Test project 1',
     completed: false
   }
-])
-const testContexts = fromJS([
-  {
-    id: 0,
+})
+const testContexts = fromJS({
+  cf1sobz3s0oc: {
+    id: 'cf1sobz3s0oc',
     title: 'Test context 0'
   },
-  {
-    id: 1,
+  cf1sobz3s0o1: {
+    id: 'cf1sobz3s0o1',
     title: 'Test context 1'
   }
-])
+})
 
 describe('Tasks Selectors', () => {
   describe('getTasksGroup selector', () => {
@@ -163,7 +163,7 @@ describe('Tasks Selectors', () => {
       const groups = fromJS([{
         items: [
           {
-            id: 0,
+            id: 'b41sogy3s0oc',
             title: 'Test task 0',
             completed: false,
             today: false,
@@ -203,19 +203,19 @@ describe('Tasks Selectors', () => {
         {
           items: [
             {
-              id: 1,
+              id: 'b41sogy3s0od',
               title: 'Test task 1',
               completed: false,
               today: true,
               priority: PRIORITY_NONE
             },
             {
-              id: 7,
+              id: 'b41sogy3s0ol',
               title: 'Test task 7',
               completed: false,
               today: true,
               priority: PRIORITY_NONE,
-              contexts: [0]
+              contexts: ['cf1sobz3s0oc']
             }
           ]
         },
@@ -223,13 +223,13 @@ describe('Tasks Selectors', () => {
           title: 'Test project 0',
           items: [
             {
-              id: 5,
+              id: 'b41sogy3s0oj',
               title: 'Test task 5',
               completed: false,
               today: true,
               priority: PRIORITY_NONE,
-              project: 0,
-              contexts: [0]
+              project: 'bh52ogy5s0fm',
+              contexts: ['cf1sobz3s0oc']
             }
           ]
         }
@@ -265,34 +265,34 @@ describe('Tasks Selectors', () => {
         {
           items: [
             {
-              id: 0,
+              id: 'b41sogy3s0oc',
               title: 'Test task 0',
               completed: false,
               today: false,
               priority: PRIORITY_NONE
             },
             {
-              id: 1,
+              id: 'b41sogy3s0od',
               title: 'Test task 1',
               completed: false,
               today: true,
               priority: PRIORITY_NONE
             },
             {
-              id: 6,
+              id: 'b41sogy3s0ok',
               title: 'Test task 6',
               completed: false,
               today: false,
               priority: PRIORITY_NONE,
-              contexts: [0]
+              contexts: ['cf1sobz3s0oc']
             },
             {
-              id: 7,
+              id: 'b41sogy3s0ol',
               title: 'Test task 7',
               completed: false,
               today: true,
               priority: PRIORITY_NONE,
-              contexts: [0]
+              contexts: ['cf1sobz3s0oc']
             }
           ]
         },
@@ -300,13 +300,13 @@ describe('Tasks Selectors', () => {
           title: 'Test project 0',
           items: [
             {
-              id: 5,
+              id: 'b41sogy3s0oj',
               title: 'Test task 5',
               completed: false,
               today: true,
               priority: PRIORITY_NONE,
-              project: 0,
-              contexts: [0]
+              project: 'bh52ogy5s0fm',
+              contexts: ['cf1sobz3s0oc']
             }
           ]
         }
@@ -335,7 +335,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.PROJECT,
-            id: 0
+            id: 'bh52ogy5s0fm'
           }
         }
       })
@@ -343,13 +343,13 @@ describe('Tasks Selectors', () => {
         {
           items: [
             {
-              id: 5,
+              id: 'b41sogy3s0oj',
               title: 'Test task 5',
               completed: false,
               today: true,
               priority: PRIORITY_NONE,
-              project: 0,
-              contexts: [0]
+              project: 'bh52ogy5s0fm',
+              contexts: ['cf1sobz3s0oc']
             }
           ]
         }
@@ -364,7 +364,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.PROJECT,
-            id: 0
+            id: 'bh52ogy5s0fm'
           }
         }
       })
@@ -378,7 +378,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.PROJECT,
-            id: 1
+            id: 'bh52ogy5s0f1'
           }
         }
       })
@@ -393,7 +393,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.CONTEXT,
-            id: 0
+            id: 'cf1sobz3s0oc'
           }
         }
       })
@@ -401,20 +401,20 @@ describe('Tasks Selectors', () => {
         {
           items: [
             {
-              id: 6,
+              id: 'b41sogy3s0ok',
               title: 'Test task 6',
               completed: false,
               today: false,
               priority: PRIORITY_NONE,
-              contexts: [0]
+              contexts: ['cf1sobz3s0oc']
             },
             {
-              id: 7,
+              id: 'b41sogy3s0ol',
               title: 'Test task 7',
               completed: false,
               today: true,
               priority: PRIORITY_NONE,
-              contexts: [0]
+              contexts: ['cf1sobz3s0oc']
             }
           ]
         },
@@ -422,13 +422,13 @@ describe('Tasks Selectors', () => {
           title: 'Test project 0',
           items: [
             {
-              id: 5,
+              id: 'b41sogy3s0oj',
               title: 'Test task 5',
               completed: false,
               today: true,
               priority: PRIORITY_NONE,
-              project: 0,
-              contexts: [0]
+              project: 'bh52ogy5s0fm',
+              contexts: ['cf1sobz3s0oc']
             }
           ]
         }
@@ -443,7 +443,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.CONTEXT,
-            id: 0
+            id: 'cf1sobz3s0oc'
           }
         }
       })
@@ -457,7 +457,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.CONTEXT,
-            id: 1
+            id: 'cf1sobz3s0o1'
           }
         }
       })
@@ -473,13 +473,13 @@ describe('Tasks Selectors', () => {
           selectedSection: {
             type: sectionTypes.INBOX
           },
-          sectionCompletedLatentTasks: [0]
+          sectionCompletedLatentTasks: ['b41sogy3s0om']
         }
       })
       const groups = fromJS([{
         items: [
           {
-            id: 0,
+            id: 'b41sogy3s0om',
             title: 'Test task 0',
             completed: true,
             today: false,
@@ -528,7 +528,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.PROJECT,
-            id: 0
+            id: 'bh52ogy5s0fm'
           }
         }
       })
@@ -540,7 +540,7 @@ describe('Tasks Selectors', () => {
         uiState: {
           selectedSection: {
             type: sectionTypes.CONTEXT,
-            id: 0
+            id: 'cf1sobz3s0oc'
           }
         }
       })
@@ -551,10 +551,10 @@ describe('Tasks Selectors', () => {
     it('Should return active item id', () => {
       const state = fromJS({
         uiState: {
-          activeItem: 2
+          activeItem: 'b41sogy3s0oe'
         }
       })
-      expect(getActiveItemID(state)).to.equal(2)
+      expect(getActiveItemID(state)).to.equal('b41sogy3s0oe')
     })
     it('Should return -1 for empty active item', () => {
       const state = fromJS({
