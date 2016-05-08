@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { List, fromJS } from 'immutable'
+import { fromJS } from 'immutable'
 import reducer from '../../src/reducer/context'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_CONTEXT_TITLE } from '../../src/constants/defaults'

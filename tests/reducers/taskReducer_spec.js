@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { List, fromJS, Set } from 'immutable'
+import { fromJS, Set } from 'immutable'
 import reducer from '../../src/reducer/task'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_TASK_TITLE } from '../../src/constants/defaults'
