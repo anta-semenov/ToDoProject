@@ -8,67 +8,67 @@ import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../../src/constant
 
 describe('Sidebar container', () => {
   const testState = fromJS({
-    task: [
-      {
-        id: 0,
+    task: {
+      b41sogy3s0oc: {
+        id: 'b41sogy3s0oc',
         title: 'test task 1',
         completed: false,
         today: false
       },
-      {
-        id: 2,
+      b41sogy3s0ok: {
+        id: 'b41sogy3s0ok',
         title: 'test task 2',
         completed: false,
         today: true,
-        project: 1
+        project: 'ab6sof83s1o1'
       },
-      {
-        id: 3,
+      b41sogy3s0om: {
+        id: 'b41sogy3s0om',
         title: 'test task 3',
         completed: true,
         today: false,
-        project: 1
+        project: 'ab6sof83s1o1'
       },
-      {
-        id: 4,
+      b41sogy3s0oq: {
+        id: 'b41sogy3s0oq',
         title: 'test task 4',
         completed: false,
         today: true,
-        project: 2,
-        context: Set([1])
+        project: 'ab6sof83s1o2',
+        context: Set(['a23sogy3s0oq'])
       }
-    ],
-    context: [
-      {
-        id: 0,
+    },
+    context: {
+      a21sogy3s0oq: {
+        id: 'a21sogy3s0oq',
         title: 'test context 1'
       },
-      {
-        id: 1,
+      a23sogy3s0oq: {
+        id: 'a23sogy3s0oq',
         title: 'test context 2'
       }
-    ],
-    project: [
-      {
-        id: 0,
+    },
+    project: {
+      ab6sof83s1oq: {
+        id: 'ab6sof83s1oq',
         title: 'test project 1',
         completed: true
       },
-      {
-        id: 1,
+      ab6sof83s1o1: {
+        id: 'ab6sof83s1o1',
         title: 'test project 2',
         completed: false
       },
-      {
-        id: 2,
+      ab6sof83s1o2: {
+        id: 'ab6sof83s1o2',
         title: 'test project 3',
         completed: false
       }
-    ],
+    },
     uiState: {
       selectedSection: {
         type: sectionTypes.CONTEXT,
-        id: 0
+        id: 'a21sogy3s0oq'
       }
     }
   })
@@ -77,8 +77,6 @@ describe('Sidebar container', () => {
     const props = mapStateToProps(testState)
 
     expect(props.groups.length).to.equal(3)
-    expect(props.nextProjectID).to.equal(3)
-    expect(props.nextContextID).to.equal(2)
     expect(props.groups[0].type).to.equal(BASIC)
     expect(props.groups[0].items).to.equal(fromJS([
       {
@@ -104,7 +102,7 @@ describe('Sidebar container', () => {
     expect(props.groups[1].addNewTitle).to.equal(ADD_NEW_CONTEXT_TITLE)
     expect(props.groups[1].items).to.equal(fromJS([
       {
-        id: 0,
+        id: 'a21sogy3s0oq',
         type: sectionTypes.CONTEXT,
         title: 'test context 1',
         active: true,
@@ -112,7 +110,7 @@ describe('Sidebar container', () => {
         count: 0
       },
       {
-        id: 1,
+        id: 'a23sogy3s0oq',
         type: sectionTypes.CONTEXT,
         title: 'test context 2',
         active: false ,
@@ -126,14 +124,14 @@ describe('Sidebar container', () => {
     expect(props.groups[2].addNewTitle).to.equal(ADD_NEW_PROJECT_TITLE)
     expect(props.groups[2].items).to.equal(fromJS([
       {
-        id: 1,
+        id: 'ab6sof83s1o1',
         type: sectionTypes.PROJECT,
         title: 'test project 2',
         active: false,
         editing: false
       },
       {
-        id: 2,
+        id: 'ab6sof83s1o2',
         type: sectionTypes.PROJECT,
         title: 'test project 3',
         active: false,

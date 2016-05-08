@@ -7,7 +7,7 @@ import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
-import { makeNextIDSelector } from '../selectors/nextID'
+import { uniqueKey } from '../utils/uniqueKeyGenerator'
 import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defaults'
 
 export const mapStateToProps = (state) => {
@@ -43,7 +43,7 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: fromJS(state.get('context').map(item => {
+      items: fromJS(state.get('context').toList().map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -59,7 +59,7 @@ export const mapStateToProps = (state) => {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: fromJS(state.get('project').filter(project => !project.get('completed')).map(item => {
+      items: fromJS(state.get('project').toList().filter(project => !project.get('completed')).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -73,9 +73,7 @@ export const mapStateToProps = (state) => {
   ]
 
   return {
-    groups: groups,
-    nextProjectID: makeNextIDSelector()(state.get('project')),
-    nextContextID: makeNextIDSelector()(state.get('context'))
+    groups: groups
   }
 }
 
@@ -86,24 +84,23 @@ export const mapDispatchToProps = (dispatch) => {
       dispatch(clearTodayLatentTasks())
       dispatch(setSelectedSection({type: type, id: id}))
     },
-    addNew: (type, nextProjectID, nextContextID) => {
+    addNew: (type) => {
+      const newKey = uniqueKey()
       switch (type) {
         case sectionTypes.PROJECTS:
-          dispatch(addProject({id: nextProjectID}))
+          dispatch(addProject({id: newKey}))
           dispatch(setEditingSection({
             type: sectionTypes.PROJECT,
-            id: nextProjectID
+            id: newKey
           }))
           break
         case sectionTypes.CONTEXTS:
-          dispatch(addContext({id: nextContextID}))
+          dispatch(addContext({id: newKey}))
           dispatch(setEditingSection({
             type: sectionTypes.CONTEXT,
-            id: nextContextID
+            id: newKey
           }))
           break
-        default:
-
       }
     },
     onStopEditing: (item) => {
@@ -123,18 +120,9 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  return Object.assign({}, ownProps, stateProps, {
-    onItemClick: dispatchProps.onItemClick,
-    addNew: (type) => dispatchProps.addNew(type, stateProps.nextProjectID, stateProps.nextContextID),
-    onStopEditing: dispatchProps.onStopEditing
-  })
-}
-
 const Sidebar = connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(Navigation)
 
 export default Sidebar
