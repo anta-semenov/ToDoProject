@@ -278,6 +278,42 @@ describe('Project reducer', () => {
           })
           expect(reducer(initialState, action)).to.equal(nextState)
       })
+
+      it('Should do nothing when new id already exist', () => {
+          const initialState = fromJS({
+              bh52ogy5s0fm: {
+                  id: 'bh52ogy5s0fm',
+                  title: 'Existing Project',
+                  completed: false
+              },
+              bh32ogy5s0fm: {
+                  id: 'bh32ogy5s0fm',
+                  title: 'New Custom Project',
+                  completed: false
+              }
+          })
+          const action = {
+              type: types.EDIT_PROJECT,
+              id: 'bh32ogy5s0fm',
+              properties: {
+                  id: 'bh52ogy5s0fm',
+                  title: 'Changed Project Tittle'
+              }
+          }
+          const nextState = fromJS({
+              bh52ogy5s0fm: {
+                  id: 'bh52ogy5s0fm',
+                  title: 'Existing Project',
+                  completed: false
+              },
+              bh32ogy5s0fm: {
+                  id: 'bh32ogy5s0fm',
+                  title: 'New Custom Project',
+                  completed: false
+              }
+          })
+          expect(reducer(initialState, action)).to.equal(nextState)
+      })
     })
 
     describe('Complete project', () => {

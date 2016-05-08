@@ -252,5 +252,37 @@ describe('Context reducer', () => {
           })
           expect(reducer(initialState, action)).to.equal(nextState)
       })
+
+      it('Should do nothing when id changed and new id already exist', () => {
+          const initialState = fromJS({
+              cf1sobz3s0oc: {
+                  id: 'cf1sobz3s0oc',
+                  title: 'Existing context'
+              },
+              cf1sobz4s0oc: {
+                  id: 'cf1sobz4s0oc',
+                  title: 'New custom context'
+              }
+          })
+          const action = {
+              type: types.EDIT_CONTEXT,
+              id: 'cf1sobz4s0oc',
+              properties: {
+                  id: 'cf1sobz3s0oc',
+                  title: 'Changed Context Tittle'
+              }
+          }
+          const nextState = fromJS({
+              cf1sobz3s0oc: {
+                  id: 'cf1sobz3s0oc',
+                  title: 'Existing context'
+              },
+              cf1sobz4s0oc: {
+                  id: 'cf1sobz4s0oc',
+                  title: 'New custom context'
+              }
+          })
+          expect(reducer(initialState, action)).to.equal(nextState)
+      })
     })
 })

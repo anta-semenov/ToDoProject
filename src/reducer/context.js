@@ -31,6 +31,9 @@ function addContext(state, properties = {}) {
 
 function editContext(state, id, properties = {}) {
   if (properties.id && properties.id != id) {
+    if (state.has(properties.id)) {
+      return state
+    }
     const temp = state.get(id)
     return state.delete(id).set(properties.id, temp).mergeIn([properties.id], properties)
   } else {

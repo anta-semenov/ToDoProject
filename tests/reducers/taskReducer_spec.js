@@ -55,7 +55,7 @@ describe('Task reducer', () => {
           priority: PRIORITY_NONE
         }
       })
-      expect(reducer(initialState, action)).to.equal(fromJS(nextState))  
+      expect(reducer(initialState, action)).to.equal(fromJS(nextState))
     })
     it('Should handle ADD_TASK with empty store', () => {
       const initialState = fromJS({})
@@ -309,6 +309,46 @@ describe('Task reducer', () => {
         b41sogy4s0ok: {
           id: 'b41sogy4s0ok',
           title: 'Changed Task Tittle',
+          completed: false,
+          today: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should do nothing when id changed and new id already exist', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.EDIT_TASK,
+        id: 'b41sogy3s0ok',
+        properties: {
+          id: 'b41sogy3s0oc',
+          title: 'Changed Task Tittle'
+        }
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
           completed: false,
           today: false
         }
