@@ -2,7 +2,7 @@ import { fromJS } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import { NEW_CONTEXT_TITLE } from '../constants/defaults'
 
-export default function context(state = fromJS([]), action) {
+export default function context(state = fromJS({}), action) {
   switch (action.type) {
     case actionTypes.ADD_CONTEXT:
       return addContext(state, action.properties)
@@ -19,27 +19,25 @@ export default function context(state = fromJS([]), action) {
 }
 
 function addContext(state, properties = {}) {
-  const newId = state.reduce((maxId, context) => {
-    return Math.max(maxId, context.get('id'))
-  }, -1) + 1
+  if (!properties.id || state.has(properties.id)) {
+    return state
+  }
   const newContext = fromJS({
-    id: newId,
+    id: properties.id,
     title: NEW_CONTEXT_TITLE
   })
-  return state.push(newContext.merge(properties))
+  return state.set(properties.id, newContext.merge(properties))
 }
 
 function editContext(state, id, properties = {}) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  return state.mergeIn([index], properties)
+  if (properties.id && properties.id != id) {
+    const temp = state.get(id)
+    return state.delete(id).set(properties.id, temp).mergeIn([properties.id], properties)
+  } else {
+    return state.mergeIn([id], properties)
+  }
 }
 
 function removeContext(state, id) {
-  const index = state.findIndex(item => {return item.get('id') === id})
-  if (index > -1) {
-    return state.delete(index)
-  }
-  else {
-    return state
-  }
+  return state.delete(id)
 }
