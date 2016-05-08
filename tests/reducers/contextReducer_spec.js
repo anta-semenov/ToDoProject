@@ -31,8 +31,24 @@ describe('Context reducer', () => {
           const nextState = fromJS({})
           expect(reducer(initialState, action)).to.equal(fromJS(nextState))
       })
+      it('Should handle ADD_CONTEXT with only id in properties', () => {
+          const initialState = fromJS({})
+          const action = {
+              type: types.ADD_CONTEXT,
+              properties: {
+                  id: 'cf1sobz3s0oc'
+              }
+          }
+          const nextState = fromJS({
+              cf1sobz3s0oc: {
+                  id: 'cf1sobz3s0oc',
+                  title: NEW_CONTEXT_TITLE
+              }
+          })
+          expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+      })
       it('Should handle ADD_CONTEXT with empty store', () => {
-          const initialState = List()
+          const initialState = fromJS({})
           const action = {
               type: types.ADD_CONTEXT,
               properties: {

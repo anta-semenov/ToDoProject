@@ -38,8 +38,27 @@ describe('Task reducer', () => {
       const nextState = fromJS({})
       expect(reducer(initialState, action)).to.equal(nextState)
     })
+    it('Should handle ADD_TASK with only id in properties', () => {
+      const initialState = fromJS({})
+      const action = {
+        type: types.ADD_TASK,
+        properties: {
+          id: 'b41sogy3s0oc'
+        }
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: NEW_TASK_TITLE,
+          completed: false,
+          today: false,
+          priority: PRIORITY_NONE
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(fromJS(nextState))  
+    })
     it('Should handle ADD_TASK with empty store', () => {
-      const initialState = List()
+      const initialState = fromJS({})
       const action = {
         type: types.ADD_TASK,
         properties: {
@@ -56,7 +75,6 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           priority: PRIORITY_NONE
-
         }
       })
       expect(reducer(initialState, action)).to.equal(fromJS(nextState))
