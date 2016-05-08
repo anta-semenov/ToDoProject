@@ -4,19 +4,21 @@ import * as activeTask from '../../src/selectors/activeTaskSelector'
 import { PRIORITY_MEDIUM } from '../../src/constants/priorityLevels'
 
 const state = fromJS({
-  task: [{
-    id: 0,
-    title: 'Test task 1',
-    completed: true,
-    today: false,
-    priority: PRIORITY_MEDIUM,
-    description: 'Description for test task',
-    project: 2,
-    contexts: [0, 4, 5],
-    date: new Date(2016, 5, 17)
-  }],
+  task: {
+    b41sogy3s0oc: {
+      id: 'b41sogy3s0oc',
+      title: 'Test task 1',
+      completed: true,
+      today: false,
+      priority: PRIORITY_MEDIUM,
+      description: 'Description for test task',
+      project: 'bh52ogy5s0fm',
+      contexts: ['cf1sobz3s0o0', 'cf1sobz3s0o4', 'cf1sobz3s0o5'],
+      date: new Date(2016, 5, 17)
+    }
+  },
   uiState: {
-    activeItem: 0
+    activeItem: 'b41sogy3s0oc'
   }
 })
 
@@ -37,10 +39,10 @@ describe('ActiveTask selector', () => {
     expect(activeTask.getDescription(state)).to.equal('Description for test task')
   })
   it('Should return active task project', () => {
-    expect(activeTask.getProject(state)).to.equal(2)
+    expect(activeTask.getProject(state)).to.equal('bh52ogy5s0fm')
   })
   it('Should return active task contexts', () => {
-    expect(activeTask.getContexts(state)).to.equal(fromJS([0, 4, 5]))
+    expect(activeTask.getContexts(state)).to.equal(fromJS(['cf1sobz3s0o0', 'cf1sobz3s0o4', 'cf1sobz3s0o5']))
   })
   it('Should return active task date', () => {
     expect(activeTask.getDate(state)).to.deep.equal(new Date(2016, 5, 17))

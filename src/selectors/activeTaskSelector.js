@@ -1,9 +1,12 @@
 import { createSelector } from 'reselect'
-import { getActiveItemID, getAllTasks } from './tasksSelector'
+import { getActiveItemID } from './tasksSelector'
+import { fromJS } from 'immutable'
+
+const getAllTasks = state => (state.get('task') || fromJS({}))
 
 const getActiveTask = createSelector(
   [getActiveItemID, getAllTasks],
-  (activeTaskId, tasks) => activeTaskId >= 0 ? tasks.filter(task => task.get('id') === activeTaskId).get(0) : undefined
+  (activeTaskId, tasks) => (tasks.get(activeTaskId) || undefined)
 )
 
 export const getTitle = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('title') : undefined)
