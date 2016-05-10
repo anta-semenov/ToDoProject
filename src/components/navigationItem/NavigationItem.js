@@ -70,12 +70,12 @@ export default class NavigationItem extends React.Component {
 NavigationItem.propTypes = {
   type: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
-  id: React.PropTypes.number,
+  id: React.PropTypes.string,
 
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
 
-  key: React.PropTypes.number,
+  key: React.PropTypes.string,
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,
   count: React.PropTypes.number

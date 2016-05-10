@@ -44,7 +44,7 @@ describe('Navigation', () => {
           {
             type: sectionTypes.CONTEXT,
             title: 'Context 1',
-            id: 2,
+            id: 'cf1sobz3s0oc',
             active: true,
             count: 4,
             editing: false
@@ -52,7 +52,7 @@ describe('Navigation', () => {
           {
             type: sectionTypes.CONTEXT,
             title: 'Context 2',
-            id: 5,
+            id: 'cf1sobz3s0ol',
             active: false,
             count: 10,
             editing: false
@@ -64,8 +64,6 @@ describe('Navigation', () => {
         addNew: testAddNew
       }
     ],
-    nextProjectID: 13,
-    nextContextID: 12,
     onItemClick: () => {},
     addNew: () => {},
     onStopEditing: () => {}

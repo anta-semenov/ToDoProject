@@ -36,7 +36,7 @@ describe('UI state reducer', () => {
       const initialState = fromJS({
         selectedSection: {
           type: sectionTypes.PROJECT,
-          id: 0
+          id: 'bh52ogy5s0fm'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
@@ -52,7 +52,7 @@ describe('UI state reducer', () => {
       const initialState = fromJS({
         selectedSection: {
           type: sectionTypes.PROJECT,
-          id: 0
+          id: 'bh52ogy5s0fm'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
@@ -87,13 +87,10 @@ describe('UI state reducer', () => {
       const initialState = fromJS({
         selectedSection: {
           type: sectionTypes.PROJECT,
-          id: 0
+          id: 'bh52ogy5s0fm'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE,
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 'b41sogy3s0os'
       })
       const action = {
         type: actionTypes.SET_SELECTED_SECTION,
@@ -113,31 +110,25 @@ describe('UI state reducer', () => {
       const initialState = fromJS({
         selectedSection: {
           type: sectionTypes.PROJECT,
-          id: 0
+          id: 'bh52ogy5s0fm'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE,
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 'b41sogy3s0os'
       })
       const action = {
         type: actionTypes.SET_SELECTED_SECTION,
         section: {
           type: sectionTypes.PROJECT,
-          id: 0
+          id: 'bh52ogy5s0fm'
         }
       }
       const nextState = fromJS({
         selectedSection: {
           type: sectionTypes.PROJECT,
-          id: 0
+          id: 'bh52ogy5s0fm'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE,
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
@@ -155,29 +146,20 @@ describe('UI state reducer', () => {
     it('Should handle SET_SIDEBAR_SIZE with empty action parameter', () => {
       const initialState = fromJS({
         sidebarSize: '180px',
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 'b41sogy3s0os'
       })
       const action = {
         type: actionTypes.SET_SIDEBAR_SIZE
       }
       const nextState = fromJS({
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle SET_SIDEBAR_SIZE', () => {
       const initialState = fromJS({
         sidebarSize: '180px',
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 'b41sogy3s0os'
       })
       const action = {
         type: actionTypes.SET_SIDEBAR_SIZE,
@@ -185,10 +167,7 @@ describe('UI state reducer', () => {
       }
       const nextState = fromJS({
         sidebarSize: '190px',
-        activeItem: {
-          type: itemTypes.TASK,
-          id: 2
-        }
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
@@ -216,7 +195,7 @@ describe('UI state reducer', () => {
     })
     it('Should handle SET_ACTIVE_ITEM with empty action parameter', () => {
       const initialState = fromJS({
-        activeItem: 0,
+        activeItem: 'b41sogy3s0os',
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
       const action = {
@@ -229,15 +208,30 @@ describe('UI state reducer', () => {
     })
     it('Should handle SET_ACTIVE_ITEM', () => {
       const initialState = fromJS({
-        activeItem: 0,
+        activeItem: 'b41sogy3s0os',
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
       const action = {
         type: actionTypes.SET_ACTIVE_ITEM,
-        id: 2
+        id: 0
       }
       const nextState = fromJS({
-        activeItem: 2,
+        activeItem: 0,
+        sidebarSize: DEFAULT_SIDEBAR_SIZE
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_ACTIVE_ITEM', () => {
+      const initialState = fromJS({
+        activeItem: 'b41sogy3s0os',
+        sidebarSize: DEFAULT_SIDEBAR_SIZE
+      })
+      const action = {
+        type: actionTypes.SET_ACTIVE_ITEM,
+        id: 'b41sogy3s0o6'
+      }
+      const nextState = fromJS({
+        activeItem: 'b41sogy3s0o6',
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -246,10 +240,10 @@ describe('UI state reducer', () => {
       const initialState = fromJS({})
       const action = {
         type: actionTypes.SET_ACTIVE_ITEM,
-        id: 2
+        id: 'b41sogy3s0os'
       }
       const nextState = fromJS({
-        activeItem: 2
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
@@ -268,7 +262,7 @@ describe('UI state reducer', () => {
       const initialState = fromJS({
         editingSection: {
           type: sectionTypes.CONTEXT,
-          id: 0
+          id: 'cf1sobz3s0oc'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
@@ -284,18 +278,18 @@ describe('UI state reducer', () => {
       const initialState = fromJS({
         editingSection: {
           type: sectionTypes.CONTEXT,
-          id: 0
+          id: 'cf1sobz3s0oc'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
       const action = actionCreator.setEditingSection({
         type: sectionTypes.PROJECT,
-        id: 2
+        id: 'bh52ogy5s0fm'
       })
       const nextState = fromJS({
         editingSection: {
           type: sectionTypes.PROJECT,
-          id: 2
+          id: 'bh52ogy5s0fm'
         },
         sidebarSize: DEFAULT_SIDEBAR_SIZE
       })
@@ -307,12 +301,12 @@ describe('UI state reducer', () => {
       const initialState = fromJS({})
       const action = actionCreator.setEditingSection({
         type: sectionTypes.PROJECT,
-        id: 2
+        id: 'bh52ogy5s0fm'
       })
       const nextState = fromJS({
         editingSection: {
           type: sectionTypes.PROJECT,
-          id: 2
+          id: 'bh52ogy5s0fm'
         }
       })
 
@@ -324,9 +318,9 @@ describe('UI state reducer', () => {
     describe('TOGGLE_TASK_COMPLETED_LATENCY', () => {
       it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with empty state', () => {
         const initialState = fromJS({})
-        const action = actionCreator.toggleTaskCompletedLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionCompletedLatentTasks: Set([2])
+          sectionCompletedLatentTasks: Set(['b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
@@ -334,29 +328,29 @@ describe('UI state reducer', () => {
         const initialState = fromJS({
           sectionCompletedLatentTasks: undefined
         })
-        const action = actionCreator.toggleTaskCompletedLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionCompletedLatentTasks: Set([2])
+          sectionCompletedLatentTasks: Set(['b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
       it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with existing latent list but without a task', () => {
         const initialState = fromJS({
-          sectionCompletedLatentTasks: Set([0, 7])
+          sectionCompletedLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7'])
         })
-        const action = actionCreator.toggleTaskCompletedLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionCompletedLatentTasks: Set([0, 7, 2])
+          sectionCompletedLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
       it('Should handle TOGGLE_TASK_COMPLETED_LATENCY with existing latent list but with a task', () => {
         const initialState = fromJS({
-          sectionCompletedLatentTasks: Set([0, 7, 3, 5, 2, 4])
+          sectionCompletedLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o2', 'b41sogy3s0o4'])
         })
-        const action = actionCreator.toggleTaskCompletedLatency(2)
+        const action = actionCreator.toggleTaskCompletedLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionCompletedLatentTasks: Set([0, 7, 3, 5, 4])
+          sectionCompletedLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o4'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
@@ -369,7 +363,7 @@ describe('UI state reducer', () => {
       })
       it('Should handle CLEAR_COMPLETED_LATENT_TASKS with existing state', () => {
         const initialState = fromJS({
-          sectionCompletedLatentTasks: Set([0, 7, 2, 5])
+          sectionCompletedLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2', 'b41sogy3s0o5'])
         })
         const action = actionCreator.clearCompletedLatentTasks()
         const nextState = fromJS({})
@@ -382,9 +376,9 @@ describe('UI state reducer', () => {
     describe('TOGGLE_TASK_TODAY_LATENCY', () => {
       it('Should handle TOGGLE_TASK_TODAY_LATENCY with empty state', () => {
         const initialState = fromJS({})
-        const action = actionCreator.toggleTaskTodayLatency(2)
+        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set([2])
+          sectionTodayLatentTasks: Set(['b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
@@ -392,29 +386,29 @@ describe('UI state reducer', () => {
         const initialState = fromJS({
           sectionTodayLatentTasks: undefined
         })
-        const action = actionCreator.toggleTaskTodayLatency(2)
+        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set([2])
+          sectionTodayLatentTasks: Set(['b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
       it('Should handle TOGGLE_TASK_TODAY_LATENCY with existing latent list but without a task', () => {
         const initialState = fromJS({
-          sectionTodayLatentTasks: Set([0, 7])
+          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7'])
         })
-        const action = actionCreator.toggleTaskTodayLatency(2)
+        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set([0, 7, 2])
+          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
       it('Should handle TOGGLE_TASK_TODAY_LATENCY with existing latent list but with a task', () => {
         const initialState = fromJS({
-          sectionTodayLatentTasks: Set([0, 7, 3, 5, 2, 4])
+          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o2', 'b41sogy3s0o4'])
         })
-        const action = actionCreator.toggleTaskTodayLatency(2)
+        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set([0, 7, 3, 5, 4])
+          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o4'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
@@ -427,7 +421,7 @@ describe('UI state reducer', () => {
       })
       it('Should handle CLEAR_TODAY_LATENT_TASKS with existing state', () => {
         const initialState = fromJS({
-          sectionTodayLatentTasks: Set([0, 7, 2, 5])
+          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2', 'b41sogy3s0o5'])
         })
         const action = actionCreator.clearTodayLatentTasks()
         const nextState = fromJS({})
@@ -454,22 +448,22 @@ describe('UI state reducer', () => {
     it('Should handle SET_SYNCING with empty parameter', () => {
       const initialState = fromJS({
         syncing: true,
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       const action = actionCreator.setSyncing()
       const nextState = fromJS({
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle SET_SYNCING with false parameter', () => {
       const initialState = fromJS({
         syncing: true,
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       const action = actionCreator.setSyncing(false)
       const nextState = fromJS({
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
@@ -493,22 +487,22 @@ describe('UI state reducer', () => {
     it('Should handle SET_OFFLINE with empty parameter', () => {
       const initialState = fromJS({
         offline: true,
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       const action = actionCreator.setOffline()
       const nextState = fromJS({
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
     it('Should handle SET_OFFLINE with false parameter', () => {
       const initialState = fromJS({
         offline: true,
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       const action = actionCreator.setOffline(false)
       const nextState = fromJS({
-        activeItem: 0
+        activeItem: 'b41sogy3s0os'
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })

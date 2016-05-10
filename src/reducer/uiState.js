@@ -53,8 +53,8 @@ function setSidebarSize(state, size) {
 }
 
 function setActiveItem(state, id) {
-  if (id >= 0) {
-    return state.set('activeItem', fromJS(id))
+  if (id != undefined) {
+    return state.set('activeItem', id)
   } else {
     return state.delete('activeItem')
   }

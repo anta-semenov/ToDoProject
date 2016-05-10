@@ -38,7 +38,7 @@ export default class Task extends React.Component {
 }
 
 Task.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
   completed: React.PropTypes.bool.isRequired,
   today: React.PropTypes.bool.isRequired,

@@ -9,7 +9,7 @@ import Task from '../../src/components/task/Task'
 
 const testTasks = fromJS([
   {
-    id: 0,
+    id: 'b41sogy3s0o0',
     title: 'Explore React',
     completed: true,
     today: true,
@@ -18,7 +18,7 @@ const testTasks = fromJS([
     date: new Date(2015, 4, 15)
   },
   {
-    id: 1,
+    id: 'b41sogy3s0o1',
     title: 'Explore Redux',
     completed: false,
     today: false
@@ -82,7 +82,7 @@ describe('Task component', () => {
       expect(checkStatus).to.equal(true)
 
       Simulate.change(checkboxComponent)
-      expect(checkedId).to.equal(0)
+      expect(checkedId).to.equal('b41sogy3s0o0')
       expect(checkStatus).to.equal(false)
     })
   })
@@ -181,11 +181,11 @@ describe('Task component', () => {
       const priorityLevelHighClass = 'task__priority-level--high'
       const priorityLevelMaxClass = 'task__priority-level--max'
 
-      const taskComponentNone = renderIntoDocument(<Task id={0} onPriorityClick={callback} />)
-      const taskComponentLow = renderIntoDocument(<Task id={1}  onPriorityClick={callback} />)
-      const taskComponentMedium = renderIntoDocument(<Task id={2} onPriorityClick={callback} />)
-      const taskComponentHigh = renderIntoDocument(<Task id={3} onPriorityClick={callback} />)
-      const taskComponentMax = renderIntoDocument(<Task id={4} onPriorityClick={callback} />)
+      const taskComponentNone = renderIntoDocument(<Task id={'b41sogy3s0o0'} onPriorityClick={callback} />)
+      const taskComponentLow = renderIntoDocument(<Task id={'b41sogy3s0o1'}  onPriorityClick={callback} />)
+      const taskComponentMedium = renderIntoDocument(<Task id={'b41sogy3s0o2'} onPriorityClick={callback} />)
+      const taskComponentHigh = renderIntoDocument(<Task id={'b41sogy3s0o3'} onPriorityClick={callback} />)
+      const taskComponentMax = renderIntoDocument(<Task id={'b41sogy3s0o4'} onPriorityClick={callback} />)
 
       const priorityLevelComponentNone = findRenderedDOMComponentWithClass(taskComponentNone, priorityLevelNoneClass)
       const priorityLevelComponentLow = findRenderedDOMComponentWithClass(taskComponentLow, priorityLevelLowClass)
@@ -198,23 +198,23 @@ describe('Task component', () => {
 
       Simulate.click(priorityLevelComponentNone)
       expect(priority).to.equal(priorityLevels.PRIORITY_NONE)
-      expect(callbackId).to.equal(0)
+      expect(callbackId).to.equal('b41sogy3s0o0')
 
       Simulate.click(priorityLevelComponentLow)
       expect(priority).to.equal(priorityLevels.PRIORITY_LOW)
-      expect(callbackId).to.equal(1)
+      expect(callbackId).to.equal('b41sogy3s0o1')
 
       Simulate.click(priorityLevelComponentMedium)
       expect(priority).to.equal(priorityLevels.PRIORITY_MEDIUM)
-      expect(callbackId).to.equal(2)
+      expect(callbackId).to.equal('b41sogy3s0o2')
 
       Simulate.click(priorityLevelComponentHigh)
       expect(priority).to.equal(priorityLevels.PRIORITY_HIGH)
-      expect(callbackId).to.equal(3)
+      expect(callbackId).to.equal('b41sogy3s0o3')
 
       Simulate.click(priorityLevelComponentMax)
       expect(priority).to.equal(priorityLevels.PRIORITY_MAX)
-      expect(callbackId).to.equal(4)
+      expect(callbackId).to.equal('b41sogy3s0o4')
     })
   })
   describe('Task Body', () => {
@@ -247,7 +247,7 @@ describe('Task component', () => {
       const descriptionClass = 'task__description'
       const dateClass = 'task__date'
 
-      const taskComponent = renderIntoDocument(<Task id={0} title={testTasks.get(0).get('title')} description={testTasks.get(0).get('description')} date={testTasks.get(0).get('date')} onTaskClick={callback} />)
+      const taskComponent = renderIntoDocument(<Task id={'b41sogy3s0o0'} title={testTasks.get(0).get('title')} description={testTasks.get(0).get('description')} date={testTasks.get(0).get('date')} onTaskClick={callback} />)
       const bodyComponent = findRenderedDOMComponentWithClass(taskComponent, bodyClass)
       const titleComponent = findRenderedDOMComponentWithClass(taskComponent, titleClass)
       const descriptionComponent = findRenderedDOMComponentWithClass(taskComponent, descriptionClass)
@@ -255,22 +255,22 @@ describe('Task component', () => {
 
       expect(callbackId).to.equal(-12)
       Simulate.click(bodyComponent)
-      expect(callbackId).to.equal(0)
+      expect(callbackId).to.equal('b41sogy3s0o0')
 
       callbackId = -12
       expect(callbackId).to.equal(-12)
       Simulate.click(titleComponent)
-      expect(callbackId).to.equal(0)
+      expect(callbackId).to.equal('b41sogy3s0o0')
 
       callbackId = -12
       expect(callbackId).to.equal(-12)
       Simulate.click(descriptionComponent)
-      expect(callbackId).to.equal(0)
+      expect(callbackId).to.equal('b41sogy3s0o0')
 
       callbackId = -12
       expect(callbackId).to.equal(-12)
       Simulate.click(dateComponent)
-      expect(callbackId).to.equal(0)
+      expect(callbackId).to.equal('b41sogy3s0o0')
     })
   })
 })

@@ -15,10 +15,11 @@ export default class TaskInfo extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
-      <div className={`task-info ${this.props.id >= 0 ? 'is-open' : ''}` }>
+      <div className={`task-info ${this.props.id != -1 ? 'is-open' : ''}` }>
         <CloseBtn appearance='task-info' onClick={this.props.onCloseClick} />
-        {this.props.id >= 0 ?
+        {this.props.id != -1 ?
           <div className='task-info__content'>
             <div className='task-info__controls'>
               <input type='checkbox' className='task__completed' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
@@ -47,7 +48,7 @@ export default class TaskInfo extends React.Component {
 }
 
 TaskInfo.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string,
   completed: React.PropTypes.bool,
   today: React.PropTypes.bool,

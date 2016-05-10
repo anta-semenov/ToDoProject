@@ -16,7 +16,7 @@ describe('Navigation Group', () => {
       {
         type: sectionTypes.CONTEXT,
         title: 'Context 1',
-        id: 2,
+        id: 'cf1sobz3s0o2',
         active: true,
         count: 4,
         editing: false
@@ -24,7 +24,7 @@ describe('Navigation Group', () => {
       {
         type: sectionTypes.CONTEXT,
         title: 'Context 2',
-        id: 5,
+        id: 'cf1sobz3s0o5',
         active: false,
         count: 10,
         editing: false
@@ -72,7 +72,7 @@ describe('Navigation Group', () => {
 
       expect(itemElementProps.type).to.equal(sectionTypes.CONTEXT)
       expect(itemElementProps.title).to.equal('Context 2')
-      expect(itemElementProps.id).to.equal(5)
+      expect(itemElementProps.id).to.equal('cf1sobz3s0o5')
       expect(itemElementProps.active).to.equal(false)
       expect(itemElementProps.count).to.equal(10)
       expect(itemElementProps.editing).to.equal(false)

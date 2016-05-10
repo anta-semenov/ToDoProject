@@ -25,11 +25,11 @@ describe('TaskGroup component tests', () => {
     const taskClass = 'task'
     const tasks = fromJS([
       {
-        id: 0,
+        id: 'b41sogy3s0o0',
         title: 'Explore React'
       },
       {
-        id: 1,
+        id: 'b41sogy3s0o1',
         title: 'Explore Redux'
       }
     ])
@@ -42,11 +42,11 @@ describe('TaskGroup component tests', () => {
     const taskTitleClass = 'task__title'
     const tasks = fromJS([
       {
-        id: 0,
+        id: 'b41sogy3s0o0',
         title: 'Explore React'
       },
       {
-        id: 1,
+        id: 'b41sogy3s0o1',
         title: 'Explore Redux'
       }
     ])

@@ -5,6 +5,7 @@ import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskAc
 import { setActiveItem, toggleTaskCompletedLatency, toggleTaskTodayLatency } from '../actions/uiStateActions'
 import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType, getTodayLatentTasks } from '../selectors/tasksSelector'
 import * as sectionTypes from '../constants/sectionTypes'
+import uniqueKey from '../utils/uniqueKeyGenerator'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,7 +21,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addTask: (taskTitle, sectionType, sectionID) => {
-      let properties = {}
+      let properties = {id: uniqueKey()}
       if (taskTitle !== '') {
         properties.title = taskTitle
       }

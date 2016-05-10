@@ -76,10 +76,10 @@ describe('Navigation Item', () => {
       let callbackParametr1 = ''
       let callbackParametr2 = -12
       const testProps = {
-        key: 0,
+        key: 'PROJECT-bh52ogy5s0fm',
         type: sectionTypes.PROJECT,
         title: 'Some project',
-        id: 2,
+        id: 'bh52ogy5s0fm',
         active: true,
         count: 4,
         editing: false,
@@ -98,17 +98,17 @@ describe('Navigation Item', () => {
       Simulate.click(itemElement)
 
       expect(callbackParametr1).to.equal(sectionTypes.PROJECT)
-      expect(callbackParametr2).to.equal(2)
+      expect(callbackParametr2).to.equal('bh52ogy5s0fm')
     })
   })
 
   describe('Render editing component', () => {
     it('Should render editing component', () => {
       const editingProps = {
-        key: 3,
+        key: 'PROJECT-bh52ogy5s0fm',
         type: sectionTypes.PROJECT,
         title: 'Some project',
-        id: 2,
+        id: 'bh52ogy5s0fm',
         active: false,
         count: 4,
         editing: true,
@@ -128,10 +128,10 @@ describe('Navigation Item', () => {
     it('Should invoke calback with type, id and new title when press enter', () => {
       let item = undefined
       const editingProps = {
-        key: 3,
+        key: 'PROJECT-bh52ogy5s0fm',
         type: sectionTypes.PROJECT,
         title: 'Some project',
-        id: 2,
+        id: 'bh52ogy5s0fm',
         active: false,
         count: 4,
         editing: true,
@@ -145,17 +145,17 @@ describe('Navigation Item', () => {
       Simulate.keyDown(editElement, {keyCode:13})
 
       expect(item.type).to.equal(sectionTypes.PROJECT)
-      expect(item.id).to.equal(2)
+      expect(item.id).to.equal('bh52ogy5s0fm')
       expect(item.newTitle).to.equal('test')
     })
 
     it('Should invoke calback with type and id only when press esc', () => {
       let item = undefined
       const editingProps = {
-        key: 3,
+        key: 'PROJECT-bh52ogy5s0fm',
         type: sectionTypes.PROJECT,
         title: 'Some project',
-        id: 2,
+        id: 'bh52ogy5s0fm',
         active: false,
         count: 4,
         editing: true,
@@ -169,7 +169,7 @@ describe('Navigation Item', () => {
       Simulate.keyDown(editElement, {keyCode:27})
 
       expect(item.type).to.equal(sectionTypes.PROJECT)
-      expect(item.id).to.equal(2)
+      expect(item.id).to.equal('bh52ogy5s0fm')
       expect(item.newTitle).not.to.be.ok
     })
 
