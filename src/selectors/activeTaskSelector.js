@@ -6,7 +6,9 @@ const getAllTasks = state => (state.get('task') || fromJS({}))
 
 const getActiveTask = createSelector(
   [getActiveItemID, getAllTasks],
-  (activeTaskId, tasks) => (tasks.get(activeTaskId) || undefined)
+  (activeTaskId, tasks) => {
+    return (tasks.get('' + activeTaskId) || undefined)
+  }
 )
 
 export const getTitle = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('title') : undefined)
