@@ -41,15 +41,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(addTask(properties))
     },
     onTaskClick: (taskId) => {dispatch(setActiveItem(taskId))},
-    onTaskCheckboxClick: (taskId) => {
+    onTaskCheckboxClick: (taskId, status) => {
       dispatch(toggleTaskCompletedLatency(taskId))
-      dispatch(completeTask(taskId))
+      dispatch(completeTask(taskId, status))
     },
-    onTaskTodayClick: (taskId, sectionType) => {
+    onTaskTodayClick: (taskId, sectionType, status) => {
       if (sectionType === sectionTypes.TODAY || sectionType === sectionTypes.INBOX) {
         dispatch(toggleTaskTodayLatency(taskId))
       }
-      dispatch(setTaskToday(taskId))
+      dispatch(setTaskToday(taskId, status))
     },
     onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))}
   }
@@ -60,7 +60,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.selectedSectionType, stateProps.selectedSectionID),
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
-    onTaskTodayClick: taskId => dispatchProps.onTaskTodayClick(taskId, stateProps.selectedSectionType),
+    onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, stateProps.selectedSectionType, status),
     onTaskPriorityClick: dispatchProps.onTaskPriorityClick
   })
 }

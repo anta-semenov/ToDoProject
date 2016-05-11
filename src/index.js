@@ -9,7 +9,6 @@ import { getStateForUser } from './backend/firebase/firebaseHelper'
 
 function authHandler(authData) {
   getStateForUser(authData.uid, (state) => {
-    console.log(state);
     const store = configureStore(state)
     ReactDOM.render(<Root store={store}/>, document.getElementById('root'))
   })
