@@ -8,59 +8,40 @@ export default function initFirebaseListeners(store) {
   const state = store.getState()
 
   //Get user data link
-  if (!state.get('userInfo')) {
+  if (!state.get('userInfo') || !state.getIn(['userInfo', 'hasAccount'])) {
+    //if user doesn't have an account we don't need listeners, because we have only one client
     return
   }
   const userID = state.getIn(['userInfo', 'uid'])
-  const guestUser = !state.getIn(['userInfo', 'hasAccount'], false)
-  const userDataLink = FIREBASE_APP_REFERENCE + (guestUser ? '/guestUserData' : '/userData/') + userID
+  const userDataLink = FIREBASE_APP_REFERENCE + '/userData/' + userID
 
   //Task
-  const maxTaskKey = state.get('task').keySeq().max()
   const taskRef = new Firebase(userDataLink + '/task')
-  // add task
-  taskRef.orderByKey().startAt(increaseKey(maxTaskKey)).on('child_added', dataShapshot => {
-    store.dispatch(taskActions.addTask(dataShapshot.val()))
-  })
-  // remove task
-  taskRef.orderByKey().on('child_removed', dataShapshot => {
-    store.dispatch(taskActions.removeTask(dataShapshot.key()))
-  })
-  // edit task
-  taskRef.orderByKey().on('child_changed', dataShapshot => {
-    store.dispatch(taskActions.editTask(dataShapshot.key(), dataShapshot.val()))
-  })
+  addListeners(taskRef, taskActions, state.get('task'), store)
 
   //Project
-  const maxProjectKey = state.get('project').keySeq().max()
   const projectRef = new Firebase(userDataLink + '/project')
-  // add project
-  projectRef.orderByKey().startAt(increaseKey(maxProjectKey)).on('child_added', dataShapshot => {
-    store.dispatch(projectActions.addProject(dataShapshot.val()))
-  })
-  // remove project
-  projectRef.orderByKey().on('child_removed', dataShapshot => {
-    store.dispatch(projectActions.removeProject(dataShapshot.key()))
-  })
-  // edit project
-  projectRef.orderByKey().on('child_changed', dataShapshot => {
-    store.dispatch(projectActions.editProject(dataShapshot.key(), dataShapshot.val()))
-  })
+  addListeners(projectRef, projectActions, state.get('project'), store)
 
   //Context
-  const maxContextKey = state.get('context').keySeq().max()
   const contextRef = new Firebase(userDataLink + '/context')
-  // add context
-  contextRef.orderByKey().startAt(increaseKey(maxContextKey)).on('child_added', dataShapshot => {
-    store.dispatch(contextActions.addContext(dataShapshot.val()))
+  addListeners(contextRef, contextActions, state.get('context'), store)
+}
+
+function addListeners(ref, actionCreator, state, store) {
+  const maxKey = state.keySeq().max()
+
+  // add
+  ref.orderByKey().startAt(increaseKey(maxKey)).on('child_added', dataShapshot => {
+    store.dispatch(actionCreator.addTask(dataShapshot.val()))
   })
-  // remove context
-  contextRef.orderByKey().on('child_removed', dataShapshot => {
-    store.dispatch(contextActions.removeContext(dataShapshot.key()))
+  // remove
+  ref.orderByKey().on('child_removed', dataShapshot => {
+    store.dispatch(actionCreator.removeTask(dataShapshot.key()))
   })
-  // edit context
-  contextRef.orderByKey().on('child_changed', dataShapshot => {
-    store.dispatch(contextActions.editContext(dataShapshot.key(), dataShapshot.val()))
+  // edit
+  ref.orderByKey().on('child_changed', dataShapshot => {
+    store.dispatch(actionCreator.editTask(dataShapshot.key(), dataShapshot.val()))
   })
 }
 
