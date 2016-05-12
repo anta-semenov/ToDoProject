@@ -1,20 +1,47 @@
+/*global Promise*/
 import Firebase from 'firebase'
 import { FIREBASE_APP_REFERENCE } from '../../constants/thierdPartyKeys'
 import { fromJS } from 'immutable'
 import mainUpdater from './mainUpdater'
 
-export function getStateForUser(userID, callback) {
-  const appDataRef = new Firebase(FIREBASE_APP_REFERENCE + '/userData/' + userID)
-  appDataRef.once('value', (data) => {
-    const userData = data.val()
-    if (userData) {
-      callback(fromJS(userData))
-    } else {
-      callback()
+export function getStateForUser(userID, isGuestUser, callback) {
+  const userDataKey = FIREBASE_APP_REFERENCE + (isGuestUser ? '/guestUserData' : '/userData/') + userID
+
+  //will query tasks, projects and contexts separatle, because we can load only uncompleted tasks and projects
+
+  const promises = []
+
+  //Task
+  const taskRef = new Firebase(userDataKey + '/task')
+  promises.push(taskRef.orderByChild('completed').equalTo(false).once('value'))
+
+  //Projects
+  const projectRef = new Firebase(userDataKey + '/project')
+  promises.push(projectRef.orderByChild('completed').equalTo(false).once('value'))
+
+  //Contects
+  const contextRef = new Firebase(userDataKey + '/context')
+  promises.push(contextRef.once('value'))
+
+  Promise.all(promises).then(result => {
+    const tasks = result[0].val()
+    if (tasks) {
+      Object.keys(tasks).forEach(item => {
+        if (tasks[item]['date'] && !(tasks[item]['date'] instanceof Date)) {
+          tasks[item]['date'] = new Date(tasks[item]['date'])
+        }
+      })
     }
-  }, () => {
-    callback()
+    callback(fromJS({
+      task: (tasks || {}),
+      project: (result[1].val() || {}),
+      context: (result[2].val() || {})
+    }))
   })
+}
+
+export function initFirebaseListeners(store) {
+
 }
 
 export const firebaseUpdateMiddleware = store => next => action => {

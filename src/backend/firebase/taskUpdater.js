@@ -1,4 +1,5 @@
 import * as actionTypes from '../../constants/actionTypes'
+import { Iterable } from 'immutable'
 
 export default function taskUpdater(updateObjects, action, newState) {
   switch (action.type) {
@@ -56,9 +57,10 @@ function editTask(updateObjects, id, properties, newState) {
     })
   } else {
     Object.keys(properties).forEach(key => {
+      const val = newState.getIn([id, key])
       updateObjects.push({
         updateURL: 'task/' + id + '/' + key,
-        value: newState.getIn([id, key])
+        value: (Iterable.isIterable(val) ? val.toJS() : val)
       })
     })
   }

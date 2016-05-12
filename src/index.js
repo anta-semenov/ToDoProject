@@ -2,13 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from './containers/Root'
 import configureStore from './store/configureStore'
-import { fromJS } from 'immutable'
 import Firebase from 'firebase'
 import { FIREBASE_APP_REFERENCE } from './constants/thierdPartyKeys'
 import { getStateForUser } from './backend/firebase/firebaseHelper'
 
 function authHandler(authData) {
-  getStateForUser(authData.uid, (state) => {
+  getStateForUser(authData.uid, false, (state) => {
     const store = configureStore(state)
     ReactDOM.render(<Root store={store}/>, document.getElementById('root'))
   })

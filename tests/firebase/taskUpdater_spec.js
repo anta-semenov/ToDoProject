@@ -99,6 +99,35 @@ describe('Firebase task updater', () => {
       expect(taskUpdater([], action, newState)).to.deep.equal(expectedUpdateObject)
     })
 
+    it('Should handle edit task action with complicated properties', () => {
+      const newTaskProperties = {
+        description: fromJS({
+          entityMap: {},
+          blocks: [
+            {t:1},
+            {t:2}
+          ]
+        })
+      }
+      const action = actions.editTask('b41sogy3s0o1', newTaskProperties)
+      const newState = taskReducer(testState, action)
+
+      const expectedUpdateObject = [
+        {
+          updateURL: 'task/b41sogy3s0o1/description',
+          value: {
+            entityMap: {},
+            blocks: [
+              {t:1},
+              {t:2}
+            ]
+          }
+        }
+      ]
+
+      expect(taskUpdater([], action, newState)).to.deep.equal(expectedUpdateObject)
+    })
+
     it('Should handle edit task action with id changes', () => {
       const newTaskProperties = {
         title: 'check task updater',

@@ -15,7 +15,6 @@ export default class TaskInfo extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className={`task-info ${this.props.id != -1 ? 'is-open' : ''}` }>
         <CloseBtn appearance='task-info' onClick={this.props.onCloseClick} />

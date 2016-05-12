@@ -21,15 +21,15 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onTaskCheckboxClick: taskId => {
+  onTaskCheckboxClick: (taskId, status) => {
     dispatch(toggleTaskCompletedLatency(taskId))
-    dispatch(completeTask(taskId))
+    dispatch(completeTask(taskId, status))
   },
-  onTaskTodayClick: (taskId, sectionType) => {
+  onTaskTodayClick: (taskId, sectionType, status) => {
     if (sectionType === TODAY || sectionType === INBOX) {
       dispatch(toggleTaskTodayLatency(taskId))
     }
-    dispatch(setTaskToday(taskId))
+    dispatch(setTaskToday(taskId, status))
   },
   onPriorityClick: (taskId, priority) => dispatch(editTask(taskId, {priority})),
   onTitleChange: (taskId, title) => dispatch(editTask(taskId, {title})),
@@ -45,7 +45,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, ownProps, stateProps, Object.assign({}, dispatchProps, {
-  onTaskTodayClick: taskId => dispatchProps.onTaskTodayClick(taskId, stateProps.sectionType)
+  onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, stateProps.sectionType, status)
 }))
 
 const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskInfo)
