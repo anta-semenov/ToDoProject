@@ -40,10 +40,6 @@ export function getStateForUser(userID, isGuestUser, callback) {
   })
 }
 
-export function initFirebaseListeners(store) {
-
-}
-
 export const firebaseUpdateMiddleware = store => next => action => {
   let result = next(action)
 

@@ -5,10 +5,21 @@ import configureStore from './store/configureStore'
 import Firebase from 'firebase'
 import { FIREBASE_APP_REFERENCE } from './constants/thierdPartyKeys'
 import { getStateForUser } from './backend/firebase/firebaseHelper'
+import initFirebaseListeners from './backend/firebase/listeners'
+import { fromJS } from 'immutable'
 
 function authHandler(authData) {
   getStateForUser(authData.uid, false, (state) => {
-    const store = configureStore(state)
+
+    const store = configureStore(
+      (state.get('userInfo') ? state : state.set('userInfo', fromJS({
+        uid: authData.uid,
+        hasAccount: true
+      })))
+    )
+
+    initFirebaseListeners(store)
+
     ReactDOM.render(<Root store={store}/>, document.getElementById('root'))
   })
 }
