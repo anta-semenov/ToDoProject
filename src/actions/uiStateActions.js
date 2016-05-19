@@ -37,3 +37,11 @@ export function setSyncing(status) {
 export function setOffline(status) {
   return {type: actionTypes.SET_OFFLINE, status}
 }
+
+export function setAuthStatus(status) {
+  return {type: actionTypes.SET_AUTH_STATUS, status}
+}
+
+export function setAuthErrorMessage(message) {
+  return {type: actionTypes.SET_AUTH_ERROR_MESSAGE, message}
+}

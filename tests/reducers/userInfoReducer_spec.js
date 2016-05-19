@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
 import reducer from '../../src/reducer/userInfo'
-import * as actions from '../../src/actions/userInfo'
+import * as actions from '../../src/actions/userInfoActions'
 
 describe('User info reducer', () => {
   it('Should return initial state', () => {

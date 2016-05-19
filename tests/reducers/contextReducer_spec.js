@@ -3,6 +3,7 @@ import { fromJS } from 'immutable'
 import reducer from '../../src/reducer/context'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_CONTEXT_TITLE } from '../../src/constants/defaults'
+import * as commonActions from '../../src/actions/commonActions'
 
 describe('Context reducer', () => {
     it('Should return initial state', () => {
@@ -283,6 +284,50 @@ describe('Context reducer', () => {
               }
           })
           expect(reducer(initialState, action)).to.equal(nextState)
+      })
+    })
+
+    describe('Set state', () => {
+      it('Should handle SET_STATE action', () => {
+        const initialState = fromJS({
+          cf1sobz3s0oc: {
+              id: 'cf1sobz3s0oc',
+              title: 'Existing context'
+          }
+        })
+
+        const newState = fromJS({
+          context: {
+            cf1sobz3s0o1: {
+                id: 'cf1sobz3s0o1',
+                title: 'Existing context 1'
+            },
+            cf1sobz3s0o2: {
+                id: 'cf1sobz3s0o2',
+                title: 'Existing context 1'
+            }
+          },
+          uiState: {
+            selectedSection: {
+              type: 'NEXT'
+            }
+          }
+        })
+
+        const nextState = fromJS({
+          cf1sobz3s0o1: {
+              id: 'cf1sobz3s0o1',
+              title: 'Existing context 1'
+          },
+          cf1sobz3s0o2: {
+              id: 'cf1sobz3s0o2',
+              title: 'Existing context 1'
+          }
+        })
+
+        const action = commonActions.setState(newState)
+
+        expect(reducer(initialState, action)).to.equal(nextState)
       })
     })
 })

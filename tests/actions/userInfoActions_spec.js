@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import * as actionTypes from '../../src/constants/actionTypes'
-import * as actions from '../../src/actions/userInfo'
+import * as actions from '../../src/actions/userInfoActions'
 
 describe('User info action creator', () => {
   it('Should return action to setting userInfo', () => {

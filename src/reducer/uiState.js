@@ -25,6 +25,10 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return setSyncing(state, action.status)
     case actionTypes.SET_OFFLINE:
       return setOffline(state, action.status)
+    case actionTypes.SET_AUTH_STATUS:
+      return setAuthStatus(state, action.status)
+    case actionTypes.SET_AUTH_ERROR_MESSAGE:
+      return setAuthErrorMessage(state, action.message)
     default:
       return state
   }
@@ -108,5 +112,21 @@ function setOffline(state, status = false) {
     return state.set('offline', status)
   } else {
     return state.delete('offline')
+  }
+}
+
+function setAuthStatus(state, status = false) {
+  if (status) {
+    return state.set('authStatus', status)
+  } else {
+    return state.delete('authStatus')
+  }
+}
+
+function setAuthErrorMessage(state, message = '') {
+  if (message !== '') {
+    return state.set('authErrorMessage', message)
+  } else {
+    return state.delete('authErrorMessage')
   }
 }

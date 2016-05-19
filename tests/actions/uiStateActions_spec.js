@@ -90,4 +90,20 @@ describe('UI state action creators', () => {
     }
     expect(actions.setOffline(true)).to.deep.equal(expectedAction)
   })
+
+  it('Should create an action to set auth status', () => {
+    const expectedAction = {
+      type: types.SET_AUTH_STATUS,
+      status: true
+    }
+    expect(actions.setAuthStatus(true)).to.deep.equal(expectedAction)
+  })
+
+  it('Should create an action to set auth error message', () => {
+    const expectedAction = {
+      type: types.SET_AUTH_ERROR_MESSAGE,
+      message: 'test message'
+    }
+    expect(actions.setAuthErrorMessage('test message')).to.deep.equal(expectedAction)
+  })
 })

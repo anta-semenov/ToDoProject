@@ -3,6 +3,7 @@ import { fromJS } from 'immutable'
 import reducer from '../../src/reducer/project'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_PROJECT_TITLE } from '../../src/constants/defaults'
+import * as commonActions from '../../src/actions/commonActions'
 
 describe('Project reducer', () => {
     it('Should return initial state', () => {
@@ -511,6 +512,55 @@ describe('Project reducer', () => {
               }
           })
           expect(reducer(initialState, action)).to.equal(nextState)
+      })
+    })
+
+    describe('Set state', () => {
+      it('Should handle SET_STATE action', () => {
+        const initialState = fromJS({
+          bh52ogy5s0fm: {
+              id: 'bh52ogy5s0fm',
+              title: 'Existing Project',
+              completed: false
+          }
+        })
+
+        const newState = fromJS({
+          project: {
+            bh52ogy5s0f1: {
+                id: 'bh52ogy5s0f1',
+                title: 'Existing Project 1',
+                completed: false
+            },
+            bh52ogy5s0f2: {
+                id: 'bh52ogy5s0f2',
+                title: 'Existing Project 1',
+                completed: false
+            }
+          },
+          uiState: {
+            selectedSection: {
+              type: 'NEXT'
+            }
+          }
+        })
+
+        const nextState = fromJS({
+          bh52ogy5s0f1: {
+              id: 'bh52ogy5s0f1',
+              title: 'Existing Project 1',
+              completed: false
+          },
+          bh52ogy5s0f2: {
+              id: 'bh52ogy5s0f2',
+              title: 'Existing Project 1',
+              completed: false
+          }
+        })
+
+        const action = commonActions.setState(newState)
+
+        expect(reducer(initialState, action)).to.equal(nextState)
       })
     })
 })

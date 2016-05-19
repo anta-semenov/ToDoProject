@@ -21,6 +21,8 @@ export default function task(state = fromJS({}), action) {
       return removeTaskContext(state, action)
     case actionTypes.SET_TASK_TODAY:
       return setTaskToday(state, action.id, action.status)
+    case actionTypes.SET_STATE:
+      return setState(action.state)
     default:
       return state
   }
@@ -96,4 +98,8 @@ function removeTaskContext(state, {id, context}) {
   } else {
     return temp
   }
+}
+
+function setState(newState) {
+  return newState.get('task')
 }

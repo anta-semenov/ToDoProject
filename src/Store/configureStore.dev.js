@@ -5,9 +5,11 @@ import DevTools from '../containers/DevTool'
 import { fromJS } from 'immutable'
 import { PRIORITY_HIGH } from '../constants/priorityLevels'
 import { firebaseUpdateMiddleware } from '../backend/firebase/firebaseHelper'
+import { localStoreMiddleware } from '../backend/localStore/localStoreHelper'
+import { authenticationFirebaseMiddleware } from '../backend/firebase/authentication'
 
 const enhancer = compose(
-  applyMiddleware(firebaseUpdateMiddleware),
+  applyMiddleware(firebaseUpdateMiddleware, localStoreMiddleware, authenticationFirebaseMiddleware),
   DevTools.instrument(),
   persistState(
     window.location.href.match(

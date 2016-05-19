@@ -30,7 +30,6 @@ export default function initFirebaseListeners(store) {
 
 function addListeners(ref, actionCreator, state, store) {
   const maxKey = state.keySeq().max()
-
   // add
   ref.orderByKey().startAt(increaseKey(maxKey)).on('child_added', dataShapshot => {
     store.dispatch(actionCreator.addTask(dataShapshot.val()))
@@ -46,6 +45,9 @@ function addListeners(ref, actionCreator, state, store) {
 }
 
 function increaseKey(key) {
+  if (!key) {
+    return '0'
+  }
   if (key.substring(key.length-1) != 'z') {
     return key.substring(0, key.length-2) + 'z'
   } else if (key.substring(key.length-2) != 'z') {

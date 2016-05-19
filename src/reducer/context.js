@@ -13,6 +13,9 @@ export default function context(state = fromJS({}), action) {
     case actionTypes.REMOVE_CONTEXT:
       return removeContext(state, action.id)
 
+    case actionTypes.SET_STATE:
+      return setState(action.state)
+
     default:
       return state
   }
@@ -43,4 +46,8 @@ function editContext(state, id, properties = {}) {
 
 function removeContext(state, id) {
   return state.delete(id)
+}
+
+function setState(newState) {
+  return newState.get('context')
 }

@@ -7,13 +7,12 @@ export default function mainUpdater(action, newState) {
   taskUpdater(updatedObjects, action, newState.get('task'))
   projectUpdater(updatedObjects, action, newState.get('project'))
   contextUpdater(updatedObjects, action, newState.get('context'))
-
   let result = {}
   updatedObjects.forEach(item => {
-    if (item.updateURL && item.value) {
+    if (item.updateURL) {
       result[item.updateURL] = item.value
     }
   })
-
+  
   return result
 }

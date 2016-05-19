@@ -16,6 +16,9 @@ export default function project(state = fromJS({}), action) {
     case actionTypes.COMPLETE_PROJECT:
       return completeProject(state, action.id, action.status)
 
+    case actionTypes.SET_STATE:
+      return setState(action.state)
+
     default:
       return state
   }
@@ -51,4 +54,8 @@ function editProject(state, id, properties = {}) {
 
 function completeProject(state, id, status = false) {
   return state.setIn([id, 'completed'], status)
+}
+
+function setState(newState) {
+  return newState.get('project')
 }

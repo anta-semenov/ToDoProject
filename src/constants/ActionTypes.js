@@ -38,9 +38,19 @@ export const TOGGLE_TASK_TODAY_LATENCY = 'TOGGLE_TASK_TODAY_LATENCY'
 export const CLEAR_TODAY_LATENT_TASKS = 'CLEAR_TODAY_LATENT_TASKS'
 export const SET_SYNCING = 'SET_SYNCING'
 export const SET_OFFLINE = 'SET_OFFLINE'
+export const SET_AUTH_STATUS = 'SET_AUTH_STATUS'
+export const SET_AUTH_ERROR_MESSAGE = 'SET_AUTH_ERROR_MESSAGE'
 
 /*
 * User Info
 */
 export const SET_USER_INFO = 'SET_USER_INFO'
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
+
+/*
+* Common
+*/
+export const SET_STATE = 'SET_STATE'
+export const LOG_IN = 'LOG_IN'
+export const SIGN_IN = 'SIGN_IN'
+export const LOG_OUT = 'LOG_OUT'

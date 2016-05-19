@@ -4,6 +4,7 @@ import reducer from '../../src/reducer/task'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_TASK_TITLE } from '../../src/constants/defaults'
 import { PRIORITY_NONE } from '../../src/constants/priorityLevels'
+import * as commonActions from '../../src/actions/commonActions'
 
 describe('Task reducer', () => {
   // Empty action
@@ -26,7 +27,6 @@ describe('Task reducer', () => {
     const action = {}
     expect(reducer(initialState, action)).to.equal(initialState)
   })
-
 
   //Add task
   describe('Add task', () => {
@@ -1117,6 +1117,53 @@ describe('Task reducer', () => {
           project: 'bh52ogy5s0fm'
         }
       })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
+  describe('Set state', () => {
+    it('Should handle set state', () => {
+      const initialState = fromJS({
+        'b41sogy3s0oc': {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          priority: PRIORITY_NONE
+        }
+      })
+
+      const newState = fromJS({
+        task: {
+          b41sogy3s0o1: {
+            id: 'b41sogy3s0o1',
+            title: 'Test task 1'
+          },
+          b41sogy3s0o2: {
+            id: 'b41sogy3s0o2',
+            title: 'Test task 2'
+          }
+        },
+        uiState: {
+          selectedSection: {
+            type: 'NEXT'
+          }
+        }
+      })
+
+      const nextState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Test task 1'
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'Test task 2'
+        }
+      })
+
+      const action = commonActions.setState(newState)
+
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })

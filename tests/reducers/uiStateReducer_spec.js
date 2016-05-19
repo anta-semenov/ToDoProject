@@ -507,4 +507,82 @@ describe('UI state reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
+
+  describe('Set auth status', () => {
+    it('Should handle SET_AUTH_STATUS with empty state and empty parameter', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setAuthStatus()
+      const nextState = fromJS({})
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_AUTH_STATUS with empty state', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setAuthStatus(true)
+      const nextState = fromJS({
+        authStatus: true
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_AUTH_STATUS with empty parameter', () => {
+      const initialState = fromJS({
+        authStatus: true,
+        activeItem: 'b41sogy3s0os'
+      })
+      const action = actionCreator.setAuthStatus()
+      const nextState = fromJS({
+        activeItem: 'b41sogy3s0os'
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_AUTH_STATUS with false parameter', () => {
+      const initialState = fromJS({
+        authStatus: true,
+        activeItem: 'b41sogy3s0os'
+      })
+      const action = actionCreator.setAuthStatus(false)
+      const nextState = fromJS({
+        activeItem: 'b41sogy3s0os'
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
+  describe('Set auth error message', () => {
+    it('Should handle SET_AUTH_ERROR_MESSAGE with empty state and empty parameter', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setAuthErrorMessage()
+      const nextState = fromJS({})
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_AUTH_ERROR_MESSAGE with empty state', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setAuthErrorMessage('test error message')
+      const nextState = fromJS({
+        authErrorMessage: 'test error message'
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_AUTH_ERROR_MESSAGE with empty parameter', () => {
+      const initialState = fromJS({
+        authErrorMessage: 'test error message',
+        activeItem: 'b41sogy3s0os'
+      })
+      const action = actionCreator.setAuthErrorMessage()
+      const nextState = fromJS({
+        activeItem: 'b41sogy3s0os'
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_AUTH_ERROR_MESSAGE with empty message', () => {
+      const initialState = fromJS({
+        authErrorMessage: 'test error message',
+        activeItem: 'b41sogy3s0os'
+      })
+      const action = actionCreator.setAuthErrorMessage('')
+      const nextState = fromJS({
+        activeItem: 'b41sogy3s0os'
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
 })
