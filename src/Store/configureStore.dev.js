@@ -4,12 +4,9 @@ import rootReducer from '../reducer'
 import DevTools from '../containers/DevTool'
 import { fromJS } from 'immutable'
 import { PRIORITY_HIGH } from '../constants/priorityLevels'
-import { firebaseUpdateMiddleware } from '../backend/firebase/firebaseHelper'
-import { localStoreMiddleware } from '../backend/localStore/localStoreHelper'
-import { authenticationFirebaseMiddleware } from '../backend/firebase/authentication'
 
-const enhancer = compose(
-  applyMiddleware(firebaseUpdateMiddleware, localStoreMiddleware, authenticationFirebaseMiddleware),
+const enhancer = middleware => compose(
+  applyMiddleware(...middleware),
   DevTools.instrument(),
   persistState(
     window.location.href.match(
@@ -65,8 +62,8 @@ const initialStateDev = fromJS({
   ]
 })
 
-export default function configureStore(initialState = initialStateDev) {
-  const store = createStore(rootReducer, initialState, enhancer);
+export default function configureStore(initialState, middleware) {
+  const store = createStore(rootReducer, initialState, enhancer(middleware));
 
   if (module.hot) {
     module.hot.accept('../reducer', () =>

@@ -3,10 +3,8 @@ import { FIREBASE_APP_REFERENCE } from '../../constants/thierdPartyKeys'
 import * as actionTypes from '../../constants/actionTypes'
 import * as uiStateActions from '../../actions/uiStateActions'
 import * as userInfoActions from '../../actions/userInfoActions'
-import * as commonActions from '../../actions/commonActions'
-import { getStateForUser } from './firebaseHelper'
 
-export function getStartUpUserInfo(localStorageUserInfoGetter, callback) {
+export function getStartUpUserInfo(localStorageHelper, callback) {
   const appRef = new Firebase(FIREBASE_APP_REFERENCE)
   const authData = appRef.getAuth()
   let userInfo
@@ -19,7 +17,7 @@ export function getStartUpUserInfo(localStorageUserInfoGetter, callback) {
       userInfo.userName = authData.facebook.displayName
     }
   } else {
-    userInfo = localStorageUserInfoGetter()
+    userInfo = localStorageHelper.getUserInfo()
   }
 
   if (callback) {
@@ -71,20 +69,16 @@ function unauth() {
   appRef.unauth()
 }
 
-export const authenticationFirebaseMiddleware = store => next => action => {
+export const authMiddleware = store => next => action => {
   const errorCallback = error => {
     store.dispatch(uiStateActions.setAuthErrorMessage(error.message))
   }
-  const authCallback = authData => {
+  const authCallback = () => {
     store.dispatch(uiStateActions.setAuthErrorMessage())
-    store.dispatch(uiStateActions.setAuthStatus(true))
-    getStateForUser(authData.uid, false, state => {store.dispatch(commonActions.setState(state))})
   }
   switch (action.type) {
     case actionTypes.LOG_OUT:
       unauth()
-      store.dispatch(userInfoActions.clearUserInfo())
-      store.dispatch(uiStateActions.setAuthStatus())
       break
     case actionTypes.LOG_IN:
       switch (action.parameters.type) {
@@ -101,4 +95,43 @@ export const authenticationFirebaseMiddleware = store => next => action => {
       break
   }
   return next(action)
+}
+
+/*
+ * Auth listeners
+ */
+ export function initAuthListener(store, localStorageHelper) {
+   const appRef = new Firebase(FIREBASE_APP_REFERENCE)
+   appRef.onAuth(authData => {
+     auth(authData, store, localStorageHelper.getUserInfo)
+   })
+ }
+
+ function auth(authData, store, localStorageUserInfoGetter) {
+   if (authData) {
+     store.dispatch(uiStateActions.setAuthStatus(true))
+     let userInfo = {
+       uid: authData.uid,
+       hasAccount: true
+     }
+     switch (authData.provider) {
+       case 'facebook':
+         userInfo.userName = authData.facebook.displayName
+         break;
+     }
+     store.dispatch(userInfoActions.setUserInfo(userInfo))
+   } else {
+     store.dispatch(uiStateActions.setAuthStatus())
+     let userInfo = {}
+     if (localStorageUserInfoGetter) {
+       userInfo = localStorageUserInfoGetter()
+     }
+     store.dispatch(userInfoActions.setUserInfo(userInfo))
+   }
+ }
+
+export default {
+  getStartUpUserInfo,
+  initAuthListener,
+  authMiddleware
 }
