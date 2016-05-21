@@ -11,20 +11,3 @@ const store = configureStore(fromJS({}),[...firebase.middleware, localStore.loca
 firebase.initFirebase(store, localStore)
 
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'))
-
-// const appRootRef = new Firebase(FIREBASE_APP_REFERENCE)
-// const authData = appRootRef.getAuth()
-// console.log(authData);
-//
-// if (authData) {
-//   authHandler(authData)
-// } else {
-//   appRootRef.authWithPassword({
-//     email: 'anta.semenov@gmail.com',
-//     password: 'sungreen'
-//   }, (error, authData) => {
-//     if (!error) {
-//       authHandler(authData)
-//     }
-//   })
-// }
