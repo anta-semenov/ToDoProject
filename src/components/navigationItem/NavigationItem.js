@@ -75,7 +75,6 @@ NavigationItem.propTypes = {
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
 
-  key: React.PropTypes.string,
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,
   count: React.PropTypes.number

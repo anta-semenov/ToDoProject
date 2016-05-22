@@ -106,4 +106,15 @@ describe('UI state action creators', () => {
     }
     expect(actions.setAuthErrorMessage('test message')).to.deep.equal(expectedAction)
   })
+
+  it('Should create an action to set auth error message', () => {
+    const property = 'showAuthMenu'
+    const value = true
+    const expectedAction = {
+      type: types.SET_PROPERTY,
+      property,
+      value
+    }
+    expect(actions.setProperty(property, value)).to.deep.equal(expectedAction)
+  })
 })

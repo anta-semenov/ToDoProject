@@ -45,3 +45,7 @@ export function setAuthStatus(status) {
 export function setAuthErrorMessage(message) {
   return {type: actionTypes.SET_AUTH_ERROR_MESSAGE, message}
 }
+
+export function setProperty(property, value) {
+  return {type: actionTypes.SET_PROPERTY, property, value}
+}

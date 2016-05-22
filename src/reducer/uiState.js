@@ -22,13 +22,15 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
     case actionTypes.CLEAR_TODAY_LATENT_TASKS:
       return clearTodayLatentTasks(state)
     case actionTypes.SET_SYNCING:
-      return setSyncing(state, action.status)
+      return setProperty(state, 'syncing', action.status)
     case actionTypes.SET_OFFLINE:
-      return setOffline(state, action.status)
+      return setProperty(state, 'offline', action.status)
     case actionTypes.SET_AUTH_STATUS:
-      return setAuthStatus(state, action.status)
+      return setProperty(state, 'authStatus', action.status)
     case actionTypes.SET_AUTH_ERROR_MESSAGE:
-      return setAuthErrorMessage(state, action.message)
+      return setProperty(state, 'authErrorMessage', action.message)
+    case actionTypes.SET_PROPERTY:
+      return setProperty(state, action.property, action.value)
     default:
       return state
   }
@@ -99,34 +101,14 @@ function clearTodayLatentTasks(state) {
   return state.delete('sectionTodayLatentTasks')
 }
 
-function setSyncing(state, status = false) {
-  if (status) {
-    return state.set('syncing', status)
+function setProperty(state, property, value) {
+  if (property) {
+    if (value) {
+      return state.set(property, value)
+    } else {
+      return state.delete(property)
+    }
   } else {
-    return state.delete('syncing')
-  }
-}
-
-function setOffline(state, status = false) {
-  if (status) {
-    return state.set('offline', status)
-  } else {
-    return state.delete('offline')
-  }
-}
-
-function setAuthStatus(state, status = false) {
-  if (status) {
-    return state.set('authStatus', status)
-  } else {
-    return state.delete('authStatus')
-  }
-}
-
-function setAuthErrorMessage(state, message = '') {
-  if (message !== '') {
-    return state.set('authErrorMessage', message)
-  } else {
-    return state.delete('authErrorMessage')
+    return state
   }
 }

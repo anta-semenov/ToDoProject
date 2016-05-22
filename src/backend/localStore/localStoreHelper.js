@@ -42,3 +42,9 @@ export function logActionWhenDisconect() {
 export function getLoggedActions() {
 
 }
+
+export default {
+  saveUserInfo,
+  getUserInfo,
+  localStoreMiddleware
+}

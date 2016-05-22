@@ -585,4 +585,32 @@ describe('UI state reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
+
+  describe('Set property', () => {
+    it('Should handle SET_PROPERTY with empty state and empty property value', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setProperty('testProperty')
+      const nextState = fromJS({})
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_PROPERTY with empty state', () => {
+      const initialState = fromJS({})
+      const action = actionCreator.setProperty('authErrorMessage', 'test error message')
+      const nextState = fromJS({
+        authErrorMessage: 'test error message'
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SET_PROPERTY with empty parameter', () => {
+      const initialState = fromJS({
+        authErrorMessage: 'test error message',
+        activeItem: 'b41sogy3s0os'
+      })
+      const action = actionCreator.setProperty('authErrorMessage')
+      const nextState = fromJS({
+        activeItem: 'b41sogy3s0os'
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
 })

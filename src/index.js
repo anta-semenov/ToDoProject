@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import Root from './containers/Root'
 import configureStore from './store/configureStore'
 import { fromJS } from 'immutable'
-import * as firebase from './backend/firebase'
-import * as localStore from './backend/localStore/localStoreHelper'
+import firebase from './backend/firebase'
+import localStore from './backend/localStore/localStoreHelper'
 
 const store = configureStore(fromJS({}),[...firebase.middleware, localStore.localStoreMiddleware])
 
