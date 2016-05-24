@@ -65,6 +65,10 @@
     background-color: @color-border-light-gray;
     border-color: @color-border-light-gray;
   }
+  &.is-disabled {
+    opacity: @opacity-disabled;
+    pointer-events: none;
+  }
 }
 .calendar__prev {
   left: -5px;
@@ -213,7 +217,10 @@
   &:first-child {
     margin-left: -7.1428%;
   }
-
+  &.is-before-today {
+    color: @color-font-light;
+    pointer-events: none;
+  }
   &.is-prev-month,
   &.is-next-month {
     color: @color-font-light;
@@ -223,6 +230,7 @@
     font-weight: @font-weight-bold;
     color: @color-accent;
   }
+
   &.is-selected {
     color: #ffffff;
     font-weight: @font-weight-bold;

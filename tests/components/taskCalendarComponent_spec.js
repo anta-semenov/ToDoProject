@@ -1,6 +1,8 @@
 import { expect } from 'chai'
+import React from 'react'
+import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils'
 import { List, fromJS } from 'immutable'
-import { weekdayRow, monthWeeksList, weekdayNamesRow } from '../../src/components/taskInfo/taskCalendar/TaskCalendar'
+import TaskCalendar, { weekdayRow, monthWeeksList, weekdayNamesRow } from '../../src/components/taskInfo/taskCalendar/TaskCalendar'
 import { WEEKDAY_SHORT_NAMES } from '../../src/constants/date'
 
 describe('TaskCalendar Component', () => {
@@ -178,6 +180,29 @@ describe('TaskCalendar Component', () => {
         ])
         expect(weekdayNamesRow(WEEKDAY_SHORT_NAMES, 3)).to.equal(weekdayNames)
       })
+    })
+  })
+  describe('Component', () => {
+    it('Should render all elements of component: navigation with prev and next button, title and weekday names. Also it should render dates', () => {
+      const calendarComponent = renderIntoDocument(<TaskCalendar id={0} />)
+      const calendarNavigation = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__nav')
+      const calendarMonth = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__month')
+      const calendarYear = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__year')
+      const prevBtn = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__prev')
+      const nextBtn = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__next')
+      const weekdayNames = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__day-names')
+      const weekdayNameArray = scryRenderedDOMComponentsWithClass(calendarComponent, 'calendar__day-name')
+      const calendarDayArray = scryRenderedDOMComponentsWithClass(calendarComponent, 'calendar__day')
+
+      expect(calendarNavigation.className).to.equal('calendar__nav')
+      expect(calendarMonth.className).to.equal('calendar__month')
+      expect(calendarYear.className).to.equal('calendar__year')
+      expect(prevBtn.className).to.include('calendar__prev')
+      expect(nextBtn.className).to.equal('calendar__next')
+      expect(weekdayNames.className).to.equal('calendar__day-names')
+      expect(weekdayNameArray.length).to.equal(7)
+      expect(calendarDayArray.length).to.be.above(27)
+      expect(calendarDayArray.length).to.be.below(43)
     })
   })
 })

@@ -4,10 +4,6 @@ import { WEEKDAY_SHORT_NAMES, MONTH_NAMES } from '../../../constants/date'
 import { shiftDate, areDatesEqual } from '../../../utils/date'
 import './TaskCalendar.less'
 
-const DATE_MODE = 'DATE_MODE'
-const MONTH_MODE = 'MONTH_MODE'
-const YEAR_MODE = 'YEAR_MODE'
-
 export const weekdayNamesRow = (weekdayNames = WEEKDAY_SHORT_NAMES, weekStart = 1) => {
   return weekdayNames.reduce((weekRow, day, index) => weekRow.set(index - weekStart, day), List([0, 1, 2, 3, 4, 5, 6]))
 }
@@ -30,10 +26,9 @@ export default class TaskCalendar extends React.Component {
     super(props)
     const today = new Date()
     this.state = {
-      todayDate: today,
+      todayDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
       currentMonth: this.props.selectedDate ? this.props.selectedDate.getMonth() : today.getMonth(),
-      currentYear: this.props.selectedDate ? this.props.selectedDate.getFullYear() : today.getFullYear(),
-      mode: DATE_MODE
+      currentYear: this.props.selectedDate ? this.props.selectedDate.getFullYear() : today.getFullYear()
     }
   }
   nextPeriod() {
@@ -64,7 +59,7 @@ export default class TaskCalendar extends React.Component {
   componentWillReceiveProps(nextProps) {
     const today = new Date()
     this.state = {
-      todayDate: today,
+      todayDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
       currentMonth: nextProps.selectedDate ? nextProps.selectedDate.getMonth() : today.getMonth(),
       currentYear: nextProps.selectedDate ? nextProps.selectedDate.getFullYear() : today.getFullYear()
     }
@@ -75,7 +70,7 @@ export default class TaskCalendar extends React.Component {
       <div className='calendar'>
         <div className='calendar__header'>
           <div className='calendar__nav'>
-            <button className='calendar__prev' onClick={() => this.prevPeriod()}><div className='calendar__prev-sign'/></button>
+            <button className={`calendar__prev ${this.state.currentMonth === this.state.todayDate.getMonth() ? 'is-disabled' : ''}`} onClick={() => this.prevPeriod()}><div className='calendar__prev-sign'/></button>
             <div className='calendar__title'>
               <div className='calendar__month'>{MONTH_NAMES.get(this.state.currentMonth)}</div>
               <div className='calendar__year'>{this.state.currentYear}</div>
@@ -97,6 +92,7 @@ export default class TaskCalendar extends React.Component {
                   className={`calendar__day
                     ${day.getMonth() < this.state.currentMonth ? 'is-prev-month' : ''}
                     ${day.getMonth() > this.state.currentMonth ? 'is-next-month' : ''}
+                    ${day < this.state.todayDate ? 'is-before-today' : ''}
                     ${areDatesEqual(day, this.state.todayDate) ? 'is-today' : '' }
                     ${areDatesEqual(day, this.props.selectedDate) ? 'is-selected' : '' }
                   `}

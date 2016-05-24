@@ -1,8 +1,7 @@
 export const dateDayDifference = (startDate, endDate) => {
   const dateDiff = endDate.getTime() - startDate.getTime()
   const dayDiff = dateDiff >= 0 ? Math.floor(dateDiff / (1000*60*60*24)) : Math.ceil(dateDiff / (1000*60*60*24))
-  const hourLeftover = startDate < endDate ? startDate.getHours() + Math.round(dateDiff % (1000*60*60*24) / (1000*60*60)) :
-  console.log(dayDiff, startDate.getHours(), Math.round(dateDiff % (1000*60*60*24) / (1000*60*60)), hourLeftover)
+  const hourLeftover = startDate < endDate ? startDate.getHours() + Math.round(dateDiff % (1000*60*60*24) / (1000*60*60)) : undefined
   return hourLeftover >= 24 ? dayDiff + 1 : dayDiff
 }
 export const dateHumanNameDifference = (startDate, endDate) => {
@@ -34,7 +33,7 @@ export const shiftDate = (date, shift, item = 'day') => {
 }
 export const areDatesEqual = (date1, date2) => {
   if (date1 && date2) {
-    return date1.getYear() === date2.getYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate()
+    return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate()
   }
   return false
 }
