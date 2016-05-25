@@ -1,0 +1,69 @@
+@import '../../../styles/variables.less';
+
+.today {
+  position: relative;
+
+  border: 1px dotted darken(@color-border-gray, 10%);
+  border-radius: 50%;
+  transition: @transition-basic;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border-radius: 50%;
+    background-color: @color-border-gray;
+    transition: @transition-basic;
+  }
+  &:hover {
+    border-color: darken(@color-border-dark-gray, 10%);
+    &::after {
+      background-color: @color-border-dark-gray;
+    }
+  }
+  &.is-checked {
+    border-color: @color-accent;
+    &::after {
+      background-color: @color-accent;
+    }
+  }
+  &.is-disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+  &.is-dimmed {
+    opacity: 0.3;
+  }
+
+  &.today--default {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    &::after {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  &.today--task-info {
+    margin: 6px 0;
+    width: 16px;
+    height: 16px;
+    &::after {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  &.today--tasks-list {
+    margin: 0 6px 0 0;
+    width: 14px;
+    height: 14px;
+
+    &::after {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}

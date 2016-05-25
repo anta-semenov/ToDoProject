@@ -4,6 +4,7 @@ import { Map } from 'immutable'
 import * as priorityLevels from '../../constants/priorityLevels'
 import { DATE_FORMAT } from '../../constants/defaults'
 import { descriptionToString } from '../../utils/descriptionTransform'
+import Today from '../controls/today/Today'
 
 import './Task.less'
 
@@ -17,7 +18,7 @@ export default class Task extends React.Component {
     return (
       <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latentToday ? 'is-latent-today' : ''} `}>
         <input type='checkbox' className='task__completed' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
-        <div className={`task__today ${this.props.today ? 'is-checked' : ''}`} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
+        <Today appearance={'tasks-list'} checked={this.props.today} dimmed={this.props.latentToday} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
         <div className={`task__priority task__priority--${this.props.priority ? this.props.priority : 'none'}`} >
           <div className='task__priority-level task__priority-level--none' onClick={() => this.props.onPriorityClick(this.props.id, priorityLevels.PRIORITY_NONE)} />
           <div className='task__priority-level task__priority-level--max' onClick={() => this.props.onPriorityClick(this.props.id, priorityLevels.PRIORITY_MAX)} />
