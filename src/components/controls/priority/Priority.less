@@ -4,10 +4,7 @@
   position: relative;
   z-index: 2;
   box-sizing: border-box;
-  margin: 0 10px 0 0;
-  padding: 4px;
-  width: 22px;
-  height: 22px;
+
   cursor: pointer;
   transform-origin: center left;
   transition: 0.2s ease-out;
@@ -25,6 +22,28 @@
   &.is-disabled {
     pointer-events: none;
     opacity: 0.5;
+  }
+  &.is-dimmed {
+    opacity: 0.5;
+  }
+  &.priority--default {
+    margin: 0;
+    padding: 4px;
+    width: 22px;
+    height: 22px;
+  }
+  &.priority--tasks-list {
+    margin: 0 10px 0 0;
+    padding: 4px;
+    width: 22px;
+    height: 22px;
+  }
+  &.priority--task-info {
+    margin: 0;
+    padding: 4px;
+    width: 22px;
+    height: 22px;
+    transform-origin: left top;
   }
 }
 .priority-level {
@@ -51,28 +70,28 @@
 
   &.priority-level--low {
     width: 8px;
-    .task__priority.task__priority--low & {
+    .priority.priority--low & {
       background-color: @color-accent;
     }
   }
 
   &.priority-level--medium {
     width: 10px;
-    .task__priority.task__priority--medium & {
+    .priority.priority--medium & {
       background-color: @color-accent;
     }
   }
 
   &.priority-level--high {
     width: 12px;
-    .task__priority.task__priority--high & {
+    .priority.priority--high & {
       background-color: @color-accent;
     }
   }
 
   &.priority-level--max {
     width: 14px;
-    .task__priority.task__priority--max & {
+    .priority.priority--max & {
       background-color: @color-accent;
     }
   }
