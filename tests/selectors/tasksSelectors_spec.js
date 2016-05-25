@@ -560,7 +560,7 @@ describe('Tasks Selectors', () => {
       const state = fromJS({
         uiState: {}
       })
-      expect(getActiveItemID(state)).to.equal(-1)
+      expect(getActiveItemID(state)).to.equal('')
     })
   })
 })

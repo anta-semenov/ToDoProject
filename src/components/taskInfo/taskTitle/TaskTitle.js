@@ -31,7 +31,7 @@ export default class TaskTitle extends React.Component {
 }
 
 TaskTitle.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string,
   onChange: React.PropTypes.func.isRequired
 }

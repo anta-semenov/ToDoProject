@@ -35,7 +35,7 @@ export default class TaskDescription extends React.Component {
 }
 
 TaskDescription.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.string.isRequired,
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,
     React.PropTypes.instanceOf(Map)

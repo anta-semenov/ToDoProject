@@ -3,9 +3,9 @@ import { fromJS, Set } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
-export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], -1)
+export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], '')
 export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
-export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], -1)
+export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], '')
 const getCompletedLatentTasks = state => state.getIn(['uiState', 'sectionCompletedLatentTasks'], fromJS([]))
 export const getTodayLatentTasks = state => state.getIn(['uiState', 'sectionTodayLatentTasks'], Set([]))
 export const getAllTasks = state => (state.get('task') || fromJS({})).toList()

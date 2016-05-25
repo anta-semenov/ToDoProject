@@ -12,7 +12,7 @@ export default class Tasks extends Component {
 
   render() {
     return(
-      <div className={`tasks ${this.props.activeItem != -1 ? 'has-active-item' : ''}`}>
+      <div className={`tasks ${this.props.activeItem != '' ? 'has-active-item' : ''}`}>
         {this.props.header ? <h1 className='tasks__header'>{this.props.header}</h1> : null}
         <AddTask addTask={this.props.addTask} />
         {this.props.groups ?
@@ -42,7 +42,7 @@ export default class Tasks extends Component {
 Tasks.propTypes = {
   groups: React.PropTypes.instanceOf(List),
   header: React.PropTypes.string,
-  activeItem: React.PropTypes.number,
+  activeItem: React.PropTypes.string,
   todayLatentTasks: React.PropTypes.instanceOf(Set),
 
   onTaskClick: React.PropTypes.func.isRequired,

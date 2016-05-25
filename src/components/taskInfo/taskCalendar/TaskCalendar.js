@@ -109,7 +109,7 @@ export default class TaskCalendar extends React.Component {
 }
 
 TaskCalendar.propTypes = {
-  id: React.PropTypes.number.isRequired,
+  id: React.PropTypes.string.isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   tasks: React.PropTypes.object,
   onChange: React.PropTypes.func.isRequired

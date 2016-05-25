@@ -26,7 +26,7 @@ export default class TaskGroup extends React.Component {
 
               description={task.get('description')}
               priority={task.get('priority')}
-              date={task.get('date')}
+              date={task.get('date') ? new Date(task.get('date')) : undefined}
               active={this.props.activeItem === task.get('id')}
               latentToday={this.props.todayLatentTasks ? this.props.todayLatentTasks.includes(task.get('id')) : undefined}
 
@@ -44,7 +44,7 @@ export default class TaskGroup extends React.Component {
 TaskGroup.propTypes = {
   groupTitle: React.PropTypes.string,
   tasks: React.PropTypes.instanceOf(List).isRequired,
-  activeItem: React.PropTypes.number,
+  activeItem: React.PropTypes.string,
   todayLatentTasks: React.PropTypes.instanceOf(Set),
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
