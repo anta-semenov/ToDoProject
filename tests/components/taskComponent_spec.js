@@ -50,21 +50,21 @@ describe('Task component', () => {
   })
   describe('Checkbox', () => {
     it('Should render complete checkbox', () => {
-      const checkboxClass = 'task__completed'
+      const checkboxClass = 'checkbox'
       const taskComponent = renderIntoDocument(<Task completed={testTasks.get(0).get('completed')} />)
       const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
       expect(checkboxComponent.checked).to.equal(testTasks.get(0).get('completed'))
     })
     it('Should render uncomplete checkbox', () => {
-      const checkboxClass = 'task__completed'
+      const checkboxClass = 'checkbox'
       const taskComponent = renderIntoDocument(<Task completed={testTasks.get(1).get('completed')} />)
       const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
       expect(checkboxComponent.checked).to.equal(testTasks.get(1).get('completed'))
     })
     it('Should invoke complete callback when change event occurs', () => {
-      const checkboxClass = 'task__completed'
+      const checkboxClass = 'checkbox'
       let checkedId = -12
       let checkStatus = true
       const callback = (id, status) => {checkedId = id, checkStatus = status}
@@ -81,21 +81,21 @@ describe('Task component', () => {
       expect(checkedId).to.equal(-12)
       expect(checkStatus).to.equal(true)
 
-      Simulate.change(checkboxComponent)
+      Simulate.click(checkboxComponent)
       expect(checkedId).to.equal('b41sogy3s0o0')
       expect(checkStatus).to.equal(false)
     })
   })
   describe('Today', () => {
     it('Should render checked today toggle', () => {
-      const todayClass = 'task__today'
+      const todayClass = 'today'
       const taskComponent = renderIntoDocument(<Task today={testTasks.get(0).get('today')} />)
       const todayToggle = findRenderedDOMComponentWithClass(taskComponent, todayClass)
 
       expect(todayToggle.className).to.include('is-checked')
     })
     it('Should render unchecked today toggle', () => {
-      const todayClass = 'task__today'
+      const todayClass = 'today'
       const taskComponent = renderIntoDocument(<Task today={testTasks.get(1).get('today')} />)
       const todayToggle = findRenderedDOMComponentWithClass(taskComponent, todayClass)
 
@@ -105,7 +105,7 @@ describe('Task component', () => {
       let callbackId = -12
       let callbackStatus = true
       const callback = (id, status) => {callbackId = id, callbackStatus = status}
-      const todayClass = 'task__today'
+      const todayClass = 'today'
       const taskComponent = renderIntoDocument(<Task today={testTasks.get(0).get('today')} id={testTasks.get(0).get('id')} onTaskTodayClick={callback} />)
       const todayToggle = findRenderedDOMComponentWithClass(taskComponent, todayClass)
 

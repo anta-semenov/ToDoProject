@@ -6,6 +6,7 @@ import TaskTitle from './taskTitle/TaskTitle'
 import TaskDescription from './taskDescription/TaskDescription'
 import TaskCalendar from './taskCalendar/TaskCalendar'
 import Today from '../controls/today/Today'
+import Checkbox from '../controls/checkbox/Checkbox'
 import CloseBtn from '../controls/closeBtn/CloseBtn'
 
 import * as priorityLevels from '../../constants/priorityLevels'
@@ -24,7 +25,7 @@ export default class TaskInfo extends React.Component {
         {this.props.id != -1 ?
           <div className='task-info__content'>
             <div className='task-info__controls'>
-              <input type='checkbox' className='task__completed' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
+              <Checkbox appearance={'task-info'} checked={this.props.completed} onClick={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
               <Today appearance={'task-info'} checked={this.props.today} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)}/>
               <div className={`task__priority task__priority--${this.props.priority ? this.props.priority : 'none'}`} >
                 <div className='task__priority-level task__priority-level--none' onClick={() => this.props.onPriorityClick(this.props.id, priorityLevels.PRIORITY_NONE)} />
