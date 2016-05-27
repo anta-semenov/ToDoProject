@@ -24,6 +24,7 @@ export const SET_TASK_TODAY = 'SET_TASK_TODAY'
 export const ADD_CONTEXT = 'ADD_CONTEXT'
 export const REMOVE_CONTEXT = 'REMOVE_CONTEXT'
 export const EDIT_CONTEXT = 'EDIT_CONTEXT'
+export const SWITCH_TASK_CONTEXT = 'SWITCH_TASK_CONTEXT'
 
 /*
 * UI State

@@ -28,6 +28,10 @@ export function removeTaskContext(id, context) {
  return {type: actionTypes.REMOVE_TASK_CONTEXT, id, context}
 }
 
+export function switchTaskContext(id, context) {
+  return {type: actionTypes.SWITCH_TASK_CONTEXT, id, context}
+}
+
 export function setTaskToday(id, status) {
   return {type: actionTypes.SET_TASK_TODAY, id, status}
 }

@@ -924,8 +924,9 @@ describe('Task reducer', () => {
     })
   })
 
+
+  //context
   describe('Context', () => {
-    //context
     it('Should handle ADD_TASK_CONTEXT with no context', () => {
       const initialState = fromJS({
         b41sogy3s0oc: {
@@ -1091,7 +1092,6 @@ describe('Task reducer', () => {
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
-
     it('Should handle REMOVE_TASK_CONTEXT for the last context', () => {
       const initialState = fromJS({
         b41sogy3s0oc: {
@@ -1105,6 +1105,116 @@ describe('Task reducer', () => {
       })
       const action = {
         type: types.REMOVE_TASK_CONTEXT,
+        id: 'b41sogy3s0oc',
+        context: '6f1sobz3s0oc'
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SWITCH_TASK_CONTEXT to add context for task with no contexts', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        }
+      })
+      const action = {
+        type: types.SWITCH_TASK_CONTEXT,
+        id: 'b41sogy3s0oc',
+        context: '6f1sobz3s0oc'
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: Set(['6f1sobz3s0oc'])
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SWITCH_TASK_CONTEXT to add context for task with existing contexts', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: Set(['406s5gokjy0'])
+        }
+      })
+      const action = {
+        type: types.SWITCH_TASK_CONTEXT,
+        id: 'b41sogy3s0oc',
+        context: '6f1sobz3s0oc'
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: Set(['406s5gokjy0', '6f1sobz3s0oc'])
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SWITCH_TASK_CONTEXT to remove context from task', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: Set(['406s5gokjy0', '6f1sobz3s0oc'])
+        }
+      })
+      const action = {
+        type: types.SWITCH_TASK_CONTEXT,
+        id: 'b41sogy3s0oc',
+        context: '6f1sobz3s0oc'
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: Set(['406s5gokjy0'])
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+    it('Should handle SWITCH_TASK_CONTEXT to remove last context from task', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: Set(['6f1sobz3s0oc'])
+        }
+      })
+      const action = {
+        type: types.SWITCH_TASK_CONTEXT,
         id: 'b41sogy3s0oc',
         context: '6f1sobz3s0oc'
       }

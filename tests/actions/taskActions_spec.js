@@ -82,6 +82,16 @@ describe('Task action creators', () => {
         }
         expect(actions.removeTaskContext(id, contextId)).to.deep.equal(expectedAction)
     })
+    it('Should create an action to switch task context', () => {
+        const id = 0
+        const contextId = 0
+        const expectedAction = {
+            type: types.SWITCH_TASK_CONTEXT,
+            id,
+            context: contextId
+        }
+        expect(actions.switchTaskContext(id, contextId)).to.deep.equal(expectedAction)
+    })
 
     it('Should create an action to add task to today', () => {
         const id = 0

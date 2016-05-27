@@ -19,6 +19,8 @@ export default function task(state = fromJS({}), action) {
       return addTaskContext(state, action.id, action.context)
     case actionTypes.REMOVE_TASK_CONTEXT:
       return removeTaskContext(state, action)
+    case actionTypes.SWITCH_TASK_CONTEXT:
+      return switchTaskContext(state, action.id, action.context)
     case actionTypes.SET_TASK_TODAY:
       return setTaskToday(state, action.id, action.status)
     case actionTypes.SET_STATE:
@@ -95,6 +97,22 @@ function removeTaskContext(state, {id, context}) {
   })
   if (temp.getIn([id, 'contexts']) && temp.getIn([id, 'contexts']).isEmpty()) {
     return temp.deleteIn([id, 'contexts'])
+  } else {
+    return temp
+  }
+}
+function switchTaskContext(state, taskId, contextId) {
+  const temp = state.updateIn([taskId, 'contexts'], val => {
+    if (val) {
+      if (val.includes(contextId)) {return val.delete(contextId)}
+      else {return val.add(contextId)}
+    }
+    else {
+      return Set([contextId])
+    }
+  })
+  if (temp.getIn([taskId, 'contexts']) && temp.getIn([taskId, 'contexts']).isEmpty()) {
+    return temp.deleteIn([taskId, 'contexts'])
   } else {
     return temp
   }
