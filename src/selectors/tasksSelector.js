@@ -7,7 +7,7 @@ export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], '
 export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
 export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], '')
 const getCompletedLatentTasks = state => state.getIn(['uiState', 'sectionCompletedLatentTasks'], fromJS([]))
-export const getTodayLatentTasks = state => state.getIn(['uiState', 'sectionTodayLatentTasks'], Set([]))
+export const getLatentTasks = state => state.getIn(['uiState', 'sectionLatentTasks'], Set([]))
 export const getAllTasks = state => (state.get('task') || fromJS({})).toList()
 const getProjects = state => (state.get('project') || fromJS({})).toList()
 const getContexts = state => (state.get('context') || fromJS({})).toList()
@@ -35,8 +35,8 @@ const groupTasksByProject = (tasks, projects) => {
 }
 
 export const getTasksGroups = createSelector(
-  [getSelectedSectionType, getSelectedSectionID, getTasks, getTodayLatentTasks, getProjects],
-  (sectionType, sectionID, tasks, todayLatentTasks, projects) => {
+  [getSelectedSectionType, getSelectedSectionID, getTasks, getLatentTasks, getProjects],
+  (sectionType, sectionID, tasks, latentTasks, projects) => {
     switch (sectionType) {
       case sectionTypes.CONTEXT: {
         const sectionTasks = tasks.filter(task => {
@@ -54,7 +54,7 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.TODAY: {
-        const sectionTasks = tasks.filter(task => task.get('today') === true || todayLatentTasks.includes(task.get('id')))
+        const sectionTasks = tasks.filter(task => task.get('today') === true || latentTasks.includes(task.get('id')))
         return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }
 
@@ -63,7 +63,7 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.INBOX: {
-        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.has('contexts') || todayLatentTasks.includes(task.get('id')))
+        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.has('contexts') || latentTasks.includes(task.get('id')))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
       }
 

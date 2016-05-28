@@ -1,7 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Map } from 'immutable'
-import * as priorityLevels from '../../constants/priorityLevels'
 import { DATE_FORMAT } from '../../constants/defaults'
 import { descriptionToString } from '../../utils/descriptionTransform'
 import Today from '../controls/today/Today'
@@ -20,7 +19,7 @@ export default class Task extends React.Component {
 
   render() {
     return (
-      <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latentToday ? 'is-latent-today' : ''} `}>
+      <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latent ? 'is-latent-today' : ''} `}>
         <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latentToday} onClick={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
         <Today appearance={appearance} checked={this.props.today} dimmed={this.props.latentToday} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
         <Priority appearance={appearance} priority={this.props.priority} dimmed={this.props.latentToday} disabled={this.props.completed} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)}/>
@@ -54,5 +53,5 @@ Task.propTypes = {
   priority: React.PropTypes.string,
   date: React.PropTypes.instanceOf(Date),
   active: React.PropTypes.bool,
-  latentToday: React.PropTypes.bool
+  latent: React.PropTypes.bool
 }

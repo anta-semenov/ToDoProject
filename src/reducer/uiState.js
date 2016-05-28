@@ -17,10 +17,10 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return toggleTaskCompletedLatency(state, action.id)
     case actionTypes.CLEAR_COMPLETED_LATENT_TASKS:
       return clearCompletedLatentTasks(state)
-    case actionTypes.TOGGLE_TASK_TODAY_LATENCY:
-      return toggleTaskTodayLatency(state, action.id)
-    case actionTypes.CLEAR_TODAY_LATENT_TASKS:
-      return clearTodayLatentTasks(state)
+    case actionTypes.TOGGLE_TASK_LATENCY:
+      return toggleTaskLatency(state, action.id, action.status)
+    case actionTypes.CLEAR_LATENT_TASKS:
+      return clearLatentTasks(state)
     case actionTypes.SET_SYNCING:
       return setProperty(state, 'syncing', action.status)
     case actionTypes.SET_OFFLINE:
@@ -88,17 +88,20 @@ function clearCompletedLatentTasks(state) {
   return state.delete('sectionCompletedLatentTasks')
 }
 
-function toggleTaskTodayLatency(state, id) {
-  return state.updateIn(['sectionTodayLatentTasks'], val => {
+function toggleTaskLatency(state, id, status) {
+  return state.updateIn(['sectionLatentTasks'], val => {
     if (val) {
-      if (val.has(id)) {return val.delete(id)}
-      else {return val.add(id)}
+      if (status) {return val.add(id)}
+      else {return val.delete(id)}
     }
-    else {return Set([id])}
+    else {
+      if (status) {return Set([id])}
+      else {return val}
+    }
   })
 }
-function clearTodayLatentTasks(state) {
-  return state.delete('sectionTodayLatentTasks')
+function clearLatentTasks(state) {
+  return state.delete('sectionLatentTasks')
 }
 
 function setProperty(state, property, value) {

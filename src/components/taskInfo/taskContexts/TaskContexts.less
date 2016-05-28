@@ -1,0 +1,53 @@
+@import '../../../styles/variables.less';
+
+.contexts {
+  position: relative;
+  margin: 15px 8px;
+}
+.contexts__title {
+  position: relative;
+  margin: 0 0 5px 0;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: @color-font-light;
+}
+.contexts__list {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.context {
+  position: relative;
+  margin: 0 6px 7px 0;
+  padding: 2px 8px 1px 8px;
+  cursor: pointer;
+  transition: @transition-basic;
+
+  border: 1px solid @color-border-gray;
+  border-radius: 2px;
+
+  font-size: @font-size-small;
+  color: @color-font-light;
+
+  &:hover {
+    border-color: @color-border-dark-gray;
+    color: @color-font-medium;
+  }
+  &:active,
+  &:focus {
+    border-color: @color-accent;
+    color: @color-accent;
+  }
+  &.is-active {
+    background-color: @color-accent;
+    border-color: @color-accent;
+    color: #ffffff;
+
+    &:hover {
+      background-color: darken(@color-accent, 10%);
+      border-color: darken(@color-accent, 10%);
+    }
+  }
+}

@@ -4,7 +4,6 @@ import reducer from '../../src/reducer/uiState'
 import * as actionTypes from '../../src/constants/actionTypes'
 import { DEFAULT_SIDEBAR_SIZE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
-import * as itemTypes from '../../src/constants/itemTypes'
 import { INITIAL_UI_STATE } from '../../src/constants/defaults'
 import * as actionCreator from '../../src/actions/uiStateActions'
 
@@ -372,58 +371,84 @@ describe('UI state reducer', () => {
     })
   })
 
-  describe('Section Today Latent Tasks', () => {
-    describe('TOGGLE_TASK_TODAY_LATENCY', () => {
-      it('Should handle TOGGLE_TASK_TODAY_LATENCY with empty state', () => {
+  describe('Section Latent Tasks', () => {
+    describe('TOGGLE_TASK_LATENCY', () => {
+      it('Should handle TOGGLE_TASK_LATENCY with empty state and true status', () => {
         const initialState = fromJS({})
-        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set(['b41sogy3s0o2'])
+          sectionLatentTasks: Set(['b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
-      it('Should handle TOGGLE_TASK_TODAY_LATENCY with undefined latent list', () => {
+      it('Should handle TOGGLE_TASK_LATENCY with empty state and false status', () => {
+        const initialState = fromJS({})
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', false)
+        expect(reducer(initialState, action)).to.equal(initialState)
+      })
+      it('Should handle TOGGLE_TASK_LATENCY with undefined latent list and true status', () => {
         const initialState = fromJS({
-          sectionTodayLatentTasks: undefined
+          sectionLatentTasks: undefined
         })
-        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set(['b41sogy3s0o2'])
+          sectionLatentTasks: Set(['b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
-      it('Should handle TOGGLE_TASK_TODAY_LATENCY with existing latent list but without a task', () => {
+      it('Should handle TOGGLE_TASK_LATENCY with undefined latent list and false status', () => {
         const initialState = fromJS({
-          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7'])
+          sectionLatentTasks: undefined
         })
-        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', false)
+        expect(reducer(initialState, action)).to.equal(initialState)
+      })
+      it('Should handle TOGGLE_TASK_LATENCY with existing latent list but without a task and true status', () => {
+        const initialState = fromJS({
+          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7'])
+        })
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2'])
+          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
-      it('Should handle TOGGLE_TASK_TODAY_LATENCY with existing latent list but with a task', () => {
+      it('Should handle TOGGLE_TASK_LATENCY with existing latent list but without a task and false status', () => {
         const initialState = fromJS({
-          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o2', 'b41sogy3s0o4'])
+          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7'])
         })
-        const action = actionCreator.toggleTaskTodayLatency('b41sogy3s0o2')
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', false)
+        expect(reducer(initialState, action)).to.equal(initialState)
+      })
+      it('Should handle TOGGLE_TASK_LATENCY with existing latent list, with a task and true status', () => {
+        const initialState = fromJS({
+          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o2', 'b41sogy3s0o4'])
+        })
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
+        expect(reducer(initialState, action)).to.equal(initialState)
+      })
+      it('Should handle TOGGLE_TASK_LATENCY with existing latent list, with a task and false status', () => {
+        const initialState = fromJS({
+          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o2', 'b41sogy3s0o4'])
+        })
+        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', false)
         const nextState = fromJS({
-          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o4'])
+          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o4'])
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
     })
-    describe('CLEAR_TODAY_LATENT_TASKS', () => {
-      it('Should handle CLEAR_TODAY_LATENT_TASKS with empty state', () => {
+    describe('CLEAR_LATENT_TASKS', () => {
+      it('Should handle CLEAR_LATENT_TASKS with empty state', () => {
         const initialState = fromJS({})
-        const action = actionCreator.clearTodayLatentTasks()
+        const action = actionCreator.clearLatentTasks()
         expect(reducer(initialState, action)).to.equal(initialState)
       })
-      it('Should handle CLEAR_TODAY_LATENT_TASKS with existing state', () => {
+      it('Should handle CLEAR_LATENT_TASKS with existing state', () => {
         const initialState = fromJS({
-          sectionTodayLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2', 'b41sogy3s0o5'])
+          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2', 'b41sogy3s0o5'])
         })
-        const action = actionCreator.clearTodayLatentTasks()
+        const action = actionCreator.clearLatentTasks()
         const nextState = fromJS({})
         expect(reducer(initialState, action)).to.equal(nextState)
       })

@@ -117,57 +117,6 @@ describe('Task component', () => {
     })
   })
   describe('Priority', () => {
-    it('Should render priority component', () => {
-      const priorityClass = 'task__priority'
-      const priorityNoneClass = 'task__priority--none'
-      const priorityLevelClass = 'task__priority-level'
-      const priorityLevelNoneClass = 'task__priority-level--none'
-      const priorityLevelLowClass = 'task__priority-level--low'
-      const priorityLevelMediumClass = 'task__priority-level--medium'
-      const priorityLevelHighClass = 'task__priority-level--high'
-      const priorityLevelMaxClass = 'task__priority-level--max'
-
-      const taskComponent = renderIntoDocument(<Task />)
-      const priorityComponent = findRenderedDOMComponentWithClass(taskComponent, priorityClass)
-      const priorityLevelComponents = scryRenderedDOMComponentsWithClass(taskComponent, priorityLevelClass)
-
-      expect(priorityComponent.className).to.include(priorityNoneClass)
-      expect(priorityLevelComponents.length).to.equal(5)
-      expect(priorityLevelComponents[0].className).to.include(priorityLevelNoneClass)
-      expect(priorityLevelComponents[1].className).to.include(priorityLevelMaxClass)
-      expect(priorityLevelComponents[2].className).to.include(priorityLevelHighClass)
-      expect(priorityLevelComponents[3].className).to.include(priorityLevelMediumClass)
-      expect(priorityLevelComponents[4].className).to.include(priorityLevelLowClass)
-    })
-    it('Should render right priority class', () => {
-      const priorityClass = 'task__priority'
-      const priorotyNoneClass = 'task__priority--none'
-      const priorotyLowClass = 'task__priority--low'
-      const priorotyMediumClass = 'task__priority--medium'
-      const priorotyHighClass = 'task__priority--high'
-      const priorotyMaxClass = 'task__priority--max'
-
-      const taskComponentNone1 = renderIntoDocument(<Task />)
-      const taskComponentNone2 = renderIntoDocument(<Task priority={priorityLevels.PRIORITY_NONE} />)
-      const taskComponentLow = renderIntoDocument(<Task priority={priorityLevels.PRIORITY_LOW} />)
-      const taskComponentMedium = renderIntoDocument(<Task priority={priorityLevels.PRIORITY_MEDIUM} />)
-      const taskComponentHigh = renderIntoDocument(<Task priority={priorityLevels.PRIORITY_HIGH} />)
-      const taskComponentMax = renderIntoDocument(<Task priority={priorityLevels.PRIORITY_MAX} />)
-
-      const priorityComponentNone1 = findRenderedDOMComponentWithClass(taskComponentNone1, priorityClass)
-      const priorityComponentNone2 = findRenderedDOMComponentWithClass(taskComponentNone2, priorityClass)
-      const priorityComponentLow = findRenderedDOMComponentWithClass(taskComponentLow, priorityClass)
-      const priorityComponentMedium = findRenderedDOMComponentWithClass(taskComponentMedium, priorityClass)
-      const priorityComponentHigh= findRenderedDOMComponentWithClass(taskComponentHigh, priorityClass)
-      const priorityComponentMax = findRenderedDOMComponentWithClass(taskComponentMax, priorityClass)
-
-      expect(priorityComponentNone1.className).to.include(priorotyNoneClass)
-      expect(priorityComponentNone2.className).to.include(priorotyNoneClass)
-      expect(priorityComponentLow.className).to.include(priorotyLowClass)
-      expect(priorityComponentMedium.className).to.include(priorotyMediumClass)
-      expect(priorityComponentHigh.className).to.include(priorotyHighClass)
-      expect(priorityComponentMax.className).to.include(priorotyMaxClass)
-    })
     it('Should invoke callback when click on priority level', () => {
       let priority = ''
       let callbackId = -12
@@ -175,11 +124,11 @@ describe('Task component', () => {
         callbackId = id
         priority = priorityLevel
       }
-      const priorityLevelNoneClass = 'task__priority-level--none'
-      const priorityLevelLowClass = 'task__priority-level--low'
-      const priorityLevelMediumClass = 'task__priority-level--medium'
-      const priorityLevelHighClass = 'task__priority-level--high'
-      const priorityLevelMaxClass = 'task__priority-level--max'
+      const priorityLevelNoneClass = 'priority-level--none'
+      const priorityLevelLowClass = 'priority-level--low'
+      const priorityLevelMediumClass = 'priority-level--medium'
+      const priorityLevelHighClass = 'priority-level--high'
+      const priorityLevelMaxClass = 'priority-level--max'
 
       const taskComponentNone = renderIntoDocument(<Task id={'b41sogy3s0o0'} onPriorityClick={callback} />)
       const taskComponentLow = renderIntoDocument(<Task id={'b41sogy3s0o1'}  onPriorityClick={callback} />)

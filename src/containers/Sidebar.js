@@ -1,6 +1,6 @@
 import Navigation from '../components/navigation/Navigation'
 import { connect } from 'react-redux'
-import { setSelectedSection, setEditingSection, clearCompletedLatentTasks, clearTodayLatentTasks } from '../actions/uiStateActions'
+import { setSelectedSection, setEditingSection, clearCompletedLatentTasks, clearLatentTasks } from '../actions/uiStateActions'
 import { addProject, editProject } from '../actions/projectActions'
 import { addContext, editContext } from '../actions/contextActions'
 import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
@@ -80,7 +80,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     onItemClick: (type, id) => {
       dispatch(clearCompletedLatentTasks())
-      dispatch(clearTodayLatentTasks())
+      dispatch(clearLatentTasks())
       dispatch(setSelectedSection({type: type, id: id}))
     },
     addNew: (type) => {

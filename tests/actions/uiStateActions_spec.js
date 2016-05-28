@@ -61,18 +61,19 @@ describe('UI state action creators', () => {
     expect(actions.clearCompletedLatentTasks()).to.deep.equal(expectedAction)
   })
 
-  it('Should create an action to toggle today task latency', () => {
+  it('Should create an action to toggle task latency', () => {
     const expectedAction = {
-      type: types.TOGGLE_TASK_TODAY_LATENCY,
-      id: 0
+      type: types.TOGGLE_TASK_LATENCY,
+      id: 0,
+      status: true
     }
-    expect(actions.toggleTaskTodayLatency(0)).to.deep.equal(expectedAction)
+    expect(actions.toggleTaskLatency(0, true)).to.deep.equal(expectedAction)
   })
   it('Should create an action to clear today latent tasks', () => {
     const expectedAction = {
-      type: types.CLEAR_TODAY_LATENT_TASKS
+      type: types.CLEAR_LATENT_TASKS
     }
-    expect(actions.clearTodayLatentTasks()).to.deep.equal(expectedAction)
+    expect(actions.clearLatentTasks()).to.deep.equal(expectedAction)
   })
 
   it('Should create an action to set syncing', () => {
