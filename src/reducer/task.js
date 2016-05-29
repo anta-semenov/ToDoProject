@@ -30,18 +30,28 @@ export default function task(state = fromJS({}), action) {
   }
 }
 
-function addTask(state, properties = fromJS({})) {
+function correctProperties(properties) {
+  let correctProperties = properties
+  if (correctProperties.context) {
+    correctProperties.context = Set(correctProperties.context)
+  }
+
+  return correctProperties
+}
+
+function addTask(state, properties = {}) {
   if (!properties.id || state.has(properties.id)) {
     return state
   }
+  const tempProperties = correctProperties(properties)
   const newTask = fromJS({
-    id: properties.id,
+    id: tempProperties.id,
     title: NEW_TASK_TITLE,
     completed: false,
     today: false,
     priority: PRIORITY_NONE
   })
-  return state.set(properties.id, newTask.merge(properties))
+  return state.set(tempProperties.id, newTask.merge(tempProperties))
 }
 
 function removeTask(state, id) {
@@ -49,16 +59,17 @@ function removeTask(state, id) {
 }
 
 function editTask(state, id, properties = {}) {
-  if (properties.id && properties.id != id) {
-    if (state.has(properties.id)) {
+  const tempProperties = correctProperties(properties)
+
+  if (tempProperties.id && tempProperties.id != id) {
+    if (state.has(tempProperties.id)) {
       return state
     }
     const temp = state.get(id)
-    return state.delete(id).set(properties.id, temp).mergeIn([properties.id], properties)
+    return state.delete(id).set(tempProperties.id, temp).mergeIn([tempProperties.id], tempProperties)
   } else {
-    return state.mergeIn([id], properties)
+    return state.mergeIn([id], tempProperties)
   }
-
 }
 
 function completeTask(state, id, status = false) {

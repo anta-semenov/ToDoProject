@@ -1,7 +1,7 @@
 /*global Promise*/
 import Firebase from 'firebase'
 import { FIREBASE_APP_REFERENCE } from '../../constants/thierdPartyKeys'
-import { fromJS } from 'immutable'
+import { fromJS, Set } from 'immutable'
 import mainUpdater from './mainUpdater'
 import * as actionTypes from '../../constants/actionTypes'
 import * as commonActions from '../../actions/commonActions'
@@ -33,9 +33,11 @@ export function getStateForUser(userID, isGuestUser, callback) {
         if (tasks[item]['date'] && !(tasks[item]['date'] instanceof Date)) {
           tasks[item]['date'] = new Date(tasks[item]['date'])
         }
+        if (tasks[item]['contexts']) {
+          tasks[item]['contexts'] = Set(tasks[item]['contexts'])
+        }
       })
     }
-
     callback(fromJS({
       task: (tasks || {}),
       project: (result[1].val() || {}),
