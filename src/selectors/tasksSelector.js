@@ -49,7 +49,7 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.PROJECT: {
-        const sectionTasks = tasks.filter(task => task.get('project') === sectionID)
+        const sectionTasks = tasks.filter(task => task.get('project') === sectionID || latentTasks.includes(task.get('id')))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
       }
 

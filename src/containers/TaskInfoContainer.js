@@ -5,7 +5,7 @@ import { getActiveItemID, getSelectedSectionType, getSelectedSectionID } from '.
 import * as activeTask from '../selectors/activeTaskSelector'
 import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask, addTaskContext, removeTaskContext } from '../actions/taskActions'
 import { setActiveItem, toggleTaskCompletedLatency, toggleTaskLatency } from '../actions/uiStateActions'
-import { INBOX, TODAY, CONTEXTS } from '../constants/sectionTypes'
+import * as sectionTypes from '../constants/sectionTypes'
 
 const mapStateToProps = (state) => ({
   id: getActiveItemID(state),
@@ -19,6 +19,7 @@ const mapStateToProps = (state) => ({
   date: activeTask.getDate(state),
   sectionType: getSelectedSectionType(state),
   sectionId: getSelectedSectionID(state),
+  projects: state.get('project', undefined),
   contexts: state.get('context')
 })
 
@@ -28,16 +29,23 @@ const mapDispatchToProps = dispatch => ({
     dispatch(completeTask(taskId, status))
   },
   onTaskTodayClick: (taskId, status, sectionType) => {
-    if (sectionType === TODAY) {dispatch(toggleTaskLatency(taskId, !status))}
-    if (sectionType === INBOX) {dispatch(toggleTaskLatency(taskId, status))}
+    if (sectionType === sectionTypes.TODAY) {dispatch(toggleTaskLatency(taskId, !status))}
+    if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
     dispatch(setTaskToday(taskId, status))
   },
   onPriorityClick: (taskId, priority) => dispatch(editTask(taskId, {priority})),
   onTitleChange: (taskId, title) => dispatch(editTask(taskId, {title})),
   onDescriptionChange: (taskId, description) => dispatch(editTask(taskId, {description})),
-  onProjectChange: (taskId, projectId) => dispatch(addTaskToProject(taskId, projectId)),
+  onProjectChange: (taskId, projectId, sectionType, sectionId) => {
+    dispatch(addTaskToProject(taskId, projectId))
+    if (sectionType === sectionTypes.PROJECT && sectionId === projectId) {
+      dispatch(toggleTaskLatency(taskId, false))
+    } else if ((sectionType === sectionTypes.PROJECT && sectionId !== projectId) || (sectionType === sectionTypes.INBOX && projectId)) {
+      dispatch(toggleTaskLatency(taskId, true))
+    }
+  },
   onContextClick: (taskId, contextId, contextStatus, sectionType, sectionId) => {
-    if (sectionType === CONTEXTS && sectionId === contextId) {
+    if (sectionType === sectionTypes.CONTEXT && sectionId === contextId) {
       dispatch(toggleTaskLatency(taskId, !contextStatus))
     }
     if (contextStatus) {dispatch(addTaskContext(taskId, contextId))}
@@ -53,7 +61,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, ownProps, stateProps, Object.assign({}, dispatchProps, {
   onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
-  onContextClick: (taskId, contextId, contextStatus) => dispatchProps.onContextClick(taskId, contextId, contextStatus, stateProps.sectionType, stateProps.section)
+  onProjectChange: (taskId, projectId) => dispatchProps.onProjectChange(taskId, projectId, stateProps.sectionType, stateProps.sectionId),
+  onContextClick: (taskId, contextId, contextStatus) => dispatchProps.onContextClick(taskId, contextId, contextStatus, stateProps.sectionType, stateProps.sectionId)
 }))
 
 const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskInfo)

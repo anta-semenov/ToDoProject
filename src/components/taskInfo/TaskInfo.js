@@ -5,6 +5,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import TaskTitle from './taskTitle/TaskTitle'
 import TaskDescription from './taskDescription/TaskDescription'
+import TaskProject from './taskProject/TaskProject.js'
 import TaskContexts from './taskContexts/TaskContexts'
 import TaskCalendar from './taskCalendar/TaskCalendar'
 import Today from '../controls/today/Today'
@@ -35,6 +36,7 @@ export default class TaskInfo extends React.Component {
               <div className='task-info__body-top'>
                 <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
                 <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} />
+                <TaskProject taskProject={this.props.taskProject} projects={this.props.projects} onProjectChange={(newProject) => this.props.onProjectChange(this.props.id, newProject)} />
                 <TaskContexts contexts={this.props.contexts} taskContexts={this.props.taskContexts} onContextClick={(context, status) => this.props.onContextClick(this.props.id, context, status)} />
                 <TaskCalendar id={this.props.id} selectedDate={this.props.date} onChange={this.props.onDateChange}/>
               </div>
@@ -62,12 +64,19 @@ TaskInfo.propTypes = {
   taskProject: React.PropTypes.string,
   taskContexts: React.PropTypes.instanceOf(Set),
 
+  projects: ImmutablePropTypes.mapOf(
+    ImmutablePropTypes.contains({
+      id: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string.isRequired,
+      completed: React.PropTypes.bool.isRequired
+    })
+  ),
   contexts: ImmutablePropTypes.mapOf(
     ImmutablePropTypes.contains({
       id: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired
     })
-  ).isRequired,
+  ),
 
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,

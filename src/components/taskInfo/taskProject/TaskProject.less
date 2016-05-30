@@ -1,0 +1,63 @@
+@import '../../../styles/variables.less';
+
+.projects {
+  position: relative;
+  margin: 20px 0 30px 8px;
+}
+.projects__title {
+  position: relative;
+  margin: 0;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: @color-font-light;
+}
+.projects__selector {
+  appearance: none;
+  position: relative;
+  width: 100%;
+  padding: 5px 6px 4px 8px;
+  margin: 4px 0 0 0;
+  cursor: pointer;
+  transition: border-color @transition-basic, color @transition-basic, background-color @transition-basic;
+
+  border: 1px solid @color-border-gray;
+  border-radius: 2px;
+  font-size: @font-size-small;
+  color: @color-font-light;
+  font-family: 'Fira Sans', sans-serif;
+
+  background-image: url("data:image/svg+xml;charset=UTF-8, <svg viewBox='0 0 12 6' xmlns='http://www.w3.org/2000/svg'><polygon points='0 0.5 5.58044434 6 11.1350098 0.5 10.5786566 0.00178777393 5.58044434 5 0.580444336 0' fill='@{color-font-light}'></polygon></svg>");
+  background-position: 97% center;
+  background-size: 6%;
+  background-repeat: no-repeat;
+
+  &:hover {
+    border-color: @color-border-dark-gray;
+    color: @color-font-medium;
+    background-image: url("data:image/svg+xml;charset=UTF-8, <svg viewBox='0 0 12 6' xmlns='http://www.w3.org/2000/svg'><polygon points='0 0.5 5.58044434 6 11.1350098 0.5 10.5786566 0.00178777393 5.58044434 5 0.580444336 0' fill='@{color-font-medium}'></polygon></svg>");
+  }
+  &:active,
+  &:focus {
+    border-color: @color-border-dark-gray;
+    background-color: @color-bg-light-gray;
+    outline: none;
+    color: @color-font-medium;
+    background-image: url("data:image/svg+xml;charset=UTF-8, <svg viewBox='0 0 12 6' xmlns='http://www.w3.org/2000/svg'><polygon points='0 0.5 5.58044434 6 11.1350098 0.5 10.5786566 0.00178777393 5.58044434 5 0.580444336 0' fill='@{color-font-medium}'></polygon></svg>");
+  }
+  &.is-active {
+    background-color: @color-accent;
+    border-color: @color-accent;
+    color: #ffffff;
+
+    &:hover {
+      background-color: darken(@color-accent, 10%);
+      border-color: darken(@color-accent, 10%);
+    }
+  }
+}
+.projects__empty-list {
+  position: relative;
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+}
