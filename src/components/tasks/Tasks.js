@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { List, Set } from 'immutable'
+import { Set } from 'immutable'
 import TaskGroup from '../taskGroup/TaskGroup'
 import AddTask from '../addTask/AddTask'
 

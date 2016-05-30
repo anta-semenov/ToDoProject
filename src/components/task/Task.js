@@ -19,7 +19,6 @@ export default class Task extends React.Component {
 
   render() {
     return (
-      this.props.id && this.props.title ? 
       <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latent ? 'is-latent-today' : ''} `}>
         <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latent} onClick={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
         <Today appearance={appearance} checked={this.props.today} dimmed={this.props.latent} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
@@ -31,8 +30,7 @@ export default class Task extends React.Component {
           </div>
           {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
         </div>
-      </li> :
-      undefined
+      </li>
     )
   }
 }
