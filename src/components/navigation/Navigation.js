@@ -1,4 +1,5 @@
 import React from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import './Navigation.less'
 import NavigationGroup from '../navigationGroup/NavigationGroup'
 
@@ -28,7 +29,23 @@ export default class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
-  groups: React.PropTypes.array.isRequired,
+  groups: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      type: React.PropTypes.string.isRequired,
+      items: ImmutablePropTypes.listOf(
+        ImmutablePropTypes.contains({
+          type: React.PropTypes.string.isRequired,
+          title: React.PropTypes.string.isRequired,
+          active: React.PropTypes.bool.isRequired,
+          id: React.PropTypes.string,
+          count: React.PropTypes.number,
+          editing: React.PropTypes.bool
+        })
+      ).isRequired,
+      title: React.PropTypes.string,
+      addNewTitle: React.PropTypes.string
+    })
+  ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   addNew: React.PropTypes.func,
   onStopEditing: React.PropTypes.func

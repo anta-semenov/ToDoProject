@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import { List, Set } from 'immutable'
 import TaskGroup from '../taskGroup/TaskGroup'
 import AddTask from '../addTask/AddTask'
@@ -40,7 +41,25 @@ export default class Tasks extends Component {
 }
 
 Tasks.propTypes = {
-  groups: React.PropTypes.instanceOf(List),
+  groups: ImmutablePropTypes.listOf(
+    ImmutablePropTypes.contains({
+      items: ImmutablePropTypes.listOf(
+        ImmutablePropTypes.contains({
+          id: React.PropTypes.string.isRequired,
+          title: React.PropTypes.string.isRequired,
+          completed: React.PropTypes.bool.isRequired,
+          today: React.PropTypes.bool.isRequired,
+          priority: React.PropTypes.string.isRequired,
+          description: React.PropTypes.oneOfType([
+            React.PropTypes.string,
+            ImmutablePropTypes.map
+          ]),
+          date: React.PropTypes.instanceOf(Date)
+        })
+      ).isRequired,
+      title: React.PropTypes.string
+    })
+  ),
   header: React.PropTypes.string,
   activeItem: React.PropTypes.string,
   latentTasks: React.PropTypes.instanceOf(Set),

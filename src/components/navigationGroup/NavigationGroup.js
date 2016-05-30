@@ -1,5 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import './NavigationGroup.less'
 
 import NavigationItem from '../navigationItem/NavigationItem'
@@ -40,7 +41,16 @@ export default class NavigationGroup extends React.Component {
 }
 
 NavigationGroup.propTypes = {
-  items: React.PropTypes.object.isRequired,
+  items: ImmutablePropTypes.listOf(
+    ImmutablePropTypes.contains({
+      type: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string.isRequired,
+      active: React.PropTypes.bool.isRequired,
+      id: React.PropTypes.string,
+      count: React.PropTypes.number,
+      editing: React.PropTypes.bool      
+    })
+  ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
 

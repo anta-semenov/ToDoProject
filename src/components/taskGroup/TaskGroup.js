@@ -1,4 +1,5 @@
 import React from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import Task from '../task/Task'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { List, Set } from 'immutable'
@@ -43,7 +44,20 @@ export default class TaskGroup extends React.Component {
 
 TaskGroup.propTypes = {
   groupTitle: React.PropTypes.string,
-  tasks: React.PropTypes.instanceOf(List).isRequired,
+  tasks: ImmutablePropTypes.listOf(
+    ImmutablePropTypes.contains({
+      id: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string.isRequired,
+      completed: React.PropTypes.bool.isRequired,
+      today: React.PropTypes.bool.isRequired,
+      priority: React.PropTypes.string.isRequired,
+      description: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        ImmutablePropTypes.map
+      ]),
+      date: React.PropTypes.instanceOf(Date)
+    })
+  ).isRequired,
   activeItem: React.PropTypes.string,
   latentTasks: React.PropTypes.instanceOf(Set),
   onTaskClick: React.PropTypes.func.isRequired,
