@@ -29,7 +29,7 @@ TaskContexts.propTypes = {
       id: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired
     })
-  ).isRequired,
+  ),
   taskContexts: ImmutablePropTypes.iterableOf(React.PropTypes.string),
   onContextClick: React.PropTypes.func.isRequired
 }

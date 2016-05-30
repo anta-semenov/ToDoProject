@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { fromJS } from 'immutable'
+import { fromJS, Set } from 'immutable'
 import * as activeTask from '../../src/selectors/activeTaskSelector'
 import { PRIORITY_MEDIUM } from '../../src/constants/priorityLevels'
 
@@ -42,7 +42,7 @@ describe('ActiveTask selector', () => {
     expect(activeTask.getProject(state)).to.equal('bh52ogy5s0fm')
   })
   it('Should return active task contexts', () => {
-    expect(activeTask.getContexts(state)).to.equal(fromJS(['cf1sobz3s0o0', 'cf1sobz3s0o4', 'cf1sobz3s0o5']))
+    expect(activeTask.getContexts(state)).to.equal(Set(['cf1sobz3s0o0', 'cf1sobz3s0o4', 'cf1sobz3s0o5']))
   })
   it('Should return active task date', () => {
     expect(activeTask.getDate(state)).to.deep.equal(new Date(2016, 5, 17))

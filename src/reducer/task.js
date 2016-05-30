@@ -91,7 +91,7 @@ function addTaskToProject(state, id, projectId) {
 function addTaskContext(state, id, contextId) {
   return state.updateIn([id, 'contexts'], val => {
     if (val) {
-      return val.add(contextId)
+      return Set(val).add(contextId)
     } else {
       return Set([contextId])
     }
@@ -101,7 +101,7 @@ function addTaskContext(state, id, contextId) {
 function removeTaskContext(state, {id, context}) {
   const temp =  state.updateIn([id, 'contexts'], val => {
     if (val) {
-      return val.delete(context)
+      return Set(val).delete(context)
     } else {
       return val
     }

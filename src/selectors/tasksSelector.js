@@ -41,9 +41,9 @@ export const getTasksGroups = createSelector(
       case sectionTypes.CONTEXT: {
         const sectionTasks = tasks.filter(task => {
           if (task.get('contexts')) {
-            return task.get('contexts').includes(sectionID)
+            return task.get('contexts').includes(sectionID) || latentTasks.includes(task.get('id'))
           }
-          return false
+          return latentTasks.includes(task.get('id'))
         })
         return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }

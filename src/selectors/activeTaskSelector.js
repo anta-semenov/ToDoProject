@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { getActiveItemID } from './tasksSelector'
-import { fromJS } from 'immutable'
+import { fromJS, Set } from 'immutable'
 
 const getAllTasks = state => (state.get('task') || fromJS({}))
 
@@ -18,4 +18,4 @@ export const getToday = createSelector([getActiveTask], activeTask => activeTask
 export const getPriority = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('priority') : undefined)
 export const getDate = createSelector([getActiveTask], activeTask => activeTask && activeTask.get('date') ? new Date(activeTask.get('date')) : undefined)
 export const getProject = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('project') : undefined)
-export const getContexts = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('contexts') : undefined)
+export const getContexts = createSelector([getActiveTask], activeTask => activeTask ? Set(activeTask.get('contexts')) : undefined)
