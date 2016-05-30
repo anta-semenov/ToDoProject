@@ -19,10 +19,11 @@ export default class Task extends React.Component {
 
   render() {
     return (
+      this.props.id && this.props.title ? 
       <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latent ? 'is-latent-today' : ''} `}>
-        <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latentToday} onClick={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
-        <Today appearance={appearance} checked={this.props.today} dimmed={this.props.latentToday} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
-        <Priority appearance={appearance} priority={this.props.priority} dimmed={this.props.latentToday} disabled={this.props.completed} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)}/>
+        <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latent} onClick={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
+        <Today appearance={appearance} checked={this.props.today} dimmed={this.props.latent} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
+        <Priority appearance={appearance} priority={this.props.priority} dimmed={this.props.latent} disabled={this.props.completed} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)}/>
         <div className='task__body' onClick={() => this.props.onTaskClick(this.props.id)}>
           <div className='task__main'>
             <div className='task__title'>{this.props.title}</div>
@@ -30,7 +31,8 @@ export default class Task extends React.Component {
           </div>
           {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
         </div>
-      </li>
+      </li> :
+      undefined
     )
   }
 }
