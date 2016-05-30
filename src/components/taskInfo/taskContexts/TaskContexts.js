@@ -8,7 +8,7 @@ export default class TaskContexts extends React.Component {
       <div className='contexts'>
         <div className='contexts__title'>Contexts</div>
         {
-          this.props.contexts ?
+          this.props.contexts && this.props.contexts.size > 0 ?
           <div className='contexts__list'>
             {this.props.contexts.map(context => {
               const active = this.props.taskContexts ? this.props.taskContexts.includes(context.get('id')) : false

@@ -18,6 +18,15 @@ const contexts = fromJS({
 const taskContexts = Set(['a23sogy3s0oq'])
 
 describe('TaskContexts component', () => {
+  it('Should render component without contexts', () => {
+    const contexts = fromJS({})
+    const contextsComponent1 = renderIntoDocument(<TaskContexts />)
+    const emptyContexts1 = findRenderedDOMComponentWithClass(contextsComponent1, 'contexts__empty-list')
+    const contextsComponent2 = renderIntoDocument(<TaskContexts contexts={contexts} />)
+    const emptyContexts2 = findRenderedDOMComponentWithClass(contextsComponent2, 'contexts__empty-list')
+    expect(emptyContexts1.className).to.equal('contexts__empty-list')
+    expect(emptyContexts2.className).to.equal('contexts__empty-list')
+  })
   it('Should render component with no task contexts', () => {
     const contextsComponent = renderIntoDocument(<TaskContexts contexts={contexts} />)
     const contextsElement = findRenderedDOMComponentWithClass(contextsComponent, 'contexts')

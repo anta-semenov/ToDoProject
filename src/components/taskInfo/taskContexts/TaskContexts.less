@@ -2,11 +2,11 @@
 
 .contexts {
   position: relative;
-  margin: 15px 8px;
+  margin: 20px 0 30px 8px;
 }
 .contexts__title {
   position: relative;
-  margin: 0 0 5px 0;
+  margin: 0;
   font-size: 10px;
   font-weight: 400;
   text-transform: uppercase;
@@ -14,6 +14,7 @@
 }
 .contexts__list {
   position: relative;
+  margin: 5px 0 0 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -50,4 +51,9 @@
       border-color: darken(@color-accent, 10%);
     }
   }
+}
+.contexts__empty-list {
+  position: relative;
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
 }
