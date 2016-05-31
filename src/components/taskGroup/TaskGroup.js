@@ -55,7 +55,7 @@ TaskGroup.propTypes = {
         React.PropTypes.string,
         ImmutablePropTypes.map
       ]),
-      date: React.PropTypes.instanceOf(Date)
+      date: React.PropTypes.number
     })
   ).isRequired,
   activeItem: React.PropTypes.string,

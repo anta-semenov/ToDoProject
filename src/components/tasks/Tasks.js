@@ -54,7 +54,7 @@ Tasks.propTypes = {
             React.PropTypes.string,
             ImmutablePropTypes.map
           ]),
-          date: React.PropTypes.instanceOf(Date)
+          date: React.PropTypes.number
         })
       ).isRequired,
       title: React.PropTypes.string
