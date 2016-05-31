@@ -53,7 +53,7 @@ export default class TaskCalendar extends React.Component {
   }
   handleDayClick(date) {
     if (areDatesEqual(date, this.props.selectedDate)) {this.props.onChange(this.props.id, undefined)}
-    else {this.props.onChange(this.props.id, date)}
+    else {this.props.onChange(this.props.id, date.getTime())}
   }
 
   componentWillReceiveProps(nextProps) {

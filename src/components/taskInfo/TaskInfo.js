@@ -35,10 +35,10 @@ export default class TaskInfo extends React.Component {
             <div className='task-info__body'>
               <div className='task-info__body-top'>
                 <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
-                <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} />
+                <TaskDescription id={this.props.id} description={this.props.description} onBlur={this.props.onDescriptionChange} />
                 <TaskProject taskProject={this.props.taskProject} projects={this.props.projects} onProjectChange={(newProject) => this.props.onProjectChange(this.props.id, newProject)} />
                 <TaskContexts contexts={this.props.contexts} taskContexts={this.props.taskContexts} onContextClick={(context, status) => this.props.onContextClick(this.props.id, context, status)} />
-                <TaskCalendar id={this.props.id} selectedDate={this.props.date} onChange={this.props.onDateChange}/>
+                <TaskCalendar id={this.props.id} selectedDate={this.props.date ? new Date(this.props.date) : undefined} onChange={this.props.onDateChange}/>
               </div>
               <button className='task-info__delete' onClick={() => this.props.onTaskDeleteClick(this.props.id)} tabIndex='0' >Delete task</button>
             </div>
@@ -60,7 +60,7 @@ TaskInfo.propTypes = {
     React.PropTypes.instanceOf(Map)
   ]),
   priority: React.PropTypes.string,
-  date: React.PropTypes.instanceOf(Date),
+  date: React.PropTypes.number,
   taskProject: React.PropTypes.string,
   taskContexts: React.PropTypes.instanceOf(Set),
 

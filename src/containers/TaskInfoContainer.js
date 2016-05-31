@@ -51,7 +51,7 @@ const mapDispatchToProps = dispatch => ({
     if (contextStatus) {dispatch(addTaskContext(taskId, contextId))}
     else {dispatch(removeTaskContext(taskId, contextId))}
   },
-  onDateChange: (taskId, date) => dispatch(editTask(taskId, {date: date.getTime()})),
+  onDateChange: (taskId, date) => dispatch(editTask(taskId, {date: date})),
   onTaskDeleteClick: taskId => {
     dispatch(setActiveItem())
     dispatch(removeTask(taskId))

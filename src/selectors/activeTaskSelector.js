@@ -16,6 +16,6 @@ export const getDescription = createSelector([getActiveTask], activeTask => acti
 export const getCompleted = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('completed') : undefined)
 export const getToday = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('today') : undefined)
 export const getPriority = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('priority') : undefined)
-export const getDate = createSelector([getActiveTask], activeTask => activeTask && activeTask.get('date') ? new Date(activeTask.get('date')) : undefined)
+export const getDate = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('date', undefined) : undefined)
 export const getProject = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('project') : undefined)
 export const getContexts = createSelector([getActiveTask], activeTask => activeTask ? Set(activeTask.get('contexts')) : undefined)
