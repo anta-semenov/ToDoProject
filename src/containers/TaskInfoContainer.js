@@ -38,7 +38,7 @@ const mapDispatchToProps = dispatch => ({
   onDescriptionChange: (taskId, description) => dispatch(editTask(taskId, {description})),
   onProjectChange: (taskId, projectId, sectionType, sectionId) => {
     dispatch(addTaskToProject(taskId, projectId))
-    if (sectionType === sectionTypes.PROJECT && sectionId === projectId) {
+    if ((sectionType === sectionTypes.PROJECT && sectionId === projectId) || (sectionType === sectionTypes.INBOX && !projectId)) {
       dispatch(toggleTaskLatency(taskId, false))
     } else if ((sectionType === sectionTypes.PROJECT && sectionId !== projectId) || (sectionType === sectionTypes.INBOX && projectId)) {
       dispatch(toggleTaskLatency(taskId, true))
@@ -47,6 +47,8 @@ const mapDispatchToProps = dispatch => ({
   onContextClick: (taskId, contextId, contextStatus, sectionType, sectionId) => {
     if (sectionType === sectionTypes.CONTEXT && sectionId === contextId) {
       dispatch(toggleTaskLatency(taskId, !contextStatus))
+    } else if (sectionType === sectionTypes.INBOX) {
+      dispatch(toggleTaskLatency(taskId, contextStatus))
     }
     if (contextStatus) {dispatch(addTaskContext(taskId, contextId))}
     else {dispatch(removeTaskContext(taskId, contextId))}

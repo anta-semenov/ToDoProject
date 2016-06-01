@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { fromJS, Set } from 'immutable'
+import { fromJS, Set, Map } from 'immutable'
 import reducer from '../../src/reducer/uiState'
 import * as actionTypes from '../../src/constants/actionTypes'
 import { DEFAULT_SIDEBAR_SIZE } from '../../src/constants/defaults'
@@ -377,7 +377,7 @@ describe('UI state reducer', () => {
         const initialState = fromJS({})
         const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
         const nextState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o2'])
+          sectionLatentTasks: Map({b41sogy3s0o2: 1})
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
@@ -392,7 +392,7 @@ describe('UI state reducer', () => {
         })
         const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
         const nextState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o2'])
+          sectionLatentTasks: Map({b41sogy3s0o2: 1})
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
@@ -405,37 +405,89 @@ describe('UI state reducer', () => {
       })
       it('Should handle TOGGLE_TASK_LATENCY with existing latent list but without a task and true status', () => {
         const initialState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7'])
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 2,
+            b41sogy3s0o7: 1
+          })
         })
         const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
         const nextState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2'])
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 2,
+            b41sogy3s0o7: 1,
+            b41sogy3s0o2: 1
+          })
         })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
       it('Should handle TOGGLE_TASK_LATENCY with existing latent list but without a task and false status', () => {
         const initialState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7'])
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 2,
+            b41sogy3s0o7: 1
+          })
         })
         const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', false)
         expect(reducer(initialState, action)).to.equal(initialState)
       })
       it('Should handle TOGGLE_TASK_LATENCY with existing latent list, with a task and true status', () => {
         const initialState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o2', 'b41sogy3s0o4'])
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 2,
+            b41sogy3s0o7: 1,
+            b41sogy3s0o3: 1,
+            b41sogy3s0o5: 1,
+            b41sogy3s0o2: 1,
+            b41sogy3s0o4: 2
+          })
         })
         const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', true)
-        expect(reducer(initialState, action)).to.equal(initialState)
+        const nextState = fromJS({
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 2,
+            b41sogy3s0o7: 1,
+            b41sogy3s0o3: 1,
+            b41sogy3s0o5: 1,
+            b41sogy3s0o2: 2,
+            b41sogy3s0o4: 2
+          })
+        })
+        expect(reducer(initialState, action)).to.deep.equal(nextState)
       })
       it('Should handle TOGGLE_TASK_LATENCY with existing latent list, with a task and false status', () => {
         const initialState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o2', 'b41sogy3s0o4'])
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 2,
+            b41sogy3s0o7: 1,
+            b41sogy3s0o3: 1,
+            b41sogy3s0o5: 1,
+            b41sogy3s0o2: 1,
+            b41sogy3s0o4: 2
+          })
         })
-        const action = actionCreator.toggleTaskLatency('b41sogy3s0o2', false)
-        const nextState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o3', 'b41sogy3s0o5', 'b41sogy3s0o4'])
+        const action1 = actionCreator.toggleTaskLatency('b41sogy3s0o2', false)
+        const nextState1 = fromJS({
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 2,
+            b41sogy3s0o7: 1,
+            b41sogy3s0o3: 1,
+            b41sogy3s0o5: 1,
+            b41sogy3s0o4: 2
+          })
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        const action2 = actionCreator.toggleTaskLatency('b41sogy3s0o0', false)
+        const nextState2 = fromJS({
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 1,
+            b41sogy3s0o7: 1,
+            b41sogy3s0o3: 1,
+            b41sogy3s0o5: 1,
+            b41sogy3s0o2: 1,
+            b41sogy3s0o4: 2
+          })
+        })
+        expect(reducer(initialState, action1)).to.equal(nextState1)
+        expect(reducer(initialState, action2)).to.equal(nextState2)
       })
     })
     describe('CLEAR_LATENT_TASKS', () => {
@@ -446,7 +498,10 @@ describe('UI state reducer', () => {
       })
       it('Should handle CLEAR_LATENT_TASKS with existing state', () => {
         const initialState = fromJS({
-          sectionLatentTasks: Set(['b41sogy3s0o0', 'b41sogy3s0o7', 'b41sogy3s0o2', 'b41sogy3s0o5'])
+          sectionLatentTasks: Map({
+            b41sogy3s0o0: 1,
+            b41sogy3s0o7: 2
+          })
         })
         const action = actionCreator.clearLatentTasks()
         const nextState = fromJS({})

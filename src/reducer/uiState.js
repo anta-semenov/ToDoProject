@@ -1,5 +1,5 @@
 import * as actionTypes from '../constants/actionTypes'
-import { fromJS, is, Set } from 'immutable'
+import { fromJS, is, Set, Map } from 'immutable'
 import { INITIAL_UI_STATE } from '../constants/defaults'
 
 
@@ -91,11 +91,11 @@ function clearCompletedLatentTasks(state) {
 function toggleTaskLatency(state, id, status) {
   return state.updateIn(['sectionLatentTasks'], val => {
     if (val) {
-      if (status) {return val.add(id)}
-      else {return val.delete(id)}
+      const temp = val.update(id, 0, latency => status ? latency++ : latency--)
+      return temp.get(id) <= 0 ? temp.delete(id) : temp
     }
     else {
-      if (status) {return Set([id])}
+      if (status) {return Map().set(id, 1)}
       else {return val}
     }
   })
