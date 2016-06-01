@@ -91,7 +91,7 @@ function clearCompletedLatentTasks(state) {
 function toggleTaskLatency(state, id, status) {
   return state.updateIn(['sectionLatentTasks'], val => {
     if (val) {
-      const temp = val.update(id, 0, latency => status ? latency++ : latency--)
+      const temp = val.update(id, 0, latency => status ? ++latency : --latency)
       return temp.get(id) <= 0 ? temp.delete(id) : temp
     }
     else {
