@@ -32,7 +32,7 @@ describe('TaskProject Component', () => {
     const projectsSelect = findRenderedDOMComponentWithTag(projectComponent, 'select')
     const options = scryRenderedDOMComponentsWithTag(projectComponent, 'option')
 
-    expect(projectsSelect.className).to.equal('projects__selector')
+    expect(projectsSelect.className).to.include('projects__selector').and.not.include('is-selected')
     expect(projectsSelect.value).to.equal('')
     expect(options.length).to.equal(3)
   })
@@ -53,7 +53,7 @@ describe('TaskProject Component', () => {
     const projectsSelect = findRenderedDOMComponentWithTag(projectComponent, 'select')
     const options = scryRenderedDOMComponentsWithTag(projectComponent, 'option')
 
-    expect(projectsSelect.className).to.equal('projects__selector')
+    expect(projectsSelect.className).to.include('projects__selector').and.include('is-selected')
     expect(projectsSelect.value).to.equal('bh52ogy5s0fm')
     expect(options.length).to.equal(3)
   })
