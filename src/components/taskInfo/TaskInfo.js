@@ -34,7 +34,7 @@ export default class TaskInfo extends React.Component {
             </div>
             <div className='task-info__body'>
               <div className='task-info__body-top'>
-                <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} />
+                <TaskTitle id={this.props.id} title={this.props.title} onBlur={this.props.onTitleChange} />
                 <TaskDescription id={this.props.id} description={this.props.description} onBlur={this.props.onDescriptionChange} />
                 <TaskProject taskProject={this.props.taskProject} projects={this.props.projects} onProjectChange={(newProject) => this.props.onProjectChange(this.props.id, newProject)} />
                 <TaskContexts contexts={this.props.contexts} taskContexts={this.props.taskContexts} onContextClick={(context, status) => this.props.onContextClick(this.props.id, context, status)} />

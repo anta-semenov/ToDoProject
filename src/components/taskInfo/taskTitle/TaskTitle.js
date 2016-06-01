@@ -14,8 +14,14 @@ export default class TaskTitle extends React.Component {
   }
   _onChange(editorState) {
     this.setState({editorState})
-    this.props.onChange(this.props.id, editorState.getCurrentContent().getPlainText())
+    if (!editorState.getSelection().getHasFocus()) {
+      this.props.onBlur(this.props.id, editorState.getCurrentContent().getPlainText())
+      this.refs.frame.classList.remove('is-active')
+    } else if (editorState.getSelection().getHasFocus() && !this.refs.frame.classList.contains('is-active')) {
+      this.refs.frame.classList.add('is-active')
+    }
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.id !== this.props.id) {
       this.setState({editorState: titleEditorState(nextProps.title)})
@@ -23,7 +29,7 @@ export default class TaskTitle extends React.Component {
   }
   render() {
     return (
-      <div className='task-info__title'>
+      <div className='task-info__title' ref='frame'>
         <Editor ref='editor' editorState={this.state.editorState} onChange={this.onChange} placeholder='Task Title' blockStyleFn={titleBlockStyleFn} />
       </div>
     )
@@ -33,5 +39,7 @@ export default class TaskTitle extends React.Component {
 TaskTitle.propTypes = {
   id: React.PropTypes.string.isRequired,
   title: React.PropTypes.string,
-  onChange: React.PropTypes.func.isRequired
+  onChange: React.PropTypes.func,
+  onBlur: React.PropTypes.func
+
 }
