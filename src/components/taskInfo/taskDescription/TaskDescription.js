@@ -9,7 +9,13 @@ const descriptionBlockStyleFn = () => 'text-info__description-text-block'
 export default class TaskDescription extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {editorState: descriptionToEditorState(this.props.description)}
+    this.state = {
+      editorState: descriptionToEditorState(this.props.description),
+      stackLenght: {
+        undo: 0,
+        redo: 0
+      }
+    }
     this.onChange = editorState => this._onChange(editorState)
     this.focus = () => {
       this.refs.editor.focus()
@@ -21,13 +27,32 @@ export default class TaskDescription extends React.Component {
     if (!editorState.getSelection().getHasFocus()) {
       this.props.onBlur(this.props.id, Map(convertToRaw(editorState.getCurrentContent())))
       this.refs.frame.classList.remove('is-active')
-    } else if (editorState.getSelection().getHasFocus() && !this.refs.frame.classList.contains('is-active')) {
-      this.refs.frame.classList.add('is-active')
+    } else {
+      if (this.state.stackLenght.undo !== editorState.getUndoStack().count() || this.state.stackLenght.redo !== editorState.getRedoStack().count()) {
+        this.props.onChange(this.props.id, Map(convertToRaw(editorState.getCurrentContent())))
+        this.setState({
+          stackLenght: {
+            undo: editorState.getUndoStack().count(),
+            redo: editorState.getRedoStack().count()
+          }
+        })
+      }
+      if (!this.refs.frame.classList.contains('is-active')) {
+        this.refs.frame.classList.add('is-active')
+      }
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({editorState: descriptionToEditorState(nextProps.description)})
+    if (!this.state.editorState.getSelection().getHasFocus() && this.state.editorState.getCurrentContent() !== descriptionToEditorState(nextProps.description)) {
+      this.setState({
+        editorState: descriptionToEditorState(nextProps.description),
+        stackLenght: {
+          undo: 0,
+          redo: 0
+        }
+      })
+    }
   }
 
   render() {

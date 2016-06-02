@@ -8,7 +8,13 @@ const titleEditorState = title => title ? EditorState.createWithContent(ContentS
 export default class TaskTitle extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {editorState: titleEditorState(this.props.title)}
+    this.state = {
+      editorState: titleEditorState(this.props.title),
+      stackLenght: {
+        undo: 0,
+        redo: 0
+      }
+    }
     this.onChange = editorState => this._onChange(editorState)
     this.focus = () => this.refs.editor.focus()
   }
@@ -17,14 +23,32 @@ export default class TaskTitle extends React.Component {
     if (!editorState.getSelection().getHasFocus()) {
       this.props.onBlur(this.props.id, editorState.getCurrentContent().getPlainText())
       this.refs.frame.classList.remove('is-active')
-    } else if (editorState.getSelection().getHasFocus() && !this.refs.frame.classList.contains('is-active')) {
-      this.refs.frame.classList.add('is-active')
+    } else {
+      if (this.state.stackLenght.undo !== editorState.getUndoStack().count() || this.state.stackLenght.redo !== editorState.getRedoStack().count()) {
+        this.props.onChange(this.props.id, editorState.getCurrentContent().getPlainText())
+        this.setState({
+          stackLenght: {
+            undo: editorState.getUndoStack().count(),
+            redo: editorState.getRedoStack().count()
+          }
+        })
+      }
+      if (!this.refs.frame.classList.contains('is-active')) {
+        this.refs.frame.classList.add('is-active')
+      }
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.id !== this.props.id) {
+    if (!this.state.editorState.getSelection().getHasFocus() && this.state.editorState.getCurrentContent() !== titleEditorState(nextProps.title)) {
       this.setState({editorState: titleEditorState(nextProps.title)})
+      this.setState({
+        editorState: titleEditorState(nextProps.title),
+        stackLenght: {
+          undo: 0,
+          redo: 0
+        }
+      })
     }
   }
   render() {
