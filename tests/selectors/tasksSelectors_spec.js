@@ -1,10 +1,9 @@
 import { expect } from 'chai'
-import { fromJS, Set } from 'immutable'
+import { fromJS, Map, Set } from 'immutable'
 import { PRIORITY_NONE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 import { getTasksGroups, getSectionName, getActiveItemID } from '../../src/selectors/tasksSelector'
-
 
 const testTasks1 = fromJS({
   b41sogy3s0oc: {
@@ -50,7 +49,7 @@ const testTasks1 = fromJS({
     today: true,
     priority: PRIORITY_NONE,
     project: 'bh52ogy5s0fm',
-    contexts: ['cf1sobz3s0oc']
+    contexts: Set(['cf1sobz3s0oc'])
   },
   b41sogy3s0ok: {
     id: 'b41sogy3s0ok',
@@ -58,7 +57,7 @@ const testTasks1 = fromJS({
     completed: false,
     today: false,
     priority: PRIORITY_NONE,
-    contexts: ['cf1sobz3s0oc']
+    contexts: Set(['cf1sobz3s0oc'])
   },
   b41sogy3s0ol: {
     id: 'b41sogy3s0ol',
@@ -66,16 +65,17 @@ const testTasks1 = fromJS({
     completed: false,
     today: true,
     priority: PRIORITY_NONE,
-    contexts: ['cf1sobz3s0oc']
+    contexts: Set(['cf1sobz3s0oc'])
   }
 })
 const testTasks2 = fromJS({
   b41sogy3s0om: {
     id: 'b41sogy3s0om',
     title: 'Test task 0',
-    completed: true,
+    completed: false,
     today: false,
-    priority: PRIORITY_NONE
+    priority: PRIORITY_NONE,
+    contexts: Set(['b07x7v4pu3e'])
   },
   b41sogy3s0on: {
     id: 'b41sogy3s0on',
@@ -113,7 +113,7 @@ const testTasks2 = fromJS({
     today: false,
     priority: PRIORITY_NONE,
     project: 'bh52ogy5s0fm',
-    contexts: ['cf1sobz3s0oc']
+    contexts: Set(['cf1sobz3s0oc'])
   },
   b41sogy3s0os: {
     id: 'b41sogy3s0os',
@@ -121,7 +121,7 @@ const testTasks2 = fromJS({
     completed: true,
     today: false,
     priority: PRIORITY_NONE,
-    contexts: ['cf1sobz3s0oc']
+    contexts: Set(['cf1sobz3s0oc'])
   }
 })
 const testProjects = fromJS({
@@ -173,7 +173,43 @@ describe('Tasks Selectors', () => {
           ]
         }])
 
-        expect(getTasksGroups(state)).to.equal(groups)
+        expect(getTasksGroups(state)).to.deep.equal(groups)
+      })
+      it('Should return latent tasks for INBOX section', () => {
+        const state = fromJS({
+          task: testTasks2,
+          project: testProjects,
+          context: testContexts,
+          uiState: {
+            selectedSection: {
+              type: sectionTypes.INBOX
+            },
+            sectionLatentTasks: {
+              b41sogy3s0om: 2,
+              b41sogy3s0on: 1
+            }
+          }
+        })
+        const groups = fromJS([{
+          items: [
+            {
+              id: 'b41sogy3s0om',
+              title: 'Test task 0',
+              completed: false,
+              today: false,
+              priority: PRIORITY_NONE,
+              contexts: Set(['b07x7v4pu3e'])
+            },
+            {
+              id: 'b41sogy3s0on',
+              title: 'Test task 1',
+              completed: true,
+              today: true,
+              priority: PRIORITY_NONE
+            }
+          ]
+        }])
+        expect(getTasksGroups(state)).to.deep.equal(groups)
       })
       it('Should return undefined for no tasks for INBOX', () => {
         const state = fromJS({
@@ -217,7 +253,7 @@ describe('Tasks Selectors', () => {
                 completed: false,
                 today: true,
                 priority: PRIORITY_NONE,
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           },
@@ -231,11 +267,47 @@ describe('Tasks Selectors', () => {
                 today: true,
                 priority: PRIORITY_NONE,
                 project: 'bh52ogy5s0fm',
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           }
         ])
+        expect(getTasksGroups(state)).to.equal(groups)
+      })
+      it('Should return latent tasks for TODAY', () => {
+        const state = fromJS({
+          task: testTasks2,
+          project: testProjects,
+          context: testContexts,
+          uiState: {
+            selectedSection: {
+              type: sectionTypes.TODAY
+            },
+            sectionLatentTasks: {
+              b41sogy3s0om: 2,
+              b41sogy3s0oo: 1
+            }
+          }
+        })
+        const groups = fromJS([{
+          items: [
+            {
+              id: 'b41sogy3s0om',
+              title: 'Test task 0',
+              completed: false,
+              today: false,
+              priority: PRIORITY_NONE,
+              contexts: Set(['b07x7v4pu3e'])
+            },
+            {
+              id: 'b41sogy3s0oo',
+              title: 'Test task 2',
+              completed: true,
+              today: true,
+              priority: PRIORITY_NONE
+            }
+          ]
+        }])
         expect(getTasksGroups(state)).to.equal(groups)
       })
       it('Should return undefined for no tasks for TODAY', () => {
@@ -287,7 +359,7 @@ describe('Tasks Selectors', () => {
                 completed: false,
                 today: false,
                 priority: PRIORITY_NONE,
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               },
               {
                 id: 'b41sogy3s0ol',
@@ -295,7 +367,7 @@ describe('Tasks Selectors', () => {
                 completed: false,
                 today: true,
                 priority: PRIORITY_NONE,
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           },
@@ -309,21 +381,79 @@ describe('Tasks Selectors', () => {
                 today: true,
                 priority: PRIORITY_NONE,
                 project: 'bh52ogy5s0fm',
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           }
         ])
         expect(getTasksGroups(state)).to.equal(groups)
       })
-      it('Should return undefined for no tasks for NEXT', () => {
+      it('Should return latent tasks for NEXT', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
           context: testContexts,
           uiState: {
             selectedSection: {
-              type: sectionTypes.TODAY
+              type: sectionTypes.NEXT
+            },
+            sectionLatentTasks: {
+              b41sogy3s0on: 1,
+              b41sogy3s0op: 2
+            }
+          }
+        })
+        const groups = fromJS([{
+          items: [
+            {
+              id: 'b41sogy3s0om',
+              title: 'Test task 0',
+              completed: false,
+              today: false,
+              priority: PRIORITY_NONE,
+              contexts: Set(['b07x7v4pu3e'])
+            },
+            {
+              id: 'b41sogy3s0on',
+              title: 'Test task 1',
+              completed: true,
+              today: true,
+              priority: PRIORITY_NONE
+            },
+            {
+              id: 'b41sogy3s0op',
+              title: 'Test task 3',
+              completed: true,
+              today: false,
+              priority: PRIORITY_NONE
+            }
+          ]
+        }])
+        expect(getTasksGroups(state)).to.equal(groups)
+      })
+      it('Should return undefined for no tasks for NEXT', () => {
+        const state = fromJS({
+          task: {
+            b41sogy3s0on: {
+              id: 'b41sogy3s0on',
+              title: 'Test task 1',
+              completed: true,
+              today: true,
+              priority: PRIORITY_NONE
+            },
+            b41sogy3s0oo: {
+              id: 'b41sogy3s0oo',
+              title: 'Test task 2',
+              completed: true,
+              today: true,
+              priority: PRIORITY_NONE
+            }
+          },
+          project: testProjects,
+          context: testContexts,
+          uiState: {
+            selectedSection: {
+              type: sectionTypes.NEXT
             }
           }
         })
@@ -353,11 +483,56 @@ describe('Tasks Selectors', () => {
                 today: true,
                 priority: PRIORITY_NONE,
                 project: 'bh52ogy5s0fm',
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           }
         ])
+        expect(getTasksGroups(state)).to.equal(groups)
+      })
+      it('Should return latent tasks for PROJECT', () => {
+        const state = fromJS({
+          task: testTasks2,
+          project: testProjects,
+          context: testContexts,
+          uiState: {
+            selectedSection: {
+              type: sectionTypes.PROJECT,
+              id: 'bh52ogy5s0fm'
+            },
+            sectionLatentTasks: {
+              b41sogy3s0on: 1,
+              b41sogy3s0op: 2,
+              b41sogy3s0oq: 1
+            }
+          }
+        })
+        const groups = fromJS([{
+          items: [
+            {
+              id: 'b41sogy3s0on',
+              title: 'Test task 1',
+              completed: true,
+              today: true,
+              priority: PRIORITY_NONE
+            },
+            {
+              id: 'b41sogy3s0op',
+              title: 'Test task 3',
+              completed: true,
+              today: false,
+              priority: PRIORITY_NONE
+            },
+            {
+              id: 'b41sogy3s0oq',
+              title: 'Test task 4',
+              completed: true,
+              today: false,
+              priority: PRIORITY_NONE,
+              project: 'bh52ogy5s0fm'
+            }
+          ]
+        }])
         expect(getTasksGroups(state)).to.equal(groups)
       })
       it('Should return undefined for no tasks for PROJECT', () => {
@@ -411,7 +586,7 @@ describe('Tasks Selectors', () => {
                 completed: false,
                 today: false,
                 priority: PRIORITY_NONE,
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               },
               {
                 id: 'b41sogy3s0ol',
@@ -419,7 +594,7 @@ describe('Tasks Selectors', () => {
                 completed: false,
                 today: true,
                 priority: PRIORITY_NONE,
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           },
@@ -433,14 +608,14 @@ describe('Tasks Selectors', () => {
                 today: true,
                 priority: PRIORITY_NONE,
                 project: 'bh52ogy5s0fm',
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           }
         ])
         expect(getTasksGroups(state)).to.equal(groups)
       })
-      it('Should return latent tasks even if task don\'t have a context', () => {
+      it('Should return latent tasks for CONTEXT', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -450,7 +625,9 @@ describe('Tasks Selectors', () => {
               type: sectionTypes.CONTEXT,
               id: 'cf1sobz3s0oc'
             },
-            sectionLatentTasks: Set(['b41sogy3s0od'])
+            sectionLatentTasks: Map({
+              b41sogy3s0od: 1
+            })
           }
         })
         const groups = fromJS([
@@ -469,7 +646,7 @@ describe('Tasks Selectors', () => {
                 completed: false,
                 today: false,
                 priority: PRIORITY_NONE,
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               },
               {
                 id: 'b41sogy3s0ol',
@@ -477,7 +654,7 @@ describe('Tasks Selectors', () => {
                 completed: false,
                 today: true,
                 priority: PRIORITY_NONE,
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           },
@@ -491,7 +668,7 @@ describe('Tasks Selectors', () => {
                 today: true,
                 priority: PRIORITY_NONE,
                 project: 'bh52ogy5s0fm',
-                contexts: ['cf1sobz3s0oc']
+                contexts: Set(['cf1sobz3s0oc'])
               }
             ]
           }
@@ -530,14 +707,32 @@ describe('Tasks Selectors', () => {
 
     it('Should return completed latent tasks even if they are completed', () => {
       const state = fromJS({
-        task: testTasks2,
+        task: [
+          {
+            id: 'b41sogy3s0om',
+            title: 'Test task 0',
+            completed: true,
+            today: false,
+            priority: PRIORITY_NONE,
+            contexts: Set(['b07x7v4pu3e'])
+          },
+          {
+            id: 'b41sogy3s0on',
+            title: 'Test task 1',
+            completed: true,
+            today: true,
+            priority: PRIORITY_NONE
+          }
+        ],
         project: testProjects,
         context: testContexts,
         uiState: {
           selectedSection: {
             type: sectionTypes.INBOX
           },
-          sectionCompletedLatentTasks: ['b41sogy3s0om']
+          sectionLatentTasks: {
+            b41sogy3s0om: 1
+          }
         }
       })
       const groups = fromJS([{
@@ -547,7 +742,8 @@ describe('Tasks Selectors', () => {
             title: 'Test task 0',
             completed: true,
             today: false,
-            priority: PRIORITY_NONE
+            priority: PRIORITY_NONE,
+            contexts: Set(['b07x7v4pu3e'])
           }
         ]
       }])

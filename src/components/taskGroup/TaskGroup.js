@@ -29,7 +29,7 @@ export default class TaskGroup extends React.Component {
               priority={task.get('priority')}
               date={task.get('date') ? new Date(task.get('date')) : undefined}
               active={this.props.activeItem === task.get('id')}
-              latent={this.props.latentTasks ? this.props.latentTasks.includes(task.get('id')) : undefined}
+              latent={this.props.latentTasks ? this.props.latentTasks.has(task.get('id')) : undefined}
 
               onTaskClick={this.props.onTaskClick}
               onTaskCheckboxClick={this.props.onTaskCheckboxClick}
@@ -59,7 +59,7 @@ TaskGroup.propTypes = {
     })
   ).isRequired,
   activeItem: React.PropTypes.string,
-  latentTasks: React.PropTypes.instanceOf(Set),
+  latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,

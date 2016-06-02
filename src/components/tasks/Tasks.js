@@ -62,7 +62,7 @@ Tasks.propTypes = {
   ),
   header: React.PropTypes.string,
   activeItem: React.PropTypes.string,
-  latentTasks: React.PropTypes.instanceOf(Set),
+  latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
 
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
