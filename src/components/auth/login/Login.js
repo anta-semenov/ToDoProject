@@ -22,7 +22,7 @@ export default class Login extends React.Component {
 
 Login.propTypes = {
   loginProviders: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  login: React.PropTypes.funs.isRequird,
+  login: React.PropTypes.func.isRequird,
   isAuthInProgress: React.PropTypes.bool
 }
 Login.defaultProps = {

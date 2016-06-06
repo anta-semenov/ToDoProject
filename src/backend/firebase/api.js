@@ -1,7 +1,7 @@
-import Firebase from 'firebase'
+import firebase from 'firebase'
 import { recieveAuth, logout } from '../../actions/commonActions'
 
-const app = Firebase.initializeApp({
+const app = firebase.initializeApp({
   serviceAccount: {
     projectId: 'popping-torch-8030',
     clientEmail: 'work.semenov@gmail.com',
