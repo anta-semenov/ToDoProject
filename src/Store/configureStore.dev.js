@@ -3,7 +3,6 @@ import { persistState } from 'redux-devtools'
 import rootReducer from '../reducer'
 import DevTools from '../containers/DevTool'
 import { fromJS } from 'immutable'
-import { PRIORITY_HIGH } from '../constants/priorityLevels'
 
 const enhancer = middleware => compose(
   applyMiddleware(...middleware),
@@ -15,54 +14,7 @@ const enhancer = middleware => compose(
   )
 )
 
-const initialStateDev = fromJS({
-  task: [
-    {
-      id: 0,
-      title: 'Existing Task',
-      completed: false,
-      today: true
-    },
-    {
-      id: 1,
-      title: 'Existing Task',
-      completed: false,
-      today: false
-    },
-    {
-      id: 2,
-      title: 'Create TaskInfo component',
-      completed: false,
-      today: false,
-      description: 'This component should show the detaied infoe about active task',
-      priority: PRIORITY_HIGH,
-      date: new Date(2016, 3, 17)
-    },
-    {
-      id: 3,
-      title: 'Handle Date to local string',
-      completed: false,
-      today: false,
-      priority: PRIORITY_HIGH,
-      date: new Date(2016, 3, 17)
-    }
-  ],
-  project: [
-    {
-      id: 0,
-      title: 'Existing Project',
-      completed: false
-    }
-  ],
-  context: [
-    {
-      id: 0,
-      title: 'Existing context'
-    }
-  ]
-})
-
-export default function configureStore(initialState, middleware) {
+export default function configureStore(initialState = fromJS({}), middleware) {
   const store = createStore(rootReducer, initialState, enhancer(middleware));
 
   if (module.hot) {
