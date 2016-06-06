@@ -1,4 +1,4 @@
-import Authentication from '../components/authentication/Authentication'
+import Auth from '../components/auth/Auth'
 import { connect } from 'react-redux'
 import { logIn, logOut } from '../actions/commonActions'
 
@@ -18,6 +18,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const AuthenticationConnected = connect(mapStateToProps, mapDispatchToProps)(Authentication)
+const AuthConnected = connect(mapStateToProps, mapDispatchToProps)(Auth)
 
-export default AuthenticationConnected
+export default AuthConnected

@@ -5,7 +5,7 @@ export function setState(state) {
   return {type: actionTypes.SET_STATE, state}
 }
 
-export const logIn = (type) => (dispatch) => {
+export const login = (type) => (dispatch) => {
   dispatch({type: actionTypes.REQUEST_AUTH})
   return auth(type).then(
     response => {
@@ -24,6 +24,6 @@ export const logIn = (type) => (dispatch) => {
   )
 }
 
-export const logOut = () => (dispatch) => {
+export const logout = () => (dispatch) => {
   return unAuth().then(() => dispatch({type: actionTypes.LOG_OUT}))
 }

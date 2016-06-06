@@ -7,10 +7,10 @@ export default class User extends React.Component {
   render() {
     return (
       <div className='user'>
-        <div className='user__img' src={this.props.userImgUrl || defaultUsrImg} />
+        <div className='user__img' src={this.props.userImage || defaultUsrImg} />
         <div className='user__body'>
           <div className='user__name'>{this.props.userName}</div>
-          <div className='user__logout' onCLick={this.props.logout}>Log Out</div>
+          <div className='user__logout' onCLick={() => this.props.logout()} >Log Out</div>
         </div>
       </div>
     )
@@ -18,7 +18,7 @@ export default class User extends React.Component {
 }
 User.propTypes = {
   userName: React.PropTypes.string.isRequired,
-  userImgUrl: React.PropTypes.string,
+  userImage: React.PropTypes.string,
 
   logout: React.PropTypes.func.isRequired
 }
