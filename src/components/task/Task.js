@@ -3,9 +3,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Map } from 'immutable'
 import { DATE_FORMAT } from '../../constants/defaults'
 import { descriptionToString } from '../../utils/descriptionTransform'
-import Today from '../controls/today/Today'
-import Checkbox from '../controls/checkbox/Checkbox'
-import Priority from '../controls/priority/Priority'
+import Today from '../elements/today/Today'
+import Checkbox from '../elements/checkbox/Checkbox'
+import Priority from '../elements/priority/Priority'
 
 import './Task.less'
 
