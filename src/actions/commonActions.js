@@ -9,18 +9,16 @@ export const login = (type) => (dispatch) => {
   dispatch({type: actionTypes.REQUEST_AUTH})
   return auth(type).then(
     response => dispatch(recieveAuth(response.user)),
-    error => {
-      dispatch({
-        type: actionTypes.ERROR_AUTH,
-        errorMessage: error.message || 'Something went wrong',
-        errorCode: error.code
-      })
-    }
+    error => dispatch(errorAuth(error))
   )
 }
 
-
 export const recieveAuth = (userData) => ({type: actionTypes.RECIEVE_AUTH, userData})
+export const errorAuth = (error) => ({
+  type: actionTypes.ERROR_AUTH,
+  errorMessage: error.message || 'Something went wrong',
+  errorCode: error.code
+})
 
 export const logout = () => ({type: actionTypes.LOG_OUT})
 

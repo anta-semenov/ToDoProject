@@ -1,6 +1,7 @@
 import firebaseHelper from './firebaseHelper'
 import authentication from './authentication'
-import app from './api'
+import app, { onAuth } from './api'
+import { errorAuth } from '../../actions/commonActions.js'
 
 export const middleware = [
   ...firebaseHelper.middleware,
@@ -8,7 +9,7 @@ export const middleware = [
 ]
 
 export function initFirebase(store, localStoreHelper) {
-  authentication.initAuthListener(store, localStoreHelper)
+  app.auth().onAuthStateChanged((userData) => onAuth(userData, store), (error) => store.dispatch(errorAuth(error)))
 }
 
 export default {
