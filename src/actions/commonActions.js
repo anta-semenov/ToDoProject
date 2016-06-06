@@ -8,12 +8,7 @@ export function setState(state) {
 export const login = (type) => (dispatch) => {
   dispatch({type: actionTypes.REQUEST_AUTH})
   return auth(type).then(
-    response => {
-      dispatch({
-        type: actionTypes.RECIEVE_AUTH,
-        userData: response.user
-      })
-    },
+    response => dispatch(recieveAuth(response.user)),
     error => {
       dispatch({
         type: actionTypes.ERROR_AUTH,
@@ -24,6 +19,11 @@ export const login = (type) => (dispatch) => {
   )
 }
 
-export const logout = () => (dispatch) => {
+
+export const recieveAuth = (userData) => ({type: actionTypes.RECIEVE_AUTH, userData})
+
+export const logout = () => ({type: actionTypes.LOG_OUT})
+
+export const logoutThunk = () => (dispatch) => {
   return unAuth().then(() => dispatch({type: actionTypes.LOG_OUT}))
 }

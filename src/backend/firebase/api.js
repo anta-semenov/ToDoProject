@@ -1,4 +1,5 @@
 import Firebase from 'firebase'
+import { recieveAuth, logout } from '../../actions/commonActions'
 
 const app = Firebase.initializeApp({
   serviceAccount: {
@@ -8,6 +9,7 @@ const app = Firebase.initializeApp({
   },
   databaseURL: 'https://popping-torch-8030.firebaseio.com/'
 })
+export default app
 
 export const auth = (type) => {
   switch (type) {
@@ -17,6 +19,14 @@ export const auth = (type) => {
       return app.auth().signInWithPopup(new app.auth.GoogleAuthProvider())
     case 'twitter':
       return app.auth().signInWithPopup(new app.auth.TwitterAuthProvider())
+  }
+}
+
+export const onAuth = (userData, store) => {
+  if (userData) {
+    store.dispatch(recieveAuth(userData))
+  } else {
+    store.dispatch(logout())
   }
 }
 
