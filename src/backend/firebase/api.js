@@ -2,23 +2,20 @@ import firebase from 'firebase'
 import { recieveAuth, logout } from '../../actions/commonActions'
 
 const app = firebase.initializeApp({
-  serviceAccount: {
-    projectId: 'popping-torch-8030',
-    clientEmail: 'work.semenov@gmail.com',
-    privateKey: 'RXb42lDJzOKMNDA5eMYsJgKjZZIsdm2jflIrjkz5'
-  },
-  databaseURL: 'https://popping-torch-8030.firebaseio.com/'
+  apiKey: 'AIzaSyB-Xq4_HuAv8moxKqJFlFMC-5c-s7JJoYQ',
+  authDomain: 'popping-torch-8030.firebaseapp.com',
+  databaseURL: 'https://popping-torch-8030.firebaseio.com'
 })
 export default app
 
 export const auth = (type) => {
   switch (type) {
     case 'facebook':
-      return app.auth().signInWithPopup(new app.auth.FacebookAuthProvider())
+      return app.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())
     case 'google':
-      return app.auth().signInWithPopup(new app.auth.GoogleAuthProvider())
+      return app.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
     case 'twitter':
-      return app.auth().signInWithPopup(new app.auth.TwitterAuthProvider())
+      return app.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider())
   }
 }
 

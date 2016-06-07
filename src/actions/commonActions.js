@@ -8,7 +8,10 @@ export function setState(state) {
 export const login = (type) => (dispatch) => {
   dispatch({type: actionTypes.REQUEST_AUTH})
   return auth(type).then(
-    response => dispatch(recieveAuth(response.user)),
+    response => {
+      dispatch(recieveAuth(response.user))
+
+    },
     error => dispatch(errorAuth(error))
   )
 }
@@ -23,5 +26,5 @@ export const errorAuth = (error) => ({
 export const logout = () => ({type: actionTypes.LOG_OUT})
 
 export const logoutThunk = () => (dispatch) => {
-  return unAuth().then(() => dispatch({type: actionTypes.LOG_OUT}))
+  return unAuth().then(() => dispatch(logout()))
 }
