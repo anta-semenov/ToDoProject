@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var autoprefixer = require('autoprefixer')
+var CarteBlanche = require('carte-blanche')
 
 module.exports = {
   devtool: 'eval',
@@ -15,7 +16,10 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new CarteBlanche({
+      componentRoot: './src/components'
+    })
   ],
   module: {
     loaders: [
