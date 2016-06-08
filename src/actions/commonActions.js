@@ -8,11 +8,8 @@ export function setState(state) {
 export const login = (type) => (dispatch) => {
   dispatch({type: actionTypes.REQUEST_AUTH})
   return auth(type).then(
-    response => {
-      dispatch(recieveAuth(response.user))
-
-    },
-    error => dispatch(errorAuth(error))
+    response => {dispatch(recieveAuth(response.user))},
+    error => {dispatch(errorAuth(error))}
   )
 }
 

@@ -4,8 +4,8 @@ import app, { onAuth } from './api'
 import { errorAuth } from '../../actions/commonActions.js'
 
 export const middleware = [
-  ...firebaseHelper.middleware,
-  authentication.authMiddleware
+  //...firebaseHelper.middleware,
+  //authentication.authMiddleware
 ]
 
 export function initFirebase(store, localStoreHelper) {
