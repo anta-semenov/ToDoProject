@@ -5,7 +5,7 @@ import User from './user/User.js'
 import Login from './login/Login.js'
 import './Auth.less'
 
-export default class Authentication extends React.Component {
+export default class Auth extends React.Component {
   constructor(props) {
     super(props)
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
@@ -22,7 +22,7 @@ export default class Authentication extends React.Component {
   }
 }
 
-Authentication.propTypes = {
+Auth.propTypes = {
   authStatus: React.PropTypes.oneOf([AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR]),
   authErrorMessage: React.PropTypes.string,
   userName: React.PropTypes.string,

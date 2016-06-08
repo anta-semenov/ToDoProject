@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import React from 'react'
 import { renderIntoDocument, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
-import CloseBtn from '../../../src/components/controls/closeBtn/CloseBtn'
+import CloseBtn from '../../../src/components/elements/closeBtn/CloseBtn'
 
 describe('CloseBtn component', () => {
   it('Should render component with right class for empty appearance prop', () => {

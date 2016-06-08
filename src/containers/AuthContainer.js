@@ -1,6 +1,6 @@
 import Auth from '../components/auth/Auth'
 import { connect } from 'react-redux'
-import { logIn, logoutThunk } from '../actions/commonActions'
+import { login, logoutThunk } from '../actions/commonActions'
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (type) => dispatch(logIn(type)),
+    login: (type) => dispatch(login(type)),
     logout: () => dispatch(logoutThunk())
   }
 }

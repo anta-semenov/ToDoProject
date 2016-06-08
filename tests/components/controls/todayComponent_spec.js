@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import React from 'react'
 import { renderIntoDocument, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
 
-import Today from '../../../src/components/controls/today/Today'
+import Today from '../../../src/components/elements/today/Today'
 
 describe('Today component', () => {
   it('Should render component with right default classes', () => {

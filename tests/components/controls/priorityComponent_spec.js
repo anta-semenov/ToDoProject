@@ -3,7 +3,7 @@ import React from 'react'
 import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
 
 import * as priorityLevels from '../../../src/constants/priorityLevels'
-import Priority from '../../../src/components/controls/priority/Priority'
+import Priority from '../../../src/components/elements/priority/Priority'
 
 describe('Priority', () => {
   it('Should render priority component with right classes for default props', () => {

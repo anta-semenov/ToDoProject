@@ -1,0 +1,105 @@
+@import '../../../styles/variables.less';
+@import '../../../styles/commonStyles.less';
+
+.login {
+  position: relative;
+}
+.login__title {
+  .small__title();
+}
+
+.login__list {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  left: -2px;
+}
+
+.login__btn {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin: 0 8px 0 0;
+
+  border: 1px solid @color-border-gray;
+  border-radius: 50%;
+  cursor: pointer;
+
+  transition: @transition-basic;
+
+  &.login__btn--facebook {
+    &:hover {
+      border-color: @color-facebook;
+    }
+    &:active,
+    &:focus {
+      outline: none;
+      background-color: @color-facebook;
+      border-color: @color-facebook;
+    }
+  }
+  &.login__btn--twitter {
+    &:hover {
+      border-color: @color-twitter;
+    }
+    &:active,
+    &:focus {
+      outline: none;
+      background-color: @color-twitter;
+      border-color: @color-twitter;
+    }
+  }
+  &.login__btn--google {
+    &:hover {
+      border-color: @color-google;
+    }
+    &:active,
+    &:focus {
+      outline: none;
+      background-color: @color-google;
+      border-color: @color-google;
+    }
+  }
+}
+.login__icon {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  #icon {
+    fill: @color-font-light;
+    transition: @transition-basic;
+  }
+  .login__btn--facebook & {
+    height: 60%;
+  }
+  .login__btn--facebook:hover & {
+    #icon {
+      fill: @color-facebook;
+    }
+  }
+  .login__btn--twitter & {
+    height: 50%;
+  }
+  .login__btn--twitter:hover & {
+    #icon {
+      fill: @color-twitter;
+    }
+  }
+  .login__btn--google & {
+    height: 60%;
+  }
+  .login__btn--google:hover & {
+    #icon {
+      fill: @color-google;
+    }
+  }
+  .login__btn:active &,
+  .login__btn:focus & {
+    #icon {
+      fill: #ffffff;
+    }
+  }
+}
