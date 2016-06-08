@@ -119,9 +119,9 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const Sidebar = connect(
+const Nav = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Navigation)
 
-export default Sidebar
+export default Nav
