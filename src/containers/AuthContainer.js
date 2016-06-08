@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
     authStatus: state.getIn(['auth', 'authStatus'], undefined),
     authErrorMessage: state.getIn(['auth', 'errorMessage'], 'Something went wrong'),
     userName: state.getIn(['auth','userName'], 'Mr. Nobody'),
-    userImage: state.getIn(['autn', 'userImage'], undefined)
+    userImage: state.getIn(['auth', 'userImage'], undefined)
   }
 }
 
