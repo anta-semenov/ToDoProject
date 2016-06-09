@@ -23,5 +23,5 @@ export const DATE_FORMAT = {
   day: 'numeric'
 }
 
-export const ADD_NEW_CONTEXT_TITLE = '+ context'
-export const ADD_NEW_PROJECT_TITLE = '+ project'
+export const ADD_NEW_CONTEXT_TITLE = 'Add context'
+export const ADD_NEW_PROJECT_TITLE = 'Add project'

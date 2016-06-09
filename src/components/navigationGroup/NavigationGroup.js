@@ -14,7 +14,7 @@ export default class NavigationGroup extends React.Component {
   render() {
     return (
       <li className='nav-group'>
-        {this.props.title ? <div className='nav-group__title'>{this.props.title}</div> : null}
+        {this.props.title && this.props.items.size > 0 ? <div className='nav-group__title'>{this.props.title}</div> : null}
         <ul className='nav-group__list'>
           {this.props.items.map(item =>
             <NavigationItem
@@ -29,7 +29,7 @@ export default class NavigationGroup extends React.Component {
               onStopEditing={this.props.onStopEditing}/>
           )}
         </ul>
-        {this.props.addNew ?
+        {this.props.addNew && this.props.addNewTitle ?
           <div className='nav-group__add-button' onClick={() => this.props.addNew(this.props.type)}>
             {this.props.addNewTitle}
           </div>:
@@ -48,7 +48,7 @@ NavigationGroup.propTypes = {
       active: React.PropTypes.bool.isRequired,
       id: React.PropTypes.string,
       count: React.PropTypes.number,
-      editing: React.PropTypes.bool      
+      editing: React.PropTypes.bool
     })
   ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,
