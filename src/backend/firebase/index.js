@@ -6,8 +6,8 @@ export const middleware = [
   authentication.authMiddleware
 ]
 
-export function initFirebase(store, localStoreHelper) {
-  authentication.initAuthListener(store, localStoreHelper)
+export function initFirebase(store) {
+  authentication.initAuthListener(store)
 }
 
 export default {

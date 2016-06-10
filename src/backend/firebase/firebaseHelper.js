@@ -7,10 +7,10 @@ import * as actionTypes from '../../constants/actionTypes'
 import * as commonActions from '../../actions/commonActions'
 import listeners from './listeners'
 
-export function getStateForUser(userID, isGuestUser, callback) {
-  const userDataKey = FIREBASE_APP_REFERENCE + (isGuestUser ? '/guestUserData/' : '/userData/') + userID
+export function getStateForUser(userID, callback) {
+  const userDataKey = FIREBASE_APP_REFERENCE + '/userData/' + userID
 
-  //will query tasks, projects and contexts separatle, because we can load only uncompleted tasks and projects
+  //will query tasks, projects and contexts separate, because we can load only uncompleted tasks and projects
 
   const promises = []
 
@@ -26,6 +26,10 @@ export function getStateForUser(userID, isGuestUser, callback) {
   const contextRef = new Firebase(userDataKey + '/context')
   promises.push(contextRef.once('value'))
 
+  //Should query max task and project keys, because we can have completed tasks and projects with key bigger then max key in state, so we nee to avoid additional load
+  promises.push(taskRef.orderByKey().limitToLast(1).once('value'))
+  promises.push(projectRef.orderByKey().limitToLast(1).once('value'))
+
   Promise.all(promises).then(result => {
     const tasks = result[0].val()
     if (tasks) {
@@ -35,16 +39,30 @@ export function getStateForUser(userID, isGuestUser, callback) {
         }
       })
     }
-    callback(fromJS({
-      task: (tasks || {}),
-      project: (result[1].val() || {}),
-      context: (result[2].val() || {})
-    }))
+    if (!tasks && !result[1].val() && !result[2].val()) {
+      callback()
+    } else {
+      callback(
+        fromJS({
+          task: (tasks || {}),
+          project: (result[1].val() || {}),
+          context: (result[2].val() || {})
+        }),
+        {
+          maxTaskKey: Object.keys(result[3].val())[0],
+          maxProjectKey: Object.keys(result[4].val())[0]
+        }
+      )
+    }
   })
 }
 
 export const firebaseUpdateMiddleware = store => next => action => {
   let result = next(action)
+
+  if (action.meta_notUpdateFirebase) {
+    return result
+  }
 
   const updateObject = mainUpdater(action, store.getState())
   let userID = store.getState().getIn(['userInfo', 'uid'], undefined)
@@ -66,6 +84,17 @@ export const firebaseUpdateMiddleware = store => next => action => {
   return result
 }
 
+function setFirebaseState(userID, state) {
+  const userDataKey = FIREBASE_APP_REFERENCE + '/userData/' + userID
+  const userDataRef = new Firebase(userDataKey)
+
+  userDataRef.set({
+    task: state.get('task').toJS(),
+    project: state.get('project').toJS(),
+    context: state.get('context').toJS()
+  })
+}
+
 export const setUserInfoMiddleware = store => next => action => {
   if (action.type === actionTypes.SET_USER_INFO) {
     listeners.clearListeners(store.getState())
@@ -73,10 +102,13 @@ export const setUserInfoMiddleware = store => next => action => {
     const state = store.getState()
     getStateForUser(
       state.getIn(['userInfo','uid']),
-      !state.getIn(['userInfo', 'hasAccount'], false),
-      (state) => {
-        store.dispatch(commonActions.setState(state))
-        listeners.initFirebaseListeners(store)
+      (state, properties) => {
+        if (state) {
+          store.dispatch(commonActions.setState(state))
+          listeners.initFirebaseListeners(store, properties)
+        } else {
+          setFirebaseState(state.getIn(['userInfo','uid']), store.getState())
+        }
       }
     )
     return result

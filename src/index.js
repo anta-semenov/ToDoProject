@@ -8,6 +8,6 @@ import localStore from './backend/localStore/localStoreHelper'
 
 const store = configureStore(fromJS({}),[...firebase.middleware, localStore.localStoreMiddleware])
 
-firebase.initFirebase(store, localStore)
+firebase.initFirebase(store)
 
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'))

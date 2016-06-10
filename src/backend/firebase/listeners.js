@@ -4,7 +4,7 @@ import * as taskActions from '../../actions/taskActions'
 import * as projectActions from '../../actions/projectActions'
 import * as contextActions from '../../actions/contextActions'
 
-export function initFirebaseListeners(store) {
+export function initFirebaseListeners(store, properties = {}) {
   const state = store.getState()
 
   //Get user data link
@@ -25,7 +25,8 @@ export function initFirebaseListeners(store) {
       edit: taskActions.editTask
     },
     state.get('task'),
-    store
+    store,
+    properties.maxTaskKey
   )
 
   //Project
@@ -38,7 +39,8 @@ export function initFirebaseListeners(store) {
       edit: projectActions.editProject
     },
     state.get('project'),
-    store
+    store,
+    properties.maxProjectKey
   )
 
   //Context
@@ -55,19 +57,34 @@ export function initFirebaseListeners(store) {
   )
 }
 
-function addListeners(ref, actionCreator, state, store) {
-  const maxKey = state.keySeq().max()
+function addListeners(ref, actionCreator, state, store, maxKeyProp) {
+  const maxKey = maxKeyProp || state.keySeq().max()
+  const clientKey = store.getState().getIn(['userInfo', 'clientKey'])
   // add
   ref.orderByKey().startAt(increaseKey(maxKey)).on('child_added', dataShapshot => {
-    store.dispatch(actionCreator.add(dataShapshot.val()))
+    if (dataShapshot.getPriority() !== clientKey) {
+      const action = actionCreator.add(dataShapshot.val())
+      action['meta_notUpdateFirebase'] = true
+      store.dispatch(action)
+    }
   })
   // remove
   ref.orderByKey().on('child_removed', dataShapshot => {
-    store.dispatch(actionCreator.remove(dataShapshot.key()))
+    console.log(dataShapshot.getPriority());
+    if (dataShapshot.getPriority() !== clientKey) {
+      const action = actionCreator.remove(dataShapshot.key())
+      action['meta_notUpdateFirebase'] = true
+      store.dispatch(action)
+    }
   })
   // edit
   ref.orderByKey().on('child_changed', dataShapshot => {
-    store.dispatch(actionCreator.edit(dataShapshot.key(), dataShapshot.val()))
+    console.log(dataShapshot.getPriority());
+    if (dataShapshot.getPriority() !== clientKey) {
+      const action = actionCreator.edit(dataShapshot.key(), dataShapshot.val())
+      action['meta_notUpdateFirebase'] = true
+      store.dispatch(action)
+    }
   })
 }
 

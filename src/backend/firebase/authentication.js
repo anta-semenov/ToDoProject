@@ -3,6 +3,7 @@ import { FIREBASE_APP_REFERENCE } from '../../constants/thierdPartyKeys'
 import * as actionTypes from '../../constants/actionTypes'
 import * as uiStateActions from '../../actions/uiStateActions'
 import * as userInfoActions from '../../actions/userInfoActions'
+import uniqueKey from '../../utils/uniqueKeyGenerator'
 
 export function getStartUpUserInfo(localStorageHelper, callback) {
   const appRef = new Firebase(FIREBASE_APP_REFERENCE)
@@ -100,19 +101,20 @@ export const authMiddleware = store => next => action => {
 /*
  * Auth listeners
  */
- export function initAuthListener(store, localStorageHelper) {
+ export function initAuthListener(store) {
    const appRef = new Firebase(FIREBASE_APP_REFERENCE)
    appRef.onAuth(authData => {
-     auth(authData, store, localStorageHelper.getUserInfo)
+     auth(authData, store)
    })
  }
 
- function auth(authData, store, localStorageUserInfoGetter) {
+ function auth(authData, store) {
    if (authData) {
      store.dispatch(uiStateActions.setAuthStatus(true))
      let userInfo = {
        uid: authData.uid,
-       hasAccount: true
+       hasAccount: true,
+       clientKey: uniqueKey()
      }
      switch (authData.provider) {
        case 'facebook':
@@ -122,11 +124,6 @@ export const authMiddleware = store => next => action => {
      store.dispatch(userInfoActions.setUserInfo(userInfo))
    } else {
      store.dispatch(uiStateActions.setAuthStatus())
-     let userInfo = {}
-     if (localStorageUserInfoGetter) {
-       userInfo = localStorageUserInfoGetter()
-     }
-     store.dispatch(userInfoActions.setUserInfo(userInfo))
    }
  }
 

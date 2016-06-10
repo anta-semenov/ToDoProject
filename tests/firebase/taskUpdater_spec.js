@@ -24,28 +24,42 @@ describe('Firebase task updater', () => {
     }
     const action = actions.addTask(newTaskProperties)
     const newState = taskReducer(testState, action)
+    const priority = '141so7yhs0op'
 
-    const expectedUpdateObject = [{
-      updateURL: 'task/b41sogy3s0o2',
-      value: {
-        id: 'b41sogy3s0o2',
-        title: 'test task 2',
-        completed: false,
-        today: false,
-        priority: PRIORITY_NONE
+    const expectedUpdateObject = [
+      {
+        updateURL: 'task/b41sogy3s0o2',
+        value: {
+          id: 'b41sogy3s0o2',
+          title: 'test task 2',
+          completed: false,
+          today: false,
+          priority: PRIORITY_NONE
+        }
+      },
+      {
+        updateURL: 'task/b41sogy3s0o2/.priority',
+        value: priority
       }
-    }]
+    ]
     expect(taskUpdater([], action, newState)).to.deep.equal(expectedUpdateObject)
   })
 
   it('Should handle remove task action', () => {
     const action = actions.removeTask('b41sogy3s0o1')
     const newState = taskReducer(testState, action)
+    const priority = '141so7yhs0op'
 
-    const expectedUpdateObject = [{
-      updateURL: 'task/b41sogy3s0o1',
-      value: null
-    }]
+    const expectedUpdateObject = [
+      {
+        updateURL: 'task/b41sogy3s0o1',
+        value: null
+      },
+      {
+        updateURL: 'task/b41sogy3s0o2/.priority',
+        value: priority
+      }
+    ]
 
     expect(taskUpdater([], action, newState)).to.deep.equal(expectedUpdateObject)
   })
