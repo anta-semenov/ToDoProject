@@ -56,4 +56,6 @@ function completeProject(state, id, status = false) {
   return state.setIn([id, 'completed'], status)
 }
 
-const setState = (newState) => newState.get('project', fromJS({}))
+function setState(newState) {
+  return newState.get('project')
+}

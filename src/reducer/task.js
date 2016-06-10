@@ -129,4 +129,6 @@ function switchTaskContext(state, taskId, contextId) {
   }
 }
 
-const setState = (newState) => newState.get('task', fromJS({}))
+function setState(newState) {
+  return newState.get('task')
+}

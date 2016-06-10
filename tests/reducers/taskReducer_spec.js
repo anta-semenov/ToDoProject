@@ -1309,39 +1309,7 @@ describe('Task reducer', () => {
   })
 
   describe('Set state', () => {
-    it('Should handle set state without task field', () => {
-      const initialState = fromJS({
-        'b41sogy3s0oc': {
-          id: 'b41sogy3s0oc',
-          title: 'Existing Task',
-          completed: false,
-          today: false,
-          priority: PRIORITY_NONE
-        }
-      })
-      const newState = fromJS({
-        context: {
-          b41sogy3s0o1: {
-            id: 'b41sogy3s0o1',
-            title: 'Test task 1'
-          },
-          b41sogy3s0o2: {
-            id: 'b41sogy3s0o2',
-            title: 'Test task 2'
-          }
-        },
-        uiState: {
-          selectedSection: {
-            type: 'NEXT'
-          }
-        }
-      })
-      const nextState = fromJS({})
-      const action = commonActions.setState(newState)
-
-      expect(reducer(initialState, action)).to.equal(nextState)
-    })
-    it('Should handle set state with task field', () => {
+    it('Should handle set state', () => {
       const initialState = fromJS({
         'b41sogy3s0oc': {
           id: 'b41sogy3s0oc',

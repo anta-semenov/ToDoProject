@@ -288,36 +288,7 @@ describe('Context reducer', () => {
     })
 
     describe('Set state', () => {
-      it('Should handle SET_STATE action without context field', () => {
-        const initialState = fromJS({
-          cf1sobz3s0oc: {
-              id: 'cf1sobz3s0oc',
-              title: 'Existing context'
-          }
-        })
-        const newState = fromJS({
-          task: {
-            cf1sobz3s0o1: {
-                id: 'cf1sobz3s0o1',
-                title: 'Existing context 1'
-            },
-            cf1sobz3s0o2: {
-                id: 'cf1sobz3s0o2',
-                title: 'Existing context 1'
-            }
-          },
-          uiState: {
-            selectedSection: {
-              type: 'NEXT'
-            }
-          }
-        })
-        const nextState = fromJS({})
-        const action = commonActions.setState(newState)
-
-        expect(reducer(initialState, action)).to.equal(nextState)
-      })
-      it('Should handle SET_STATE action with context field', () => {
+      it('Should handle SET_STATE action', () => {
         const initialState = fromJS({
           cf1sobz3s0oc: {
               id: 'cf1sobz3s0oc',
