@@ -48,6 +48,4 @@ function removeContext(state, id) {
   return state.delete(id)
 }
 
-function setState(newState) {
-  return newState.get('context')
-}
+const setState = (newState) => newState.get('context', fromJS({}))
