@@ -1,5 +1,4 @@
 import firebase from 'firebase'
-import { recieveAuth, logout } from '../../actions/commonActions'
 
 const app = firebase.initializeApp({
   serviceAccount: {
@@ -23,15 +22,5 @@ export const auth = (type) => {
       return app.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider())
   }
 }
-
-export const onAuth = (userData, store) => {
-  if (userData) {
-    store.dispatch(recieveAuth(userData))
-  } else {
-    store.dispatch(logout())
-  }
-}
-
-export const unAuth = () => {
-  return app.auth().signOut()
-}
+export const fetchData = (uid, dataType) => app.database().ref(`/userData/${uid}/${dataType}`).orderByChild('completed').equalTo(false).once('value')
+export const unAuth = () => app.auth().signOut()

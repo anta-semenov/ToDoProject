@@ -9,7 +9,8 @@ const auth = (state = Map(), action) => {
       return Map().set('authStatus', AUTH_IN_PROGRESS)
     case RECIEVE_AUTH:
       return Map().withMutations(map => {
-        map.set('authStatus', AUTH_SUCESS).set('uid', action.userData.uid).set('userName', action.userData.displayName)
+        map.set('authStatus', AUTH_SUCESS).set('uid', action.userData.uid)
+        if (action.userData.displayName) {map.set('userImage', action.userData.displayName)}
         if (action.userData.photoURL) {map.set('userImage', action.userData.photoURL)}
         return map
       })

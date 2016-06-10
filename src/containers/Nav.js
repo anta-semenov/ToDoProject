@@ -43,7 +43,7 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: fromJS(state.get('context').toList().map(item => {
+      items: state.get('context') ? fromJS(state.get('context').toList().map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -53,13 +53,13 @@ export const mapStateToProps = (state) => {
           editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
           count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size
         })
-      }))
+      })) : fromJS([])
     },
     {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: fromJS(state.get('project').toList().filter(project => !project.get('completed')).map(item => {
+      items: state.get('project') ? fromJS(state.get('project').toList().filter(project => !project.get('completed')).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -68,7 +68,7 @@ export const mapStateToProps = (state) => {
           active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false,
           editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false
         })
-      }))
+      })) : fromJS([])
     }
   ]
   return {
@@ -79,7 +79,6 @@ export const mapStateToProps = (state) => {
 export const mapDispatchToProps = (dispatch) => {
   return {
     onItemClick: (type, id) => {
-      dispatch(clearCompletedLatentTasks())
       dispatch(clearLatentTasks())
       dispatch(setSelectedSection({type: type, id: id}))
     },
