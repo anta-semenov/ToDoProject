@@ -1,14 +1,14 @@
+import { Map } from 'immutable'
 import app from './api.js'
-import { recieveAuth, logout, errorAuth, requestAuth, fetchData } from '../../actions/commonActions'
+import { recieveAuth, logout, errorAuth, requestAuth, fetchData, setState } from '../../actions/commonActions'
 
 const onAuth = (userData, store) => {
   if (userData && userData.uid) {
     store.dispatch(recieveAuth(userData))
-    store.dispatch(fetchData('task'))
-    store.dispatch(fetchData('project'))
-    store.dispatch(fetchData('context'))
+    store.dispatch(fetchData())
   } else {
     store.dispatch(logout())
+    store.dispatch(setState(Map({ task: {}, project: {}, context: {} })))
   }
 }
 

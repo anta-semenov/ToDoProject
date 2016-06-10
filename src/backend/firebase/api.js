@@ -24,3 +24,7 @@ export const auth = (type) => {
 }
 export const fetchData = (uid, dataType) => app.database().ref(`/userData/${uid}/${dataType}`).orderByChild('completed').equalTo(false).once('value')
 export const unAuth = () => app.auth().signOut()
+
+export const subscribeToDataUpdate = (uid, dataType, maxKey, eventType, callback) => {
+  app.database().ref(`/userData/${uid}/${dataType}`).orderByChild('completed').equalTo(false)
+}

@@ -1,3 +1,4 @@
+/*global Promise*/
 import { fromJS } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import * as api from '../backend/firebase/api.js'
@@ -13,9 +14,9 @@ export const errorAuth = (error) => ({
 })
 export const logout = () => ({ type: actionTypes.LOG_OUT })
 
-export const requestData = (dataType) => ({ type: actionTypes.REQUEST_DATA, dataType })
-export const recieveData = (dataType) => ({ type: actionTypes.RECIEVE_DATA, dataType })
-export const errorData = (dataType, error) => ({ type: actionTypes.ERROR_DATA, dataType, error })
+export const requestData = () => ({ type: actionTypes.REQUEST_DATA })
+export const recieveData = () => ({ type: actionTypes.RECIEVE_DATA })
+export const errorData = (error) => ({ type: actionTypes.ERROR_DATA, error })
 
 
 //Thunk action creators
@@ -38,16 +39,17 @@ export const logoutThunk = () => (dispatch) => {
   return api.unAuth().then(() => dispatch(logout()))
 }
 
-export const fetchData = (dataType) => (dispatch, getState) => {
+export const fetchData = () => (dispatch, getState) => {
   const uid = getState().getIn(['auth', 'uid'], undefined)
+  const dataTypes = ['task', 'project', 'context']
   if (uid) {
-    dispatch(requestData(dataType))
-    api.fetchData(uid, dataType).then(
-      response => {
-        dispatch(recieveData(dataType))
-        if (response.val()) {dispatch(setState(fromJS({ [dataType]: response.val() }))) }
+    dispatch(requestData())
+    Promise.all(dataTypes.map(dataType => api.fetchData(uid, dataType))).then(
+      results => {
+        dispatch(recieveData())
+        dispatch(setState(results.reduce((newState, result, index) => newState.set(dataTypes[index], fromJS(result.val() || {})), fromJS({}))))
       },
-      error => dispatch(errorData(dataType, error))
+      error => dispatch(errorData(error))
     )
   }
 }

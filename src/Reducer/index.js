@@ -1,3 +1,4 @@
+
 import context from './context'
 import project from './project'
 import task from './task'
@@ -15,3 +16,8 @@ export default function rootReduser(state, action) {
     .set('auth', auth(map.get('auth'), action))
   )
 }
+
+/*
+ * Selectors
+ */
+export const getMaxKey = (state, dataType = 'task') => state.get(dataType).keySeq().max()

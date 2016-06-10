@@ -1,10 +1,10 @@
 import Navigation from '../components/navigation/Navigation'
 import { connect } from 'react-redux'
-import { setSelectedSection, setEditingSection, clearCompletedLatentTasks, clearLatentTasks } from '../actions/uiStateActions'
+import { setSelectedSection, setEditingSection, clearLatentTasks } from '../actions/uiStateActions'
 import { addProject, editProject } from '../actions/projectActions'
 import { addContext, editContext } from '../actions/contextActions'
 import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import uniqueKey from '../utils/uniqueKeyGenerator'
@@ -43,7 +43,7 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: state.get('context') ? fromJS(state.get('context').toList().map(item => {
+      items: state.get('context', Map()).toList().map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -53,13 +53,13 @@ export const mapStateToProps = (state) => {
           editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
           count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size
         })
-      })) : fromJS([])
+      })
     },
     {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: state.get('project') ? fromJS(state.get('project').toList().filter(project => !project.get('completed')).map(item => {
+      items: state.get('project', Map()).toList().filter(project => !project.get('completed')).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -68,7 +68,7 @@ export const mapStateToProps = (state) => {
           active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false,
           editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false
         })
-      })) : fromJS([])
+      })
     }
   ]
   return {
