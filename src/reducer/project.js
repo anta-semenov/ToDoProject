@@ -17,7 +17,7 @@ export default function project(state = fromJS({}), action) {
       return completeProject(state, action.id, action.status)
 
     case actionTypes.SET_STATE:
-      return setState(action.state)
+      return setState(state, action.state)
 
     default:
       return state
@@ -56,4 +56,4 @@ function completeProject(state, id, status = false) {
   return state.setIn([id, 'completed'], status)
 }
 
-const setState = (newState) => newState.get('project', fromJS({}))
+const setState = (state, newState) => newState.has('project') ? newState.get('project', fromJS({})) : state

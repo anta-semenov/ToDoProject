@@ -543,10 +543,9 @@ describe('Project reducer', () => {
             }
           }
         })
-        const nextState = fromJS({})
         const action = commonActions.setState(newState)
 
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).to.equal(initialState)
       })
       it('Should handle SET_STATE action with project field', () => {
         const initialState = fromJS({

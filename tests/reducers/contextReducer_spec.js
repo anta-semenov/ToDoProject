@@ -312,10 +312,9 @@ describe('Context reducer', () => {
             }
           }
         })
-        const nextState = fromJS({})
         const action = commonActions.setState(newState)
 
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).to.equal(initialState)
       })
       it('Should handle SET_STATE action with context field', () => {
         const initialState = fromJS({

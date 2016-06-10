@@ -24,7 +24,7 @@ export default function task(state = fromJS({}), action) {
     case actionTypes.SET_TASK_TODAY:
       return setTaskToday(state, action.id, action.status)
     case actionTypes.SET_STATE:
-      return setState(action.state)
+      return setState(state, action.state)
     default:
       return state
   }
@@ -129,4 +129,4 @@ function switchTaskContext(state, taskId, contextId) {
   }
 }
 
-const setState = (newState) => newState.get('task', fromJS({}))
+const setState = (state, newState) => newState.has('task') ? newState.get('task', fromJS({})) : state

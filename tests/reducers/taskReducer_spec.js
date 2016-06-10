@@ -1336,10 +1336,9 @@ describe('Task reducer', () => {
           }
         }
       })
-      const nextState = fromJS({})
       const action = commonActions.setState(newState)
 
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).to.equal(initialState)
     })
     it('Should handle set state with task field', () => {
       const initialState = fromJS({

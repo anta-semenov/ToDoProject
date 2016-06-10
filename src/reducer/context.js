@@ -14,7 +14,7 @@ export default function context(state = fromJS({}), action) {
       return removeContext(state, action.id)
 
     case actionTypes.SET_STATE:
-      return setState(action.state)
+      return setState(state, action.state)
 
     default:
       return state
@@ -48,4 +48,4 @@ function removeContext(state, id) {
   return state.delete(id)
 }
 
-const setState = (newState) => newState.get('context', fromJS({}))
+const setState = (state, newState) => newState.has('context') ? newState.get('context', fromJS({})) : state
