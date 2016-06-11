@@ -1,7 +1,5 @@
-/*global Promise*/
-import { fromJS } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
-import * as api from '../backend/firebase/api.js'
+import * as api from '../backend/firebase/api'
 
 //Plain action creators
 export const setState = (state) => ({ type: actionTypes.SET_STATE, state })
@@ -37,19 +35,4 @@ export const login = (type) => (dispatch) => {
 
 export const logoutThunk = () => (dispatch) => {
   return api.unAuth().then(() => dispatch(logout()))
-}
-
-export const fetchData = () => (dispatch, getState) => {
-  const uid = getState().getIn(['auth', 'uid'], undefined)
-  const dataTypes = ['task', 'project', 'context']
-  if (uid) {
-    dispatch(requestData())
-    Promise.all(dataTypes.map(dataType => api.fetchData(uid, dataType))).then(
-      results => {
-        dispatch(recieveData())
-        dispatch(setState(results.reduce((newState, result, index) => newState.set(dataTypes[index], fromJS(result.val() || {})), fromJS({}))))
-      },
-      error => dispatch(errorData(error))
-    )
-  }
 }

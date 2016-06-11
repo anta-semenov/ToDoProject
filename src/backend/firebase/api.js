@@ -26,5 +26,8 @@ export const fetchData = (uid, dataType) => app.database().ref(`/userData/${uid}
 export const unAuth = () => app.auth().signOut()
 
 export const subscribeToDataUpdate = (uid, dataType, maxKey, eventType, callback) => {
-  app.database().ref(`/userData/${uid}/${dataType}`).orderByChild('completed').equalTo(false)
+  app.database().ref(`/userData/${uid}/${dataType}`).orderByKey().startAt(maxKey).on(eventType, callback)
+}
+export const unsubscribeFromDataUpdate = (uid, dataType) => {
+  app.database().ref(`/userData/${uid}/${dataType}`).off()
 }

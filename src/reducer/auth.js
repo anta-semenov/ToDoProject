@@ -27,3 +27,5 @@ const auth = (state = Map(), action) => {
   }
 }
 export default auth
+
+export const getUid = state => state.get('uid')

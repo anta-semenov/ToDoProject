@@ -4,7 +4,7 @@ import project from './project'
 import task from './task'
 import uiState from './uiState'
 import userInfo from './userInfo'
-import auth from './auth.js'
+import auth, * as fromAuth from './auth.js'
 
 export default function rootReduser(state, action) {
   return state.withMutations(map => map
@@ -21,3 +21,4 @@ export default function rootReduser(state, action) {
  * Selectors
  */
 export const getMaxKey = (state, dataType = 'task') => state.get(dataType).keySeq().max()
+export const getUid = state => fromAuth.getUid(state.get('auth'))
