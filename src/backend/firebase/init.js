@@ -7,17 +7,16 @@ import * as projectActions from '../../actions/projectActions'
 import * as contextActions from '../../actions/contextActions'
 import { getMaxKey, getUid } from '../../reducer'
 import { capitalize } from '../../utils/string'
+import { increaseKey } from '../../utils/uniqueKeyGenerator'
 import * as api from './api'
-import DATA_TYPES from '../../constants/defaults'
+import { DATA_TYPES } from '../../constants/defaults'
 
 const onAuth = (userData, store) => {
   if (userData && userData.uid) {
     store.dispatch(recieveAuth(userData))
     store.dispatch(requestData())
-    console.log(123)
     Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType))).then(
       results => {
-        console.log(results)
         store.dispatch(recieveData())
         store.dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
         subscribeToDataUpdates(store)
@@ -50,9 +49,9 @@ const subscribeToDataUpdates = (store) => {
   const uid = getUid(store.getState())
   DATA_TYPES.forEach(type => {
     const maxKey = getMaxKey(store.getState(), type)
-    subscribeToDataUpdate(uid, type, maxKey, 'child_added', data => store.dispatch(actions[`${type}Action`][`add${capitalize(type)}`](data.val())))
-    subscribeToDataUpdate(uid, type, maxKey, 'child_removed', data => store.dispatch(actions[`${type}Action`][`remove${capitalize(type)}`](data.key())))
-    subscribeToDataUpdate(uid, type, maxKey, 'child_changed', data => store.dispatch(actions[`${type}Action`][`edit${capitalize(type)}`](data.val(), data.key())))
+    subscribeToDataUpdate(uid, type, maxKey, 'child_added', data => store.dispatch(actions[`${type}Actions`][`add${capitalize(type)}`](data.val())))
+    subscribeToDataUpdate(uid, type, maxKey, 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
+    subscribeToDataUpdate(uid, type, maxKey, 'child_changed', data => store.dispatch(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val())))
   })
 }
 
