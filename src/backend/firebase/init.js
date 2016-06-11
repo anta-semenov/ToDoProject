@@ -15,7 +15,7 @@ const onAuth = (userData, store) => {
   if (userData && userData.uid) {
     store.dispatch(recieveAuth(userData))
     store.dispatch(requestData())
-    Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType))).then(
+    Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' ? null : false))).then(
       results => {
         store.dispatch(recieveData())
         store.dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
@@ -33,7 +33,7 @@ const onAuth = (userData, store) => {
 export const fetchData = (uid, store) => {
   if (uid) {
     store.dispatch(requestData())
-    return Promise.all(DATA_TYPES.map(dataType => api.fetchData(uid, dataType)))
+    return Promise.all(DATA_TYPES.map(dataType => api.fetchData(uid, dataType, dataType === 'context' ? null : false)))
   }
 }
 
@@ -48,10 +48,10 @@ const subscribeToDataUpdates = (store) => {
   const actions = { taskActions, projectActions, contextActions }
   const uid = getUid(store.getState())
   DATA_TYPES.forEach(type => {
-    const maxKey = getMaxKey(store.getState(), type)
+    const maxKey = increaseKey(getMaxKey(store.getState(), type))
     subscribeToDataUpdate(uid, type, maxKey, 'child_added', data => store.dispatch(actions[`${type}Actions`][`add${capitalize(type)}`](data.val())))
-    subscribeToDataUpdate(uid, type, maxKey, 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
-    subscribeToDataUpdate(uid, type, maxKey, 'child_changed', data => store.dispatch(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val())))
+    subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
+    subscribeToDataUpdate(uid, type, '', 'child_changed', data => store.dispatch(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val())))
   })
 }
 

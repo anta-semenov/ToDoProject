@@ -22,7 +22,7 @@ export const auth = (type) => {
       return app.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider())
   }
 }
-export const fetchData = (uid, dataType) => app.database().ref(`/userData/${uid}/${dataType}`).orderByChild('completed').equalTo(false).once('value')
+export const fetchData = (uid, dataType, completedFilter) => app.database().ref(`/userData/${uid}/${dataType}`).orderByChild('completed').equalTo(completedFilter).once('value')
 export const unAuth = () => app.auth().signOut()
 
 export const subscribeToDataUpdate = (uid, dataType, maxKey, eventType, callback) => {
