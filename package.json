@@ -52,6 +52,7 @@
     "draft-js": "^0.6.0",
     "firebase": "^3.0.3",
     "immutable": "^3.7.6",
+    "lodash": "^4.13.1",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-addons-pure-render-mixin": "^15.1.0",

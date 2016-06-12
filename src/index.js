@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom'
 import Root from './containers/Root'
 import thunk from 'redux-thunk'
 import configureStore from './store/configureStore'
-import { fromJS } from 'immutable'
 import initFirebase from './backend/firebase/init'
+import { loadState, saveState } from './backend/localStore'
+import throttle from 'lodash/throttle'
 
-const store = configureStore(fromJS({}), [thunk])
+const store = configureStore(loadState(), [thunk])
+store.subscribe(throttle(() => {
+  saveState(store.getState())
+}, 1500))
 
 initFirebase(store)
 

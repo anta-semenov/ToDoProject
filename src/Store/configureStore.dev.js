@@ -15,6 +15,7 @@ const enhancer = middleware => compose(
 )
 
 export default function configureStore(initialState = fromJS({}), middleware) {
+
   const store = createStore(rootReducer, initialState, enhancer(middleware));
 
   if (module.hot) {
