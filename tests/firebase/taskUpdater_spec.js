@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { fromJS, Set } from 'immutable'
+import { fromJS } from 'immutable'
 import taskUpdater from '../../src/backend/firebase/updaters/taskUpdater'
 import { PRIORITY_NONE, PRIORITY_MEDIUM } from '../../src/constants/priorityLevels'
 import taskReducer from '../../src/reducer/task'
@@ -14,7 +14,7 @@ describe('Firebase task updater', () => {
         today: false,
         priority: PRIORITY_NONE,
         project: 'a2ps56y3sfo0',
-        contexts: Set(['cb3sr7yd9fo0', 'cb3sr7yd9fo1'])
+        contexts: ['cb3sr7yd9fo0', 'cb3sr7yd9fo1']
       }
     })
   it('Should handle Add task action', () => {
@@ -219,7 +219,7 @@ describe('Firebase task updater', () => {
             today: false,
             priority: PRIORITY_NONE,
             project: 'a2ps56y3sfo0',
-            contexts: Set(['cb3sr7yd9fo0'])
+            contexts: ['cb3sr7yd9fo0']
           }
         })
       const action = actions.removeTaskContext('b41sogy3s0o1', 'cb3sr7yd9fo0')

@@ -1,4 +1,4 @@
-import { fromJS, Set } from 'immutable'
+import { fromJS, List } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import { NEW_TASK_TITLE } from '../constants/defaults'
 import { PRIORITY_NONE } from '../constants/priorityLevels'
@@ -25,33 +25,27 @@ export default function task(state = fromJS({}), action) {
       return setTaskToday(state, action.id, action.status)
     case actionTypes.SET_STATE:
       return setState(state, action.state)
+    case actionTypes.REMOVE_PROJECT:
+      return removeProjectTasks(state, action.id)
+    case actionTypes.REMOVE_CONTEXT:
+      return removeContextFromTasks(state, action.id)
     default:
       return state
   }
-}
-
-function correctProperties(properties) {
-  let correctProperties = properties
-  if (correctProperties.context) {
-    correctProperties.context = Set(correctProperties.context)
-  }
-
-  return correctProperties
 }
 
 function addTask(state, properties = {}) {
   if (!properties.id || state.has(properties.id)) {
     return state
   }
-  const tempProperties = correctProperties(properties)
   const newTask = fromJS({
-    id: tempProperties.id,
+    id: properties.id,
     title: NEW_TASK_TITLE,
     completed: false,
     today: false,
     priority: PRIORITY_NONE
   })
-  return state.set(tempProperties.id, newTask.merge(tempProperties))
+  return state.set(properties.id, newTask.merge(properties))
 }
 
 function removeTask(state, id) {
@@ -59,16 +53,14 @@ function removeTask(state, id) {
 }
 
 function editTask(state, id, properties = {}) {
-  const tempProperties = correctProperties(properties)
-
-  if (tempProperties.id && tempProperties.id != id) {
-    if (state.has(tempProperties.id)) {
+  if (properties.id && properties.id != id) {
+    if (state.has(properties.id)) {
       return state
     }
     const temp = state.get(id)
-    return state.delete(id).set(tempProperties.id, temp).mergeIn([tempProperties.id], tempProperties)
+    return state.delete(id).set(properties.id, temp).mergeIn([properties.id], properties)
   } else {
-    return state.mergeIn([id], tempProperties)
+    return state.mergeIn([id], properties)
   }
 }
 
@@ -91,9 +83,13 @@ function addTaskToProject(state, id, projectId) {
 function addTaskContext(state, id, contextId) {
   return state.updateIn([id, 'contexts'], val => {
     if (val) {
-      return Set(val).add(contextId)
+      if (val.find(item => item === contextId)) {
+        return val
+      } else {
+        return val.push(contextId)
+      }
     } else {
-      return Set([contextId])
+      return List([contextId])
     }
   })
 }
@@ -101,7 +97,7 @@ function addTaskContext(state, id, contextId) {
 function removeTaskContext(state, {id, context}) {
   const temp =  state.updateIn([id, 'contexts'], val => {
     if (val) {
-      return Set(val).delete(context)
+      return val.filter(item => item !== context)
     } else {
       return val
     }
@@ -115,11 +111,12 @@ function removeTaskContext(state, {id, context}) {
 function switchTaskContext(state, taskId, contextId) {
   const temp = state.updateIn([taskId, 'contexts'], val => {
     if (val) {
-      if (val.includes(contextId)) {return val.delete(contextId)}
-      else {return val.add(contextId)}
+      const idIndex = val.indexOf(contextId)
+      if (idIndex !== -1) {return val.delete(idIndex)}
+      else {return val.push(contextId)}
     }
     else {
-      return Set([contextId])
+      return List([contextId])
     }
   })
   if (temp.getIn([taskId, 'contexts']) && temp.getIn([taskId, 'contexts']).isEmpty()) {
@@ -130,3 +127,23 @@ function switchTaskContext(state, taskId, contextId) {
 }
 
 const setState = (state, newState) => newState.has('task') ? newState.get('task', fromJS({})) : state
+
+const removeProjectTasks = (state, projectId) => {
+  return state.filter(item => item.get('project') !== projectId)
+}
+
+const removeContextFromTasks = (state, contextId) => {
+  return state.map(task => {
+    const contexts = task.get('contexts')
+    if (contexts) {
+      const newContexts = contexts.filter(item => item !== contextId)
+      if (!newContexts.isEmpty()) {
+        return task.set('contexts', newContexts)
+      } else {
+        return task.delete('contexts')
+      }
+    } else {
+      return task
+    }
+  })
+}
