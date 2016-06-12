@@ -1,11 +1,6 @@
 import firebase from 'firebase'
 
 const app = firebase.initializeApp({
-  serviceAccount: {
-    projectId: 'popping-torch-8030',
-    clientEmail: 'work.semenov@gmail.com',
-    privateKey: 'RXb42lDJzOKMNDA5eMYsJgKjZZIsdm2jflIrjkz5'
-  },
   apiKey: 'AIzaSyB-Xq4_HuAv8moxKqJFlFMC-5c-s7JJoYQ',
   authDomain: 'popping-torch-8030.firebaseapp.com',
   databaseURL: 'https://popping-torch-8030.firebaseio.com'

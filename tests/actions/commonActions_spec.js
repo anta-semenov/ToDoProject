@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import * as types from '../../src/constants/actionTypes'
-import * as actions from '../../src/actions/commonActions'
+import { setState, logout } from '../../src/actions/commonActions'
 import { fromJS } from 'immutable'
 
 describe('Common action creators', () => {
@@ -16,13 +16,13 @@ describe('Common action creators', () => {
       state
     }
 
-    expect(actions.setState(state)).to.deep.equal(expectedAction)
+    expect(setState(state)).to.deep.equal(expectedAction)
   })
 
   it('Should create action to log out', () => {
     const expectedAction = {
       type: types.LOG_OUT
     }
-    expect(actions.logout()).to.deep.equal(expectedAction)
+    expect(logout()).to.deep.equal(expectedAction)
   })
 })

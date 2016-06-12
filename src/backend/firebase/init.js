@@ -1,5 +1,5 @@
 /* global Promise */
-import { fromJS, Map } from 'immutable'
+import { fromJS } from 'immutable'
 import app, { subscribeToDataUpdate, unsubscribeFromDataUpdate } from './api.js'
 import { recieveAuth, logout, errorAuth, requestAuth, requestData, recieveData, errorData, setState } from '../../actions/commonActions'
 import * as taskActions from '../../actions/taskActions'
@@ -10,6 +10,13 @@ import { capitalize } from '../../utils/string'
 import { increaseKey } from '../../utils/uniqueKeyGenerator'
 import * as api from './api'
 import { DATA_TYPES } from '../../constants/defaults'
+
+
+const initFirebase = (store) => {
+  store.dispatch(requestAuth())
+  app.auth().onAuthStateChanged((userData) => onAuth(userData, store), (error) => store.dispatch(errorAuth(error)))
+}
+export default initFirebase
 
 const onAuth = (userData, store) => {
   if (userData && userData.uid) {
@@ -26,23 +33,9 @@ const onAuth = (userData, store) => {
   } else {
     unsubscribeFromDataUpdates(store)
     store.dispatch(logout())
-    store.dispatch(setState(Map({ task: {}, project: {}, context: {} })))
+    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {} })))
   }
 }
-
-export const fetchData = (uid, store) => {
-  if (uid) {
-    store.dispatch(requestData())
-    return Promise.all(DATA_TYPES.map(dataType => api.fetchData(uid, dataType, dataType === 'context' ? null : false)))
-  }
-}
-
-const initFirebase = (store) => {
-  store.dispatch(requestAuth())
-  app.auth().onAuthStateChanged((userData) => onAuth(userData, store), (error) => store.dispatch(errorAuth(error)))
-}
-
-export default initFirebase
 
 const subscribeToDataUpdates = (store) => {
   const actions = { taskActions, projectActions, contextActions }

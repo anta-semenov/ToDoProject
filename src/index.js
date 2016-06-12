@@ -6,8 +6,9 @@ import configureStore from './store/configureStore'
 import initFirebase from './backend/firebase/init'
 import { loadState, saveState } from './backend/localStore'
 import throttle from 'lodash/throttle'
+import firebaseUpdateMiddleware from './backend/firebase/middleware'
 
-const store = configureStore(loadState(), [thunk])
+const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
 store.subscribe(throttle(() => {
   saveState(store.getState())
 }, 1500))
