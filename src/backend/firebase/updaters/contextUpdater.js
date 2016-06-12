@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable'
-import * as actionTypes from '../../constants/actionTypes'
+import * as actionTypes from '../../../constants/actionTypes'
 
 export default function contextUpdater(updatedObjects = [], action, newState = fromJS({})) {
   switch (action.type) {

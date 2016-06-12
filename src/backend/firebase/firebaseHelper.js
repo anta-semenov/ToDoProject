@@ -2,7 +2,7 @@
 import Firebase from 'firebase'
 import { FIREBASE_APP_REFERENCE } from '../../constants/thierdPartyKeys'
 import { fromJS, Set } from 'immutable'
-import mainUpdater from './mainUpdater'
+import mainUpdater from './updaters'
 import * as actionTypes from '../../constants/actionTypes'
 import * as commonActions from '../../actions/commonActions'
 import listeners from './listeners'

@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { fromJS, Set } from 'immutable'
-import taskUpdater from '../../src/backend/firebase/taskUpdater'
+import taskUpdater from '../../src/backend/firebase/updaters/taskUpdater'
 import { PRIORITY_NONE, PRIORITY_MEDIUM } from '../../src/constants/priorityLevels'
 import taskReducer from '../../src/reducer/task'
 import * as actions from '../../src/actions/taskActions'

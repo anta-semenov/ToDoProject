@@ -1,4 +1,4 @@
-import * as actionTypes from '../../constants/actionTypes'
+import * as actionTypes from '../../../constants/actionTypes'
 import { Iterable } from 'immutable'
 
 export default function taskUpdater(updateObjects, action, newState) {
