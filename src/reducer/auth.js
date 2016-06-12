@@ -10,8 +10,8 @@ const auth = (state = Map(), action) => {
     case RECIEVE_AUTH:
       return Map().withMutations(map => {
         map.set('authStatus', AUTH_SUCESS).set('uid', action.userData.uid)
-        if (action.userData.displayName) {map.set('userName', action.userData.displayName)}
-        if (action.userData.photoURL) {map.set('userImage', action.userData.photoURL)}
+        if (action.userData.providerData[0].displayName) {map.set('userName', action.userData.providerData[0].displayName)}
+        if (action.userData.providerData[0].photoURL) {map.set('userImage', action.userData.providerData[0].photoURL)}
         return map
       })
     case ERROR_AUTH:
