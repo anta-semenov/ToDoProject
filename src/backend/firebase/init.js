@@ -5,9 +5,9 @@ import { recieveAuth, logout, errorAuth, requestAuth, requestData, recieveData, 
 import * as taskActions from '../../actions/taskActions'
 import * as projectActions from '../../actions/projectActions'
 import * as contextActions from '../../actions/contextActions'
-import { getMaxKey, getUid } from '../../reducer'
+import { getUid } from '../../reducer'
 import { capitalize } from '../../utils/string'
-import { increaseKey } from '../../utils/uniqueKeyGenerator'
+import uniqueKey from '../../utils/uniqueKeyGenerator'
 import * as api from './api'
 import { DATA_TYPES } from '../../constants/defaults'
 
@@ -41,8 +41,7 @@ const subscribeToDataUpdates = (store) => {
   const actions = { taskActions, projectActions, contextActions }
   const uid = getUid(store.getState())
   DATA_TYPES.forEach(type => {
-    const maxKey = increaseKey(getMaxKey(store.getState(), type))
-    subscribeToDataUpdate(uid, type, maxKey, 'child_added', data => store.dispatch(actions[`${type}Actions`][`add${capitalize(type)}`](data.val())))
+    subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', data => store.dispatch(actions[`${type}Actions`][`add${capitalize(type)}`](data.val())))
     subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
     subscribeToDataUpdate(uid, type, '', 'child_changed', data => store.dispatch(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val())))
   })
