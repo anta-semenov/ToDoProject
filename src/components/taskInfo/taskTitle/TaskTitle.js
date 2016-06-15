@@ -41,7 +41,6 @@ export default class TaskTitle extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.editorState.getSelection().getHasFocus() && this.state.editorState.getCurrentContent() !== titleEditorState(nextProps.title)) {
-      this.setState({editorState: titleEditorState(nextProps.title)})
       this.setState({
         editorState: titleEditorState(nextProps.title),
         stackLenght: {

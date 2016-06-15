@@ -27,6 +27,8 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return setProperty(state, 'offline', action.status)
     case actionTypes.SET_PROPERTY:
       return setProperty(state, action.property, action.value)
+    case actionTypes.SET_STATE:
+      return setState(state, action.state)
     default:
       return state
   }
@@ -111,3 +113,5 @@ function setProperty(state, property, value) {
     return state
   }
 }
+
+const setState = (state, newState) => newState.has('uiState') ? newState.get('uiState', INITIAL_UI_STATE) : state

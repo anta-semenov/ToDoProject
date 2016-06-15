@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { Set } from 'immutable'
-import TaskGroup from '../taskGroup/TaskGroup'
-import AddTask from '../addTask/AddTask'
+import TaskGroup from './taskGroup/TaskGroup'
+import AddTask from './addTask/AddTask'
+import TasksHeader from './tasksHeader/TasksHeader'
+import { NEXT, INBOX, TODAY, PROJECT, CONTEXT, PROJECTS, CONTEXTS } from '../../constants/sectionTypes.js'
 
 import './Tasks.less'
 
@@ -14,7 +15,7 @@ export default class Tasks extends Component {
   render() {
     return(
       <div className={`tasks ${this.props.activeItem != '' ? 'has-active-item' : ''}`}>
-        {this.props.header ? <h1 className='tasks__header'>{this.props.header}</h1> : null}
+        <TasksHeader sectionName={this.props.sectionName} sectionType={this.props.sectionType} onNameChange={this.props.onSectionNameChange} onDelete={this.props.onSectionDelete} />
         <AddTask addTask={this.props.addTask} />
         {this.props.groups ?
           <ul className='tasks__list'>
@@ -60,10 +61,13 @@ Tasks.propTypes = {
       title: React.PropTypes.string
     })
   ),
-  header: React.PropTypes.string,
+  sectionName: React.PropTypes.string.isRequired,
+  sectionType: React.PropTypes.oneOf([NEXT, INBOX, TODAY, PROJECT, CONTEXT, PROJECTS, CONTEXTS]).isRequired,
   activeItem: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
 
+  onSectionNameChange: React.PropTypes.func.isRequired,
+  onSectionDelete: React.PropTypes.func.isRequired,
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,

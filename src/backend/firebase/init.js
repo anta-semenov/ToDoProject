@@ -9,7 +9,7 @@ import { getUid } from '../../reducer'
 import { capitalize } from '../../utils/string'
 import uniqueKey from '../../utils/uniqueKeyGenerator'
 import * as api from './api'
-import { DATA_TYPES } from '../../constants/defaults'
+import { DATA_TYPES, INITIAL_UI_STATE } from '../../constants/defaults'
 
 
 const initFirebase = (store) => {
@@ -33,7 +33,7 @@ const onAuth = (userData, store) => {
   } else {
     unsubscribeFromDataUpdates(store)
     store.dispatch(logout())
-    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {} })))
+    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, uiState: INITIAL_UI_STATE })))
   }
 }
 

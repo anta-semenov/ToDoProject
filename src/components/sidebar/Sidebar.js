@@ -5,8 +5,8 @@ import './Sidebar.less'
 
 const Sidebar = () => (
   <div className='sidebar' >
-    <Navigation /> 
     <Auth />
+    <Navigation />
   </div>
 )
 export default Sidebar

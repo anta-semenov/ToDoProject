@@ -1,24 +1,30 @@
 @import '../../styles/variables.less';
 
+.task-info-transition-enter {
+  width: 0;
+  opacity: 0;
+  transition: @transition-basic;
+
+  &.task-info-transition-enter-active {
+    width: @size-width-task-info;
+    opacity: 1;
+  }
+}
+
 .task-info {
   position: relative;
   box-sizing: border-box;
   top: 0;
   height: 100%;
-  right: -@size-width-task-info; //Only for development
   width: @size-width-task-info;
-  padding: 40px 30px;
+  padding: 40px 60px 40px 50px;
   margin: 0;
   overflow-y: auto;
 
-  background-color: transparent;//fade(@color-bg-light-gray, 30%);
+  background-color: #fcfcfc;
   border-left: 1px solid @color-border-light-gray;
   transition: @transition-basic;
   font-family: 'Fira Sans', sans-serif;
-
-  &.is-open {
-    right: 0;
-  }
 }
 
 .task-info__content {

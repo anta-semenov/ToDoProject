@@ -2,7 +2,6 @@ import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Task from '../task/Task'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import { List, Set } from 'immutable'
 
 import './TaskGroup.less'
 
