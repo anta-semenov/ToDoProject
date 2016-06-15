@@ -615,4 +615,70 @@ describe('UI state reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
+
+  describe('Remove context and project', () => {
+    it('Should handle REMOVE_CONTEXT and REMOVE_PROJECT with empty state and empty parameter', () => {
+      const initialState = fromJS({})
+      const action1 = { type: actionTypes.REMOVE_PROJECT }
+      const action2 = { type: actionTypes.REMOVE_CONTEXT }
+      expect(reducer(initialState, action1)).to.equal(initialState)
+      expect(reducer(initialState, action2)).to.equal(initialState)
+    })
+    it('Should handle REMOVE_CONTEXT and REMOVE_PROJECT with empty state', () => {
+      const initialState = fromJS({})
+      const action1 = { type: actionTypes.REMOVE_PROJECT, id: '40ckl00ign4' }
+      const action2 = { type: actionTypes.REMOVE_CONTEXT, id: '40c2z2drpd8' }
+      expect(reducer(initialState, action1)).to.equal(initialState)
+      expect(reducer(initialState, action2)).to.equal(initialState)
+    })
+    it('Should handle REMOVE_CONTEXT and REMOVE_PROJECT with existing state and empty parameter', () => {
+      const initialState1 = fromJS({
+        selectedSection: {
+          type: sectionTypes.INBOX
+        }
+      })
+      const initialState2 = fromJS({
+        selectedSection: {
+          type: sectionTypes.PROJECT,
+          id: '40c2z47yxr8'
+        }
+      })
+      const action1 = { type: actionTypes.REMOVE_PROJECT, id: '40ckl00ign4' }
+      const action2 = { type: actionTypes.REMOVE_CONTEXT, id: '40c2z2drpd8' }
+
+      expect(reducer(initialState1, action1)).to.equal(initialState1)
+      expect(reducer(initialState2, action1)).to.equal(initialState2)
+      expect(reducer(initialState1, action2)).to.equal(initialState1)
+      expect(reducer(initialState2, action2)).to.equal(initialState2)
+    })
+    it('Should handle REMOVE_CONTEXT and REMOVE_PROJECT with existing state', () => {
+      const initialState1 = fromJS({
+        selectedSection: {
+          type: sectionTypes.INBOX
+        }
+      })
+      const initialState2 = fromJS({
+        selectedSection: {
+          type: sectionTypes.PROJECT,
+          id: '40ckl00ign4'
+        }
+      })
+      const initialState3 = fromJS({
+        selectedSection: {
+          type: sectionTypes.CONTEXT,
+          id: '40c2z2drpd8'
+        }
+      })
+      const action1 = { type: actionTypes.REMOVE_PROJECT, id: '40ckl00ign4' }
+      const action2 = { type: actionTypes.REMOVE_CONTEXT, id: '40c2z2drpd8' }
+
+      expect(reducer(initialState1, action1)).to.equal(initialState1)
+      expect(reducer(initialState2, action1)).to.equal(initialState1)
+      expect(reducer(initialState3, action1)).to.equal(initialState3)
+
+      expect(reducer(initialState1, action2)).to.equal(initialState1)
+      expect(reducer(initialState2, action2)).to.equal(initialState2)
+      expect(reducer(initialState3, action2)).to.equal(initialState1)
+    })
+  })
 })

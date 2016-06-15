@@ -1,6 +1,7 @@
 import * as actionTypes from '../constants/actionTypes'
 import { fromJS, is, Set, Map } from 'immutable'
 import { INITIAL_UI_STATE } from '../constants/defaults'
+import { INBOX } from '../constants/sectionTypes'
 
 
 export default function uiState(state = INITIAL_UI_STATE, action) {
@@ -29,6 +30,9 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return setProperty(state, action.property, action.value)
     case actionTypes.SET_STATE:
       return setState(state, action.state)
+    case actionTypes.REMOVE_PROJECT:
+    case actionTypes.REMOVE_CONTEXT:
+      return removeSection(state, action.id)
     default:
       return state
   }
@@ -115,3 +119,4 @@ function setProperty(state, property, value) {
 }
 
 const setState = (state, newState) => newState.has('uiState') ? newState.get('uiState', INITIAL_UI_STATE) : state
+const removeSection = (state, id) => state.getIn(['selectedSection', 'id'], undefined) === id && id !== '' && id !== undefined ? state.set('selectedSection', fromJS({ type: INBOX })) : state

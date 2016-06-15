@@ -41,7 +41,6 @@ const mapDispatchToProps = (dispatch) => {
           dispatch(removeContext(sectionID))
           break
       }
-      dispatch(setSelectedSection({type: sectionTypes.INBOX}))
     },
     addTask: (taskTitle, sectionType, sectionID) => {
       let properties = {id: uniqueKey()}
@@ -81,7 +80,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return Object.assign({}, ownProps, stateProps, {
     onSectionNameChange: (sectionName) => dispatchProps.onSectionNameChange(stateProps.sectionID, stateProps.sectionType, sectionName),
     onSectionDelete: () => dispatchProps.onSectionDelete(stateProps.sectionID, stateProps.sectionType),
-    addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.selectedSectionType, stateProps.selectedSectionID),
+    addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.sectionType, stateProps.sectionID),
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
     onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),

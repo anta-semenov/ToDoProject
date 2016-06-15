@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { mergeProps, mapStateToProps, mapDispatchToProps } from '../../src/containers/Nav'
+import { mapStateToProps } from '../../src/containers/Nav'
 import { fromJS, Set } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
