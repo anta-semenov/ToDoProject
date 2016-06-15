@@ -1,28 +1,23 @@
-import Authentication from '../components/authentication/Authentication'
+import Auth from '../components/auth/Auth'
 import { connect } from 'react-redux'
-import { logIn, logOut } from '../actions/commonActions'
-import { setProperty } from '../actions/uiStateActions'
+import { login, logoutThunk } from '../actions/commonActions'
 
 const mapStateToProps = (state) => {
   return {
-    authStatus: state.getIn(['uiState', 'authStatus'], false),
-    authErrorMessage: state.getIn(['uiState', 'authErrorMessage']),
-    userName: state.getIn(['userInfo','name']),
-    showAuth: state.getIn(['uiState', 'showAuthMenu'], false)
+    authStatus: state.getIn(['auth', 'authStatus'], undefined),
+    authErrorMessage: state.getIn(['auth', 'errorMessage'], 'Something went wrong'),
+    userName: state.getIn(['auth','userName'], 'Mr. Nobody'),
+    userImage: state.getIn(['auth', 'userImage'], undefined)
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginFacebook: () => {dispatch(logIn({type:'facebook'}))},
-    loginGoogle: () => {dispatch(logIn({type:'google'}))},
-    loginEmail: (email, password) => {dispatch(logIn({type:'email', email, password}))},
-    logout: () => {dispatch(logOut())},
-    showMenu: () => {dispatch(setProperty('showAuthMenu', true))},
-    hideMenu: () => {dispatch(setProperty('showAuthMenu'))}
+    login: (type) => dispatch(login(type)),
+    logout: () => dispatch(logoutThunk())
   }
 }
 
-const AuthenticationConnected = connect(mapStateToProps, mapDispatchToProps)(Authentication)
+const AuthConnected = connect(mapStateToProps, mapDispatchToProps)(Auth)
 
-export default AuthenticationConnected
+export default AuthConnected

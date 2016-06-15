@@ -1,10 +1,12 @@
 import { expect } from 'chai'
-import { fromJS, Set } from 'immutable'
+import { fromJS } from 'immutable'
 import reducer from '../../src/reducer/task'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_TASK_TITLE } from '../../src/constants/defaults'
 import { PRIORITY_NONE } from '../../src/constants/priorityLevels'
 import * as commonActions from '../../src/actions/commonActions'
+import { removeProject } from '../../src/actions/projectActions'
+import { removeContext } from '../../src/actions/contextActions'
 
 describe('Task reducer', () => {
   // Empty action
@@ -180,42 +182,6 @@ describe('Task reducer', () => {
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
-
-    it('Should convert context properties to Set, if it is not instance of Set', () => {
-      const initialState = fromJS({
-        b41sogy3s0oc: {
-          id: 'b41sogy3s0oc',
-          title: 'Existing Task',
-          completed: false,
-          today: false
-        }
-      })
-      const action = {
-        type: types.ADD_TASK,
-        properties: {
-          id: 'b41sogy3s0ok',
-          title: 'Test Task',
-          context: ['a91sogy3s0o0','a91sogy3s0o1']
-        }
-      }
-      const nextState = fromJS({
-        b41sogy3s0oc: {
-          id: 'b41sogy3s0oc',
-          title: 'Existing Task',
-          completed: false,
-          today: false
-        },
-        b41sogy3s0ok: {
-          id: 'b41sogy3s0ok',
-          title: 'Test Task',
-          completed: false,
-          today: false,
-          priority: PRIORITY_NONE,
-          context: Set(['a91sogy3s0o0','a91sogy3s0o1'])
-        }
-      })
-      expect(reducer(initialState, action)).to.equal(nextState)
-    })
   })
 
   describe('Remove task', () => {
@@ -387,47 +353,6 @@ describe('Task reducer', () => {
           title: 'New Task',
           completed: false,
           today: false
-        }
-      })
-      expect(reducer(initialState, action)).to.equal(nextState)
-    })
-
-    it('Should convert context properties to Set if new properties have it', () => {
-      const initialState = fromJS({
-        b41sogy3s0oc: {
-          id: 'b41sogy3s0oc',
-          title: 'Existing Task',
-          completed: false,
-          today: false
-        },
-        b41sogy3s0ok: {
-          id: 'b41sogy3s0ok',
-          title: 'New Task',
-          completed: false,
-          today: false
-        }
-      })
-      const action = {
-        type: types.EDIT_TASK,
-        id: 'b41sogy3s0ok',
-        properties: {
-          title: 'Changed Task Tittle',
-          context: ['a91sogy3s0o0','a91sogy3s0o1']
-        }
-      }
-      const nextState = fromJS({
-        b41sogy3s0oc: {
-          id: 'b41sogy3s0oc',
-          title: 'Existing Task',
-          completed: false,
-          today: false
-        },
-        b41sogy3s0ok: {
-          id: 'b41sogy3s0ok',
-          title: 'Changed Task Tittle',
-          completed: false,
-          today: false,
-          context: Set(['a91sogy3s0o0','a91sogy3s0o1'])
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -999,6 +924,46 @@ describe('Task reducer', () => {
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
+
+    it('Should handle REMOVE_PROJECT action', () => {
+      const initialState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      const action = removeProject('bh52ogy5s0fm')
+
+      const nextState = fromJS({
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
   })
 
 
@@ -1026,7 +991,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc'])
+          contexts: ['6f1sobz3s0oc']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1039,7 +1004,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc'])
+          contexts: ['6f1sobz3s0oc']
         }
       })
       const action = {
@@ -1054,7 +1019,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc', '6c1sobz9s0oc'])
+          contexts: ['6f1sobz3s0oc', '6c1sobz9s0oc']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1067,7 +1032,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc'])
+          contexts: ['6f1sobz3s0oc']
         }
       })
       const action = {
@@ -1082,7 +1047,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc'])
+          contexts: ['6f1sobz3s0oc']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1121,7 +1086,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc', '6c1sobz9s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol'])
+          contexts: ['6f1sobz3s0oc', '6c1sobz9s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol']
         }
       })
       const action = {
@@ -1136,7 +1101,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol'])
+          contexts: ['6f1sobz3s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1149,7 +1114,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc', '6c1sobz9s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol'])
+          contexts: ['6f1sobz3s0oc', '6c1sobz9s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol']
         }
       })
       const action = {
@@ -1164,7 +1129,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc', '6c1sobz9s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol'])
+          contexts: ['6f1sobz3s0oc', '6c1sobz9s0oc', '2f1s7bz9s0ol', '2j1s7bz9s0ol']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1177,7 +1142,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc'])
+          contexts: ['6f1sobz3s0oc']
         }
       })
       const action = {
@@ -1218,7 +1183,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc'])
+          contexts: ['6f1sobz3s0oc']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1231,7 +1196,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['406s5gokjy0'])
+          contexts: ['406s5gokjy0']
         }
       })
       const action = {
@@ -1246,7 +1211,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['406s5gokjy0', '6f1sobz3s0oc'])
+          contexts: ['406s5gokjy0', '6f1sobz3s0oc']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1259,7 +1224,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['406s5gokjy0', '6f1sobz3s0oc'])
+          contexts: ['406s5gokjy0', '6f1sobz3s0oc']
         }
       })
       const action = {
@@ -1274,7 +1239,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['406s5gokjy0'])
+          contexts: ['406s5gokjy0']
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -1287,7 +1252,7 @@ describe('Task reducer', () => {
           completed: false,
           today: false,
           project: 'bh52ogy5s0fm',
-          contexts: Set(['6f1sobz3s0oc'])
+          contexts: ['6f1sobz3s0oc']
         }
       })
       const action = {
@@ -1306,10 +1271,114 @@ describe('Task reducer', () => {
       })
       expect(reducer(initialState, action)).to.equal(nextState)
     })
+
+    it('Should handle REMOVE_CONTEXT', () => {
+      const initialState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: ['6f1sobz3s0oc']
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: ['6f1sobz3s0oc', '6f1sobz3s0od']
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: ['6f1sobz3s0od', '6f1sobz3s0ob']
+        },
+        b41sogy3s0o4: {
+          id: 'b41sogy3s0o4',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        }
+      })
+
+      const action = removeContext('6f1sobz3s0oc')
+
+      const nextState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: ['6f1sobz3s0od']
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          contexts: ['6f1sobz3s0od', '6f1sobz3s0ob']
+        },
+        b41sogy3s0o4: {
+          id: 'b41sogy3s0o4',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
   })
 
   describe('Set state', () => {
-    it('Should handle set state', () => {
+    it('Should handle set state without task field', () => {
+      const initialState = fromJS({
+        'b41sogy3s0oc': {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          priority: PRIORITY_NONE
+        }
+      })
+      const newState = fromJS({
+        context: {
+          b41sogy3s0o1: {
+            id: 'b41sogy3s0o1',
+            title: 'Test task 1'
+          },
+          b41sogy3s0o2: {
+            id: 'b41sogy3s0o2',
+            title: 'Test task 2'
+          }
+        },
+        uiState: {
+          selectedSection: {
+            type: 'NEXT'
+          }
+        }
+      })
+      const action = commonActions.setState(newState)
+
+      expect(reducer(initialState, action)).to.equal(initialState)
+    })
+    it('Should handle set state with task field', () => {
       const initialState = fromJS({
         'b41sogy3s0oc': {
           id: 'b41sogy3s0oc',
@@ -1354,4 +1423,5 @@ describe('Task reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
+
 })

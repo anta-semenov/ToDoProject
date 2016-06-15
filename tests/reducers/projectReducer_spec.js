@@ -516,7 +516,38 @@ describe('Project reducer', () => {
     })
 
     describe('Set state', () => {
-      it('Should handle SET_STATE action', () => {
+      it('Should handle SET_STATE action without project field', () => {
+        const initialState = fromJS({
+          bh52ogy5s0fm: {
+              id: 'bh52ogy5s0fm',
+              title: 'Existing Project',
+              completed: false
+          }
+        })
+        const newState = fromJS({
+          task: {
+            bh52ogy5s0f1: {
+                id: 'bh52ogy5s0f1',
+                title: 'Existing Project 1',
+                completed: false
+            },
+            bh52ogy5s0f2: {
+                id: 'bh52ogy5s0f2',
+                title: 'Existing Project 1',
+                completed: false
+            }
+          },
+          uiState: {
+            selectedSection: {
+              type: 'NEXT'
+            }
+          }
+        })
+        const action = commonActions.setState(newState)
+
+        expect(reducer(initialState, action)).to.equal(initialState)
+      })
+      it('Should handle SET_STATE action with project field', () => {
         const initialState = fromJS({
           bh52ogy5s0fm: {
               id: 'bh52ogy5s0fm',

@@ -1,0 +1,31 @@
+@import '../../../styles/variables.less';
+
+.tasks-header {
+  position: relative;
+  margin: 0 0 20px 0;
+  width: 100%;
+  max-width: @size-max-width-tasks;
+  transition: @transition-basic;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tasks-header__delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  svg {
+    #trash {
+      fill: @color-font-light;
+    }
+  }
+  &:hover {
+    svg {
+      #trash {
+        fill: @color-accent;
+      }
+    }
+  }
+}

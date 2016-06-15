@@ -1,31 +1,29 @@
 @import '../../styles/variables.less';
 
 .tasks {
-  position: fixed;
-  top: 0;
-  left: @size-width-sidebar;
-  bottom: 0;
-  width: ~'calc(100% - @{size-width-sidebar})';
-  margin: 0;
-  padding: 30px 30px;
+  position: relative;
+  padding: 30px 60px 30px 0;
   overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+
   font-family: 'Fira Sans', sans-serif;
   transition: @transition-basic;
 
-  max-width: 800px; //only for development purposes
   &.has-active-item {
-    width: ~'calc(100% - @{size-width-sidebar} - @{size-width-task-info})';
-    max-width: 480px;
+    //width: ~'calc(100% - @{size-width-sidebar} - @{size-width-task-info})';
+    //padding: 30px 60px 30px 30px;
   }
-}
-.tasks__header {
-  margin: 0 0 10px 0;
-  font-size: 20px;
-  font-weight: 400;
 }
 .tasks__list {
   position: relative;
+  max-width: @size-max-width-tasks;
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
+  transition: @transition-basic;
 }

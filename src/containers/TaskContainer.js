@@ -2,7 +2,9 @@ import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
-import { setActiveItem, toggleTaskCompletedLatency, toggleTaskLatency } from '../actions/uiStateActions'
+import { setActiveItem, toggleTaskLatency, setSelectedSection } from '../actions/uiStateActions'
+import { removeContext, editContext } from '../actions/contextActions'
+import { removeProject, editProject } from '../actions/projectActions'
 import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType, getLatentTasks } from '../selectors/tasksSelector'
 import * as sectionTypes from '../constants/sectionTypes'
 import uniqueKey from '../utils/uniqueKeyGenerator'
@@ -10,16 +12,37 @@ import uniqueKey from '../utils/uniqueKeyGenerator'
 const mapStateToProps = (state) => {
   return {
     groups: getTasksGroups(state),
-    header: getSectionName(state),
     activeItem: getActiveItemID(state),
-    selectedSectionID: getSelectedSectionID(state),
-    selectedSectionType: getSelectedSectionType(state),
+    sectionID: getSelectedSectionID(state),
+    sectionName: getSectionName(state),
+    sectionType: getSelectedSectionType(state),
     latentTasks: getLatentTasks(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onSectionNameChange: (sectionID, sectionType, sectionName) => {
+      switch (sectionType) {
+        case sectionTypes.PROJECT:
+          dispatch(editProject(sectionID, { title: sectionName || 'New Project' }))
+          break
+        case sectionType.CONTEXT:
+          dispatch(editContext(sectionID, { title: sectionName || 'New Context' }))
+          break
+      }
+    },
+    onSectionDelete: (sectionID, sectionType) => {
+      switch (sectionType) {
+        case sectionTypes.PROJECT:
+          dispatch(removeProject(sectionID))
+          break
+        case sectionType.CONTEXT:
+          dispatch(removeContext(sectionID))
+          break
+      }
+      dispatch(setSelectedSection({type: sectionTypes.INBOX}))
+    },
     addTask: (taskTitle, sectionType, sectionID) => {
       let properties = {id: uniqueKey()}
       if (taskTitle !== '') {
@@ -56,6 +79,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return Object.assign({}, ownProps, stateProps, {
+    onSectionNameChange: (sectionName) => dispatchProps.onSectionNameChange(stateProps.sectionID, stateProps.sectionType, sectionName),
+    onSectionDelete: () => dispatchProps.onSectionDelete(stateProps.sectionID, stateProps.sectionType),
     addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.selectedSectionType, stateProps.selectedSectionID),
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,

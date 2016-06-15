@@ -7,9 +7,9 @@ export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], '
 export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
 export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], '')
 export const getLatentTasks = state => state.getIn(['uiState', 'sectionLatentTasks'], Map())
-export const getAllTasks = state => (state.get('task', Map())).toList()
-const getProjects = state => (state.get('project', Map())).toList()
-const getContexts = state => (state.get('context', Map())).toList()
+export const getAllTasks = state => state.get('task', Map()).toList()
+const getProjects = state => state.get('project', Map()).toList()
+const getContexts = state => state.get('context', Map()).toList()
 
 //Helper functions
 const groupTasksByProject = (tasks, projects) => {
@@ -29,7 +29,7 @@ const groupTasksByProject = (tasks, projects) => {
 // Composable selectors
 const getTasks = createSelector(
   [getAllTasks, getLatentTasks],
-  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed') || latentTasks.has(task.get('id')))
+  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed', false) || latentTasks.has(task.get('id')))
 )
 
 export const getTasksGroups = createSelector(

@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import React from 'react'
 import { renderIntoDocument, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
 
-import Checkbox from '../../../src/components/controls/checkbox/Checkbox'
+import Checkbox from '../../../src/components/elements/checkbox/Checkbox'
 
 describe('Checkbox component', () => {
   it('Should render component with right default classes', () => {

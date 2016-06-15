@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
-import projectUpdater from '../../src/backend/firebase/projectUpdater'
+import projectUpdater from '../../src/backend/firebase/updaters/projectUpdater'
 import * as actions from '../../src/actions/projectActions'
 import projectReducer from '../../src/reducer/project'
 import { NEW_PROJECT_TITLE } from '../../src/constants/defaults'

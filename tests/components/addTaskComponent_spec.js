@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import React from 'react'
 import { renderIntoDocument, scryRenderedDOMComponentsWithTag, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
 
-import AddTask from '../../src/components/addTask/AddTask'
+import AddTask from '../../src/components/tasks/addTask/AddTask'
 
 describe('AddTask component tests', () => {
   it('Should render textfield', () => {

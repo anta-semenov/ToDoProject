@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
-import contextUpdater from '../../src/backend/firebase/contextUpdater'
+import contextUpdater from '../../src/backend/firebase/updaters/contextUpdater'
 import * as actions from '../../src/actions/contextActions'
 import contextReducer from '../../src/reducer/context'
 import { NEW_CONTEXT_TITLE } from '../../src/constants/defaults'

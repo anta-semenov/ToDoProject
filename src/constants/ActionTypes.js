@@ -53,6 +53,11 @@ export const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
 * Common
 */
 export const SET_STATE = 'SET_STATE'
-export const LOG_IN = 'LOG_IN'
-export const SIGN_IN = 'SIGN_IN'
 export const LOG_OUT = 'LOG_OUT'
+export const REQUEST_AUTH = 'REQUEST_AUTH'
+export const RECIEVE_AUTH = 'RECIEVE_AUTH'
+export const ERROR_AUTH = 'ERROR_AUTH'
+
+export const REQUEST_DATA = 'REQUEST_DATA'
+export const RECIEVE_DATA = 'RECIEVE_DATA'
+export const ERROR_DATA = 'ERROR_DATA'

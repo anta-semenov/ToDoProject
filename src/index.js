@@ -1,13 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from './containers/Root'
+import thunk from 'redux-thunk'
 import configureStore from './store/configureStore'
-import { fromJS } from 'immutable'
-import firebase from './backend/firebase'
-import localStore from './backend/localStore/localStoreHelper'
+import initFirebase from './backend/firebase/init'
+import { loadState, saveState } from './backend/localStore'
+import throttle from 'lodash/throttle'
+import firebaseUpdateMiddleware from './backend/firebase/middleware'
 
-const store = configureStore(fromJS({}),[...firebase.middleware, localStore.localStoreMiddleware])
+const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
+store.subscribe(throttle(() => {
+  saveState(store.getState())
+}, 1500))
 
+<<<<<<< HEAD
 firebase.initFirebase(store)
+=======
+initFirebase(store)
+>>>>>>> firebase-3
 
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'))
