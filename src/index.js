@@ -13,10 +13,6 @@ store.subscribe(throttle(() => {
   saveState(store.getState())
 }, 1500))
 
-<<<<<<< HEAD
-firebase.initFirebase(store)
-=======
 initFirebase(store)
->>>>>>> firebase-3
 
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'))
