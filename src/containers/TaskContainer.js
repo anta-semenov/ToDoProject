@@ -84,7 +84,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.selectedSectionType, stateProps.selectedSectionID),
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
-    onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.selectedSectionType),
+    onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
     onTaskPriorityClick: dispatchProps.onTaskPriorityClick
   })
 }

@@ -4,7 +4,7 @@ import TaskInfo from '../components/taskInfo/TaskInfo'
 import { getActiveItemID, getSelectedSectionType, getSelectedSectionID } from '../selectors/tasksSelector'
 import * as activeTask from '../selectors/activeTaskSelector'
 import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask, addTaskContext, removeTaskContext } from '../actions/taskActions'
-import { setActiveItem, toggleTaskCompletedLatency, toggleTaskLatency } from '../actions/uiStateActions'
+import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import * as sectionTypes from '../constants/sectionTypes'
 
 const mapStateToProps = (state) => ({
