@@ -14,6 +14,5 @@ export default function mainUpdater(action, newState) {
       result[item.updateURL] = item.value
     }
   })
-  console.log(result);
   return result
 }

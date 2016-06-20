@@ -19,7 +19,8 @@ const initFirebase = (store) => {
 export default initFirebase
 
 const onAuth = (userData, store) => {
-  if (userData && userData.uid) {
+  if (userData && userData.uid && userData.uid !== getUid(store.getState())) {
+    unsubscribeFromDataUpdates(store)
     store.dispatch(recieveAuth(userData))
     store.dispatch(requestData())
     Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' ? null : false))).then(
@@ -30,7 +31,7 @@ const onAuth = (userData, store) => {
       },
       error => store.dispatch(errorData(error))
     )
-  } else {
+  } else if (!userData || !userData.uid) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(logout())
     store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, uiState: INITIAL_UI_STATE })))
@@ -43,8 +44,13 @@ const subscribeToDataUpdates = (store) => {
   DATA_TYPES.forEach(type => {
     subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', data => store.dispatch(actions[`${type}Actions`][`add${capitalize(type)}`](data.val())))
     subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
-    subscribeToDataUpdate(uid, type, '', 'child_changed', data => store.dispatch(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val())))
+    subscribeToDataUpdate(uid, type, '', 'child_changed', data => editData(data, type, store))
   })
+}
+const editData = (data, type, store) => {
+  const actions = { taskActions, projectActions, contextActions }
+  console.log('Firebase update', data.key, data.val())
+  store.dispatch(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val()))
 }
 
 const unsubscribeFromDataUpdates = (store) => {
