@@ -22,7 +22,7 @@ const onAuth = (userData, store) => {
   if (userData && userData.uid && userData.uid !== getUid(store.getState())) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(recieveAuth(userData, uniqueKey()))
-    
+
     store.dispatch(requestData())
     Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' ? null : false))).then(
       results => {
@@ -45,14 +45,16 @@ const subscribeToDataUpdates = (store) => {
   DATA_TYPES.forEach(type => {
     subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', data => store.dispatch(actions[`${type}Actions`][`add${capitalize(type)}`](data.val())))
     subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
-    subscribeToDataUpdate(uid, type, '', 'child_changed', data => editData(data)(type, store, actions))
+    subscribeToDataUpdate(uid, type, '', 'child_changed', editData(type, store, actions))
   })
 }
 const editData = (type, store, actions) => (data) => {
   if (getClientId(store.getState()) !== data.getPriority()) {
-    store.dispatch(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val()))
+    store.dispatch(actionClientIdEnchancer(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val()), getClientId(store.getState())))
   }
 }
+
+const actionClientIdEnchancer = (action, clientId) => ({ ...action, clientId })
 
 const unsubscribeFromDataUpdates = (store) => {
   const uid = getUid(store.getState())

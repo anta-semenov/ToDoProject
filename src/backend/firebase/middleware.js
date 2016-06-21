@@ -4,7 +4,7 @@ import diff from 'immutablediff'
 import { getUid, getClientId } from '../../reducer'
 
 const firebaseUpdateMiddleware = store => next => action => {
-  if (!passToFirebase(action.type)) {return next(action)}
+  if (!passToFirebase(action.type) || (action.clientId && action.clientId !== getClientId(store.getState()))) {return next(action)}
 
   const currentState = store.getState()
   const result = next(action)
@@ -21,7 +21,6 @@ const firebaseUpdateMiddleware = store => next => action => {
       }
       return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
     }, {})
-    console.log('Update object: ', updateObject)
     app.database().ref(`/userData/${getUid(nextState)}`).update(updateObject)
   }
   return result
@@ -29,11 +28,6 @@ const firebaseUpdateMiddleware = store => next => action => {
 export default firebaseUpdateMiddleware
 
 const priorityForPath = path => parsePath(path).type && parsePath(path).id ? `/${parsePath(path).type}/${parsePath(path).id}/.priority` : ''
-const isPathToObject = path => {
-  const typeReg = /(task|project|context)/
-  const idReg = /\d+/
-  return path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && idReg.test(path.split('/')[2])
-}
 const parsePath = path => {
   const typeReg = /(task|project|context)/
   const idReg = /\d+/
