@@ -4,12 +4,9 @@ import diff from 'immutablediff'
 import { getUid, getClientId } from '../../reducer'
 
 const firebaseUpdateMiddleware = store => next => action => {
-  console.log('Middleware', action.clientId, getClientId(store.getState()), action.clientId && action.clientId !== getClientId(store.getState()))
   if (!passToFirebase(action.type) || (action.clientId && action.clientId !== getClientId(store.getState()))) {
-    console.log('without firebase')
     return next(action)
   }
-  console.log('to firebase')
   const currentState = store.getState()
   const result = next(action)
   const nextState = store.getState()
@@ -17,13 +14,16 @@ const firebaseUpdateMiddleware = store => next => action => {
 
   if (difference.length > 0) {
     const updateObject = difference.reduce((updates, diff) => {
-      if (diff.op === 'remove' && parsePath(diff.path).isPathToObject) {
-        return { ...updates, [diff.path]: null }
+      if (parsePath(diff.path).isPathToFirebaseData) {
+        if (diff.op === 'remove' && parsePath(diff.path).isPathToObject) {
+          return { ...updates, [diff.path]: null }
+        }
+        if (parsePath(diff.path).isPathToObject) {
+          return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
+        }
+        return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
       }
-      if (parsePath(diff.path).isPathToObject) {
-        return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
-      }
-      return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
+      return updates
     }, {})
     app.database().ref(`/userData/${getUid(nextState)}`).update(updateObject)
   }
@@ -38,7 +38,8 @@ const parsePath = path => {
   return {
     type: typeReg.test(path.split('/')[1]) ? path.split('/')[1] : '',
     id: idReg.test(path.split('/')[2]) ? path.split('/')[2] : '',
-    isPathToObject: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && idReg.test(path.split('/')[2])
+    isPathToObject: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && idReg.test(path.split('/')[2]),
+    isPathToFirebaseData: typeReg.test(path.split('/')[1])
   }
 }
 

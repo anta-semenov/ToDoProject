@@ -43,17 +43,21 @@ const subscribeToDataUpdates = (store) => {
   const actions = { taskActions, projectActions, contextActions }
   const uid = getUid(store.getState())
   DATA_TYPES.forEach(type => {
-    subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', data => store.dispatch(actions[`${type}Actions`][`add${capitalize(type)}`](data.val())))
+    subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', addData(type, store, actions))
     subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
     subscribeToDataUpdate(uid, type, '', 'child_changed', editData(type, store, actions))
   })
+}
+const addData = (type, store, actions) => (data) => {
+  if (getClientId(store.getState()) !== data.getPriority()) {
+    store.dispatch(actionClientIdEnchancer(actions[`${type}Actions`][`add${capitalize(type)}`](data.val()), data.getPriority()))
+  }
 }
 const editData = (type, store, actions) => (data) => {
   if (getClientId(store.getState()) !== data.getPriority()) {
     store.dispatch(actionClientIdEnchancer(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val()), data.getPriority()))
   }
 }
-
 const actionClientIdEnchancer = (action, clientId) => ({ ...action, clientId })
 
 const unsubscribeFromDataUpdates = (store) => {
