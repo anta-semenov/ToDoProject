@@ -44,12 +44,6 @@ export const SET_AUTH_ERROR_MESSAGE = 'SET_AUTH_ERROR_MESSAGE'
 export const SET_PROPERTY = 'SET_PROPERTY'
 
 /*
-* User Info
-*/
-export const SET_USER_INFO = 'SET_USER_INFO'
-export const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
-
-/*
 * Common
 */
 export const SET_STATE = 'SET_STATE'

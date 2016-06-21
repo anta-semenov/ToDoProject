@@ -2,13 +2,13 @@ import React from 'react'
 import { Editor, EditorState, ContentState } from 'draft-js'
 import './Textfield.less'
 
-const textIntoContent = (text = '') => EditorState.createWithContent(ContentState.createFromText(text))
+const textIntoState = (text = '') => EditorState.createWithContent(ContentState.createFromText(text))
 
 export default class Textfield extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      editorState: textIntoContent(this.props.initialText),
+      editorState: textIntoState(this.props.text),
       stackLenght: {
         undo: 0,
         redo: 0
@@ -20,12 +20,18 @@ export default class Textfield extends React.Component {
   _onChange(editorState) {
     this.setState({editorState})
     if (!editorState.getSelection().getHasFocus()) {
-      if (this.props.onBlur) {this.props.onBlur(editorState.getCurrentContent().getPlainText())}
-      if (this.props.onChange) { this.props.onChange(editorState.getCurrentContent().getPlainText())}
+      if (this.props.onBlur) {
+        this.props.onBlur(editorState.getCurrentContent().getPlainText())
+      }
+      if (this.props.onChange) {
+        this.props.onChange(editorState.getCurrentContent().getPlainText())
+      }
       this.refs.frame.classList.remove('is-active')
     } else {
       if (this.state.stackLenght.undo !== editorState.getUndoStack().count() || this.state.stackLenght.redo !== editorState.getRedoStack().count()) {
-        if (this.props.onChange) { this.props.onChange(editorState.getCurrentContent().getPlainText())}
+        if (this.props.onChange) {
+          this.props.onChange(editorState.getCurrentContent().getPlainText())
+        }
         this.setState({
           stackLenght: {
             undo: editorState.getUndoStack().count(),
@@ -40,9 +46,9 @@ export default class Textfield extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.editorState.getSelection().getHasFocus() && this.state.editorState.getCurrentContent() !== textIntoContent(nextProps.initialText)) {
+    if (!this.state.editorState.getSelection().getHasFocus() && this.state.editorState.getCurrentContent().getPlainText() !== nextProps.text) {
       this.setState({
-        editorState: textIntoContent(nextProps.initialText),
+        editorState: textIntoState(nextProps.text),
         stackLenght: {
           undo: 0,
           redo: 0
@@ -61,7 +67,7 @@ export default class Textfield extends React.Component {
 
 Textfield.propTypes = {
   appearance: React.PropTypes.oneOf(['task-title', 'section-header', 'default']).isRequired,
-  initialText: React.PropTypes.string,
+  text: React.PropTypes.string,
   placeholder: React.PropTypes.string,
   onChange: React.PropTypes.func,
   onBlur: React.PropTypes.func

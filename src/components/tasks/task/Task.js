@@ -20,7 +20,7 @@ export default class Task extends React.Component {
   render() {
     return (
       <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latent && !this.props.completed ? 'is-latent-today' : ''} `}>
-        <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latent && !this.props.completed} onClick={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
+        <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latent && !this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
         <Today appearance={appearance} checked={this.props.today} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
         <Priority appearance={appearance} priority={this.props.priority} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)}/>
         <div className='task__body' onClick={() => this.props.onTaskClick(this.props.id)}>
