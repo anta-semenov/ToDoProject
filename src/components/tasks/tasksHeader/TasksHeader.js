@@ -16,7 +16,7 @@ const TasksHeader = ({ sectionName, sectionType, onNameChange, onDelete }) => {
   return (
     <div className='tasks-header'>
       {sectionType === PROJECT || sectionType === CONTEXT ?
-        <Textfield appearance='section-header' initialText={sectionName} onChange={onNameChange} placeholder={headerPlaceholder(sectionType)} /> :
+        <Textfield appearance='section-header' text={sectionName} onChange={onNameChange} placeholder={headerPlaceholder(sectionType)} /> :
         <h1 className='tasks-header__title'>{sectionName}</h1>
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?

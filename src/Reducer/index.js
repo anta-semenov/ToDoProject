@@ -20,3 +20,4 @@ export default function rootReduser(state, action) {
  */
 export const getMaxKey = (state, dataType = 'task') => state.get(dataType).keySeq().max()
 export const getUid = state => fromAuth.getUid(state.get('auth'))
+export const getClientId = state => fromAuth.getClientId(state.get('auth'))

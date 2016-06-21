@@ -35,7 +35,7 @@ export default class TaskInfo extends React.Component {
             <CloseBtn appearance='task-info' onClick={this.props.onCloseClick} />
               <div className='task-info__content'>
                 <div className='task-info__controls'>
-                  <Checkbox appearance='task-info' checked={this.props.completed} onClick={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
+                  <Checkbox appearance='task-info' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
                   <Today appearance='task-info' checked={this.props.today} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)}/>
                   <Priority appearance='task-info' priority={this.props.priority} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)} />
                 </div>
