@@ -50,7 +50,7 @@ const subscribeToDataUpdates = (store) => {
 }
 const editData = (type, store, actions) => (data) => {
   if (getClientId(store.getState()) !== data.getPriority()) {
-    store.dispatch(actionClientIdEnchancer(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val()), getClientId(store.getState())))
+    store.dispatch(actionClientIdEnchancer(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val()), data.getPriority()))
   }
 }
 
