@@ -12,6 +12,7 @@ const auth = (state = Map(), action) => {
         map.set('authStatus', AUTH_SUCESS).set('uid', action.userData.uid)
         if (action.userData.providerData[0].displayName) {map.set('userName', action.userData.providerData[0].displayName)}
         if (action.userData.providerData[0].photoURL) {map.set('userImage', action.userData.providerData[0].photoURL)}
+        if (action.clientId) {map.set('clientId', action.clientId)}
         return map
       })
     case ERROR_AUTH:
@@ -28,4 +29,8 @@ const auth = (state = Map(), action) => {
 }
 export default auth
 
+/*
+ * Selectors
+ */
 export const getUid = state => state.get('uid')
+export const getClientId = state => state.get('clientId')

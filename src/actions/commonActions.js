@@ -1,10 +1,11 @@
 import * as actionTypes from '../constants/actionTypes'
 import * as api from '../backend/firebase/api'
+import uniqueKey from '../utils/uniqueKeyGenerator'
 
 //Plain action creators
 export const setState = (state) => ({ type: actionTypes.SET_STATE, state })
 export const requestAuth = () => ({ type: actionTypes.REQUEST_AUTH })
-export const recieveAuth = (userData) => ({ type: actionTypes.RECIEVE_AUTH, userData })
+export const recieveAuth = (userData, clientId) => ({ type: actionTypes.RECIEVE_AUTH, userData, clientId })
 export const errorAuth = (error) => ({
   type: actionTypes.ERROR_AUTH,
   errorMessage: error.message || 'Something went wrong',
@@ -23,7 +24,7 @@ export const login = (type) => (dispatch) => {
   return api.auth(type).then(
     response => {
       if (response.user.uid) {
-        dispatch(recieveAuth(response.user))
+        dispatch(recieveAuth(response.user, uniqueKey()))
       }
       else {
         dispatch(errorAuth({ errorMessage: 'Authentification failed. There is no such user'}))

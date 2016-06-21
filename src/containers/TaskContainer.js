@@ -22,13 +22,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSectionNameChange: (sectionID, sectionType, sectionName) => {
+    onSectionNameChange: (sectionID, sectionType, newSectionName) => {
       switch (sectionType) {
         case sectionTypes.PROJECT:
-          dispatch(editProject(sectionID, { title: sectionName || 'New Project' }))
+          dispatch(editProject(sectionID, { title: newSectionName || 'New Project' }))
           break
         case sectionType.CONTEXT:
-          dispatch(editContext(sectionID, { title: sectionName || 'New Context' }))
+          dispatch(editContext(sectionID, { title: newSectionName || 'New Context' }))
           break
       }
     },
@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return Object.assign({}, ownProps, stateProps, {
-    onSectionNameChange: (sectionName) => dispatchProps.onSectionNameChange(stateProps.sectionID, stateProps.sectionType, sectionName),
+    onSectionNameChange: (newSectionName) => dispatchProps.onSectionNameChange(stateProps.sectionID, stateProps.sectionType, newSectionName),
     onSectionDelete: () => dispatchProps.onSectionDelete(stateProps.sectionID, stateProps.sectionType),
     addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.sectionType, stateProps.sectionID),
     onTaskClick: dispatchProps.onTaskClick,
