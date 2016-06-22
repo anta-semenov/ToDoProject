@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/actionTypes'
 
 export function addTask(properties) {
-  return {type: actionTypes.ADD_TASK, properties}
+  return {type: actionTypes.ADD_TASK, properties: { ...properties, createdDate: Date.now() }}
 }
 
 export function removeTask(id) {

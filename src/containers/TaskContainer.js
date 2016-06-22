@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
         case sectionTypes.PROJECT:
           dispatch(removeProject(sectionID))
           break
-        case sectionType.CONTEXT:
+        case sectionTypes.CONTEXT:
           dispatch(removeContext(sectionID))
           break
       }
