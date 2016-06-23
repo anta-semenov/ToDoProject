@@ -29,7 +29,7 @@ const groupTasksByProject = (tasks, projects) => {
 // Composable selectors
 const getTasks = createSelector(
   [getAllTasks, getLatentTasks],
-  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed', false) || latentTasks.has(task.get('id')))
+  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed', false) || latentTasks.has(task.get('id'))).sortBy(task => task.get('id'))
 )
 
 export const getTasksGroups = createSelector(

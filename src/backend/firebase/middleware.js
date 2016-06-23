@@ -14,13 +14,16 @@ const firebaseUpdateMiddleware = store => next => action => {
 
   if (difference.length > 0) {
     const updateObject = difference.reduce((updates, diff) => {
-      if (diff.op === 'remove' && parsePath(diff.path).isPathToObject) {
-        return { ...updates, [diff.path]: null }
+      if (parsePath(diff.path).isPathToFirebaseData) {
+        if (diff.op === 'remove' && parsePath(diff.path).isPathToObject) {
+          return { ...updates, [diff.path]: null }
+        }
+        if (parsePath(diff.path).isPathToObject) {
+          return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
+        }
+        return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
       }
-      if (parsePath(diff.path).isPathToObject) {
-        return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
-      }
-      return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
+      return updates
     }, {})
     app.database().ref(`/userData/${getUid(nextState)}`).update(updateObject)
   }
@@ -35,7 +38,8 @@ const parsePath = path => {
   return {
     type: typeReg.test(path.split('/')[1]) ? path.split('/')[1] : '',
     id: idReg.test(path.split('/')[2]) ? path.split('/')[2] : '',
-    isPathToObject: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && idReg.test(path.split('/')[2])
+    isPathToObject: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && idReg.test(path.split('/')[2]),
+    isPathToFirebaseData: typeReg.test(path.split('/')[1])
   }
 }
 

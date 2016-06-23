@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/actionTypes'
 
 export function addProject(properties) {
-  return {type: actionTypes.ADD_PROJECT, properties}
+  return {type: actionTypes.ADD_PROJECT, properties: { ...properties, createdDate: Date.now() }}
 }
 
 export function removeProject(id) {
