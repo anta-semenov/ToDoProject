@@ -1,21 +1,8 @@
 @import '../../styles/variables.less';
 
-.task-info--enter {
-  animation: task-info--enter 0.3s ease-out;
+.task-info__transition {
+  flex-shrink: 0;
 }
-@keyframes task-info--enter {
-  0% {width: 0}
-  100% {width: @size-width-task-info}
-}
-
-.task-info--leave {
-  animation: task-info--leave 0.3s ease-out;
-}
-@keyframes task-info--leave {
-  0% {width: @size-width-task-info}
-  100% {width: 0}
-}
-
 .task-info {
   position: relative;
   box-sizing: border-box;
@@ -28,21 +15,45 @@
 
   background-color: #ffffff;
   border-left: 1px solid @color-border-light-gray;
-  transition: @transition-basic;
   font-family: 'Fira Sans', sans-serif;
-
-  &.task-info--mounted {
-    width: @size-width-task-info;
-  }
 }
+
+.task-info.task-info-enter {
+  opacity: 0;
+  padding: 40px 0;
+  transform: translateX(100%);
+  width: 0;
+}
+
+.task-info.task-info-enter.task-info-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  width: @size-width-task-info;
+  padding: 40px 60px 40px 50px;
+  transition: width 400ms ease-in-out, opacity 300ms ease-in, padding 400ms ease-in;
+}
+
+.task-info.task-info-leave {
+  opacity: 1;
+  width: @size-width-task-info;
+}
+
+.task-info.task-info-leave.task-info-leave-active {
+  opacity: 0;
+  width: 0;
+  padding: 40px 0;
+  transition: 300ms ease-out;
+}
+
 
 .task-info__content {
   position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  .task-info.task-info--enter &,
-  .task-info.task-info--leave & {
+
+  .task-info-enter.task-info-enter-active &,
+  .task-info-leave.task-info-leave-active & {
     min-width: @size-width-task-info - 110;
   }
 }
@@ -72,7 +83,8 @@
 
 .task-info__delete {
   position: relative;
-  display: inline-flex;
+  z-index: 1;
+  display: block;
   margin: 40px 0 0 4px;
   padding: 6px 12px 7px 12px;
   cursor: pointer;
@@ -81,16 +93,16 @@
   font-size: @font-size-basic;
   font-weight: @font-weight-medium;
   color: @color-red;
-  border: 1px solid fade(@color-red, 50%);
+  border: 1px solid fade(@color-red, 40%);
   border-radius: 2px;
-  background-color: transparent;
+  background-color: #ffffff;
 
   transition: @transition-basic;
 
   &:hover,
   &:focus {
     border-color: @color-red;
-    color: darken(@color-red, 15%);
+    background-color: fade(desaturate(@color-red, 35%), 5%);
     outline: none;
   }
   &:active {
@@ -98,4 +110,8 @@
     background-color: @color-red;
     color: #ffffff;
   }
+}
+.task-info__delete-text {
+  position: relative;
+  z-index: 2;
 }

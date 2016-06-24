@@ -97,7 +97,7 @@ export default class TaskCalendar extends React.Component {
                     ${areDatesEqual(day, this.props.selectedDate) ? 'is-selected' : '' }
                   `}
                   onClick={() => this.handleDayClick(day)}>
-                  {day.getDate()}
+                    {day.getDate()}                
                 </div>
               )}
             </div>

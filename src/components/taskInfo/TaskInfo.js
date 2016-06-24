@@ -15,34 +15,10 @@ import CloseBtn from '../elements/closeBtn/CloseBtn'
 
 import './TaskInfo.less'
 
-const handleAnimationEnd = (animationName, callback) => event => {
-  event.target.removeEventListener('animationend', handleAnimationEnd)
-  if (event.animationName === animationName) {
-    event.target.classList.remove(animationName)
-    if (callback) {callback()}
-  }
-}
-const initComponentTransition = (component, animationName, callback) => {
-  component.addEventListener('animationend', handleAnimationEnd(animationName, callback))
-  component.classList.add(animationName)
-}
-
 export default class TaskInfo extends React.Component {
   constructor(props) {
     super(props)
     this.shouldComponentUpdate = PureRenderMixins.shouldComponentUpdate.bind(this)
-  }
-  componentDidEnter() {
-    initComponentTransition(this.refs.taskInfo, 'task-info--enter')
-    /*initComponentTransition(this.refs.taskTitle, 'task-info-component--enter')
-    initComponentTransition(this.refs.taskDescription, 'task-info-component--enter')
-    initComponentTransition(this.refs.taskProject, 'task-info-component--enter')
-    initComponentTransition(this.refs.taskContexts, 'task-info-component--enter')
-    initComponentTransition(this.refs.taskCalendar, 'task-info-component--enter')*/
-
-  }
-  componentWillLeave(callback) {
-    initComponentTransition(this.refs.taskInfo, 'task-info--leave', callback)
   }
 
   render() {

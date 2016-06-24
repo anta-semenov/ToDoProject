@@ -16,26 +16,26 @@ export default class TaskGroup extends React.Component {
       <li className='task-group'>
         {this.props.groupTitle ? <div className='task-group__title'>{this.props.groupTitle}</div> : null}
         <ul className='task-group__list'>
-          {this.props.tasks.map(task =>
-            <Task
-              key={`task-${task.get('id')}`}
-              id={task.get('id')}
-              title={task.get('title')}
-              completed={task.get('completed')}
-              today={task.get('today')}
+            {this.props.tasks.map(task =>
+              <Task
+                key={`task-${task.get('id')}`}
+                id={task.get('id')}
+                title={task.get('title')}
+                completed={task.get('completed')}
+                today={task.get('today')}
 
-              description={task.get('description')}
-              priority={task.get('priority')}
-              date={task.get('date') ? new Date(task.get('date')) : undefined}
-              active={this.props.activeItem === task.get('id')}
-              latent={this.props.latentTasks ? this.props.latentTasks.has(task.get('id')) : undefined}
+                description={task.get('description')}
+                priority={task.get('priority')}
+                date={task.get('date') ? new Date(task.get('date')) : undefined}
+                active={this.props.activeItem === task.get('id')}
+                latent={this.props.latentTasks ? this.props.latentTasks.has(task.get('id')) : undefined}
 
-              onTaskClick={this.props.onTaskClick}
-              onTaskCheckboxClick={this.props.onTaskCheckboxClick}
-              onTaskTodayClick={this.props.onTaskTodayClick}
-              onPriorityClick={this.props.onPriorityClick}
-            />
-          )}
+                onTaskClick={this.props.onTaskClick}
+                onTaskCheckboxClick={this.props.onTaskCheckboxClick}
+                onTaskTodayClick={this.props.onTaskTodayClick}
+                onPriorityClick={this.props.onPriorityClick}
+              />
+            )}
         </ul>
       </li>)
   }

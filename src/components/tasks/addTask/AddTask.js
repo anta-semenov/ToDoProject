@@ -14,10 +14,8 @@ export default class AddTask extends Component {
   }
   handleFocus = () => {
     this.refs.frame.classList.add('has-focus')
-    console.log(this.refs.frame)
   }
   handleBlur = () => {
-    console.log(this.refs.frame)
     this.refs.frame.classList.remove('has-focus')
   }
   handleButtonClick = () => {
@@ -37,7 +35,7 @@ export default class AddTask extends Component {
           onFocus={() => this.handleFocus()}
           onBlur={() => this.handleBlur()}
           placeholder={NEW_TASK_TITLE} />
-        <button className='add-task__button' onClick={this.handleButtonClick} >Add Task</button>
+        <button className='add-task__button' onClick={this.handleButtonClick} ><span className='add-task__button-text'>Add Task</span></button>
       </div>
     )
   }

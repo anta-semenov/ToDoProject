@@ -1,11 +1,12 @@
 import React from 'react'
-import ReactTransitionGroup from 'react-addons-transition-group'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import TaskInfo from './TaskInfo'
 
 const TaskInfoTransition = (props) =>
-  <ReactTransitionGroup >
-    {props.id ? <TaskInfo {...props} /> : null}
-  </ReactTransitionGroup>
-
+  <div className='task-info__transition'>
+    <ReactCSSTransitionGroup transitionName="task-info" transitionEnterTimeout={400} transitionLeaveTimeout={300} >
+      {props.id ? <TaskInfo {...props} /> : null}
+    </ReactCSSTransitionGroup>
+  </div>
 
 export default TaskInfoTransition
