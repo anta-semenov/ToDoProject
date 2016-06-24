@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import TaskInfo from '../components/taskInfo/TaskInfo'
+import TaskInfoTransition from '../components/taskInfo/TaskInfoTransition'
 import { getActiveItemID, getSelectedSectionType, getSelectedSectionID } from '../selectors/tasksSelector'
 import * as activeTask from '../selectors/activeTaskSelector'
 import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask, addTaskContext, removeTaskContext } from '../actions/taskActions'
@@ -67,6 +67,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, ow
   onContextClick: (taskId, contextId, contextStatus) => dispatchProps.onContextClick(taskId, contextId, contextStatus, stateProps.sectionType, stateProps.sectionId)
 }))
 
-const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskInfo)
+const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskInfoTransition)
 
 export default TaskInfoContainer

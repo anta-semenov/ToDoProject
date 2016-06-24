@@ -2,30 +2,72 @@
 
 .tasks-header {
   position: relative;
-  margin: 0 0 20px 0;
+  margin: 10px 0 40px 0;
   width: 100%;
   max-width: @size-max-width-tasks;
   transition: @transition-basic;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0;
+}
+.tasks-header__title {
+  position: relative;
+  margin: 6px 0 3px 0;
+  font-size: @font-size-section-header;
+  font-weight: @font-weight-bold;
+  line-height: 1.3;
 }
 
 .tasks-header__delete {
   position: absolute;
   top: 0;
   right: 0;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: @color-bg-light-gray;
+    opacity: 0;
+    transform: scale(0);
+    transition: @transition-basic;
+  }
+  &:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+  &:active::before {
+    background-color: @color-border-light-gray;
+  }
 
   svg {
+    position: relative;
+    width: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     #trash {
       fill: @color-font-light;
+      transition: @transition-basic;
     }
   }
   &:hover {
     svg {
       #trash {
-        fill: @color-accent;
+        fill: @color-red;
       }
     }
+  }
+  &:focus,
+  &:active {
+    outline: none;
   }
 }

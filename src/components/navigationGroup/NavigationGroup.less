@@ -6,12 +6,13 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0;
-  margin: 0 0 15px 0;
+  margin: 0 0 25px 0;
 }
 
 .nav-group__title {
   .small__title();
-  margin-top: 15px;
+  margin: 15px 0 5px 0;
+  opacity: 0;
 }
 
 .nav-group__list {
@@ -24,14 +25,20 @@
 
 .nav-group__add-button {
   position: relative;
-  padding: 4px 0;
-  color: @color-accent;
-  font-size: @font-size-small;
-  font-weight: 400;
+  display: inline-block;
+  left: -2px;
+  margin: 12px 0;
+  padding: 3px 7px;
+  color: @color-font-light;
+  font-size: @font-size-xsmall;
+  font-weight: @font-weight-light;
+  border: 1px solid @color-border-gray;
+  border-radius: 10px;
   cursor: pointer;
   transition: @transition-basic;
 
   &:hover {
-    color: darken(@color-accent, 10%);
+    color: @color-accent;
+    border-color: @color-accent;
   }
 }

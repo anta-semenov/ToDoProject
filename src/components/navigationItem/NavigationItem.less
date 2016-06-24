@@ -1,10 +1,11 @@
 @import '../../styles/variables.less';
+@import '../../styles/commonStyles.less';
 
 .nav-item {
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding: 4px 0;
+  padding: 5px 3px;
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -19,8 +20,8 @@
 .nav-item__title {
   position: relative;
   font-size: @font-size-basic;
-  font-weight: 300;
-  color: @color-font-medium;
+  font-weight: @font-weight-light;
+  color: @color-accent;
   transition: @transition-basic;
 
   white-space: nowrap;
@@ -29,22 +30,34 @@
   text-overflow: ellipsis;
 
   .nav-item:hover & {
-    color: @color-font-basic;
+    color: @color-accent;
   }
   .nav-item.is-active & {
-    font-weight: 500;
+    font-weight: @font-weight-bold;
     color: @color-font-basic;
   }
 }
 
 .nav-item__input {
   position: relative;
+  box-sizing: border-box;
+  padding: 4px 2px;
+  margin: 2px;
   font-size: @font-size-basic;
   font-weight: 300;
   color: @color-font-basic;
-  width: ~'calc(0.65*@{size-width-sidebar})';
-  border: none;
-  border-bottom: solid 1px @color-border-light-gray;
+  width: 0.75 * @size-width-sidebar;
+  border: solid 1px @color-border-light-gray;
+  border-radius: 2px;
+  transition: @transition-basic;
+
+  &:focus,
+  &:active {
+    border-color: @color-accent;
+  }
+  &::-webkit-input-placeholder {
+    .placeholder();
+  }
 }
 
 .nav-item__input:focus {
@@ -53,10 +66,10 @@
 
 .nav-item__count {
   position: relative;
-  margin: 0 0 0 8px;
+  margin: 0 0 0 5px;
   flex-shrink: 0;
 
-  font-size: @font-size-basic / 1.5;
+  font-size: @font-size-basic / 1.6;
   font-weight: 400;
   color: @color-font-light;
   vertical-align: top;
