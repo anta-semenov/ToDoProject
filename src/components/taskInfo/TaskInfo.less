@@ -1,14 +1,19 @@
 @import '../../styles/variables.less';
 
-.task-info-transition-enter {
-  width: 0;
-  opacity: 0;
-  transition: @transition-basic;
+.task-info--enter {
+  animation: task-info--enter 0.3s ease-out;
+}
+@keyframes task-info--enter {
+  0% {width: 0}
+  100% {width: @size-width-task-info}
+}
 
-  &.task-info-transition-enter-active {
-    width: @size-width-task-info;
-    opacity: 1;
-  }
+.task-info--leave {
+  animation: task-info--leave 0.3s ease-out;
+}
+@keyframes task-info--leave {
+  0% {width: @size-width-task-info}
+  100% {width: 0}
 }
 
 .task-info {
@@ -21,10 +26,14 @@
   margin: 0;
   overflow-y: auto;
 
-  background-color: #fcfcfc;
+  background-color: #ffffff;
   border-left: 1px solid @color-border-light-gray;
   transition: @transition-basic;
   font-family: 'Fira Sans', sans-serif;
+
+  &.task-info--mounted {
+    width: @size-width-task-info;
+  }
 }
 
 .task-info__content {
@@ -32,6 +41,10 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  .task-info.task-info--enter &,
+  .task-info.task-info--leave & {
+    min-width: @size-width-task-info - 110;
+  }
 }
 
 .task-info__controls {
@@ -61,25 +74,28 @@
   position: relative;
   display: inline-flex;
   margin: 40px 0 0 4px;
-  padding: 5px 12px 6px 12px;
+  padding: 6px 12px 7px 12px;
   cursor: pointer;
 
   text-transform: capitalize;
-  font-size: @font-size-small;
-  color: @color-accent;
-  border: 1px solid fade(@color-accent, 50%);
+  font-size: @font-size-basic;
+  font-weight: @font-weight-medium;
+  color: @color-red;
+  border: 1px solid fade(@color-red, 50%);
   border-radius: 2px;
   background-color: transparent;
 
   transition: @transition-basic;
 
-  &:hover {
-    border-color: @color-accent;
-    color: darken(@color-accent, 15%);
-  }
+  &:hover,
   &:focus {
-    border-color: @color-accent;
-    color: darken(@color-accent, 15%);
-    box-shadow: 0 0 2px 2px fade(@color-accent, 50%);
+    border-color: @color-red;
+    color: darken(@color-red, 15%);
+    outline: none;
+  }
+  &:active {
+    border-color: @color-red;
+    background-color: @color-red;
+    color: #ffffff;
   }
 }

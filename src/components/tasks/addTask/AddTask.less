@@ -1,4 +1,5 @@
 @import '../../../styles/variables.less';
+@import '../../../styles/commonStyles.less';
 
 .add-task {
   position: relative;
@@ -8,31 +9,44 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  flex-shrink: 0;
   transition: @transition-basic;
+  border: 1px solid @color-border-gray;
+  border-radius: 2px;
+  overflow: hidden;
+
+  &:hover {
+    border-color: @color-border-dark-gray;
+  }
+  &.has-focus {
+    border-color: fade(@color-accent, 80%);
+  }
 }
 
 .add-task__textfield {
   position: relative;
   width: 100%;
-  margin: 0 10px 0 0;
+  margin: 0 0px 0 0;
   padding: 10px 10px;
   font-size: @font-size-basic;
   font-weight: 400;
 
-  border: 1px solid @color-border-light-gray;
-  background-color: fade(@color-bg-light-gray, 50%);
-  border-radius: 2px;
+  //border: 1px solid @color-border-light-gray;
+  border: none;
+  background-color: transparent;//fade(@color-bg-light-gray, 50%);
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
   transition: @transition-basic;
 
   &:hover {
-    border-color: @color-border-gray;
   }
   &:focus,
   &:active {
-    border: 1px solid @color-accent;
     background-color: transparent;
     outline: none;
-    //box-shadow: 0 0 4px 0 fade(@color-accent, 30%);
+  }
+  &::-webkit-input-placeholder {
+    .placeholder();
   }
 }
 
@@ -44,17 +58,32 @@
   flex-shrink: 0;
 
   font-size: @font-size-basic;
-  font-weight: 500;
-  color: #ffffff;
-  background-color: @color-accent;
-  border: 1px solid @color-accent;
-  border-radius: 2px;
+  font-weight: @font-weight-medium;
+  color: @color-font-light;
+  background-color: #fafafa;
+  border: none;
+  border-left: 1px solid @color-border-gray;
   cursor: pointer;
   transition: @transition-basic;
 
+  .add-task:hover & {
+    border-color: @color-border-dark-gray;
+    color: @color-font-medium;
+  }
+  .add-task.has-focus & {
+    border-color: @color-accent;
+    color: @color-accent;
+    background-color: transparent;
+    outline-color: @color-accent;
+  }
+  &:focus {
+    outline-color: @color-accent;
+  }
   &:hover {
-    background-color: darken(@color-accent, 10%);
-    border-color: darken(@color-accent, 10%);
+    //background-color: darken(@color-accent, 10%);
+    //border-color: darken(@color-accent, 10%);
+
+    color: darken(@color-accent, 10%);
   }
 
 }

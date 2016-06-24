@@ -1,16 +1,12 @@
 @import '../../../styles/variables.less';
+@import '../../../styles/commonStyles.less';
 
 .contexts {
   position: relative;
   margin: 20px 0 30px 6px;
 }
 .contexts__title {
-  position: relative;
-  margin: 0;
-  font-size: 10px;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: @color-font-light;
+  .small__title();
 }
 .contexts__list {
   position: relative;
@@ -22,19 +18,20 @@
 .context {
   position: relative;
   margin: 0 6px 7px 0;
-  padding: 2px 8px 1px 8px;
+  padding: 3px 10px 2px 10px;
   cursor: pointer;
   transition: @transition-basic;
 
   border: 1px solid @color-border-gray;
   border-radius: 2px;
 
-  font-size: @font-size-small;
-  color: @color-font-light;
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+  color: @color-font-medium;
 
   &:hover {
-    border-color: @color-border-dark-gray;
-    color: @color-font-medium;
+    border-color: fade(@color-accent, 50%);
+    color: @color-accent;
   }
   &:active,
   &:focus {

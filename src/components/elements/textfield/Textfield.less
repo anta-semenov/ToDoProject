@@ -4,28 +4,31 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding: 5px 3px 2px 4px;
   border: 1px solid transparent;
   border-radius: 2px;
   transition: @transition-basic;
 
   &:hover {
-    border-color: @color-border-gray;
-    background-color: fade(@color-bg-light-gray, 50%);
+    border: 1px dashed @color-border-dark-gray;
+    //border-color: @color-border-gray;
+    //background-color: fade(@color-bg-light-gray, 50%);
   }
   &.is-active {
     border: 1px solid @color-accent;
     background-color: transparent;
   }
   &.textfield--default {
+    padding: 5px 6px 2px 6px;
     font-size: @font-size-basic;
   }
   &.textfield--section-header {
     display: inline-block;
+    padding: 2px 4px 6px 4px;
     min-width: 200px;
     width: auto;
     text-align: center;
     font-size: @font-size-section-header;
+    font-weight: @font-weight-bold;
   }
   &.textfield--task-title {
     font-size: @font-size-task-title

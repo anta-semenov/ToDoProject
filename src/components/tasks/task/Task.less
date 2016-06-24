@@ -3,7 +3,7 @@
 .task {
   position: relative;
   margin: 0;
-  padding: 0 8px;
+  padding: 2px 8px;
 
   display: flex;
   flex-direction: row;
@@ -14,7 +14,7 @@
   transition: @transition-basic;
 
   &::before {
-    content: '';
+    //content: '';
     position: absolute;
     z-index: 0;
     width: 0;
@@ -42,7 +42,7 @@
     &::before {
       z-index: 3;
       width: ~"calc(100% - 28px)";
-      background-color: fade(@color-accent, 50%);
+      background-color: fade(@color-red, 50%);
     }
   }
 }
@@ -127,8 +127,9 @@
 }
 .task__body {
   position: relative;
-  padding: 14px 0 11px 0;
+  padding: 11px 0 11px 0;
   flex-grow: 1;
+  min-width: 0;
 
   display: flex;
   flex-direction: row;
@@ -152,6 +153,7 @@
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
+  overflow: hidden;
 }
 .task__title {
   position: relative;
@@ -160,8 +162,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-wrap: break-word;
-
 
   font-size: @font-size-basic;
 }
@@ -186,7 +186,6 @@
 
 .task__date {
   position: relative;
-  //width: 100%;
   margin: 0 0 0 10px;
   flex-shrink: 0;
   float: right;
