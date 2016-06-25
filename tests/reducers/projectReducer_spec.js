@@ -317,6 +317,35 @@ describe('Project reducer', () => {
       })
     })
 
+    describe('Replace project', () => {
+      it('Should handle REPLACE_PROJECT with existing id', () => {
+        const initialState = fromJS({
+          b41sogy3s0oc: {
+            id: 'b41sogy3s0oc',
+            title: 'Existing Project',
+            completed: false
+          }
+        })
+        const action = {
+          type: types.REPLACE_PROJECT,
+          id: 'b41sogy3s0oc',
+          newProject: {
+            id: 'b41sogy3s0oc',
+            title: 'Changed Project Tittle',
+            completed: true
+          }
+        }
+        const nextState = fromJS({
+          b41sogy3s0oc: {
+            id: 'b41sogy3s0oc',
+            title: 'Changed Project Tittle',
+            completed: true
+          }
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+    })
+
     describe('Complete project', () => {
       it('Should handle COMPLETE_PROJECT', () => {
           const initialState = fromJS({

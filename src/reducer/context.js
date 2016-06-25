@@ -10,6 +10,9 @@ export default function context(state = fromJS({}), action) {
     case actionTypes.EDIT_CONTEXT:
       return editContext(state, action.id, action.properties)
 
+    case actionTypes.REPLACE_CONTEXT:
+      return state.set(action.id, fromJS(action.newContext))
+
     case actionTypes.REMOVE_CONTEXT:
       return removeContext(state, action.id)
 
