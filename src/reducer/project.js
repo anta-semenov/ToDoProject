@@ -13,6 +13,9 @@ export default function project(state = fromJS({}), action) {
     case actionTypes.EDIT_PROJECT:
       return editProject(state, action.id, action.properties)
 
+    case actionTypes.REPLACE_PROJECT:
+      return state.set(action.id, fromJS(action.newProject))
+
     case actionTypes.COMPLETE_PROJECT:
       return completeProject(state, action.id, action.status)
 

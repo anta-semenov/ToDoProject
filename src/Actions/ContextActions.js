@@ -11,3 +11,5 @@ import * as actionTypes from '../constants/actionTypes'
  export function editContext(id, properties) {
    return {type: actionTypes.EDIT_CONTEXT, id, properties}
  }
+
+ export const replaceContext = (id, newContext) => ({ type: actionTypes.REPLACE_CONTEXT, id, newContext })

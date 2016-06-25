@@ -55,7 +55,7 @@ const addData = (type, store, actions) => (data) => {
 }
 const editData = (type, store, actions) => (data) => {
   if (getClientId(store.getState()) !== data.getPriority()) {
-    store.dispatch(actionClientIdEnchancer(actions[`${type}Actions`][`edit${capitalize(type)}`](data.key, data.val()), data.getPriority()))
+    store.dispatch(actionClientIdEnchancer(actions[`${type}Actions`][`replace${capitalize(type)}`](data.key, data.val()), data.getPriority()))
   }
 }
 const actionClientIdEnchancer = (action, clientId) => ({ ...action, clientId })

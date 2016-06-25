@@ -11,6 +11,7 @@ const firebaseUpdateMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
   const difference = diff(currentState, nextState).toJS()
+  console.log('difference', difference)
 
   if (difference.length > 0) {
     const updateObject = difference.reduce((updates, diff) => {
@@ -21,10 +22,11 @@ const firebaseUpdateMiddleware = store => next => action => {
         if (parsePath(diff.path).isPathToObject) {
           return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
         }
-        return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
+        return { ...updates, [diff.path]: diff.value || null, [priorityForPath(diff.path)]: getClientId(nextState) }
       }
       return updates
     }, {})
+    console.log('Update object', updateObject)
     app.database().ref(`/userData/${getUid(nextState)}`).update(updateObject)
   }
   return result

@@ -15,6 +15,7 @@ export function completeTask(id, status) {
 export function editTask(id, properties) {
  return {type: actionTypes.EDIT_TASK, id, properties}
 }
+export const replaceTask = (id, newTask) => ({ type: actionTypes.REPLACE_TASK, id, newTask })
 
 export function addTaskToProject(id, project) {
  return {type: actionTypes.ADD_TASK_TO_PROJECT, id, project}

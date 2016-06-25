@@ -359,6 +359,38 @@ describe('Task reducer', () => {
     })
   })
 
+  describe('Replace task', () => {
+    it('Should handle REPLACE_TASK with existing id', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          date: 1467259200000
+        }
+      })
+      const action = {
+        type: types.REPLACE_TASK,
+        id: 'b41sogy3s0oc',
+        newTask: {
+          id: 'b41sogy3s0oc',
+          title: 'Changed Task Tittle',
+          completed: true,
+          today: false
+        }
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Changed Task Tittle',
+          completed: true,
+          today: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
   describe('Complete', () => {
     it('Should handle COMPLETE_TASK', () => {
       const initialState = fromJS({
