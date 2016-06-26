@@ -5,7 +5,7 @@ import { fromJS } from 'immutable'
 import * as priorityLevels from '../../src/constants/priorityLevels'
 import { DATE_FORMAT } from '../../src/constants/defaults'
 
-import Task from '../../src/components/task/Task'
+import Task from '../../src/components/tasks/task/Task'
 
 const testTasks = fromJS([
   {
