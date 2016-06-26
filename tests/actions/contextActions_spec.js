@@ -3,16 +3,16 @@ import * as types from '../../src/constants/actionTypes'
 import * as actions from '../../src/actions/contextActions'
 
 describe('Context action creators', () => {
-    it('Should create an action to add a context', () => {
-        const properties = {
-            title: 'New task'
-        }
-        const expectedAction = {
-            type: types.ADD_CONTEXT,
-            properties
-        }
-        expect(actions.addContext(properties)).to.deep.equal(expectedAction);
-    })
+    // it('Should create an action to add a context', () => {
+    //     const properties = {
+    //         title: 'New task'
+    //     }
+    //     const expectedAction = {
+    //         type: types.ADD_CONTEXT,
+    //         properties
+    //     }
+    //     expect(actions.addContext(properties)).to.deep.equal(expectedAction);
+    // })
 
     it('Should create an action to remove a context', () => {
         const id = 0

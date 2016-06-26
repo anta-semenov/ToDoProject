@@ -81,7 +81,7 @@ describe('Task component', () => {
       expect(checkedId).to.equal(-12)
       expect(checkStatus).to.equal(true)
 
-      Simulate.click(checkboxComponent)
+      Simulate.change(checkboxComponent)
       expect(checkedId).to.equal('b41sogy3s0o0')
       expect(checkStatus).to.equal(false)
     })
