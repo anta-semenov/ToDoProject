@@ -2,7 +2,9 @@
 
 .tasks {
   position: relative;
-  padding: 30px 60px 30px 0;
+  padding: 30px 60px 30px 20px;
+  box-sizing: border-box;
+  height: 100%;
   overflow: auto;
 
   display: flex;
@@ -10,20 +12,16 @@
   align-items: center;
   flex-grow: 1;
 
-  font-family: 'Fira Sans', sans-serif;
   transition: @transition-basic;
-
-  &.has-active-item {
-    //width: ~'calc(100% - @{size-width-sidebar} - @{size-width-task-info})';
-    //padding: 30px 60px 30px 30px;
-  }
 }
 .tasks__list {
   position: relative;
+  box-sizing: border-box;
   max-width: @size-max-width-tasks;
   width: 100%;
+  flex-shrink: 0;
   list-style: none;
-  padding: 0;
+  padding: 0 0 100px 0;
   margin: 0;
   transition: @transition-basic;
 }

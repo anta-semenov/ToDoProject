@@ -11,6 +11,8 @@ export default function task(state = fromJS({}), action) {
       return removeTask(state, action.id)
     case actionTypes.EDIT_TASK:
       return editTask(state, action.id, action.properties)
+    case actionTypes.REPLACE_TASK:
+      return state.set(action.id, fromJS(action.newTask))
     case actionTypes.COMPLETE_TASK:
       return completeTask(state, action.id, action.status)
     case actionTypes.ADD_TASK_TO_PROJECT:

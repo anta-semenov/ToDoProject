@@ -28,12 +28,12 @@ describe('Checkbox component', () => {
   })
   it('Should handle click on the element', () => {
     let id = -1
-    const callback = () => id = 0
-    const checkbox = renderIntoDocument(<Checkbox onClick={callback} />)
+    const callback = () => {id = 0}
+    const checkbox = renderIntoDocument(<Checkbox onChange={callback} />)
     const checkboxElement = findRenderedDOMComponentWithClass(checkbox, 'checkbox')
 
     expect(id).to.equal(-1)
-    Simulate.click(checkboxElement)
+    Simulate.change(checkboxElement)
     expect(id).to.equal(0)
   })
 })

@@ -287,6 +287,32 @@ describe('Context reducer', () => {
       })
     })
 
+    describe('Replace context', () => {
+      it('Should handle REPLACE_CONTEXT with existing id', () => {
+        const initialState = fromJS({
+          b41sogy3s0oc: {
+            id: 'b41sogy3s0oc',
+            title: 'Existing Context'
+          }
+        })
+        const action = {
+          type: types.REPLACE_CONTEXT,
+          id: 'b41sogy3s0oc',
+          newContext: {
+            id: 'b41sogy3s0oc',
+            title: 'Changed Context Tittle'
+          }
+        }
+        const nextState = fromJS({
+          b41sogy3s0oc: {
+            id: 'b41sogy3s0oc',
+            title: 'Changed Context Tittle'
+          }
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+    })
+
     describe('Set state', () => {
       it('Should handle SET_STATE action without context field', () => {
         const initialState = fromJS({

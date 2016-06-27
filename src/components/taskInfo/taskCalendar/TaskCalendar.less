@@ -45,7 +45,7 @@
   &::before {
     content: '';
     position: absolute;
-    z-index: -1;
+    z-index: 0;
     width: 100%;
     height: 100%;
     top: 50%;
@@ -78,6 +78,7 @@
 }
 .calendar__prev-sign {
   position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
 
@@ -111,6 +112,7 @@
 }
 .calendar__next-sign {
   position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
 
@@ -181,6 +183,7 @@
 }
 .calendar__day {
   position: relative;
+  z-index: 0;
   box-sizing: border-box;
   width: 14.2857%;
   padding: 10px 10px 8px 10px;
@@ -191,6 +194,7 @@
   color: @color-font-basic;
   line-height: 1;
   cursor: pointer;
+  background-color: transparent;
 
   &::before {
     content: '';
@@ -227,13 +231,14 @@
     font-weight: @font-weight-light;
   }
   &.is-today {
-    font-weight: @font-weight-bold;
+    font-weight: @font-weight-medium;
     color: @color-accent;
   }
 
   &.is-selected {
     color: #ffffff;
     font-weight: @font-weight-bold;
+    pointer-events: all;
 
     &::before {
       transform: translate(-50%, -50%) scale(1);

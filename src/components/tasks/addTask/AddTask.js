@@ -12,16 +12,30 @@ export default class AddTask extends Component {
       }
     }
   }
+  handleFocus = () => {
+    this.refs.frame.classList.add('has-focus')
+  }
+  handleBlur = () => {
+    this.refs.frame.classList.remove('has-focus')
+  }
   handleButtonClick = () => {
     this.props.addTask(this.refs.input.value)
     this.refs.input.value = ''
+    this.refs.input.focus()
   }
 
   render() {
     return (
-      <div className='add-task'>
-        <input type='text' ref='input' className='add-task__textfield' onKeyDown={this.handleKeyDown} placeholder={NEW_TASK_TITLE}/>
-        <button className='add-task__button' onClick={this.handleButtonClick} >Add Task</button>
+      <div className='add-task' ref='frame'>
+        <input
+          type='text'
+          ref='input'
+          className='add-task__textfield'
+          onKeyDown={this.handleKeyDown}
+          onFocus={() => this.handleFocus()}
+          onBlur={() => this.handleBlur()}
+          placeholder={NEW_TASK_TITLE} />
+        <button className='add-task__button' onClick={this.handleButtonClick} ><span className='add-task__button-text'>Add Task</span></button>
       </div>
     )
   }
