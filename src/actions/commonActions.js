@@ -17,6 +17,9 @@ export const requestData = () => ({ type: actionTypes.REQUEST_DATA })
 export const recieveData = () => ({ type: actionTypes.RECIEVE_DATA })
 export const errorData = (error) => ({ type: actionTypes.ERROR_DATA, error })
 
+export const undo = () => ({ type: actionTypes.UNDO })
+export const redo = () => ({ type: actionTypes.REDO })
+
 
 //Thunk action creators
 export const login = (type) => (dispatch) => {
