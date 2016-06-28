@@ -3,7 +3,7 @@ import React from 'react'
 import { renderIntoDocument, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 
-import TaskGroup from '../../src/components/taskGroup/TaskGroup'
+import TaskGroup from '../../src/components/tasks/taskGroup/TaskGroup'
 
 describe('TaskGroup component tests', () => {
   it('Should render group name if it has one', () => {

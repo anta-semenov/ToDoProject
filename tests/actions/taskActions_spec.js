@@ -3,18 +3,18 @@ import * as actions from '../../src/actions/taskActions'
 import * as types from '../../src/constants/actionTypes'
 
 describe('Task action creators', () => {
-    it('Should create an action to add a task', () => {
-        const properties = {
-          title: 'New task',
-          description: 'Description of the task'
-        }
-        const expectedAction = {
-            type: types.ADD_TASK,
-            properties
-        }
-
-        expect(actions.addTask(properties)).to.deep.equal(expectedAction)
-    })
+    // it('Should create an action to add a task', () => {
+    //     const properties = {
+    //       title: 'New task',
+    //       description: 'Description of the task'
+    //     }
+    //     const expectedAction = {
+    //         type: types.ADD_TASK,
+    //         properties
+    //     }
+    //
+    //     expect(actions.addTask(properties)).to.deep.equal(expectedAction)
+    // })
 
     it('Should create an action to remove a task', () => {
         const id = 0

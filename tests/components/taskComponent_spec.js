@@ -5,7 +5,7 @@ import { fromJS } from 'immutable'
 import * as priorityLevels from '../../src/constants/priorityLevels'
 import { DATE_FORMAT } from '../../src/constants/defaults'
 
-import Task from '../../src/components/task/Task'
+import Task from '../../src/components/tasks/task/Task'
 
 const testTasks = fromJS([
   {
@@ -81,7 +81,7 @@ describe('Task component', () => {
       expect(checkedId).to.equal(-12)
       expect(checkStatus).to.equal(true)
 
-      Simulate.click(checkboxComponent)
+      Simulate.change(checkboxComponent)
       expect(checkedId).to.equal('b41sogy3s0o0')
       expect(checkStatus).to.equal(false)
     })

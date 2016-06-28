@@ -36,7 +36,9 @@ describe('Auth reducer', () => {
         type: RECIEVE_AUTH,
         userData: {
           uid: 'hdjfsdlkf6ofndso87f',
-          displayName: 'Mr. X'
+          providerData: [{
+            displayName: 'Mr. X'
+          }]
         }
       }
       const nextState = fromJS({
@@ -55,7 +57,9 @@ describe('Auth reducer', () => {
         type: RECIEVE_AUTH,
         userData: {
           uid: 'hdjfsdlkf6ofndso87f',
-          displayName: 'Mr. X'
+          providerData: [{
+            displayName: 'Mr. X'
+          }]
         }
       }
       const nextState1 = fromJS({
@@ -67,8 +71,10 @@ describe('Auth reducer', () => {
         type: RECIEVE_AUTH,
         userData: {
           uid: 'hdjfsdlkf6ofndso87f',
-          displayName: 'Mr. X',
-          photoURL: 'http://facebook.com/dsadlj/sdadasdsad/asdasdasd.jpg'
+          providerData: [{
+            displayName: 'Mr. X',
+            photoURL: 'http://facebook.com/dsadlj/sdadasdsad/asdasdasd.jpg'
+          }]
         }
       }
       const nextState2 = fromJS({
