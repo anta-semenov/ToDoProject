@@ -11,6 +11,7 @@
   align-items: center;
 
   border-bottom: 1px solid @color-border-light-gray;
+  border-top: 1px solid transparent;
   transition: @transition-basic;
 
   &::before {
@@ -27,7 +28,7 @@
   }
 
   &:first-child {
-    border-top: 1px solid @color-border-light-gray;
+    border-top-color: @color-border-light-gray;
   }
   &:hover {
     background-color: fade(@color-bg-light-gray, 50%);
