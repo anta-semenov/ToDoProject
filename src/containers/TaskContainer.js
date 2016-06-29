@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
-import { setActiveItem, toggleTaskLatency, setSelectedSection } from '../actions/uiStateActions'
+import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import { removeContext, editContext } from '../actions/contextActions'
 import { removeProject, editProject } from '../actions/projectActions'
 import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType, getLatentTasks } from '../selectors/tasksSelector'
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
         case sectionTypes.PROJECT:
           dispatch(editProject(sectionID, { title: newSectionName || 'New Project' }))
           break
-        case sectionType.CONTEXT:
+        case sectionTypes.CONTEXT:
           dispatch(editContext(sectionID, { title: newSectionName || 'New Context' }))
           break
       }
@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
         case sectionTypes.PROJECT:
           dispatch(removeProject(sectionID))
           break
-        case sectionType.CONTEXT:
+        case sectionTypes.CONTEXT:
           dispatch(removeContext(sectionID))
           break
       }
