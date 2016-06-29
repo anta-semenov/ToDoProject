@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { fromJS, Map, Set } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
+import { PRIORITY } from '../constants/priorityLevels'
 
 export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], '')
 export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
@@ -29,7 +30,12 @@ const groupTasksByProject = (tasks, projects) => {
 // Composable selectors
 const getTasks = createSelector(
   [getAllTasks, getLatentTasks],
-  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed', false) || latentTasks.has(task.get('id'))).sortBy(task => task.get('id'))
+  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed', false) || latentTasks.has(task.get('id'))).sort((a, b) => {
+    return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
+            PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
+            a.get('id') > b.get('id') ? 1 :
+            a.get('id') < b.get('id') ? -1 : 0
+  })
 )
 
 export const getTasksGroups = createSelector(

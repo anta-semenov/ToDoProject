@@ -1,5 +1,6 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import FlipMove from 'react-flip-move'
 import Task from '../task/Task'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
@@ -16,6 +17,7 @@ export default class TaskGroup extends React.Component {
       <li className='task-group'>
         {this.props.groupTitle ? <div className='task-group__title'>{this.props.groupTitle}</div> : null}
         <ul className='task-group__list'>
+          <FlipMove enterAnimation='fade' leaveAnimation='fade'>
             {this.props.tasks.map(task =>
               <Task
                 key={`task-${task.get('id')}`}
@@ -35,7 +37,8 @@ export default class TaskGroup extends React.Component {
                 onTaskTodayClick={this.props.onTaskTodayClick}
                 onPriorityClick={this.props.onPriorityClick}
               />
-            )}
+            )}    
+          </FlipMove>
         </ul>
       </li>)
   }
