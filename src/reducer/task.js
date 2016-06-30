@@ -31,6 +31,10 @@ export default function task(state = fromJS({}), action) {
       return removeProjectTasks(state, action.id)
     case actionTypes.REMOVE_CONTEXT:
       return removeContextFromTasks(state, action.id)
+    case actionTypes.START_TASK_TRACKING:
+      return state.has(action.id) ? state.updateIn([action.id, 'tracking'], fromJS([]), val => val.push(fromJS({ startTime: action.startTime }))) : state
+    case actionTypes.STOP_TASK_TRACKING:
+      return state.updateIn([action.id, 'tracking'], undefined, val => val ? val.setIn([val.size - 1, 'endTime'], action.endTime) : undefined)
     default:
       return state
   }
@@ -149,3 +153,9 @@ const removeContextFromTasks = (state, contextId) => {
     }
   })
 }
+
+/*
+ * Selectors
+ */
+
+export const getTasks = (state = fromJS({})) => state

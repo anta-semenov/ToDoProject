@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
-import { addTask, completeTask, setTaskToday, editTask } from '../actions/taskActions'
+import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking } from '../actions/taskActions'
 import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import { removeContext, editContext } from '../actions/contextActions'
 import { removeProject, editProject } from '../actions/projectActions'
 import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType, getLatentTasks } from '../selectors/tasksSelector'
+import { getTrackingTaskId } from '../reducer'
 import * as sectionTypes from '../constants/sectionTypes'
 import uniqueKey from '../utils/uniqueKeyGenerator'
 
@@ -16,7 +17,8 @@ const mapStateToProps = (state) => {
     sectionID: getSelectedSectionID(state),
     sectionName: getSectionName(state),
     sectionType: getSelectedSectionType(state),
-    latentTasks: getLatentTasks(state)
+    latentTasks: getLatentTasks(state),
+    trackingTask: getTrackingTaskId(state)
   }
 }
 
@@ -66,13 +68,21 @@ const mapDispatchToProps = (dispatch) => {
     onTaskCheckboxClick: (taskId, status) => {
       dispatch(toggleTaskLatency(taskId, status))
       dispatch(completeTask(taskId, status))
+      if (status) {dispatch(stopTaskTracking())}
     },
     onTaskTodayClick: (taskId, status, sectionType) => {
       if (sectionType === sectionTypes.TODAY) {dispatch(toggleTaskLatency(taskId, !status))}
       if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
       dispatch(setTaskToday(taskId, status))
     },
-    onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))}
+    onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))},
+    onTrackingClick: (taskId, trackingTask) => {
+      if (trackingTask === taskId) {dispatch(stopTaskTracking(taskId))}
+      else {
+        dispatch(stopTaskTracking(trackingTask))
+        dispatch(startTaskTracking(taskId))
+      }
+    }
   }
 }
 
@@ -84,7 +94,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
     onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
-    onTaskPriorityClick: dispatchProps.onTaskPriorityClick
+    onTaskPriorityClick: dispatchProps.onTaskPriorityClick,
+    onTrackingClick: (taskId) => dispatchProps.onTrackingClick(taskId, stateProps.trackingTask)
   })
 }
 

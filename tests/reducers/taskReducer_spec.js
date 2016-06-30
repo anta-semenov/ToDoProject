@@ -998,7 +998,6 @@ describe('Task reducer', () => {
     })
   })
 
-
   //context
   describe('Context', () => {
     it('Should handle ADD_TASK_CONTEXT with no context', () => {
@@ -1455,5 +1454,151 @@ describe('Task reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
-
+  describe('Task tracking', () => {
+    it('Should handle START_TASK_TRACKING with empty state', () => {
+      const action = {
+        type: types.START_TASK_TRACKING,
+        id: '40gnkhutsvo',
+        startTime: 1467058902561
+      }
+      expect(reducer(fromJS({}), action)).to.equal(fromJS({}))
+    })
+    it('Should handle START_TASK_TRACKING with no task', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.START_TASK_TRACKING,
+        id: '40gnkhutsvo',
+        startTime: 1467058902561
+      }
+      expect(reducer(initialState, action)).to.equal(initialState)
+    })
+    it('Should handle START_TASK_TRACKING with task', () => {
+      const initialState1 = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        }
+      })
+      const initialState2 = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          tracking: [
+            {
+              startTime: 1466957388121,
+              endTime: 1467036315074
+            }
+          ]
+        }
+      })
+      const action = {
+        type: types.START_TASK_TRACKING,
+        id: 'b41sogy3s0oc',
+        startTime: 1467058902561
+      }
+      const nextState1 = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          tracking: [
+            { startTime: 1467058902561 }
+          ]
+        }
+      })
+      const nextState2 = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          tracking: [
+            {
+              startTime: 1466957388121,
+              endTime: 1467036315074
+            },
+            {
+              startTime: 1467058902561
+            }
+          ]
+        }
+      })
+      expect(reducer(initialState1, action)).to.equal(nextState1)
+      expect(reducer(initialState2, action)).to.equal(nextState2)
+    })
+    it('Should handle STOP_TASK_TRACKING with no tracking task', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.STOP_TASK_TRACKING,
+        endTime: 1467058902561
+      }
+      expect(reducer(initialState, action)).to.equal(initialState)
+    })
+    it('Should handle STOP_TASK_TRACKING with tracking task', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          tracking: [
+            {
+              startTime: 1466957388121
+            }
+          ]
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = {
+        type: types.STOP_TASK_TRACKING,
+        id: 'b41sogy3s0oc',
+        endTime: 1467058902561
+      }
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          tracking: [
+            {
+              startTime: 1466957388121,
+              endTime: 1467058902561
+            }
+          ]
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
 })
