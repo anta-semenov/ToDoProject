@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
     onTaskCheckboxClick: (taskId, status) => {
       dispatch(toggleTaskLatency(taskId, status))
       dispatch(completeTask(taskId, status))
-      if (status) {dispatch(stopTaskTracking())}
+      if (status) {dispatch(stopTaskTracking(taskId))}
     },
     onTaskTodayClick: (taskId, status, sectionType) => {
       if (sectionType === sectionTypes.TODAY) {dispatch(toggleTaskLatency(taskId, !status))}

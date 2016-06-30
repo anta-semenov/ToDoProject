@@ -31,7 +31,7 @@
     border-top-color: @color-border-light-gray;
   }
   &:hover {
-    background-color: fade(@color-bg-light-gray, 50%);
+    background-color: lighten(@color-bg-light-gray, 1%);
   }
   &.is-active {
     background-color: @color-bg-light-gray;
@@ -203,4 +203,122 @@
   font-size: @font-size-small;
   font-weight: 300;
   color: @color-font-medium;
+}
+
+.task__tracking {
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+  width: 24px;
+  height: 18px;
+  top: 50%;
+  right: 0;
+  margin: 0;
+  padding: 0 0 0 6px;
+  transform: translateY(-50%);
+  border: none;
+  background-color: lighten(@color-bg-light-gray, 1%);
+  outline: none;
+  cursor: pointer;
+  transition: opacity @transition-basic;
+
+  &.is-active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    background-color: transparent;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 2px;
+      right: -1px;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background-color: #fdfdfd;
+      transition: opacity @transition-basic;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 3;
+      top: 3px;
+      right: 0;
+      width: 4px;
+      height: 4px;
+      border-radius: 2px;
+      background-color: @color-red;
+      animation: rec 1s ease-in infinite alternate;
+      transition: opacity @transition-basic;
+    }
+    &:hover::before,
+    &:hover::after {
+      opacity: 0;
+      animation: none;
+    }
+
+    .task.is-active & {
+      background-color: @color-bg-light-gray;
+      &::before {
+        background-color: @color-bg-light-gray;
+      }
+    }
+  }
+
+  .task:hover & {
+    opacity: 1;
+  }
+
+  svg {
+    pointer-events: none;
+  }
+}
+
+.task__tracking svg {
+  opacity: 1;
+  transition: opacity @transition-basic;
+}
+.task__tracking.is-active svg {
+  opacity: 0.5;
+  .task:hover & {
+    opacity: 1;
+  }
+}
+
+.task__tracking svg g[id^='stopwatch__stopwatch-'] {
+  opacity: 1;
+  transition: opacity @transition-basic;
+}
+.task__tracking:hover svg g[id^='stopwatch__stopwatch-'] {
+  opacity: 0;
+}
+
+.task__tracking svg circle[id^='stopwatch__bezel-'] {
+  opacity: 1;
+  transition: opacity @transition-basic, transform @transition-basic;
+  transform-origin: center;
+}
+.task__tracking:hover svg circle[id^='stopwatch__bezel-'] {
+  opacity: 0.5;
+  transform: scale(1.25);
+}
+
+.task__tracking svg g[id^='stopwatch__stop-'] {
+  opacity: 0;
+  transition: opacity @transition-basic;
+}
+.task__tracking.is-active:hover svg g[id^='stopwatch__stop-'] {
+  opacity: 1;
+}
+
+.task__tracking svg g[id^='stopwatch__start-'],
+.task__tracking.is-active svg g[id^='stopwatch__start-'],
+.task__tracking.is-active:hover svg g[id^='stopwatch__start-'] {
+  opacity: 0;
+  transition: opacity @transition-basic;
+}
+.task__tracking:hover svg g[id^='stopwatch__start-'] {
+  opacity: 1;
 }
