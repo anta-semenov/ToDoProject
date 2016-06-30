@@ -11,7 +11,6 @@ const firebaseUpdateMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
   const difference = diff(currentState, nextState).toJS()
-  console.log('difference', difference)
 
   if (difference.length > 0) {
     const updateObject = difference.reduce((updates, diff) => {
@@ -26,7 +25,6 @@ const firebaseUpdateMiddleware = store => next => action => {
       }
       return updates
     }, {})
-    console.log('Update object', updateObject)
     app.database().ref(`/userData/${getUid(nextState)}`).update(updateObject)
   }
   return result
@@ -63,4 +61,7 @@ const passToFirebase = actionType =>
   actionType === actionTypes.ADD_CONTEXT ||
   actionType === actionTypes.REMOVE_CONTEXT ||
   actionType === actionTypes.EDIT_CONTEXT ||
-  actionType === actionTypes.SWITCH_TASK_CONTEXT
+  actionType === actionTypes.SWITCH_TASK_CONTEXT ||
+
+  actionType === actionTypes.UNDO ||
+  actionType === actionTypes.REDO

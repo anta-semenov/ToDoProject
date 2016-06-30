@@ -19,6 +19,7 @@ export const errorData = (error) => ({ type: actionTypes.ERROR_DATA, error })
 
 export const undo = () => ({ type: actionTypes.UNDO })
 export const redo = () => ({ type: actionTypes.REDO })
+export const clearUndoRedo = () => ({ type: actionTypes.CLEAR_UNDO_REDO})
 
 
 //Thunk action creators

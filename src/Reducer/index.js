@@ -4,8 +4,9 @@ import project from './project'
 import task from './task'
 import uiState from './uiState'
 import auth, * as fromAuth from './auth.js'
+import undoRedo from './undoRedo'
 
-export default function rootReduser(state, action) {
+const appLogicReducer = (state, action) => {
   return state.withMutations(map => map
     .set('task', task(map.get('task'), action))
     .set('context', context(map.get('context'), action))
@@ -14,6 +15,10 @@ export default function rootReduser(state, action) {
     .set('auth', auth(map.get('auth'), action))
   )
 }
+
+const rootReducer = undoRedo(appLogicReducer, {undoProps: ['task', 'project', 'context']})
+
+export default rootReducer
 
 /*
  * Selectors
