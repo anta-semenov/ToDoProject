@@ -6,6 +6,7 @@ import task, * as fromTask from './task'
 import uiState from './uiState'
 import auth, * as fromAuth from './auth.js'
 import undoRedo from './undoRedo'
+import { REMOVE_TASK, REMOVE_PROJECT, REMOVE_CONTEXT } from '../constants/actionTypes'
 import tracking, * as fromTracking from './tracking'
 
 const appLogicReducer = (state, action) => {
@@ -19,7 +20,10 @@ const appLogicReducer = (state, action) => {
   )
 }
 
-const rootReducer = undoRedo(appLogicReducer, {undoProps: ['task', 'project', 'context']})
+const rootReducer = undoRedo(appLogicReducer, {
+  undoProps: ['task', 'project', 'context'],
+  undoActions: [REMOVE_TASK, REMOVE_CONTEXT, REMOVE_PROJECT]  
+})
 
 export default rootReducer
 
