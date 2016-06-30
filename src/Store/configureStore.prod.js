@@ -1,6 +1,11 @@
-import { createStore } from 'redux';
-import rootReducer from '../reducer';
+import { createStore, compose, applyMiddleware } from 'redux'
+import rootReducer from '../reducer'
+import { fromJS } from 'immutable'
 
-export default function configureStore(initialState) {
-  return createStore(rootReducer, initialState);
+const enhancer = middleware => compose(
+  applyMiddleware(...middleware)
+)
+
+export default function configureStore(initialState = fromJS({}), middleware) {
+  return createStore(rootReducer, initialState, enhancer(middleware));
 }
