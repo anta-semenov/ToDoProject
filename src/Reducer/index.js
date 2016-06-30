@@ -5,11 +5,8 @@ import project from './project'
 import task, * as fromTask from './task'
 import uiState from './uiState'
 import auth, * as fromAuth from './auth.js'
-<<<<<<< HEAD
 import undoRedo from './undoRedo'
-=======
 import tracking, * as fromTracking from './tracking'
->>>>>>> master
 
 const appLogicReducer = (state, action) => {
   return state.withMutations(map => map

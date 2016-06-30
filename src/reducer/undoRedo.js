@@ -70,3 +70,5 @@ const commonStateReducer = (state, action, reducer) => {
 }
 
 export default undoRedo
+
+export const getPresentState = (state) => state.delete('past').delete('future')
