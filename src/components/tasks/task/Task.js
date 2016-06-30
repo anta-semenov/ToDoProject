@@ -28,7 +28,10 @@ export default class Task extends React.Component {
             <div className='task__title'>{this.props.title}</div>
             {descriptionToString(this.props.description) ? <div className='task__description'>{descriptionToString(this.props.description)}</div> : null}
           </div>
-          {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
+          <div className='task__extra'>
+            {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
+            <button casssName={`task__tracking ${this.props.isTracking ? 'is-active' : ''}`} onClick={() => this.props.onTrackingClick(this.props.id)}></button>
+          </div>
         </div>
       </li>
     )
@@ -45,6 +48,7 @@ Task.propTypes = {
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onPriorityClick: React.PropTypes.func.isRequired,
+  onTrackingClick: React.PropTypes.func.isRequired,
 
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,
@@ -53,5 +57,6 @@ Task.propTypes = {
   priority: React.PropTypes.string,
   date: React.PropTypes.instanceOf(Date),
   active: React.PropTypes.bool,
-  latent: React.PropTypes.bool
+  latent: React.PropTypes.bool,
+  isTracking: React.PropTypes.bool
 }

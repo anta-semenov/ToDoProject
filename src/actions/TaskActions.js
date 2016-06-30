@@ -36,3 +36,6 @@ export function switchTaskContext(id, context) {
 export function setTaskToday(id, status) {
   return {type: actionTypes.SET_TASK_TODAY, id, status}
 }
+
+export const startTaskTracking = id => ({ type: actionTypes.START_TASK_TRACKING, startTime: Date.now(), id })
+export const stopTaskTracking = id => ({ type: actionTypes.STOP_TASK_TRACKING, endTime: Date.now(), id })

@@ -15,13 +15,15 @@ const firebaseUpdateMiddleware = store => next => action => {
   if (difference.length > 0) {
     const updateObject = difference.reduce((updates, diff) => {
       if (parsePath(diff.path).isPathToFirebaseData) {
-        if (diff.op === 'remove' && parsePath(diff.path).isPathToObject) {
+        if (diff.op === 'remove') {
           return { ...updates, [diff.path]: null }
-        }
-        if (parsePath(diff.path).isPathToObject) {
+        } else if (parsePath(diff.path).isPathToObject) {
           return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
+        } else if (parsePath(diff.path).isTrackingPath) {
+          return { ...updates, [diff.path]: diff.value || null }
+        } else {
+          return { ...updates, [diff.path]: diff.value || null, [priorityForPath(diff.path)]: getClientId(nextState) }
         }
-        return { ...updates, [diff.path]: diff.value || null, [priorityForPath(diff.path)]: getClientId(nextState) }
       }
       return updates
     }, {})
@@ -33,13 +35,14 @@ export default firebaseUpdateMiddleware
 
 const priorityForPath = path => parsePath(path).type && parsePath(path).id ? `/${parsePath(path).type}/${parsePath(path).id}/.priority` : ''
 const parsePath = path => {
-  const typeReg = /(task|project|context)/
+  const typeReg = /(task|project|context|tracking)/
   const idReg = /\d+/
   return {
     type: typeReg.test(path.split('/')[1]) ? path.split('/')[1] : '',
     id: idReg.test(path.split('/')[2]) ? path.split('/')[2] : '',
     isPathToObject: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && idReg.test(path.split('/')[2]),
-    isPathToFirebaseData: typeReg.test(path.split('/')[1])
+    isPathToFirebaseData: typeReg.test(path.split('/')[1]),
+    isTrackingPath: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && path.split('/')[2].includes('task')
   }
 }
 
@@ -57,6 +60,8 @@ const passToFirebase = actionType =>
   actionType === actionTypes.ADD_TASK_CONTEXT ||
   actionType === actionTypes.REMOVE_TASK_CONTEXT ||
   actionType === actionTypes.SET_TASK_TODAY ||
+  actionType === actionTypes.START_TASK_TRACKING ||
+  actionType === actionTypes.STOP_TASK_TRACKING ||
 
   actionType === actionTypes.ADD_CONTEXT ||
   actionType === actionTypes.REMOVE_CONTEXT ||

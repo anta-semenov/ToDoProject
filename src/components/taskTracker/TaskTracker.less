@@ -1,0 +1,74 @@
+@import '../../styles/variables.less';
+
+.task-tracker {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  max-width: 200px;
+  padding: 5px 10px;
+  white-space: nowrap;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  background-color: fade(#f2f2f2, 99%);
+  border-radius: 2px;
+}
+
+.task-tracker__stop {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin: 0 5px 0 0;
+  border: none;
+  background-color: transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: @color-red;
+
+    animation: rec 1.2s ease-in infinite alternate;
+  }
+}
+
+@keyframes rec {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
+
+.task-tracker__title {
+  position: relative;
+  margin: 0 5px;
+  min-width: 0;
+  flex-grow: 1;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+}
+
+.task-tracker__time {
+  position: relative;
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+  color: @color-font-medium;
+
+  &::before {
+    content: '—';
+    position: relative;
+    margin: 0 5px;
+    font-size: @font-size-basic;
+    font-weight: @font-weight-light;
+    color: @color-font-medium;
+  }
+}

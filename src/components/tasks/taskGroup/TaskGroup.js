@@ -31,13 +31,15 @@ export default class TaskGroup extends React.Component {
                 date={task.get('date') ? new Date(task.get('date')) : undefined}
                 active={this.props.activeItem === task.get('id')}
                 latent={this.props.latentTasks ? this.props.latentTasks.has(task.get('id')) : undefined}
+                isTracking={this.props.trackingTask === task.get('id')}
 
                 onTaskClick={this.props.onTaskClick}
                 onTaskCheckboxClick={this.props.onTaskCheckboxClick}
                 onTaskTodayClick={this.props.onTaskTodayClick}
                 onPriorityClick={this.props.onPriorityClick}
+                onTrackingClick={this.props.onTrackingClick}
               />
-            )}    
+            )}
           </FlipMove>
         </ul>
       </li>)
@@ -62,8 +64,10 @@ TaskGroup.propTypes = {
   ).isRequired,
   activeItem: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
+  trackingTask: React.PropTypes.string,
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
-  onPriorityClick: React.PropTypes.func.isRequired
+  onPriorityClick: React.PropTypes.func.isRequired,
+  onTrackingClick: React.PropTypes.func.isRequired
 }

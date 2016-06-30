@@ -26,10 +26,12 @@ export default class Tasks extends Component {
                 tasks={group.get('items')}
                 activeItem={this.props.activeItem}
                 latentTasks={this.props.latentTasks}
+                trackingTask={this.props.trackingTask}
                 onTaskClick={this.props.onTaskClick}
                 onTaskCheckboxClick={this.props.onTaskCheckboxClick}
                 onTaskTodayClick={this.props.onTaskTodayClick}
                 onPriorityClick={this.props.onTaskPriorityClick}
+                onTrackingClick={this.props.onTrackingClick}
               />
             )}
           </ul>
@@ -65,6 +67,7 @@ Tasks.propTypes = {
   sectionType: React.PropTypes.oneOf([NEXT, INBOX, TODAY, PROJECT, CONTEXT, PROJECTS, CONTEXTS]).isRequired,
   activeItem: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
+  trackingTask: React.PropTypes.string,
 
   onSectionNameChange: React.PropTypes.func.isRequired,
   onSectionDelete: React.PropTypes.func.isRequired,
@@ -72,5 +75,6 @@ Tasks.propTypes = {
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
+  onTrackingClick: React.PropTypes.func.isRequired,
   addTask: React.PropTypes.func.isRequired
 }
