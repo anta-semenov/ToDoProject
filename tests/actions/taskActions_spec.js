@@ -3,18 +3,13 @@ import * as actions from '../../src/actions/taskActions'
 import * as types from '../../src/constants/actionTypes'
 
 describe('Task action creators', () => {
-    // it('Should create an action to add a task', () => {
-    //     const properties = {
-    //       title: 'New task',
-    //       description: 'Description of the task'
-    //     }
-    //     const expectedAction = {
-    //         type: types.ADD_TASK,
-    //         properties
-    //     }
-    //
-    //     expect(actions.addTask(properties)).to.deep.equal(expectedAction)
-    // })
+    it('Should create an action to add a task', () => {
+      const properties = {
+        title: 'New task',
+        description: 'Description of the task'
+      }
+      expect(actions.addTask(properties)).to.deep.equal({ type: types.ADD_TASK, properties: { ...properties, createdDate: Date.now() }})
+    })
 
     it('Should create an action to remove a task', () => {
         const id = 0
@@ -42,12 +37,7 @@ describe('Task action creators', () => {
     it('Should create an action to complete a task', () => {
         const id = 0
         const status = true
-        const expectedAction = {
-            type: types.COMPLETE_TASK,
-            id,
-            status
-        }
-        expect(actions.completeTask(id, status)).to.deep.equal(expectedAction)
+        expect(actions.completeTask(id, status)).to.deep.equal({ type: types.COMPLETE_TASK, date: Date.now(), id, status })
     })
 
     it('Should create an action to add task to a project', () => {

@@ -17,7 +17,7 @@ export default function project(state = fromJS({}), action) {
       return state.set(action.id, fromJS(action.newProject))
 
     case actionTypes.COMPLETE_PROJECT:
-      return completeProject(state, action.id, action.status)
+      return completeProject(state, action.id, action.status, action.date)
 
     case actionTypes.SET_STATE:
       return setState(state, action.state)
@@ -55,8 +55,10 @@ function editProject(state, id, properties = {}) {
   }
 }
 
-function completeProject(state, id, status = false) {
-  return state.setIn([id, 'completed'], status)
+function completeProject(state, id, status = false, date) {
+  const newState = state.setIn([id, 'completed'], status)
+  if (status && date) {return newState.setIn([id, 'completedDate'], date)}
+  return newState.deleteIn([id, 'completedDate'])
 }
 
 const setState = (state, newState) => newState.has('project') ? newState.get('project', fromJS({})) : state
