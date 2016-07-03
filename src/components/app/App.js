@@ -1,5 +1,4 @@
 import React from 'react'
-import DevTool  from '../../containers/DevTool'
 import TaskContainer from '../../containers/TaskContainer'
 import TaskInfoContainer from '../../containers/TaskInfoContainer'
 import Sidebar from '../sidebar/Sidebar'
@@ -12,7 +11,6 @@ const App = () => (
     <TaskContainer />
     <TaskInfoContainer />
     <TaskTrackerContainer />
-    <DevTool />
   </div>
 )
 
