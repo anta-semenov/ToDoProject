@@ -7,8 +7,6 @@ before_script:
 
 script:
   - npm install
-  - cd src/containers
-  - ls
   - webpack --config webpack.prod.js
   - cp index.prod.html dist/index.html
 
