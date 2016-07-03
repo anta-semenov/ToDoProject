@@ -29,8 +29,6 @@ describe('Task reducer', () => {
     const action = {}
     expect(reducer(initialState, action)).to.equal(initialState)
   })
-
-  //Add task
   describe('Add task', () => {
     it('should handle ADD_TASK with empty action', () => {
       const initialState = fromJS({})
@@ -183,7 +181,6 @@ describe('Task reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
-
   describe('Remove task', () => {
     it('Should handle REMOVE_TASK', () => {
       const initialState = fromJS({
@@ -237,7 +234,6 @@ describe('Task reducer', () => {
       expect(reducer(initialState, action)).to.equal(initialState)
     })
   })
-
   describe('Edit task', () => {
     it('Should handle EDIT_TASK', () => {
       const initialState = fromJS({
@@ -358,7 +354,6 @@ describe('Task reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
-
   describe('Replace task', () => {
     it('Should handle REPLACE_TASK with existing id', () => {
       const initialState = fromJS({
@@ -391,6 +386,7 @@ describe('Task reducer', () => {
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })
+
   describe('Complete', () => {
     it('Should handle COMPLETE_TASK', () => {
       const initialState = fromJS({
@@ -410,7 +406,8 @@ describe('Task reducer', () => {
       const action = {
         type: types.COMPLETE_TASK,
         id: 'b41sogy3s0ok',
-        status: true
+        status: true,
+        date: 1467200092084
       }
       const nextState = fromJS({
         b41sogy3s0oc: {
@@ -423,7 +420,8 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
-          today: false
+          today: false,
+          completedDate: 1467200092084
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -441,13 +439,15 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
-          today: false
+          today: false,
+          completedDate: 1467200092084
         }
       })
       const action = {
         type: types.COMPLETE_TASK,
         id: 'b41sogy3s0ok',
-        status: true
+        status: true,
+        date: 1468200092084
       }
       const nextState = fromJS({
         b41sogy3s0oc: {
@@ -460,6 +460,7 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
+          completedDate: 1468200092084,
           today: false
         }
       })
@@ -478,6 +479,7 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
+          completedDate: 1468200092084,
           today: false
         }
       })
@@ -514,13 +516,15 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: true,
+          completedDate: 1468200092084,
           today: false
         }
       })
       const action = {
         type: types.COMPLETE_TASK,
         id: 'b41sogy3s0ok',
-        status: false
+        status: false,
+        date: undefined
       }
       const nextState = fromJS({
         b41sogy3s0oc: {
