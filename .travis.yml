@@ -6,6 +6,7 @@ before_script:
   - npm install -g webpack
 
 script:
+  - npm install
   - webpack --config webpack.prod.js
   - cp index.prod.html dist/index.html
 
