@@ -15,6 +15,5 @@ install:
 
 after_success:
   - cd dist
-  - firebase login --email ${FIREBASE_LOGIN} --pasword${FIREBASE_PASSWORD}
-  - firebase init
-  - firebase deploy
+  - firebase init --email ${FIREBASE_LOGIN} --pasword${FIREBASE_PASSWORD}
+  - firebase deploy --only hosting --email ${FIREBASE_LOGIN} --pasword${FIREBASE_PASSWORD}
