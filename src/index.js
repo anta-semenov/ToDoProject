@@ -7,8 +7,9 @@ import initFirebase from './backend/firebase/init'
 import { loadState, saveState } from './backend/localStore'
 import throttle from 'lodash/throttle'
 import firebaseUpdateMiddleware from './backend/firebase/middleware'
+import createLogger from 'redux-logger'
 
-const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
+const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware, createLogger])
 store.subscribe(throttle(() => {
   saveState(store.getState().delete('past').delete('future'))
 }, 1500))
