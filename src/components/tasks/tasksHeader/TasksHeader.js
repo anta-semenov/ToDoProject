@@ -21,7 +21,7 @@ const TasksHeader = ({ sectionName, sectionType, onNameChange, onDelete }) => {
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?
         <div className='tasks-header__delete' onClick={() => onDelete()}>
-          <svg width='16px' viewBox='0 0 26 32' version='1.1' xmlns='http://www.w3.org/2000/svg' >
+          <svg width='16px' viewBox='0 0 26 32' version='1.1' >
             <g id="trash" fill="#FF6666">
               <rect id="Rectangle-path" x="8" y="10" width="2" height="16"></rect>
               <rect id="Rectangle-path" x="12" y="10" width="2" height="16"></rect>
