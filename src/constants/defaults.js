@@ -25,4 +25,4 @@ export const DATE_FORMAT = {
 export const ADD_NEW_CONTEXT_TITLE = 'Add context'
 export const ADD_NEW_PROJECT_TITLE = 'Add project'
 
-export const DATA_TYPES = ['task', 'project', 'context']
+export const DATA_TYPES = ['task', 'project', 'context', 'tracking']

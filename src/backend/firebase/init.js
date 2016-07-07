@@ -24,7 +24,7 @@ const onAuth = (userData, store) => {
     store.dispatch(recieveAuth(userData, uniqueKey()))
 
     store.dispatch(requestData())
-    Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' ? null : false))).then(
+    Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' || dataType === 'tracking' ? null : false))).then(
       results => {
         store.dispatch(recieveData())
         store.dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
@@ -35,7 +35,7 @@ const onAuth = (userData, store) => {
   } else if (!userData || !userData.uid) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(logout())
-    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, uiState: INITIAL_UI_STATE })))
+    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, tracking: {}, uiState: INITIAL_UI_STATE })))
   }
 }
 
@@ -43,9 +43,16 @@ const subscribeToDataUpdates = (store) => {
   const actions = { taskActions, projectActions, contextActions }
   const uid = getUid(store.getState())
   DATA_TYPES.forEach(type => {
-    subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', addData(type, store, actions))
-    subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
-    subscribeToDataUpdate(uid, type, '', 'child_changed', editData(type, store, actions))
+    switch (type) {
+      case 'tracking':
+        subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actionClientIdEnchancer(setState(fromJS({ tracking: {} })), data.getPriority())))
+        subscribeToDataUpdate(uid, type, '', 'child_added', data => store.dispatch(actionClientIdEnchancer(setState(fromJS({ tracking: { [data.key]: data.val()} })), data.getPriority())))
+        break
+      default:
+      subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', addData(type, store, actions))
+      subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actions[`${type}Actions`][`remove${capitalize(type)}`](data.key)))
+      subscribeToDataUpdate(uid, type, '', 'child_changed', editData(type, store, actions))
+    }
   })
 }
 const addData = (type, store, actions) => (data) => {

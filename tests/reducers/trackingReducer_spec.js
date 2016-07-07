@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
 import tracking from '../../src/reducer/tracking'
-import { START_TASK_TRACKING, STOP_TASK_TRACKING } from '../../src/constants/actionTypes'
+import { START_TASK_TRACKING, STOP_TASK_TRACKING, SET_STATE } from '../../src/constants/actionTypes'
 
 describe('Tracking reducer', () => {
   it('Should return undefined state',() => {
@@ -40,5 +40,23 @@ describe('Tracking reducer', () => {
     }
     expect(tracking(initialState, action1)).to.equal(fromJS({}))
     expect(tracking(initialState, action2)).to.equal(initialState)
+  })
+  it('Should handle SET_STATE with empty new state', () => {
+    const initialState = fromJS({ task: '40gafk2gci6' })
+    const action = {
+      type: SET_STATE,
+      state: fromJS({ tracking: {} })
+    }
+    expect(tracking(initialState, action)).to.equal(fromJS({}))
+  })
+  it('Should handle SET_STATE with not empty new state', () => {
+    const action = {
+      type: SET_STATE,
+      state: fromJS({
+        tracking: { task: '40gafk2gci6' }
+      })
+    }
+    const nextState = fromJS({ task: '40gafk2gci6'})
+    expect(tracking(fromJS({}), action)).to.equal(nextState)
   })
 })
