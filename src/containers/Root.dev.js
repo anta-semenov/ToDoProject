@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Provider} from 'react-redux'
 import App from '../components/app/App'
 import DevTool  from './DevTool'
+import Perf from 'react-addons-perf'
 
 export default class Root extends Component {
   render() {
@@ -15,3 +16,4 @@ export default class Root extends Component {
     )
   }
 }
+window.Perf = Perf

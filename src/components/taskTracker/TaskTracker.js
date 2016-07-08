@@ -1,5 +1,4 @@
 import React from 'react'
-import FlipMove from 'react-flip-move'
 import { timeIntervalToComponents } from '../../utils/date'
 import './TaskTracker.less'
 
@@ -20,8 +19,8 @@ export default class TaskTracker extends React.Component {
     window.clearInterval(this.state.interval)
   }
   render() {
-    return (
-      this.props.title ?
+    if (this.props.title) {
+      return (
         <div className='task-tracker' key='taskTracker'>
           <button className='task-tracker__stop' onClick={() => this.props.stopTracking(this.props.id)}>
             <svg width='18px' height='18px' viewBox='0 0 18 18' version='1.1' vectorEffect='non-scaling-stroke'>
@@ -39,9 +38,10 @@ export default class TaskTracker extends React.Component {
           </button>
           <div className='task-tracker__title'>{this.props.title}</div>
           <div className='task-tracker__time'>{`${this.state.days ? this.state.days.toString() + 'd' : ''} ${this.state.hours ? this.state.hours.toString() + 'h' : ''} ${this.state.minutes ? this.state.minutes.toString() + 'm' : '1m'}`}</div>
-        </div> :
-        null
-    )
+        </div>
+      )
+    }
+    return null
   }
 }
 
