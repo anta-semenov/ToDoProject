@@ -12,9 +12,9 @@ import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defau
 
 export const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
-  const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'], -1)
+  const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'])
   const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
-  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'], -1)
+  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'])
 
   const groups = [
     {
@@ -59,7 +59,7 @@ export const mapStateToProps = (state) => {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: state.get('project', Map()).toList().filter(project => !project.get('completed')).map(item => {
+      items: state.get('project', Map()).toList().filter(project => !project.get('completed')).sortBy(project => project.get('id')).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
