@@ -1,16 +1,12 @@
 import React from 'react'
 import './Checkbox.less'
 
-export default class Checkbox extends React.Component {
-  render() {
-    return (
-      <input type='checkbox' className={`checkbox checkbox--${this.props.appearance} ${this.props.dimmed ? 'is-dimmed' : ''}`} checked={this.props.checked} onChange={() => this.props.onChange()} />
-    )
-  }
-}
+const Checkbox = ({ appearance, dimmed, checked, onChange }) =>
+  <input type='checkbox' className={`checkbox checkbox--${appearance} ${dimmed ? 'is-dimmed' : ''}`} checked={checked} onChange={() => onChange()} />
+
 
 Checkbox.propTypes = {
-  appearance: React.PropTypes.oneOf(['task-info', 'tasks-list', 'default']),
+  appearance: React.PropTypes.oneOf(['task-info', 'tasks-list', 'default', 'section-header']),
   checked: React.PropTypes.bool,
   dimmed: React.PropTypes.bool,
   onChange: React.PropTypes.func.isRequired
@@ -21,3 +17,5 @@ Checkbox.defaultProps = {
   checked: false,
   dimmed: false
 }
+
+export default Checkbox
