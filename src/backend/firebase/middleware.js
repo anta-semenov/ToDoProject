@@ -22,7 +22,7 @@ const firebaseUpdateMiddleware = store => next => action => {
         } else if (parsePath(diff.path).isTrackingPath) {
           return { ...updates, [diff.path]: diff.value || null }
         } else {
-          return { ...updates, [diff.path]: diff.value || null, [priorityForPath(diff.path)]: getClientId(nextState) }
+          return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
         }
       }
       return updates

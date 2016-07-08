@@ -4,9 +4,9 @@ import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking } from '../actions/taskActions'
 import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import { removeContext, editContext } from '../actions/contextActions'
-import { removeProject, editProject } from '../actions/projectActions'
-import { getTasksGroups, getSectionName, getActiveItemID, getSelectedSectionID, getSelectedSectionType, getLatentTasks } from '../selectors/tasksSelector'
-import { getTrackingTaskId } from '../reducer'
+import { removeProject, editProject, completeProject } from '../actions/projectActions'
+import { getTasksGroups, getActiveItemID, getLatentTasks } from '../selectors/tasksSelector'
+import { getTrackingTaskId, getSelectedSectionName, getSelectedSectionType, getSelectedSectionId, isSelectedSectionComplete } from '../reducer'
 import * as sectionTypes from '../constants/sectionTypes'
 import uniqueKey from '../utils/uniqueKeyGenerator'
 
@@ -14,37 +14,42 @@ const mapStateToProps = (state) => {
   return {
     groups: getTasksGroups(state),
     activeItem: getActiveItemID(state),
-    sectionID: getSelectedSectionID(state),
-    sectionName: getSectionName(state),
-    sectionType: getSelectedSectionType(state),
     latentTasks: getLatentTasks(state),
-    trackingTask: getTrackingTaskId(state)
+    trackingTask: getTrackingTaskId(state),
+
+    sectionId: getSelectedSectionId(state),
+    sectionName: getSelectedSectionName(state),
+    sectionType: getSelectedSectionType(state),
+    isSectionComplete: isSelectedSectionComplete(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSectionNameChange: (sectionID, sectionType, newSectionName) => {
+    onSectionNameChange: (sectionId, sectionType, newSectionName) => {
       switch (sectionType) {
         case sectionTypes.PROJECT:
-          dispatch(editProject(sectionID, { title: newSectionName || 'New Project' }))
+          dispatch(editProject(sectionId, { title: newSectionName || 'New Project' }))
           break
         case sectionTypes.CONTEXT:
-          dispatch(editContext(sectionID, { title: newSectionName || 'New Context' }))
+          dispatch(editContext(sectionId, { title: newSectionName || 'New Context' }))
           break
       }
     },
-    onSectionDelete: (sectionID, sectionType) => {
+    onSectionDelete: (sectionId, sectionType) => {
       switch (sectionType) {
         case sectionTypes.PROJECT:
-          dispatch(removeProject(sectionID))
+          dispatch(removeProject(sectionId))
           break
         case sectionTypes.CONTEXT:
-          dispatch(removeContext(sectionID))
+          dispatch(removeContext(sectionId))
           break
       }
     },
-    addTask: (taskTitle, sectionType, sectionID) => {
+    onSectionComplete: (sectionId, sectionType, isSectionComplete) => {
+      if (sectionType === sectionTypes.PROJECT) {dispatch(completeProject(sectionId, !isSectionComplete))}
+    },
+    addTask: (taskTitle, sectionType, sectionId) => {
       let properties = {id: uniqueKey()}
       if (taskTitle !== '') {
         properties.title = taskTitle
@@ -55,11 +60,11 @@ const mapDispatchToProps = (dispatch) => {
           break
 
         case sectionTypes.CONTEXT:
-          properties.contexts = [sectionID]
+          properties.contexts = [sectionId]
           break
 
         case sectionTypes.PROJECT:
-          properties.project = sectionID
+          properties.project = sectionId
           break
       }
       dispatch(addTask(properties))
@@ -88,9 +93,11 @@ const mapDispatchToProps = (dispatch) => {
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return Object.assign({}, ownProps, stateProps, {
-    onSectionNameChange: (newSectionName) => dispatchProps.onSectionNameChange(stateProps.sectionID, stateProps.sectionType, newSectionName),
-    onSectionDelete: () => dispatchProps.onSectionDelete(stateProps.sectionID, stateProps.sectionType),
-    addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.sectionType, stateProps.sectionID),
+    onSectionNameChange: (newSectionName) => dispatchProps.onSectionNameChange(stateProps.sectionId, stateProps.sectionType, newSectionName),
+    onSectionDelete: () => dispatchProps.onSectionDelete(stateProps.sectionId, stateProps.sectionType),
+    onSectionComplete: () => dispatchProps.onSectionComplete(stateProps.sectionId, stateProps.sectionType, stateProps.isSectionComplete),
+    
+    addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.sectionType, stateProps.sectionId),
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
     onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),

@@ -1,7 +1,8 @@
 import React from 'react'
-import { PROJECT, CONTEXT } from '../../../constants/sectionTypes.js'
+import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../../constants/sectionTypes.js'
 import Textfield from '../../elements/textfield/Textfield'
-import './TasksHeader.less'
+import Checkbox from '../../elements/checkbox/Checkbox'
+import './SectionHeader.less'
 
 const headerPlaceholder = (sectionType) => {
   switch (sectionType) {
@@ -12,15 +13,19 @@ const headerPlaceholder = (sectionType) => {
   }
 }
 
-const TasksHeader = ({ sectionName, sectionType, onNameChange, onDelete }) => {
+const SectionHeader = ({ sectionName, sectionType, onSectionNameChange, onSectionDelete, isSectionComplete, onSectionComplete }) => {
   return (
-    <div className='tasks-header'>
-      {sectionType === PROJECT || sectionType === CONTEXT ?
-        <Textfield appearance='section-header' text={sectionName} onChange={onNameChange} placeholder={headerPlaceholder(sectionType)} /> :
-        <h1 className='tasks-header__title'>{sectionName}</h1>
+    <div className='section-header'>
+      {sectionType === PROJECT ?
+        <Checkbox appearance='section-header' checked={isSectionComplete} onChange={onSectionComplete} /> :
+        null
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?
-        <div className='tasks-header__delete' onClick={() => onDelete()}>
+        <Textfield appearance='section-header' text={sectionName} onChange={onSectionNameChange} placeholder={headerPlaceholder(sectionType)} /> :
+        <h1 className='section-header__title'>{sectionName}</h1>
+      }
+      {sectionType === PROJECT || sectionType === CONTEXT ?
+        <div className='section-header__delete' onClick={() => onSectionDelete()}>
           <svg width='16px' viewBox='0 0 26 32' version='1.1' >
             <g id="trash" fill="#FF6666">
               <rect id="Rectangle-path" x="8" y="10" width="2" height="16"></rect>
@@ -38,11 +43,18 @@ const TasksHeader = ({ sectionName, sectionType, onNameChange, onDelete }) => {
   )
 }
 
-TasksHeader.propTypes = {
+SectionHeader.propTypes = {
   sectionName: React.PropTypes.string.isRequired,
-  sectionType: React.PropTypes.string.isRequired,
-  onNameChange: React.PropTypes.func.isRequired,
-  onDelete: React.PropTypes.func.isRequired
+  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT]).isRequired,
+  isSectionComplete: React.PropTypes.bool,
+
+  onSectionNameChange: React.PropTypes.func.isRequired,
+  onSectionDelete: React.PropTypes.func.isRequired,
+  onSectionComplete: React.PropTypes.func.isRequired
 }
 
-export default TasksHeader
+SectionHeader.defaultProps = {
+  isSectionComplete: false
+}
+
+export default SectionHeader

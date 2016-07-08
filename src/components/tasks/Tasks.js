@@ -1,47 +1,46 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../constants/sectionTypes.js'
 import TaskGroup from './taskGroup/TaskGroup'
 import AddTask from './addTask/AddTask'
-import TasksHeader from './tasksHeader/TasksHeader'
-import { NEXT, INBOX, TODAY, PROJECT, CONTEXT, PROJECTS, CONTEXTS } from '../../constants/sectionTypes.js'
+import SectionHeader from './sectionHeader/SectionHeader'
 
 import './Tasks.less'
 
-export default class Tasks extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return(
-      <div className={`tasks ${this.props.activeItem != '' ? 'has-active-item' : ''}`}>
-        <TasksHeader sectionName={this.props.sectionName} sectionType={this.props.sectionType} onNameChange={this.props.onSectionNameChange} onDelete={this.props.onSectionDelete} />
-        <AddTask addTask={this.props.addTask} />
-        {this.props.groups ?
-          <ul className='tasks__list'>
-            {this.props.groups.map((group, index) =>
-              <TaskGroup
-                key={index}
-                groupTitle={group.get('title')}
-                tasks={group.get('items')}
-                activeItem={this.props.activeItem}
-                latentTasks={this.props.latentTasks}
-                trackingTask={this.props.trackingTask}
-                onTaskClick={this.props.onTaskClick}
-                onTaskCheckboxClick={this.props.onTaskCheckboxClick}
-                onTaskTodayClick={this.props.onTaskTodayClick}
-                onPriorityClick={this.props.onTaskPriorityClick}
-                onTrackingClick={this.props.onTrackingClick}
-              />
-            )}
-          </ul>
-          :
-          <div className='tasks__empty-state'>This section doesn't have any tasks. This text should be replaced with a component for empty space.</div>
-        }
-      </div>
-    )
-  }
-}
+const Tasks = props => (
+  <div className={`tasks ${props.activeItem != '' ? 'has-active-item' : ''}`}>
+    <SectionHeader
+      sectionName={props.sectionName}
+      sectionType={props.sectionType}
+      isSectionComplete={props.isSectionComplete}
+      onSectionNameChange={props.onSectionNameChange}
+      onSectionDelete={props.onSectionDelete}
+      onSectionComplete={props.onSectionComplete}
+    />
+    <AddTask addTask={props.addTask} />
+    {props.groups ?
+      <ul className='tasks__list'>
+        {props.groups.map((group, index) =>
+          <TaskGroup
+            key={index}
+            groupTitle={group.get('title')}
+            tasks={group.get('items')}
+            activeItem={props.activeItem}
+            latentTasks={props.latentTasks}
+            trackingTask={props.trackingTask}
+            onTaskClick={props.onTaskClick}
+            onTaskCheckboxClick={props.onTaskCheckboxClick}
+            onTaskTodayClick={props.onTaskTodayClick}
+            onPriorityClick={props.onTaskPriorityClick}
+            onTrackingClick={props.onTrackingClick}
+          />
+        )}
+      </ul>
+      :
+      <div className='tasks__empty-state'>This section doesn't have any tasks. This text should be replaced with a component for empty space.</div>
+    }
+  </div>
+)
 
 Tasks.propTypes = {
   groups: ImmutablePropTypes.listOf(
@@ -63,18 +62,25 @@ Tasks.propTypes = {
       title: React.PropTypes.string
     })
   ),
-  sectionName: React.PropTypes.string.isRequired,
-  sectionType: React.PropTypes.oneOf([NEXT, INBOX, TODAY, PROJECT, CONTEXT, PROJECTS, CONTEXTS]).isRequired,
   activeItem: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
   trackingTask: React.PropTypes.string,
 
+  sectionName: React.PropTypes.string.isRequired,
+  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT]).isRequired,
+  isSectionComplete: React.PropTypes.bool,
+
   onSectionNameChange: React.PropTypes.func.isRequired,
   onSectionDelete: React.PropTypes.func.isRequired,
+  onSectionComplete: React.PropTypes.func.isRequired,
+
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
   onTrackingClick: React.PropTypes.func.isRequired,
+
   addTask: React.PropTypes.func.isRequired
 }
+
+export default Tasks
