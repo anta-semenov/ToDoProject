@@ -2,14 +2,16 @@
 
 .section-header {
   position: relative;
+  box-sizing: border-box;
   margin: 10px 0 40px 0;
+  padding: 0 40px 0 0;
   width: 100%;
   max-width: @size-max-width-tasks;
   transition: @transition-basic;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-shrink: 0;
 }
 .section-header__title {
@@ -27,8 +29,8 @@
   width: 36px;
   height: 36px;
   cursor: pointer;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 8px;
+  //transform: translateY(-50%);
 
   &::before {
     content: '';
