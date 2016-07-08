@@ -9,12 +9,12 @@ const Checkbox = ({ appearance, dimmed, checked, onChange }) =>
       </svg>
     </div>
     <div className='checkbox__border'>
-      <svg id='circle' viewBox='0 0 26 26' verctorEffect='non-scaling-stroke'>
+      <svg id='circle' viewBox='0 0 26 26' >
         <circle cx='13' cy='13' r='11' fill='none' />
       </svg>
     </div>
     <div className='checkbox__background'>
-      <svg id='circle' viewBox='0 0 26 26' verctorEffect='non-scaling-stroke'>
+      <svg id='circle' viewBox='0 0 26 26' >
         <circle cx='13' cy='13' r='11' />
       </svg>
     </div>
