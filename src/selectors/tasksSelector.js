@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 import { fromJS, Map, Set } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
-import * as sectionNames from '../constants/sectionNames'
 import { PRIORITY } from '../constants/priorityLevels'
 
 export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], '')
@@ -10,7 +9,6 @@ export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSe
 export const getLatentTasks = state => state.getIn(['uiState', 'sectionLatentTasks'], Map())
 export const getAllTasks = state => state.get('task', Map()).toList()
 const getProjects = state => state.get('project', Map()).toList()
-const getContexts = state => state.get('context', Map()).toList()
 
 //Helper functions
 const groupTasksByProject = (tasks, projects) => {
@@ -68,32 +66,6 @@ export const getTasksGroups = createSelector(
 
       default:
         return fromJS([{items: tasks}])
-    }
-  }
-)
-
-export const getSectionName = createSelector(
-  [getSelectedSectionType, getSelectedSectionID, getProjects, getContexts],
-  (sectionType, sectionID, projects, contexts) => {
-    switch (sectionType) {
-      case sectionTypes.PROJECT:{
-        const projectIndex = projects.findIndex(project => project.get('id') === sectionID)
-        return projects.getIn([projectIndex, 'title'], undefined)
-      }
-
-      case sectionTypes.CONTEXT: {
-        const contextIndex = contexts.findIndex(context => context.get('id') === sectionID)
-        return contexts.getIn([contextIndex, 'title'], undefined)
-      }
-
-      case sectionTypes.INBOX:
-        return sectionNames.INBOX
-
-      case sectionTypes.TODAY:
-        return sectionNames.TODAY
-
-      case sectionTypes.NEXT:
-        return sectionNames.NEXT
     }
   }
 )

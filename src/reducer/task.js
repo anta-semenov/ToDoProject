@@ -164,5 +164,3 @@ const removeContextFromTasks = (state, contextId) => {
 /*
  * Selectors
  */
-
-export const getTasks = (state = fromJS({})) => state

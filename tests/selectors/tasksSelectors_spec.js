@@ -2,8 +2,7 @@ import { expect } from 'chai'
 import { fromJS, Map, Set } from 'immutable'
 import { PRIORITY_NONE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
-import * as sectionNames from '../../src/constants/sectionNames'
-import { getTasksGroups, getSectionName, getActiveItemID } from '../../src/selectors/tasksSelector'
+import { getTasksGroups, getActiveItemID } from '../../src/selectors/tasksSelector'
 
 const testTasks1 = fromJS({
   b41sogy3s0oc: {
@@ -749,62 +748,6 @@ describe('Tasks Selectors', () => {
       }])
 
       expect(getTasksGroups(state)).to.equal(groups)
-    })
-  })
-  describe('getSectionName selector', () => {
-    it('Should return name for INBOX', () => {
-      const state = fromJS({
-        uiState: {
-          selectedSection: {
-            type: sectionTypes.INBOX
-          }
-        }
-      })
-      expect(getSectionName(state)).to.equal(sectionNames.INBOX)
-    })
-    it('Should return name for TODAY', () => {
-      const state = fromJS({
-        uiState: {
-          selectedSection: {
-            type: sectionTypes.TODAY
-          }
-        }
-      })
-      expect(getSectionName(state)).to.equal(sectionNames.TODAY)
-    })
-    it('Should return name for NEXT', () => {
-      const state = fromJS({
-        uiState: {
-          selectedSection: {
-            type: sectionTypes.NEXT
-          }
-        }
-      })
-      expect(getSectionName(state)).to.equal(sectionNames.NEXT)
-    })
-    it('Should return name for PROJECT', () => {
-      const state = fromJS({
-        project: testProjects,
-        uiState: {
-          selectedSection: {
-            type: sectionTypes.PROJECT,
-            id: 'bh52ogy5s0fm'
-          }
-        }
-      })
-      expect(getSectionName(state)).to.equal('Test project 0')
-    })
-    it('Should return name for CONTEXT', () => {
-      const state = fromJS({
-        context: testContexts,
-        uiState: {
-          selectedSection: {
-            type: sectionTypes.CONTEXT,
-            id: 'cf1sobz3s0oc'
-          }
-        }
-      })
-      expect(getSectionName(state)).to.equal('Test context 0')
     })
   })
   describe('getActiveItemID selector', () => {
