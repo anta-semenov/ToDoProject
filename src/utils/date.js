@@ -37,3 +37,9 @@ export const areDatesEqual = (date1, date2) => {
   }
   return false
 }
+
+export const timeIntervalToComponents = interval => ({
+  days: Math.floor(interval / (1000*60*60*24)),
+  hours: Math.floor((interval % (1000*60*60*24)) / (1000*60*60)),
+  minutes: Math.floor((interval % (1000*60*60)) / (1000*60))
+})

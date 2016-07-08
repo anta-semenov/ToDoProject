@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {Provider} from 'react-redux';
+import App from '../components/app/App'
 
 export default class Root extends Component {
   render() {
     return(
-      <Provider >
-        <div>
-          
-        </div>
+      <Provider store={this.props.store}>
+        <App />
       </Provider>
     );
   }

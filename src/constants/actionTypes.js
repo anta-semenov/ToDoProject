@@ -19,6 +19,8 @@ export const ADD_TASK_TO_PROJECT = 'ADD_TASK_TO_PROJECT'
 export const ADD_TASK_CONTEXT = 'ADD_TASK_CONTEXT'
 export const REMOVE_TASK_CONTEXT = 'REMOVE_TASK_CONTEXT'
 export const SET_TASK_TODAY = 'SET_TASK_TODAY'
+export const START_TASK_TRACKING = 'START_TASK_TRACKING'
+export const STOP_TASK_TRACKING = 'STOP_TASK_TRACKING'
 
 /*
  * Context
@@ -58,3 +60,7 @@ export const ERROR_AUTH = 'ERROR_AUTH'
 export const REQUEST_DATA = 'REQUEST_DATA'
 export const RECIEVE_DATA = 'RECIEVE_DATA'
 export const ERROR_DATA = 'ERROR_DATA'
+
+export const UNDO = 'UNDO'
+export const REDO = 'REDO'
+export const CLEAR_UNDO_REDO = 'CLEAR_UNDO_REDO'

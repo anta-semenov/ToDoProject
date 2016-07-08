@@ -1,0 +1,117 @@
+@import '../../styles/variables.less';
+
+.task-tracker {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  max-width: 200px;
+  padding: 5px 10px 5px 5px;
+  white-space: nowrap;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  background-color: fade(#f2f2f2, 99%);
+  border-radius: 2px;
+}
+
+.task-tracker__stop {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  margin: 0 5px 0 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: -1px;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background-color: #f2f2f2;
+    transition: opacity @transition-basic;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: @color-red;
+    animation: rec 1s ease-in infinite alternate;
+    transition: opacity @transition-basic;
+  }
+  .task-tracker:hover &::before,
+  .task-tracker:hover &::after {
+    opacity: 0;
+    animation: none;
+  }
+}
+
+.task-tracker .task-tracker__stop svg #stopwatch {
+  opacity: 1;
+  transition: opacity @transition-basic;
+}
+.task-tracker:hover .task-tracker__stop svg #stopwatch {
+  opacity: 0;
+}
+.task-tracker .task-tracker__stop svg #bezel {
+  opacity: 1;
+  transition: opacity @transition-basic, transform @transition-basic;
+  transform-origin: center;
+}
+.task-tracker:hover .task-tracker__stop svg #bezel {
+  opacity: 0.5;
+  transform: scale(1.25);
+}
+.task-tracker .task-tracker__stop svg #stop {
+  opacity: 0;
+  transition: opacity @transition-basic;
+}
+.task-tracker:hover .task-tracker__stop svg #stop {
+  opacity: 1;
+}
+
+@keyframes rec {
+  0% {opacity: 0.2}
+  100% {opacity: 1}
+}
+
+.task-tracker__title {
+  position: relative;
+  margin: 0 5px;
+  min-width: 0;
+  flex-grow: 1;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+}
+
+.task-tracker__time {
+  position: relative;
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+  color: @color-font-medium;
+
+  &::before {
+    content: '—';
+    position: relative;
+    margin: 0 5px;
+    font-size: @font-size-basic;
+    font-weight: @font-weight-light;
+    color: @color-font-medium;
+  }
+}

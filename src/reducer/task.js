@@ -13,24 +13,33 @@ export default function task(state = fromJS({}), action) {
       return editTask(state, action.id, action.properties)
     case actionTypes.REPLACE_TASK:
       return state.set(action.id, fromJS(action.newTask))
+
     case actionTypes.COMPLETE_TASK:
-      return completeTask(state, action.id, action.status)
+      return completeTask(state, action.id, action.status, action.date)
+    case actionTypes.SET_TASK_TODAY:
+      return setTaskToday(state, action.id, action.status)
+
     case actionTypes.ADD_TASK_TO_PROJECT:
       return addTaskToProject(state, action.id, action.project)
+    case actionTypes.REMOVE_PROJECT:
+      return removeProjectTasks(state, action.id)
+
     case actionTypes.ADD_TASK_CONTEXT:
       return addTaskContext(state, action.id, action.context)
     case actionTypes.REMOVE_TASK_CONTEXT:
       return removeTaskContext(state, action)
     case actionTypes.SWITCH_TASK_CONTEXT:
       return switchTaskContext(state, action.id, action.context)
-    case actionTypes.SET_TASK_TODAY:
-      return setTaskToday(state, action.id, action.status)
-    case actionTypes.SET_STATE:
-      return setState(state, action.state)
-    case actionTypes.REMOVE_PROJECT:
-      return removeProjectTasks(state, action.id)
     case actionTypes.REMOVE_CONTEXT:
       return removeContextFromTasks(state, action.id)
+
+    case actionTypes.SET_STATE:
+      return setState(state, action.state)
+
+    case actionTypes.START_TASK_TRACKING:
+      return state.has(action.id) ? state.updateIn([action.id, 'tracking'], fromJS([]), val => val.push(fromJS({ startTime: action.startTime }))) : state
+    case actionTypes.STOP_TASK_TRACKING:
+      return state.updateIn([action.id, 'tracking'], undefined, val => val ? val.setIn([val.size - 1, 'endTime'], action.endTime) : undefined)
     default:
       return state
   }
@@ -66,8 +75,10 @@ function editTask(state, id, properties = {}) {
   }
 }
 
-function completeTask(state, id, status = false) {
-  return state.setIn([id, 'completed'], status)
+function completeTask(state, id, status = false, date) {
+  const newState = state.setIn([id, 'completed'], status)
+  if (status && date) {return newState.setIn([id, 'completedDate'], date)}
+  return newState.deleteIn([id, 'completedDate'])
 }
 
 function setTaskToday(state, id, status = false) {
@@ -149,3 +160,7 @@ const removeContextFromTasks = (state, contextId) => {
     }
   })
 }
+
+/*
+ * Selectors
+ */
