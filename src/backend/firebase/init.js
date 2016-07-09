@@ -19,6 +19,8 @@ const initFirebase = (store) => {
 export default initFirebase
 
 const onAuth = (userData, store) => {
+  console.log('userData: ', userData);
+  console.log('userUid: ', getUid(store.getState()));
   if (userData && userData.uid && userData.uid !== getUid(store.getState())) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(recieveAuth(userData, uniqueKey()))
