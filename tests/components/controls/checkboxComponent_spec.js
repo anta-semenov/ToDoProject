@@ -14,9 +14,8 @@ describe('Checkbox component', () => {
     expect(checkbox.props.className).to.include('checkbox--default')
       .and.not.include('checkbox--task-info')
       .and.not.include('checkbox--tasks-list')
+      .and.not.include('is-active')
       .and.not.include('is-dimmed')
-    expect(checkbox.props.checked).to.equal(false)
-    expect(checkbox.type).to.equal('input')
   })
   it('Should render component with right classes for passed props', () => {
     shallowRenderer.render(<Checkbox appearance='task-info' dimmed={true} checked={true} />)
@@ -24,9 +23,9 @@ describe('Checkbox component', () => {
 
     expect(checkbox.props.className)
       .to.include('checkbox--task-info')
+      .to.include('is-active')
       .to.include('is-dimmed')
       .and.not.include('checkbox--tasks-list')
       .and.not.include('checkbox--default')
-    expect(checkbox.props.checked).to.equal(true)
   })
 })
