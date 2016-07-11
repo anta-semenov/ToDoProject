@@ -4,7 +4,7 @@ import diff from 'immutablediff'
 import { getUid, getClientId } from '../../reducer'
 
 const firebaseUpdateMiddleware = store => next => action => {
-  if (!passToFirebase(action.type) || (action.clientId && action.clientId !== getClientId(store.getState()))) {
+  if (!passToFirebase(action.type) || (action.clientId && action.clientId !== getClientId(store.getState())) || !getUid(store.getState())) {
     return next(action)
   }
   const currentState = store.getState()
