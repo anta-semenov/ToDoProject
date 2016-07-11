@@ -1,14 +1,12 @@
-/* global Promise */
 import { fromJS } from 'immutable'
 import app, { subscribeToDataUpdate, unsubscribeFromDataUpdate } from './api.js'
-import { recieveAuth, logout, errorAuth, requestAuth, requestData, recieveData, errorData, setState } from '../../actions/commonActions'
+import { recieveAuth, logout, errorAuth, requestAuth, setState } from '../../actions/commonActions'
 import * as taskActions from '../../actions/taskActions'
 import * as projectActions from '../../actions/projectActions'
 import * as contextActions from '../../actions/contextActions'
 import { getUid, getClientId } from '../../reducer'
 import { capitalize } from '../../utils/string'
 import uniqueKey from '../../utils/uniqueKeyGenerator'
-import * as api from './api'
 import { DATA_TYPES, INITIAL_UI_STATE } from '../../constants/defaults'
 
 
@@ -22,16 +20,7 @@ const onAuth = (userData, store) => {
   if (userData && userData.uid && userData.uid !== getUid(store.getState())) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(recieveAuth(userData, uniqueKey()))
-
-    store.dispatch(requestData())
-    Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' || dataType === 'tracking' ? null : false))).then(
-      results => {
-        store.dispatch(recieveData())
-        store.dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
-        subscribeToDataUpdates(store)
-      },
-      error => store.dispatch(errorData(error))
-    )
+    subscribeToDataUpdates(store)
   } else if (!userData || !userData.uid) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(logout())
