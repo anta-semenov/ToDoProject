@@ -14,10 +14,10 @@ export default class NavigationGroup extends React.Component {
   render() {
     return (
       <li className='nav-group'>
-        {this.props.title && this.props.items.size > 0 ?
+        {this.props.title ?
           <div className='nav-group__title'>
             <div className='nav-group__title-text' >{this.props.title}</div>
-            {this.props.addNew && this.props.addNewTitle ?
+            {this.props.addNew ?
               <div className='nav-group__add-button' onClick={() => this.props.addNew(this.props.type)} /> :
               null
             }
