@@ -102,20 +102,20 @@ describe('Sidebar container', () => {
     expect(props.groups[1].addNewTitle).to.equal(ADD_NEW_CONTEXT_TITLE)
     expect(props.groups[1].items).to.equal(fromJS([
       {
-        id: 'a21sogy3s0oq',
-        type: sectionTypes.CONTEXT,
-        title: 'test context 1',
-        active: true,
-        editing: false,
-        count: 0
-      },
-      {
         id: 'a23sogy3s0oq',
         type: sectionTypes.CONTEXT,
         title: 'test context 2',
         active: false ,
         editing: false,
         count: 1
+      },
+      {
+        id: 'a21sogy3s0oq',
+        type: sectionTypes.CONTEXT,
+        title: 'test context 1',
+        active: true,
+        editing: false,
+        count: 0
       }
     ]))
 
@@ -124,19 +124,19 @@ describe('Sidebar container', () => {
     expect(props.groups[2].addNewTitle).to.equal(ADD_NEW_PROJECT_TITLE)
     expect(props.groups[2].items).to.equal(fromJS([
       {
-        id: 'ab6sof83s1o1',
-        type: sectionTypes.PROJECT,
-        title: 'test project 2',
-        active: false,
-        editing: false
-      },
-      {
         id: 'ab6sof83s1o2',
         type: sectionTypes.PROJECT,
         title: 'test project 3',
         active: false,
         editing: false
-      }
+      },
+      {
+        id: 'ab6sof83s1o1',
+        type: sectionTypes.PROJECT,
+        title: 'test project 2',
+        active: false,
+        editing: false
+      }      
     ]))
   })
 })
