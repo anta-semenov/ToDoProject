@@ -1,11 +1,13 @@
+/* global Promise */
+import { fromJS } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import * as api from '../backend/firebase/api'
 import uniqueKey from '../utils/uniqueKeyGenerator'
+import { DATA_TYPES } from '../constants/defaults'
 
 //Plain action creators
 export const setState = (state) => ({ type: actionTypes.SET_STATE, state })
 export const requestAuth = () => ({ type: actionTypes.REQUEST_AUTH })
-export const recieveAuth = (userData, clientId) => ({ type: actionTypes.RECIEVE_AUTH, userData, clientId })
 export const errorAuth = (error) => ({
   type: actionTypes.ERROR_AUTH,
   errorMessage: error.message || 'Something went wrong',
@@ -40,4 +42,15 @@ export const login = (type) => (dispatch) => {
 
 export const logoutThunk = () => (dispatch) => {
   return api.unAuth().then(() => dispatch(logout()))
+}
+export const recieveAuth = (userData, clientId) => (dispatch) => {
+  dispatch({ type: actionTypes.RECIEVE_AUTH, userData, clientId })
+  dispatch(requestData())
+  Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' || dataType === 'tracking' ? null : false))).then(
+    results => {
+      dispatch(recieveData())
+      dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
+    },
+    error => dispatch(errorData(error))
+  )
 }
