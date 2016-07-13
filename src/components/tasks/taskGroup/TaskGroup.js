@@ -25,6 +25,7 @@ export default class TaskGroup extends React.Component {
                 title={task.get('title')}
                 completed={task.get('completed')}
                 today={task.get('today')}
+                someday={task.get('someday', false)}
 
                 description={task.get('description')}
                 priority={task.get('priority')}
@@ -38,6 +39,7 @@ export default class TaskGroup extends React.Component {
                 onTaskTodayClick={this.props.onTaskTodayClick}
                 onPriorityClick={this.props.onPriorityClick}
                 onTrackingClick={this.props.onTrackingClick}
+                onTaskSomedayClick={this.props.onTaskSomedayClick}
               />
             )}
           </FlipMove>
@@ -69,5 +71,6 @@ TaskGroup.propTypes = {
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onPriorityClick: React.PropTypes.func.isRequired,
-  onTrackingClick: React.PropTypes.func.isRequired
+  onTrackingClick: React.PropTypes.func.isRequired,
+  onTaskSomedayClick: React.PropTypes.func.isRequired
 }

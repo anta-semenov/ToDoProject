@@ -95,6 +95,11 @@ describe('Sidebar container', () => {
         type: sectionTypes.NEXT,
         title: sectionNames.NEXT,
         active: false
+      },
+      {
+        type: sectionTypes.SOMEDAY,
+        title: sectionNames.SOMEDAY,
+        active: false
       }
     ]))
     expect(props.groups[1].type).to.equal(CONTEXTS)
@@ -136,7 +141,7 @@ describe('Sidebar container', () => {
         title: 'test project 2',
         active: false,
         editing: false
-      }      
+      }
     ]))
   })
 })

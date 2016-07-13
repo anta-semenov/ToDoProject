@@ -62,6 +62,7 @@ const passToFirebase = actionType =>
   actionType === actionTypes.SET_TASK_TODAY ||
   actionType === actionTypes.START_TASK_TRACKING ||
   actionType === actionTypes.STOP_TASK_TRACKING ||
+  actionType === actionTypes.SET_TASK_SOMEDAY ||
 
   actionType === actionTypes.ADD_CONTEXT ||
   actionType === actionTypes.REMOVE_CONTEXT ||

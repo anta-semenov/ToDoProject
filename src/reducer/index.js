@@ -78,6 +78,8 @@ export const getSelectedSectionName = createSelector(
 
       case sectionTypes.NEXT:
         return sectionNames.NEXT
+      case sectionTypes.SOMEDAY:
+        return sectionNames.SOMEDAY
     }
   }
 )

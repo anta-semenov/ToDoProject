@@ -7,6 +7,7 @@ import { PRIORITY_NONE } from '../../src/constants/priorityLevels'
 import * as commonActions from '../../src/actions/commonActions'
 import { removeProject } from '../../src/actions/projectActions'
 import { removeContext } from '../../src/actions/contextActions'
+import * as taskActions from '../../src/actions/taskActions'
 
 describe('Task reducer', () => {
   // Empty action
@@ -1602,6 +1603,224 @@ describe('Task reducer', () => {
           today: false
         }
       })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
+  describe('Someday', () => {
+    it('Should handle SET_TASK_SOMEDAY', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', true)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday true and true status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', true)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday true and empty status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om')
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday true and false status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', false)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday false and false status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', false)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday false and empty status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om')
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })

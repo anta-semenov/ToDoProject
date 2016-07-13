@@ -6,6 +6,7 @@ import { descriptionToString } from '../../../utils/descriptionTransform'
 import Today from '../../elements/today/Today'
 import Checkbox from '../../elements/checkbox/Checkbox'
 import Priority from '../../elements/priority/Priority'
+import Someday from '../../elements/someday/Someday'
 
 import './Task.less'
 
@@ -22,6 +23,7 @@ export default class Task extends React.Component {
       <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latent && !this.props.completed ? 'is-latent-today' : ''} `}>
         <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latent && !this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
         <Today appearance={appearance} checked={this.props.today} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
+        <Someday appearance={appearance} checked={this.props.someday} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={() => this.props.onTaskSomedayClick(this.props.id, !this.props.someday)}/>
         <Priority appearance={appearance} priority={this.props.priority} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)}/>
         <div className='task__body' onClick={(e) => e.target !== this.refs.trackingBtn ? this.props.onTaskClick(this.props.id) : null } >
           <div className='task__main'>
@@ -59,12 +61,14 @@ Task.propTypes = {
   title: React.PropTypes.string.isRequired,
   completed: React.PropTypes.bool.isRequired,
   today: React.PropTypes.bool.isRequired,
+  someday: React.PropTypes.bool.isRequired,
 
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onPriorityClick: React.PropTypes.func.isRequired,
   onTrackingClick: React.PropTypes.func.isRequired,
+  onTaskSomedayClick: React.PropTypes.func.isRequired,
 
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,

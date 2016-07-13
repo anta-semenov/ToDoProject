@@ -12,6 +12,7 @@ import Today from '../elements/today/Today'
 import Checkbox from '../elements/checkbox/Checkbox'
 import Priority from '../elements/priority/Priority'
 import CloseBtn from '../elements/closeBtn/CloseBtn'
+import Someday from '../elements/someday/Someday'
 
 import './TaskInfo.less'
 
@@ -29,6 +30,7 @@ export default class TaskInfo extends React.Component {
             <div className='task-info__controls'>
               <Checkbox appearance='task-info' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
               <Today appearance='task-info' checked={this.props.today} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)}/>
+              <Someday appearance='task-info' checked={this.props.someday} onClick={() => this.props.onTaskSomedayClick(this.props.id, !this.props.someday)}/>
               <Priority appearance='task-info' priority={this.props.priority} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)} />
             </div>
             <div className='task-info__body'>
@@ -52,6 +54,7 @@ TaskInfo.propTypes = {
   title: React.PropTypes.string,
   completed: React.PropTypes.bool,
   today: React.PropTypes.bool,
+  someday: React.PropTypes.bool,
 
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,
@@ -85,5 +88,6 @@ TaskInfo.propTypes = {
   onContextClick: React.PropTypes.func.isRequired,
   onDateChange: React.PropTypes.func.isRequired,
   onTaskDeleteClick: React.PropTypes.func.isRequired,
-  onCloseClick: React.PropTypes.func.isRequired
+  onCloseClick: React.PropTypes.func.isRequired,
+  onTaskSomedayClick: React.PropTypes.func.isRequired
 }
