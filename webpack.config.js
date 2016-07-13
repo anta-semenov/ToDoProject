@@ -1,8 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
 var autoprefixer = require('autoprefixer')
-var carteBlanche = require('carte-blanche')
-var reactPlugin = require('carte-blanche-react-plugin')
 
 module.exports = {
   devtool: 'eval',
@@ -27,7 +25,7 @@ module.exports = {
         include: path.join(__dirname, 'src')
       },
       {
-        test: /\.less/,
+        test: /\.less$/,
         loader: 'style!css!postcss!less',
         include: path.join(__dirname, 'src')
       }

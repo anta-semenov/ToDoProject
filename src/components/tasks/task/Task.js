@@ -6,6 +6,7 @@ import { descriptionToString } from '../../../utils/descriptionTransform'
 import Today from '../../elements/today/Today'
 import Checkbox from '../../elements/checkbox/Checkbox'
 import Priority from '../../elements/priority/Priority'
+import Someday from '../../elements/someday/Someday'
 
 import './Task.less'
 
@@ -22,6 +23,7 @@ export default class Task extends React.Component {
       <li className={`task ${this.props.completed ? 'is-completed' : ''} ${this.props.active ? 'is-active' : ''} ${this.props.latent && !this.props.completed ? 'is-latent-today' : ''} `}>
         <Checkbox appearance={appearance} checked={this.props.completed} dimmed={this.props.latent && !this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
         <Today appearance={appearance} checked={this.props.today} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)} />
+        <Someday appearance={appearance} checked={this.props.someday} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={() => this.props.onTaskSomedayClick(this.props.id, !this.props.someday)}/>
         <Priority appearance={appearance} priority={this.props.priority} dimmed={this.props.latent && !this.props.completed} disabled={this.props.completed} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)}/>
         <div className='task__body' onClick={(e) => e.target !== this.refs.trackingBtn ? this.props.onTaskClick(this.props.id) : null } >
           <div className='task__main'>
@@ -31,9 +33,9 @@ export default class Task extends React.Component {
           <div className='task__extra'>
             {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
             <button ref='trackingBtn' className={`task__tracking ${this.props.isTracking ? 'is-active' : ''}`} onClick={() => this.props.onTrackingClick(this.props.id)}>
-              <svg width='18px' height='18px' viewBox='0 0 18 18' version='1.1' xmlns='http://www.w3.org/2000/svg' vector-effect='non-scaling-stroke'>
+              <svg width='18px' height='18px' viewBox='0 0 18 18' version='1.1' vectorEffect='non-scaling-stroke'>
                 <g transform='translate(1.000000, 0.000000)'>
-                  <circle id={`stopwatch__bezel-${this.props.id}`} stroke='#000000' fill='none' strok-width='1' cx='9' cy='10' r='6'></circle>
+                  <circle id={`stopwatch__bezel-${this.props.id}`} stroke='#000000' fill='none' strokeWidth='1' cx='9' cy='10' r='6'></circle>
                   <g id={`stopwatch__stopwatch-${this.props.id}`}>
                     <polygon id='hand' fill='#000000' points='8 2.98944092 7 2.98944092 7.01660156 2 11 2 11 2.98944092 10 2.98944092 10 4.25482178 8 4.25482178'></polygon>
                     <path d='M9,5.45581055 C9.34204102,5.45581055 9.73310423,10.0430298 9.75054932,11 C9.75473391,11.2295507 9.5,11.4558105 9,11.4558105 C8.5,11.4558105 8.26983643,11.2215576 8.26983643,11 C8.26983643,10.0003052 8.65795898,5.45581055 9,5.45581055 Z' id='toggle' fill='#000000'></path>
@@ -59,12 +61,14 @@ Task.propTypes = {
   title: React.PropTypes.string.isRequired,
   completed: React.PropTypes.bool.isRequired,
   today: React.PropTypes.bool.isRequired,
+  someday: React.PropTypes.bool.isRequired,
 
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onPriorityClick: React.PropTypes.func.isRequired,
   onTrackingClick: React.PropTypes.func.isRequired,
+  onTaskSomedayClick: React.PropTypes.func.isRequired,
 
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,

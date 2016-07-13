@@ -5,7 +5,7 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding: 5px 3px;
+  padding: 5px 3px 5px 0;
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -35,6 +35,7 @@
   .nav-item.is-active & {
     font-weight: @font-weight-bold;
     color: @color-font-basic;
+    transition: none;
   }
 }
 
@@ -42,11 +43,11 @@
   position: relative;
   box-sizing: border-box;
   padding: 4px 2px;
-  margin: 2px;
+  margin: 2px 0;
   font-size: @font-size-basic;
   font-weight: 300;
   color: @color-font-basic;
-  width: 0.75 * @size-width-sidebar;
+  width: 100%;
   border: solid 1px @color-border-light-gray;
   border-radius: 2px;
   transition: @transition-basic;

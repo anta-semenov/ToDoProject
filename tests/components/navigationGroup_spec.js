@@ -82,13 +82,6 @@ describe('Navigation Group', () => {
   })
 
   describe('Add button render', () => {
-    it('Should render addButton titile', () => {
-      const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
-      const addButtonComponent = findRenderedDOMComponentWithClass(groupComponent, 'nav-group__add-button')
-
-      expect(addButtonComponent.textContent).to.equal('+ context')
-    })
-
     it('Should invoke addButton callback when clicked', () => {
       let callback = -12
       testGroup.addNew = () => {callback = 12}

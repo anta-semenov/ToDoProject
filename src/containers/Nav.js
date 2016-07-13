@@ -12,9 +12,9 @@ import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defau
 
 export const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
-  const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'], -1)
+  const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'])
   const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
-  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'], -1)
+  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'])
 
   const groups = [
     {
@@ -24,7 +24,7 @@ export const mapStateToProps = (state) => {
           type: sectionTypes.INBOX,
           title: sectionNames.INBOX,
           active: selectedSectionType === sectionTypes.INBOX ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.has('project') && !task.has('contexts')).size
+          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.get('someday') && !task.has('project') && !task.has('contexts')).size
         },
         {
           type: sectionTypes.TODAY,
@@ -36,6 +36,11 @@ export const mapStateToProps = (state) => {
           type: sectionTypes.NEXT,
           title: sectionNames.NEXT,
           active: selectedSectionType === sectionTypes.NEXT ? true : false
+        },
+        {
+          type: sectionTypes.SOMEDAY,
+          title: sectionNames.SOMEDAY,
+          active: selectedSectionType === sectionTypes.SOMEDAY ? true : false
         }
       ])
     },
@@ -43,7 +48,7 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: state.get('context', Map()).toList().map(item => {
+      items: state.get('context', Map()).toList().sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -59,7 +64,7 @@ export const mapStateToProps = (state) => {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: state.get('project', Map()).toList().filter(project => !project.get('completed')).map(item => {
+      items: state.get('project', Map()).toList().filter(project => !project.get('completed')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,

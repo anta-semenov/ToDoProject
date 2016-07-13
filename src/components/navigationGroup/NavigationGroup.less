@@ -6,13 +6,19 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0;
-  margin: 0 0 25px 0;
+  margin: 0 0 35px 0;
 }
 
 .nav-group__title {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 0 8px 0;
+}
+.nav-group__title-text {
   .small__title();
-  margin: 15px 0 5px 0;
-  opacity: 0;
 }
 
 .nav-group__list {
@@ -26,19 +32,47 @@
 .nav-group__add-button {
   position: relative;
   display: inline-block;
-  left: -2px;
-  margin: 12px 0;
-  padding: 3px 7px;
-  color: @color-font-light;
-  font-size: @font-size-xsmall;
-  font-weight: @font-weight-light;
+  vertical-align: sub;
+  width: 14px;
+  height: 14px;
+  margin: 0 0 0 8px;
   border: 1px solid @color-border-gray;
-  border-radius: 10px;
+  border-radius: 50%;
   cursor: pointer;
   transition: @transition-basic;
 
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: @color-border-gray;
+    transition: @transition-basic;
+  }
+  &::before {
+    width: 70%;
+    height: 1px;
+  }
+  &::after {
+    width: 1px;
+    height: 70%;
+  }
+
   &:hover {
-    color: @color-accent;
     border-color: @color-accent;
+
+    &::before,
+    &::after {
+      background-color: @color-accent;
+    }
+  }
+  &:active {
+    background-color: @color-accent;
+    &::before,
+    &::after {
+      background-color: #fff;
+    }
   }
 }

@@ -4,7 +4,7 @@ import diff from 'immutablediff'
 import { getUid, getClientId } from '../../reducer'
 
 const firebaseUpdateMiddleware = store => next => action => {
-  if (!passToFirebase(action.type) || (action.clientId && action.clientId !== getClientId(store.getState()))) {
+  if (!passToFirebase(action.type) || (action.clientId && action.clientId !== getClientId(store.getState())) || !getUid(store.getState())) {
     return next(action)
   }
   const currentState = store.getState()
@@ -22,7 +22,7 @@ const firebaseUpdateMiddleware = store => next => action => {
         } else if (parsePath(diff.path).isTrackingPath) {
           return { ...updates, [diff.path]: diff.value || null }
         } else {
-          return { ...updates, [diff.path]: diff.value || null, [priorityForPath(diff.path)]: getClientId(nextState) }
+          return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
         }
       }
       return updates
@@ -62,6 +62,7 @@ const passToFirebase = actionType =>
   actionType === actionTypes.SET_TASK_TODAY ||
   actionType === actionTypes.START_TASK_TRACKING ||
   actionType === actionTypes.STOP_TASK_TRACKING ||
+  actionType === actionTypes.SET_TASK_SOMEDAY ||
 
   actionType === actionTypes.ADD_CONTEXT ||
   actionType === actionTypes.REMOVE_CONTEXT ||

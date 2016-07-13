@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import TaskInfoTransition from '../components/taskInfo/TaskInfoTransition'
 import { getActiveItemID, getSelectedSectionType, getSelectedSectionID } from '../selectors/tasksSelector'
 import * as activeTask from '../selectors/activeTaskSelector'
-import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask, addTaskContext, removeTaskContext } from '../actions/taskActions'
+import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask, addTaskContext, removeTaskContext, setTaskSomeday } from '../actions/taskActions'
 import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import * as sectionTypes from '../constants/sectionTypes'
 
@@ -20,7 +20,8 @@ const mapStateToProps = (state) => ({
   sectionType: getSelectedSectionType(state),
   sectionId: getSelectedSectionID(state),
   projects: state.get('project', undefined),
-  contexts: state.get('context')
+  contexts: state.get('context'),
+  someday: activeTask.getSomeday(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -31,7 +32,14 @@ const mapDispatchToProps = dispatch => ({
   onTaskTodayClick: (taskId, status, sectionType) => {
     if (sectionType === sectionTypes.TODAY) {dispatch(toggleTaskLatency(taskId, !status))}
     if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
+    if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, status))}
     dispatch(setTaskToday(taskId, status))
+  },
+  onTaskSomedayClick: (taskId, status, sectionType) => {
+    if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, !status))}
+    if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
+    if (sectionType === sectionTypes.NEXT) {dispatch(toggleTaskLatency(taskId, status))}
+    dispatch(setTaskSomeday(taskId, status))
   },
   onPriorityClick: (taskId, priority) => dispatch(editTask(taskId, {priority})),
   onTitleChange: (taskId, title) => dispatch(editTask(taskId, {title})),
@@ -63,6 +71,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, ownProps, stateProps, Object.assign({}, dispatchProps, {
   onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
+  onTaskSomedayClick: (taskId, status) => dispatchProps.onTaskSomedayClick(taskId, status, stateProps.sectionType),
   onProjectChange: (taskId, projectId) => dispatchProps.onProjectChange(taskId, projectId, stateProps.sectionType, stateProps.sectionId),
   onContextClick: (taskId, contextId, contextStatus) => dispatchProps.onContextClick(taskId, contextId, contextStatus, stateProps.sectionType, stateProps.sectionId)
 }))
