@@ -28,7 +28,7 @@
   &:active {
     outline: none;
   }
-  &.is-active::before {
+  &.is-checked::before {
     opacity: 0;
   }
   &.is-dimmed {
@@ -77,7 +77,7 @@
     .checkbox:hover & {
       fill: @color-accent;
     }
-    .checkbox.is-active & {
+    .checkbox.is-checked & {
       fill: #ffffff;
     }
   }
@@ -106,7 +106,7 @@
       stroke: @color-accent;
       opacity: 1;
     }
-    .checkbox.is-active & {
+    .checkbox.is-checked & {
       transform: scale(0);
     }
   }
@@ -130,7 +130,7 @@
     transform-origin: center;
     transition: @transition-basic;
 
-    .checkbox.is-active & {
+    .checkbox.is-checked & {
       transform: scale(1.1);
     }
   }

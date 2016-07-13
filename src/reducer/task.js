@@ -2,6 +2,7 @@ import { fromJS, List } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import { NEW_TASK_TITLE } from '../constants/defaults'
 import { PRIORITY_NONE } from '../constants/priorityLevels'
+import SOMEDAY_WAITING_PERIOD from '../constants/defaults'
 
 export default function task(state = fromJS({}), action) {
   switch (action.type) {
@@ -37,6 +38,8 @@ export default function task(state = fromJS({}), action) {
 
     case actionTypes.SET_STATE:
       return setState(state, action.state)
+    case actionTypes.PROCESS_STATE:
+      return processState(state)
 
     case actionTypes.START_TASK_TRACKING:
       return state.has(action.id) ? state.updateIn([action.id, 'tracking'], fromJS([]), val => val.push(fromJS({ startTime: action.startTime }))) : state
@@ -148,6 +151,23 @@ function switchTaskContext(state, taskId, contextId) {
 }
 
 const setState = (state, newState) => newState.has('task') ? newState.get('task', fromJS({})) : state
+
+const processState = (state) => {
+  return state.map(item => item.withMutations(task => {
+    //check if someday has expired
+    if (task.get('someday') && task.get('somedayDate',0) + SOMEDAY_WAITING_PERIOD >= Date.now()) {
+      task.set('someday', false)
+    }
+    //check today date
+    if (!task.get('today')) {
+      const today = new Date()
+      const taskDate = new Date(task.get('date',0))
+      if (task.get('date') && taskDate.getFullYear() === today.getFullYear() && taskDate.getMonth() === today.getMonth() && taskDate.getDate() === today.getDate()) {
+        task.set('today', true)
+      }
+    }    
+  }))
+}
 
 const removeProjectTasks = (state, projectId) => {
   return state.filter(item => item.get('project') !== projectId)

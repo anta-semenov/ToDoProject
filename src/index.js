@@ -11,7 +11,7 @@ import createLogger from 'redux-logger'
 
 const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware, createLogger()])
 store.subscribe(throttle(() => {
-  saveState(store.getState().delete('past').delete('future'))
+  saveState(store.getState())
 }, 1500))
 
 initFirebase(store)
