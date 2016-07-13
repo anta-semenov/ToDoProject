@@ -26,3 +26,5 @@ export const ADD_NEW_CONTEXT_TITLE = 'Add context'
 export const ADD_NEW_PROJECT_TITLE = 'Add project'
 
 export const DATA_TYPES = ['task', 'project', 'context', 'tracking']
+
+export const SOMEDAY_WAITING_PERIOD = 31*24*60*60*1000

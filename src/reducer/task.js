@@ -87,8 +87,10 @@ function setTaskToday(state, id, status = false) {
   return state.setIn([id, 'today'], status)
 }
 
-function setTaskSomeday(state, id, status = false) {
-  return state.setIn([id, 'someday'], status)
+function setTaskSomeday(state, id, status = false, date) {
+  const newState = state.setIn([id, 'someday'], status)
+  if (status && date) {return newState.setIn([id, 'somedayDate'], date)}
+  return newState.deleteIn([id, 'somedayDate'])
 }
 
 function addTaskToProject(state, id, projectId) {
