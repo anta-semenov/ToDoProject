@@ -62,6 +62,4 @@ export const REQUEST_DATA = 'REQUEST_DATA'
 export const RECIEVE_DATA = 'RECIEVE_DATA'
 export const ERROR_DATA = 'ERROR_DATA'
 
-export const UNDO = 'UNDO'
-export const REDO = 'REDO'
-export const CLEAR_UNDO_REDO = 'CLEAR_UNDO_REDO'
+export const PROCESS_STATE = 'PROCESS_STATE'
