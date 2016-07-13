@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
-import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking } from '../actions/taskActions'
+import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking, setTaskSomeday } from '../actions/taskActions'
 import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import { removeContext, editContext } from '../actions/contextActions'
 import { removeProject, editProject, completeProject } from '../actions/projectActions'
@@ -59,6 +59,10 @@ const mapDispatchToProps = (dispatch) => {
           properties.today = true
           break
 
+          case sectionTypes.SOMEDAY:
+            properties.someday = true
+            break
+
         case sectionTypes.CONTEXT:
           properties.contexts = [sectionId]
           break
@@ -78,6 +82,7 @@ const mapDispatchToProps = (dispatch) => {
     onTaskTodayClick: (taskId, status, sectionType) => {
       if (sectionType === sectionTypes.TODAY) {dispatch(toggleTaskLatency(taskId, !status))}
       if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
+      if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, status))}
       dispatch(setTaskToday(taskId, status))
     },
     onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))},
@@ -87,6 +92,12 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(stopTaskTracking(trackingTask))
         dispatch(startTaskTracking(taskId))
       }
+    },
+    onTaskSomedayClick: (taskId, status, sectionType) => {
+      if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, !status))}
+      if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
+      if (sectionType === sectionTypes.NEXT) {dispatch(toggleTaskLatency(taskId, status))}
+      dispatch(setTaskSomeday(taskId, status))
     }
   }
 }
@@ -96,13 +107,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     onSectionNameChange: (newSectionName) => dispatchProps.onSectionNameChange(stateProps.sectionId, stateProps.sectionType, newSectionName),
     onSectionDelete: () => dispatchProps.onSectionDelete(stateProps.sectionId, stateProps.sectionType),
     onSectionComplete: () => dispatchProps.onSectionComplete(stateProps.sectionId, stateProps.sectionType, stateProps.isSectionComplete),
-    
+
     addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.sectionType, stateProps.sectionId),
     onTaskClick: dispatchProps.onTaskClick,
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
     onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
     onTaskPriorityClick: dispatchProps.onTaskPriorityClick,
-    onTrackingClick: (taskId) => dispatchProps.onTrackingClick(taskId, stateProps.trackingTask)
+    onTrackingClick: (taskId) => dispatchProps.onTrackingClick(taskId, stateProps.trackingTask),
+    onTaskSomedayClick: (taskId, status) => dispatchProps.onTaskSomedayClick(taskId, status, stateProps.sectionType)
   })
 }
 

@@ -33,6 +33,7 @@ const Tasks = props => (
             onTaskTodayClick={props.onTaskTodayClick}
             onPriorityClick={props.onTaskPriorityClick}
             onTrackingClick={props.onTrackingClick}
+            onTaskSomedayClick={props.onTaskSomedayClick}
           />
         )}
       </ul>
@@ -79,6 +80,7 @@ Tasks.propTypes = {
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
   onTrackingClick: React.PropTypes.func.isRequired,
+  onTaskSomedayClick: React.PropTypes.func.isRequired,
 
   addTask: React.PropTypes.func.isRequired
 }

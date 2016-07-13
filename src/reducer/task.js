@@ -18,6 +18,8 @@ export default function task(state = fromJS({}), action) {
       return completeTask(state, action.id, action.status, action.date)
     case actionTypes.SET_TASK_TODAY:
       return setTaskToday(state, action.id, action.status)
+    case actionTypes.SET_TASK_SOMEDAY:
+      return setTaskSomeday(state, action.id, action.status)
 
     case actionTypes.ADD_TASK_TO_PROJECT:
       return addTaskToProject(state, action.id, action.project)
@@ -83,6 +85,10 @@ function completeTask(state, id, status = false, date) {
 
 function setTaskToday(state, id, status = false) {
   return state.setIn([id, 'today'], status)
+}
+
+function setTaskSomeday(state, id, status = false) {
+  return state.setIn([id, 'someday'], status)
 }
 
 function addTaskToProject(state, id, projectId) {

@@ -14,3 +14,4 @@ export const completeTask = (id, status) => ({type: actionTypes.COMPLETE_TASK, d
 export const setTaskToday = (id, status) => ({type: actionTypes.SET_TASK_TODAY, id, status})
 export const startTaskTracking = id => ({ type: actionTypes.START_TASK_TRACKING, startTime: Date.now(), id })
 export const stopTaskTracking = id => ({ type: actionTypes.STOP_TASK_TRACKING, endTime: Date.now(), id })
+export const setTaskSomeday = (id, status) => ({type: actionTypes.SET_TASK_SOMEDAY, id, status})
