@@ -22,9 +22,10 @@ export default class TaskInfo extends React.Component {
     this.shouldComponentUpdate = PureRenderMixins.shouldComponentUpdate.bind(this)
   }
 
+
   render() {
     return (
-      <div className='task-info' ref='taskInfo' >
+      <div className='task-info' ref='taskInfo'>
         <CloseBtn appearance='task-info' ref='closeBtn' onClick={this.props.onCloseClick} />
           <div className='task-info__content'>
             <div className='task-info__controls'>
