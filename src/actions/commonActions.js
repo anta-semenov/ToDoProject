@@ -19,6 +19,8 @@ export const requestData = () => ({ type: actionTypes.REQUEST_DATA })
 export const recieveData = () => ({ type: actionTypes.RECIEVE_DATA })
 export const errorData = (error) => ({ type: actionTypes.ERROR_DATA, error })
 
+export const processState = () => ({ type: actionTypes.PROCESS_STATE })
+
 export const undo = () => ({ type: actionTypes.UNDO })
 export const redo = () => ({ type: actionTypes.REDO })
 export const clearUndoRedo = () => ({ type: actionTypes.CLEAR_UNDO_REDO})
@@ -50,6 +52,7 @@ export const recieveAuth = (userData, clientId) => (dispatch) => {
     results => {
       dispatch(recieveData())
       dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
+      dispatch(processState())
     },
     error => dispatch(errorData(error))
   )
