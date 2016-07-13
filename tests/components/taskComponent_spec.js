@@ -54,14 +54,14 @@ describe('Task component', () => {
       const taskComponent = renderIntoDocument(<Task completed={testTasks.get(0).get('completed')} />)
       const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
-      expect(checkboxComponent.className).to.include('is-checked')
+      expect(checkboxComponent.checked).to.equal(testTasks.get(0).get('completed'))
     })
     it('Should render uncomplete checkbox', () => {
       const checkboxClass = 'checkbox'
       const taskComponent = renderIntoDocument(<Task completed={testTasks.get(1).get('completed')} />)
       const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
 
-      expect(checkboxComponent.className).to.not.include('is-checked')
+      expect(checkboxComponent.checked).to.equal(testTasks.get(1).get('completed'))
     })
     it('Should invoke complete callback when change event occurs', () => {
       const checkboxClass = 'checkbox'
@@ -81,7 +81,7 @@ describe('Task component', () => {
       expect(checkedId).to.equal(-12)
       expect(checkStatus).to.equal(true)
 
-      Simulate.click(checkboxComponent)
+      Simulate.change(checkboxComponent)
       expect(checkedId).to.equal('b41sogy3s0o0')
       expect(checkStatus).to.equal(false)
     })
