@@ -1,12 +1,14 @@
 import { expect } from 'chai'
 import React, { Component } from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
+import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate, createRenderer } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 import * as navGroupTypes from '../../src/constants/navGroupTypes'
 
 import Navigation from '../../src/components/navigation/Navigation'
+
+const shallowRenderer = createRenderer()
 
 describe('Navigation', () => {
   const testClickOnItem = () => {}
@@ -69,10 +71,10 @@ describe('Navigation', () => {
     onStopEditing: () => {}
   }
   it('Should render correct amount of groups', () => {
-    const navigationComponent = renderIntoDocument(<Navigation {...testProps} />)
-    const groupComponents = scryRenderedDOMComponentsWithClass(navigationComponent, 'nav-group')
+    shallowRenderer.render(<Navigation {...testProps} />)
+    const navigation = shallowRenderer.getRenderOutput()
 
-    expect(groupComponents.length).to.equal(2)
+    expect(navigation.props.children.length).to.equal(2)
   })
 
   it('Should pass correct props to groupComponents', () => {
