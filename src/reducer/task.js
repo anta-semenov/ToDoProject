@@ -28,6 +28,8 @@ const task = (state = fromJS({}), action) => {
       return addTaskToProject(state, action.id, action.project)
     case actionTypes.REMOVE_PROJECT:
       return state.filter(item => item.get('project') !== action.id)
+    case actionTypes.DELETE_PROJECT:
+      return deleteProject(state, action.id, action.status)
 
     case actionTypes.ADD_TASK_CONTEXT:
       return addTaskContext(state, action.id, action.context)
@@ -64,6 +66,7 @@ const addTask = (state, properties = {}) => {
     completed: false,
     today: false,
     priority: PRIORITY_NONE,
+    deleted: false,
     completedDeleted: false
   })
   return state.set(properties.id, newTask.merge(properties))
@@ -81,10 +84,10 @@ const editTask = (state, id, properties = {}) => {
   }
 }
 
-const deleteTask = (state, id, status = false) => state.setIn([id, 'deleted'], status).setIn([id, 'completedDeleted'], status || state.getIn([id, 'completed'], false))
+const deleteTask = (state, id, status = false) => state.withMutations(tasks => tasks.setIn([id, 'deleted'], status).setIn([id, 'completedDeleted'], status || state.getIn([id, 'completed'], false)))
 
 const completeTask = (state, id, status = false, date) => {
-  const newState = state.setIn([id, 'completed'], status).setIn([id, 'completedDeleted'], status || state.getIn([id, 'deleted'], false))
+  const newState = state.withMutations(tasks => tasks.setIn([id, 'completed'], status).setIn([id, 'completedDeleted'], status || state.getIn([id, 'deleted'], false)))
   if (status && date) {return newState.setIn([id, 'completedDate'], date)}
   return newState.deleteIn([id, 'completedDate'])
 }
@@ -103,6 +106,12 @@ const addTaskToProject = (state, id, projectId) => {
   } else {
     return state.deleteIn([id, 'project'])
   }
+}
+
+const deleteProject = (state, projectId, status = false) => {
+  return state.map(item => item.get('project') !== projectId ? item : item.withMutations(task => {
+    task.set('deleted', status).set('completedDeleted', status || task.get('completed'))
+  }))
 }
 
 const addTaskContext = (state, id, contextId) => {
@@ -167,6 +176,8 @@ const processState = (state) => state.map(item => item.withMutations(task => {
       task.set('today', true)
     }
   }
+  //completedDeleted property
+  task.set('completedDeleted', task.get('completed') || task.get('deleted', false))
 }))
 
 const removeContextFromTasks = (state, contextId) => {

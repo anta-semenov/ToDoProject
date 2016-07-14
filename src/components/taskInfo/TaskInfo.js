@@ -41,7 +41,7 @@ export default class TaskInfo extends React.Component {
                 <TaskContexts contexts={this.props.contexts} taskContexts={this.props.taskContexts} onContextClick={(context, status) => this.props.onContextClick(this.props.id, context, status)} ref='taskContexts' />
                 <TaskCalendar ref='taskCalendar' id={this.props.id} selectedDate={this.props.date ? new Date(this.props.date) : undefined} onChange={this.props.onDateChange}/>
               </div>
-              <button ref='taskDeleteBtn' className='task-info__delete' onClick={() => this.props.onTaskDeleteClick(this.props.id)} tabIndex='0' >Delete task</button>
+              <button ref='taskDeleteBtn' className='task-info__delete' onClick={() => this.props.onTaskDeleteClick()} tabIndex='0' >{this.props.deleted ? 'Recover task' : 'Delete task'}</button>
             </div>
           </div>
       </div>
@@ -55,6 +55,7 @@ TaskInfo.propTypes = {
   completed: React.PropTypes.bool,
   today: React.PropTypes.bool,
   someday: React.PropTypes.bool,
+  deleted: React.PropTypes.bool,
 
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,

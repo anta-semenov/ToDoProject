@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import TaskInfoTransition from '../components/taskInfo/TaskInfoTransition'
 import { getActiveItemID, getSelectedSectionType, getSelectedSectionID } from '../selectors/tasksSelector'
 import * as activeTask from '../selectors/activeTaskSelector'
-import { completeTask, setTaskToday, editTask, addTaskToProject, removeTask, addTaskContext, removeTaskContext, setTaskSomeday } from '../actions/taskActions'
+import { completeTask, setTaskToday, editTask, addTaskToProject, deleteTask, addTaskContext, removeTaskContext, setTaskSomeday } from '../actions/taskActions'
 import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import * as sectionTypes from '../constants/sectionTypes'
 
@@ -21,7 +21,8 @@ const mapStateToProps = (state) => ({
   sectionId: getSelectedSectionID(state),
   projects: state.get('project', undefined),
   contexts: state.get('context'),
-  someday: activeTask.getSomeday(state)
+  someday: activeTask.getSomeday(state),
+  deleted: activeTask.getDeleted(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -62,9 +63,11 @@ const mapDispatchToProps = dispatch => ({
     else {dispatch(removeTaskContext(taskId, contextId))}
   },
   onDateChange: (taskId, date) => dispatch(editTask(taskId, {date: date})),
-  onTaskDeleteClick: taskId => {
-    dispatch(setActiveItem())
-    dispatch(removeTask(taskId))
+  onTaskDeleteClick: (taskId, status) => {
+    dispatch(deleteTask(taskId, !status))
+    if (!status) {
+      dispatch(setActiveItem())
+    }
   },
   onCloseClick: () => dispatch(setActiveItem())
 })
@@ -73,7 +76,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign({}, ow
   onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
   onTaskSomedayClick: (taskId, status) => dispatchProps.onTaskSomedayClick(taskId, status, stateProps.sectionType),
   onProjectChange: (taskId, projectId) => dispatchProps.onProjectChange(taskId, projectId, stateProps.sectionType, stateProps.sectionId),
-  onContextClick: (taskId, contextId, contextStatus) => dispatchProps.onContextClick(taskId, contextId, contextStatus, stateProps.sectionType, stateProps.sectionId)
+  onContextClick: (taskId, contextId, contextStatus) => dispatchProps.onContextClick(taskId, contextId, contextStatus, stateProps.sectionType, stateProps.sectionId),
+  onTaskDeleteClick: () => dispatchProps.onTaskDeleteClick(stateProps.id, stateProps.deleted)
 }))
 
 const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskInfoTransition)
