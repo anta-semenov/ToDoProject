@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking, setTaskSomeday } from '../actions/taskActions'
-import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
-import { removeContext, editContext } from '../actions/contextActions'
-import { removeProject, editProject, completeProject } from '../actions/projectActions'
+import { setActiveItem, toggleTaskLatency} from '../actions/uiStateActions'
+import { deleteContext, editContext } from '../actions/contextActions'
+import { deleteProject, editProject, completeProject } from '../actions/projectActions'
 import { getTasksGroups, getActiveItemID, getLatentTasks } from '../selectors/tasksSelector'
 import { getTrackingTaskId, getSelectedSectionName, getSelectedSectionType, getSelectedSectionId, isSelectedSectionComplete } from '../reducer'
 import * as sectionTypes from '../constants/sectionTypes'
@@ -39,10 +39,10 @@ const mapDispatchToProps = (dispatch) => {
     onSectionDelete: (sectionId, sectionType) => {
       switch (sectionType) {
         case sectionTypes.PROJECT:
-          dispatch(removeProject(sectionId))
+          dispatch(deleteProject(sectionId, true))
           break
         case sectionTypes.CONTEXT:
-          dispatch(removeContext(sectionId))
+          dispatch(deleteContext(sectionId, true))
           break
       }
     },

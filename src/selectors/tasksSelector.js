@@ -28,7 +28,7 @@ const groupTasksByProject = (tasks, projects) => {
 // Composable selectors
 const getTasks = createSelector(
   [getAllTasks, getLatentTasks],
-  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed', false) || latentTasks.has(task.get('id'))).sort((a, b) => {
+  (allTasks, latentTasks) => allTasks.filter(task => (!task.get('completed', false) || latentTasks.has(task.get('id'))) && !task.get('deleted', false)).sort((a, b) => {
     return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
             PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
             a.get('id') > b.get('id') ? 1 :
