@@ -6,12 +6,5 @@ before_script:
   - npm install -g webpack
 
 script:
-  - npm install
-  - webpack --config webpack.prod.js
-  - cp index.prod.html dist/index.html
-
-install:
-  - npm install firebase-tools -g
-
-after_success:
-  - firebase deploy --only hosting --token ${FIREBASE_TOKEN}
+  - npm run deploy
+  - bash ./.deploy.sh
