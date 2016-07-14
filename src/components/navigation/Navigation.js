@@ -3,30 +3,20 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import './Navigation.less'
 import NavigationGroup from '../navigationGroup/NavigationGroup'
 
-export default class Navigation extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return (
-      <ul className='nav'>
-        {this.props.groups.map((group, index) =>
-          <NavigationGroup
-            key={index} //We should pass unique identificator for array items
-            items={group.items}
-            title={group.title}
-            onItemClick={this.props.onItemClick}
-            type={group.type}
-            addNewTitle={group.addNewTitle}
-            addNew={this.props.addNew}
-            onStopEditing={this.props.onStopEditing}
-          />
-        )}
-      </ul>
-    )
-  }
-}
+const Navigation = ({ groups, ...rest }) => (
+  <ul className='nav'>
+    {groups.map((group, index) =>
+      <NavigationGroup
+        {...rest}
+        key={index}
+        items={group.items}
+        title={group.title}
+        type={group.type}
+        addNewTitle={group.addNewTitle}
+      />
+    )}
+  </ul>
+)
 
 Navigation.propTypes = {
   groups: React.PropTypes.arrayOf(
@@ -50,3 +40,5 @@ Navigation.propTypes = {
   addNew: React.PropTypes.func,
   onStopEditing: React.PropTypes.func
 }
+
+export default Navigation

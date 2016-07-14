@@ -1,7 +1,7 @@
 import React from 'react'
 import './Stopwatch.less'
 
-const Stopwatch = ({ appearance = 'tasks-list', tracking = false, onClick}) => {
+const Stopwatch = ({ appearance = 'tasks-list', tracking = false, onClick }) => {
   return (
     <div className={`stopwatch--${appearance}${tracking ? ' is-tracking' : ''}`} onClick={() => onClick()}>
       <svg className={`stopwatch__svg--${appearance}${tracking ? ' is-tracking' : ''}`} width='18px' height='18px' viewBox='0 0 18 18' version='1.1' vectorEffect='non-scaling-stroke'>

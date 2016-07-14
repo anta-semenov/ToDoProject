@@ -1,8 +1,8 @@
 import React from 'react'
 import './Loader.less'
 
-const Loader = (props) => (
-  <div className={`loader loader--${props.appearance}`}>
+const Loader = ({ appearance = 'default' }) => (
+  <div className={`loader loader--${appearance}`}>
     <div className='loader__indicator' />
     <div className='loader__indicator' />
     <div className='loader__indicator' />
@@ -11,8 +11,5 @@ const Loader = (props) => (
 
 Loader.propTypes = {
   appearance: React.PropTypes.oneOf(['default', 'sidebar'])
-}
-Loader.defaultProps = {
-  appearance: 'default'
 }
 export default Loader
