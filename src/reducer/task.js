@@ -2,6 +2,7 @@ import { fromJS, List } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import { NEW_TASK_TITLE } from '../constants/defaults'
 import { PRIORITY_NONE } from '../constants/priorityLevels'
+import SOMEDAY_WAITING_PERIOD from '../constants/defaults'
 
 const task = (state = fromJS({}), action) => {
   switch (action.type) {
@@ -41,6 +42,8 @@ const task = (state = fromJS({}), action) => {
 
     case actionTypes.SET_STATE:
       return setState(state, action.state)
+    case actionTypes.PROCESS_STATE:
+      return processState(state)
 
     case actionTypes.START_TASK_TRACKING:
       return state.has(action.id) ? state.updateIn([action.id, 'tracking'], fromJS([]), val => val.push(fromJS({ startTime: action.startTime }))) : state
@@ -160,14 +163,6 @@ const switchTaskContext = (state, taskId, contextId) => {
 
 const setState = (state, newState) => newState.has('task') ? newState.get('task', fromJS({})) : state
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-const removeProjectTasks = (state, projectId) => {
-  return state.filter(item => item.get('project') !== projectId)
-}
-=======
-=======
->>>>>>> perf
 const processState = (state) => state.map(item => item.withMutations(task => {
   //check if someday has expired
   if (task.get('someday') && task.get('somedayDate',0) + SOMEDAY_WAITING_PERIOD >= Date.now()) {
@@ -184,10 +179,6 @@ const processState = (state) => state.map(item => item.withMutations(task => {
   //completedDeleted property
   task.set('completedDeleted', task.get('completed') || task.get('deleted', false))
 }))
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> perf
 
 const removeContextFromTasks = (state, contextId) => {
   return state.map(task => {
