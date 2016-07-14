@@ -8,6 +8,10 @@ export function removeProject(id) {
   return {type: actionTypes.REMOVE_PROJECT, id}
 }
 
+export function deleteProject(id, status) {
+  return {type: actionTypes.DELETE_PROJECT, id, status}
+}
+
 export const completeProject = (id, status) => ({ type: actionTypes.COMPLETE_PROJECT, date: status ? Date.now() : undefined, id, status })
 
 export function editProject(id, properties) {

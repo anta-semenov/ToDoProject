@@ -20,3 +20,4 @@ export const getDate = createSelector([getActiveTask], activeTask => activeTask 
 export const getProject = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('project') : undefined)
 export const getContexts = createSelector([getActiveTask], activeTask => activeTask ? Set(activeTask.get('contexts')) : undefined)
 export const getSomeday = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('someday', false) : undefined)
+export const getDeleted = createSelector([getActiveTask], activeTask => activeTask ? activeTask.get('deleted', false) : undefined)
