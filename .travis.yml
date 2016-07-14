@@ -3,6 +3,7 @@ node_js:
   - node
 
 script:
+  - npm install
   - npm run deploy
   - cp index.prod.html dist/index.html
   - bash ./.deploy.sh
