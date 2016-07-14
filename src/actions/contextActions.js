@@ -8,6 +8,10 @@ import * as actionTypes from '../constants/actionTypes'
    return {type: actionTypes.REMOVE_CONTEXT, id}
  }
 
+ export function deleteContext(id, status) {
+   return {type: actionTypes.DELETE_CONTEXT, id, status}
+ }
+
  export function editContext(id, properties) {
    return {type: actionTypes.EDIT_CONTEXT, id, properties}
  }
