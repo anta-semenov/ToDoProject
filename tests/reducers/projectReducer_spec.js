@@ -4,6 +4,7 @@ import reducer from '../../src/reducer/project'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_PROJECT_TITLE } from '../../src/constants/defaults'
 import * as commonActions from '../../src/actions/commonActions'
+import { deleteProject } from '../../src/actions/projectActions'
 
 describe('Project reducer', () => {
   it('Should return initial state', () => {
@@ -45,7 +46,9 @@ describe('Project reducer', () => {
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
           title: NEW_PROJECT_TITLE,
-          completed: false
+          completed: false,
+          deleted: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(fromJS(nextState))
@@ -65,7 +68,9 @@ describe('Project reducer', () => {
           id: 'bh52ogy5s0fm',
           title: 'New Custom Project',
           description: 'Project description',
-          completed: false
+          completed: false,
+          deleted: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(fromJS(nextState))
@@ -94,7 +99,9 @@ describe('Project reducer', () => {
         bh32ogy5s0fm: {
           id: 'bh32ogy5s0fm',
           title: 'New Custom Project',
-          completed: false
+          completed: false,
+          deleted: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -376,7 +383,8 @@ describe('Project reducer', () => {
           id: 'bh32ogy5s0fm',
           title: 'New Custom Project',
           completed: true,
-          completedDate: 1467200092084
+          completedDate: 1467200092084,
+          completedDeleted: true
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -412,7 +420,8 @@ describe('Project reducer', () => {
           id: 'bh32ogy5s0fm',
           title: 'New Custom Project',
           completed: true,
-          completedDate: 1468200092084
+          completedDate: 1468200092084,
+          completedDeleted: true
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -447,7 +456,8 @@ describe('Project reducer', () => {
         bh32ogy5s0fm: {
           id: 'bh32ogy5s0fm',
           title: 'New Custom Project',
-          completed: false
+          completed: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -481,7 +491,8 @@ describe('Project reducer', () => {
         bh32ogy5s0fm: {
           id: 'bh32ogy5s0fm',
           title: 'New Custom Project',
-          completed: false
+          completed: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -514,7 +525,8 @@ describe('Project reducer', () => {
         bh32ogy5s0fm: {
           id: 'bh32ogy5s0fm',
           title: 'New Custom Project',
-          completed: false
+          completed: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -546,7 +558,206 @@ describe('Project reducer', () => {
         bh32ogy5s0fm: {
           id: 'bh32ogy5s0fm',
           title: 'New Custom Project',
+          completed: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
+  describe('Delete project', () => {
+    it('Should handle DELETE_PROJECT with true status', () => {
+      const initialState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
           completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false
+        }
+      })
+      const action = deleteProject('bh32ogy5s0fm', true)
+
+      const nextState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false,
+          deleted: true,
+          completedDeleted: true
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT with true status and true delete', () => {
+      const initialState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false,
+          deleted: true
+        }
+      })
+      const action = deleteProject('bh32ogy5s0fm', true)
+
+      const nextState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false,
+          deleted: true,
+          completedDeleted: true
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT with empty status and true delete', () => {
+      const initialState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false,
+          deleted: true
+        }
+      })
+      const action = deleteProject('bh32ogy5s0fm')
+
+      const nextState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false,
+          deleted: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT with false status', () => {
+      const initialState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: true,
+          deleted: true
+        }
+      })
+      const action = deleteProject('bh32ogy5s0fm', false)
+
+      const nextState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: true,
+          deleted: false,
+          completedDeleted: true
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT with false status and false delete', () => {
+      const initialState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false,
+          deleted: false
+        }
+      })
+      const action = deleteProject('bh32ogy5s0fm', false)
+
+      const nextState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: false,
+          deleted: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT with empty status', () => {
+      const initialState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: true
+        }
+      })
+      const action = deleteProject('bh32ogy5s0fm')
+
+      const nextState = fromJS({
+        bh52ogy5s0fm: {
+          id: 'bh52ogy5s0fm',
+          title: 'Existing Project',
+          completed: false
+        },
+        bh32ogy5s0fm: {
+          id: 'bh32ogy5s0fm',
+          title: 'New Custom Project',
+          completed: true,
+          deleted: false,
+          completedDeleted: true
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
