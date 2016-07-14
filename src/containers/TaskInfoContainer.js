@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 
 import TaskInfoTransition from '../components/taskInfo/TaskInfoTransition'
-import { getActiveItemID, getSelectedSectionType, getSelectedSectionID } from '../selectors/tasksSelector'
+import { getActiveItemID } from '../selectors/tasksSelector'
 import * as activeTask from '../selectors/activeTaskSelector'
 import { completeTask, setTaskToday, editTask, addTaskToProject, deleteTask, addTaskContext, removeTaskContext, setTaskSomeday } from '../actions/taskActions'
 import { setActiveItem, toggleTaskLatency } from '../actions/uiStateActions'
 import * as sectionTypes from '../constants/sectionTypes'
+import { getProjects, getContexts, getSelectedSectionType, getSelectedSectionId } from '../reducer'
 
 const mapStateToProps = (state) => ({
   id: getActiveItemID(state),
@@ -18,9 +19,9 @@ const mapStateToProps = (state) => ({
   taskContexts: activeTask.getContexts(state),
   date: activeTask.getDate(state),
   sectionType: getSelectedSectionType(state),
-  sectionId: getSelectedSectionID(state),
-  projects: state.get('project', undefined),
-  contexts: state.get('context'),
+  sectionId: getSelectedSectionId(state),
+  projects: getProjects(state),
+  contexts: getContexts(state),
   someday: activeTask.getSomeday(state),
   deleted: activeTask.getDeleted(state)
 })

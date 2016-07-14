@@ -74,3 +74,9 @@ const setState = (state, newState) => newState.has('project') ? newState.get('pr
 const processState = (state) => state.map(item => item.withMutations(project => {
   project.set('completedDeleted', project.get('completed') || project.get('deleted', false))
 }))
+
+/*
+ * Selectors
+ */
+
+export const getProjects = (state = fromJS({})) => state.filter(project => !project.get('completedDeleted'))
