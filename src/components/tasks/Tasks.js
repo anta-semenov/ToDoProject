@@ -9,39 +9,32 @@ import { DEFAULT_SIDEBAR_SIZE, DEFAULT_TASKINFO_SIZE, STANDART_SPRING } from '..
 
 import './Tasks.less'
 
-const Tasks = props => {
+const Tasks = ({ groups, activeTask, sectionName, sectionType, isSectionComplete, onSectionNameChange, onSectionDelete, onSectionComplete, addTask, ...rest }) => {
   const getDefaultStyle = () => ({ width: 0, opacity: 0 })
   const getStyle = (isActive) => ({ width: isActive ? spring(DEFAULT_TASKINFO_SIZE, STANDART_SPRING) : spring(0, STANDART_SPRING), opacity: 1 })
 
   return (
-    <Motion defaultSyle={getDefaultStyle} style={getStyle(props.activeItem)}>
+    <Motion defaultSyle={getDefaultStyle} style={getStyle(activeTask)}>
       {interpolatedStyle =>
         <div className='tasks' style={{ width: `calc(100% - ${DEFAULT_SIDEBAR_SIZE}px - ${interpolatedStyle.width}px)`, opacity: interpolatedStyle.opacity}}>
           <SectionHeader
-            sectionName={props.sectionName}
-            sectionType={props.sectionType}
-            isSectionComplete={props.isSectionComplete}
-            onSectionNameChange={props.onSectionNameChange}
-            onSectionDelete={props.onSectionDelete}
-            onSectionComplete={props.onSectionComplete}
+            sectionName={sectionName}
+            sectionType={sectionType}
+            isSectionComplete={isSectionComplete}
+            onSectionNameChange={onSectionNameChange}
+            onSectionDelete={onSectionDelete}
+            onSectionComplete={onSectionComplete}
           />
-          <AddTask addTask={props.addTask} />
-          {props.groups ?
+          <AddTask addTask={addTask} />
+          {groups ?
             <ul className='tasks__list'>
-              {props.groups.map((group, index) =>
+              {groups.toSeq().map((group, index) =>
                 <TaskGroup
+                  {...rest}
                   key={index}
                   groupTitle={group.get('title')}
                   tasks={group.get('items')}
-                  activeItem={props.activeItem}
-                  latentTasks={props.latentTasks}
-                  trackingTask={props.trackingTask}
-                  onTaskClick={props.onTaskClick}
-                  onTaskCheckboxClick={props.onTaskCheckboxClick}
-                  onTaskTodayClick={props.onTaskTodayClick}
-                  onPriorityClick={props.onTaskPriorityClick}
-                  onTrackingClick={props.onTrackingClick}
-                  onTaskSomedayClick={props.onTaskSomedayClick}
+                  activeItem={activeTask}
                 />
               )}
             </ul>
@@ -75,7 +68,7 @@ Tasks.propTypes = {
       title: React.PropTypes.string
     })
   ),
-  activeItem: React.PropTypes.string,
+  activeTask: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
   trackingTask: React.PropTypes.string,
 
@@ -91,7 +84,7 @@ Tasks.propTypes = {
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
-  onTrackingClick: React.PropTypes.func.isRequired,
+  onTaskTrackingClick: React.PropTypes.func.isRequired,
   onTaskSomedayClick: React.PropTypes.func.isRequired,
 
   addTask: React.PropTypes.func.isRequired
