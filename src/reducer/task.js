@@ -161,10 +161,13 @@ const switchTaskContext = (state, taskId, contextId) => {
 const setState = (state, newState) => newState.has('task') ? newState.get('task', fromJS({})) : state
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const removeProjectTasks = (state, projectId) => {
   return state.filter(item => item.get('project') !== projectId)
 }
 =======
+=======
+>>>>>>> perf
 const processState = (state) => state.map(item => item.withMutations(task => {
   //check if someday has expired
   if (task.get('someday') && task.get('somedayDate',0) + SOMEDAY_WAITING_PERIOD >= Date.now()) {
@@ -181,7 +184,10 @@ const processState = (state) => state.map(item => item.withMutations(task => {
   //completedDeleted property
   task.set('completedDeleted', task.get('completed') || task.get('deleted', false))
 }))
+<<<<<<< HEAD
 >>>>>>> master
+=======
+>>>>>>> perf
 
 const removeContextFromTasks = (state, contextId) => {
   return state.map(task => {

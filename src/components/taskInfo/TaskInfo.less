@@ -15,7 +15,6 @@
 
   background-color: #ffffff;
   border-left: 1px solid @color-border-light-gray;
-  font-family: 'Fira Sans', sans-serif;
 }
 
 .task-info.task-info-enter {
@@ -48,6 +47,7 @@
 
 .task-info__content {
   position: relative;
+  min-width: @size-width-task-info - 110;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;

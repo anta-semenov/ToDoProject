@@ -70,12 +70,6 @@ const passToFirebase = actionType =>
   actionType === actionTypes.REMOVE_CONTEXT ||
   actionType === actionTypes.EDIT_CONTEXT ||
   actionType === actionTypes.SWITCH_TASK_CONTEXT ||
-<<<<<<< HEAD
-
-  actionType === actionTypes.UNDO ||
-  actionType === actionTypes.REDO
-=======
   actionType === actionTypes.DELETE_CONTEXT ||
 
   actionType === actionTypes.PROCESS_STATE
->>>>>>> master
