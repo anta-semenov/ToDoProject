@@ -13,12 +13,11 @@ const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, .
   }))
   const getStyles = () => tasks.toArray().map(task => ({
     key: task.get('id'),
-    style: { opacity: spring(1, presets.gentle), height: spring(46, presets.gentle) },
+    style: { opacity: spring(1), height: spring(46) },
     data: task
   }))
   const willEnter = () => ({ opacity: 0, height: 0 })
-  const willLeave = () => ({ opacity: spring(0, presets.gentle), height: spring(0, presets.gentle) })
-  console.log(getStyles())
+  const willLeave = () => ({ opacity: spring(0), height: spring(0) })
 
   return (
     <li className='task-group'>
@@ -26,11 +25,10 @@ const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, .
       <TransitionMotion
         defaultStyles={getDefaultStyles()}
         styles={getStyles()}
-        willLeave={willLeave}
         willEnter={willEnter}
+        //willLeave={willLeave}
       >
         {styles => {
-          console.log(styles)
           return <ul className='task-group__list'>
             {styles.map(({ key, style, data }) => {
               return <Task
