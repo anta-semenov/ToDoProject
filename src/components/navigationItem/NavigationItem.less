@@ -5,11 +5,13 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding: 5px 3px 5px 0;
+  padding: 5px 3px 5px 3px;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  border: 1px solid transparent;
+  border-radius: 0.2em;
 
   &.is-active {
     cursor: default;
@@ -18,7 +20,8 @@
 }
 
 .nav-item-drop-over {
-  background-color: #c6c6c6
+  border-color: @color-border-gray;
+  background-color: @color-bg-light-gray;
 }
 
 .nav-item__title {

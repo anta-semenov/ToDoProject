@@ -6,7 +6,7 @@ import { TASK } from '../../constants/dndTypes'
 import './NavigationItem.less'
 
 const sectionTarget = {
-  canDrop: props => props.type === TODAY || props.type === SOMEDAY || props.type === PROJECT || props.type === CONTEXT && !props.editing ,
+  canDrop: props => props.type === TODAY || props.type === SOMEDAY || props.type === PROJECT || props.type === CONTEXT && !props.editing,
   drop: props => ({
     type: props.type,
     id: props.id
