@@ -1,8 +1,25 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import { DropTarget } from 'react-dnd'
+import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
+import { TASK } from '../../constants/dndTypes'
 import './NavigationItem.less'
 
-export default class NavigationItem extends React.Component {
+const sectionTarget = {
+  canDrop: props => props.type === TODAY || props.type === SOMEDAY || props.type === PROJECT || props.type === CONTEXT && !props.editing ,
+  drop: props => ({
+    type: props.type,
+    id: props.id
+  })
+}
+
+const collect = (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isHovering: monitor.isOver(),
+  canDrop: monitor.canDrop()
+})
+
+class NavigationItem extends React.Component {
   state = {text: ''}
   constructor(props) {
     super(props)
@@ -58,10 +75,12 @@ export default class NavigationItem extends React.Component {
       )
     } else {
       return(
-        <li className={`nav-item ${this.props.active ? 'is-active' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
-          <span className='nav-item__title'>{this.props.title}</span>
-          {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
-        </li>
+        this.props.connectDropTarget(
+          <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isHovering && this.props.canDrop ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
+            <span className='nav-item__title'>{this.props.title}</span>
+            {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
+          </li>
+        )
       )
     }
   }
@@ -79,3 +98,5 @@ NavigationItem.propTypes = {
   editing: React.PropTypes.bool,
   count: React.PropTypes.number
 }
+
+export default DropTarget(TASK, sectionTarget, collect)(NavigationItem)

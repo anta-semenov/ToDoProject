@@ -40,6 +40,8 @@ export default class TaskGroup extends React.Component {
                 onPriorityClick={this.props.onPriorityClick}
                 onTrackingClick={this.props.onTrackingClick}
                 onTaskSomedayClick={this.props.onTaskSomedayClick}
+                addTaskToProject={this.props.addTaskToProject}
+                addTaskContext={this.props.addTaskContext}
               />
             )}
           </FlipMove>
@@ -72,5 +74,7 @@ TaskGroup.propTypes = {
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onPriorityClick: React.PropTypes.func.isRequired,
   onTrackingClick: React.PropTypes.func.isRequired,
-  onTaskSomedayClick: React.PropTypes.func.isRequired
+  onTaskSomedayClick: React.PropTypes.func.isRequired,
+  addTaskToProject: React.PropTypes.func.isRequired,
+  addTaskContext: React.PropTypes.func.isRequired
 }
