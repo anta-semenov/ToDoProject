@@ -1,35 +1,61 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import { TransitionMotion, spring, presets } from 'react-motion'
 import Task from '../task/Task'
 
 import './TaskGroup.less'
 
 const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, ...rest}) => {
+  const getDefaultStyles = () => tasks.toArray().map(task => ({
+    key: task.get('id'),
+    style: { opacity: 0, height: 0 },
+    data: task
+  }))
+  const getStyles = () => tasks.toArray().map(task => ({
+    key: task.get('id'),
+    style: { opacity: spring(1, presets.gentle), height: spring(46, presets.gentle) },
+    data: task
+  }))
+  const willEnter = () => ({ opacity: 0, height: 0 })
+  const willLeave = () => ({ opacity: spring(0, presets.gentle), height: spring(0, presets.gentle) })
+  console.log(getStyles())
+
   return (
     <li className='task-group'>
       {groupTitle ? <div className='task-group__title'>{groupTitle}</div> : null}
-      <ul className='task-group__list'>
-        {tasks.map(task =>
-          <Task
-            {...rest}
-            key={task.get('id')}
-            id={task.get('id')}
+      <TransitionMotion
+        defaultStyles={getDefaultStyles()}
+        styles={getStyles()}
+        willLeave={willLeave}
+        willEnter={willEnter}
+      >
+        {styles => {
+          console.log(styles)
+          return <ul className='task-group__list'>
+            {styles.map(({ key, style, data }) => {
+              return <Task
+                {...rest}
+                key={key}
+                id={data.get('id')}
+                style={style}
 
-            active={activeTask === task.get('id')}
-            latent={latentTasks ? latentTasks.has(task.get('id')) : undefined}
-            tracking={trackingTask === task.get('id')}
+                active={activeTask === data.get('id')}
+                latent={latentTasks ? latentTasks.has(data.get('id')) : undefined}
+                tracking={trackingTask === data.get('id')}
 
-            completed={task.get('completed')}
-            today={task.get('today')}
-            priority={task.get('priority')}
-            someday={task.get('someday', false)}
+                completed={data.get('completed')}
+                today={data.get('today')}
+                priority={data.get('priority')}
+                someday={data.get('someday', false)}
 
-            title={task.get('title')}
-            description={task.get('description')}
-            date={task.get('date') ? new Date(task.get('date')) : undefined}
-          />
-        )}
-      </ul>
+                title={data.get('title')}
+                description={data.get('description')}
+                date={data.get('date') ? new Date(data.get('date')) : undefined}
+              />
+            })}
+          </ul>
+        }}
+      </TransitionMotion>
     </li>
   )
 }

@@ -10,10 +10,10 @@ import Stopwatch from '../../elements/stopwatch/Stopwatch'
 
 import './Task.less'
 
-const Task = ({ id, active, latent, tracking, completed, today, priority, someday, title, description, date,
+const Task = ({ id, style, active, latent, tracking, completed, today, priority, someday, title, description, date,
   onTaskCheckboxClick, onTaskTodayClick, onTaskSomedayClick, onTaskPriorityClick, onTaskClick, onTaskTrackingClick}) => {
   return (
-    <li className={`task${completed ? ' is-completed' : ''}${active ? ' is-active' : ''}${latent && !completed ? ' is-latent-today' : ''} `} >
+    <li className={`task${completed ? ' is-completed' : ''}${active ? ' is-active' : ''}${latent && !completed ? ' is-latent-today' : ''} `} style={style}>
       <Checkbox
         appearance='tasks-list'
         checked={completed}
