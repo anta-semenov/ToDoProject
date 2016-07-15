@@ -59,3 +59,9 @@ const editContext = (state, id, properties = {}) => {
 const setState = (state, newState) => newState.has('context') ? newState.get('context', fromJS({})) : state
 
 const processState = (state) => state.map(context => context.set('deleted', context.get('deleted', false)))
+
+/*
+ * Selectors
+ */
+
+export const getContexts = (state = fromJS({})) => state.filter(context => !context.get('deleted'))

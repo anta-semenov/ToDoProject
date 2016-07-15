@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { fromJS } from 'immutable'
-import context from './context'
-import project from './project'
+import context, * as fromContext from './context'
+import project, * as fromProject from './project'
 import task from './task'
 import uiState, * as fromUiState from './uiState'
 import auth, * as fromAuth from './auth.js'
@@ -30,10 +30,10 @@ export default rootReducer
 const getTasks = (state = fromJS({})) => state.get('task')
 
 // Projects
-const getProjects = (state = fromJS({})) => state.get('project')
+export const getProjects = (state = fromJS({})) => fromProject.getProjects(state.get('project'))
 
 // Contexts
-const getContexts = (state = fromJS({})) => state.get('context')
+export const getContexts = (state = fromJS({})) => fromContext.getContexts(state.get('context'))
 
 // Client Data
 export const getUid = state => fromAuth.getUid(state.get('auth'))
