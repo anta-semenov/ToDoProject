@@ -6,4 +6,32 @@
   padding: 0;
   list-style: none;
   overflow-y: auto;
+
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.nav-scroll {
+  height: 10px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: #919191;
+
+  &:hover {
+    height: 10px;
+  }
+}
+
+.nav-scroll-hover {
+  height: 10px;
+}
+
+.navigation {
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
