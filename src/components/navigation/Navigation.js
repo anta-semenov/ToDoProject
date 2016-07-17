@@ -2,52 +2,21 @@ import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import './Navigation.less'
 import NavigationGroup from '../navigationGroup/NavigationGroup'
-import { DropTarget } from 'react-dnd'
-import { TASK } from '../../constants/dndTypes'
-import flow from 'lodash/flow'
+import DropScrollTarget from '../elements/dropScrollTarget/DropScrollTarget'
 
-const scrollTarget = {
-  canDrop: () => true
-}
-
-const collectUpScroll = (connect, monitor) => ({
-  connectUpScrollTarget: connect.dropTarget(),
-  isHoveringUp: monitor.isOver()
-})
-
-const collectDownScroll = (connect, monitor) => ({
-  connectDownScrollTarget: connect.dropTarget(),
-  isHoveringDown: monitor.isOver()
-})
-
-class Navigation extends React.Component {
+export default class Navigation extends React.Component {
   constructor(props) {
     super(props)
-  }
-
-  componentDidUpdate() {
-    if (this.props.isHoveringUp && this._navScrollView.scrollTop > 0) {
-      this._intervalID = setInterval(() => {
-        if (this._navScrollView.scrollTop > 0) {
-          this._navScrollView.scrollTop -=10
-        }
-      }, 60)
-    } else if (!this.props.isHoveringUp && !this.props.isHoveringDown && this._intervalID) {
-      clearInterval(this._intervalID)
-      this._intervalID = undefined
-    } else if (this.props.isHoveringDown && this._navScrollView.scrollTop < this._navScrollView.scrollHeight - this._navScrollView.clientHeight) {
-      this._intervalID = setInterval(() => {
-        if (this._navScrollView.scrollTop < this._navScrollView.scrollHeight - this._navScrollView.clientHeight) {
-          this._navScrollView.scrollTop +=10
-        }
-      }, 60)
-    }
   }
 
   render() {
     return (
       <div className='navigation'>
-        {this.props.connectUpScrollTarget(<div className='nav-scroll' />)}
+        <DropScrollTarget className='nav-scroll' scrollCallback = {() => {
+          if (this._navScrollView.scrollTop > 0) {
+            this._navScrollView.scrollTop -=10
+          }
+        }} />
         <ul className='nav' ref={(ref) => this._navScrollView = ref} >
           {this.props.groups.map((group, index) =>
             <NavigationGroup
@@ -62,7 +31,11 @@ class Navigation extends React.Component {
             />
           )}
         </ul>
-        {this.props.connectDownScrollTarget(<div className='nav-scroll'/>)}
+        <DropScrollTarget className='nav-scroll' scrollCallback = {() => {
+          if (this._navScrollView.scrollTop < this._navScrollView.scrollHeight - this._navScrollView.clientHeight) {
+            this._navScrollView.scrollTop +=10
+          }
+        }} />
       </div>
     )
   }
@@ -90,8 +63,3 @@ Navigation.propTypes = {
   addNew: React.PropTypes.func,
   onStopEditing: React.PropTypes.func
 }
-
-export default flow(
-  DropTarget(TASK, scrollTarget, collectUpScroll),
-  DropTarget(TASK, scrollTarget, collectDownScroll)
-)(Navigation)
