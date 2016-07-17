@@ -2,6 +2,7 @@ import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import './Navigation.less'
 import NavigationGroup from '../navigationGroup/NavigationGroup'
+import DropScrollTarget from '../elements/dropScrollTarget/DropScrollTarget'
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -10,20 +11,32 @@ export default class Navigation extends React.Component {
 
   render() {
     return (
-      <ul className='nav'>
-        {this.props.groups.map((group, index) =>
-          <NavigationGroup
-            key={index} //We should pass unique identificator for array items
-            items={group.items}
-            title={group.title}
-            onItemClick={this.props.onItemClick}
-            type={group.type}
-            addNewTitle={group.addNewTitle}
-            addNew={this.props.addNew}
-            onStopEditing={this.props.onStopEditing}
-          />
-        )}
-      </ul>
+      <div className='navigation'>
+        <DropScrollTarget className='nav-scroll' scrollCallback = {() => {
+          if (this._navScrollView.scrollTop > 0) {
+            this._navScrollView.scrollTop -=10
+          }
+        }} />
+        <ul className='nav' ref={(ref) => this._navScrollView = ref} >
+          {this.props.groups.map((group, index) =>
+            <NavigationGroup
+              key={index} //We should pass unique identificator for array items
+              items={group.items}
+              title={group.title}
+              onItemClick={this.props.onItemClick}
+              type={group.type}
+              addNewTitle={group.addNewTitle}
+              addNew={this.props.addNew}
+              onStopEditing={this.props.onStopEditing}
+            />
+          )}
+        </ul>
+        <DropScrollTarget className='nav-scroll' scrollCallback = {() => {
+          if (this._navScrollView.scrollTop < this._navScrollView.scrollHeight - this._navScrollView.clientHeight) {
+            this._navScrollView.scrollTop +=10
+          }
+        }} />
+      </div>
     )
   }
 }
