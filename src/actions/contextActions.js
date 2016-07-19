@@ -17,3 +17,5 @@ import * as actionTypes from '../constants/actionTypes'
  }
 
  export const replaceContext = (id, newContext) => ({ type: actionTypes.REPLACE_CONTEXT, id, newContext })
+
+ export const changeContextPosition = (id, nextId) => ({ type: actionTypes.CHANGE_CONTEXT_POSITION, id, nextId })

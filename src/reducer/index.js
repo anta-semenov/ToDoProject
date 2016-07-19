@@ -6,6 +6,7 @@ import task from './task'
 import uiState, * as fromUiState from './uiState'
 import auth, * as fromAuth from './auth.js'
 import tracking, * as fromTracking from './tracking'
+import order from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
@@ -17,6 +18,7 @@ const rootReducer = (state, action) => {
     .set('uiState', uiState(map.get('uiState'), action))
     .set('auth', auth(map.get('auth'), action))
     .set('tracking', tracking(map.get('tracking'), action))
+    .set('order', order(map.get('order'), action))
   )
 }
 

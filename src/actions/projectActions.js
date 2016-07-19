@@ -19,3 +19,5 @@ export function editProject(id, properties) {
 }
 
 export const replaceProject = (id, newProject) => ({ type: actionTypes.REPLACE_PROJECT, id, newProject })
+
+export const changeProjectPosition = (id, nextId) => ({ type: actionTypes.CHANGE_PROJECT_POSITION, id, nextId })
