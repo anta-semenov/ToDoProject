@@ -6,6 +6,8 @@ import * as sectionNames from '../../src/constants/sectionNames'
 
 import NavigationItem from '../../src/components/navigationItem/NavigationItem'
 
+const connectDropTarget = element => element
+
 const testItem1 = {
   key: 0,
   type: sectionTypes.NEXT,
@@ -13,7 +15,8 @@ const testItem1 = {
   active: true,
   count: 4,
   editing: false,
-  onItemClick: () => {}
+  onItemClick: () => {},
+  connectDropTarget
 }
 const testItem2 = {
   key: 0,
@@ -21,7 +24,8 @@ const testItem2 = {
   title: sectionNames.NEXT,
   active: false,
   editing: false,
-  onItemClick: () => {}
+  onItemClick: () => {},
+  connectDropTarget
 }
 
 describe('Navigation Item', () => {
@@ -60,7 +64,8 @@ describe('Navigation Item', () => {
         active: true,
         count: 4,
         editing: false,
-        onItemClick: (type) => callbackParametr1 = type
+        onItemClick: (type) => callbackParametr1 = type,
+        connectDropTarget
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...testProps}/>)
@@ -86,7 +91,8 @@ describe('Navigation Item', () => {
         onItemClick: (type, id) => {
           callbackParametr1 = type
           callbackParametr2 = id
-        }
+        },
+        connectDropTarget
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...testProps}/>)
@@ -112,7 +118,8 @@ describe('Navigation Item', () => {
         active: false,
         count: 4,
         editing: true,
-        onItemClick: () => {}
+        onItemClick: () => {},
+        connectDropTarget
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
@@ -135,7 +142,8 @@ describe('Navigation Item', () => {
         active: false,
         count: 4,
         editing: true,
-        onStopEditing: (callback) => {item = callback}
+        onStopEditing: (callback) => {item = callback},
+        connectDropTarget
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
@@ -159,7 +167,8 @@ describe('Navigation Item', () => {
         active: false,
         count: 4,
         editing: true,
-        onStopEditing: (callback) => {item = callback}
+        onStopEditing: (callback) => {item = callback},
+        connectDropTarget
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
