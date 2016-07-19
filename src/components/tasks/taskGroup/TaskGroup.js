@@ -1,7 +1,7 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import FlipMove from 'react-flip-move'
-import Task from '../task/Task'
+import {TaskConnectedDragSource as Task } from '../task/Task'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 import './TaskGroup.less'

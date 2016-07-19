@@ -38,12 +38,28 @@ describe('Navigation Group', () => {
 
   describe('Correct render', () => {
     it('Should render group title', () => {
+      NavigationGroup.__Rewire__('NavigationItem', class extends Component {
+        render() {
+          return(
+            null
+          )
+        }
+      })
+
       const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
       const titleElement = findRenderedDOMComponentWithClass(groupComponent, 'nav-group__title')
 
       expect(titleElement.textContent).to.equal(sectionNames.CONTEXTS)
     })
     it('Should render correct count of items', () => {
+      NavigationGroup.__Rewire__('NavigationItem', class extends Component {
+        render() {
+          return(
+            <div className='nav-item'/>
+          )
+        }
+      })
+
       const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
       const itemElements = scryRenderedDOMComponentsWithClass(groupComponent, 'nav-item')
 
@@ -83,6 +99,14 @@ describe('Navigation Group', () => {
 
   describe('Add button render', () => {
     it('Should invoke addButton callback when clicked', () => {
+      NavigationGroup.__Rewire__('NavigationItem', class extends Component {
+        render() {
+          return(
+            null
+          )
+        }
+      })
+
       let callback = -12
       testGroup.addNew = () => {callback = 12}
 
@@ -96,4 +120,6 @@ describe('Navigation Group', () => {
       expect(callback).to.equal(12)
     })
   })
+
+  NavigationGroup.__ResetDependency__('NavigationItem')
 })

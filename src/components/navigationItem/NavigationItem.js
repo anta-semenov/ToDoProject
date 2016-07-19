@@ -19,7 +19,7 @@ const collect = (connect, monitor) => ({
   canDrop: monitor.canDrop()
 })
 
-class NavigationItem extends React.Component {
+export default class NavigationItem extends React.Component {
   state = {text: ''}
   constructor(props) {
     super(props)
@@ -99,4 +99,4 @@ NavigationItem.propTypes = {
   count: React.PropTypes.number
 }
 
-export default DropTarget(TASK, sectionTarget, collect)(NavigationItem)
+export const NavigationItemConnectedDropTarget = DropTarget(TASK, sectionTarget, collect)(NavigationItem)
