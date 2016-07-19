@@ -13,7 +13,11 @@ export default order
 /*
 Staff function
 */
-const changeOrder = (orderMap, changingId, newNextId) => {
+export const changeOrder = (orderMap, changingId, newNextId) => {
+  if (!orderMap.get(changingId) || !orderMap.get(newNextId)) {
+    return orderMap
+  }
+
   const currentNextId = orderMap.getIn([changingId, 'nextId'])
   const prevId = orderMap.findKey(item => item.get('nextId') === changingId)
   const prevNextId = orderMap.findKey(item => item.get('nextId') === newNextId)
@@ -38,16 +42,52 @@ const changeOrder = (orderMap, changingId, newNextId) => {
   })
 }
 
-const deleteId = (orderMap, id) => {
+export const deleteId = (orderMap, id) => {
+  if (!orderMap.get(id)) {
+    return orderMap
+  }
+
+  const prevId = orderMap.findKey(item => item.get('nextId') === id)
+  const nextId = orderMap.getIn([id, 'nextId'])
+
+  return orderMap.withMutations(map => {
+    map.delete(id)
+
+    if (nextId && prevId) {
+      map.setIn([prevId, 'nextId'], nextId)
+    } else if (!nextId) {
+      map.set(prevId, Map())
+    } else {
+      map.setIn([nextId, 'isFirst'], true)
+    }
+  })
 
 }
 
-const insertId = (orderMap, id) => {
-
+export const addId = (orderMap, id) => {
+  const firstId = orderMap.findKey(item => item.get('isFirst', false))
+  return orderMap.withMutations(map => {
+    map.set(id, Map({nextId: firstId, isFirst: true}))
+    .deleteIn([firstId, 'isFirst'])
+  })
 }
 
-const createOrderMap = (array) => {
+export const createOrderMap = (array) => {
+  const result = Map().asMutable()
 
+  array.forEach((value, index, array) => {
+    if (index === array.length-1) {
+      result.set(value, Map())
+    } else {
+      result.setIn([value, 'nextId'], array[index+1])
+    }
+
+    if (index === 0) {
+      result.setIn([value, 'isFirst'], true)
+    }
+  })
+
+  return result.asImmutable()
 }
 
 /*
