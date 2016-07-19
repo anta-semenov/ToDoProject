@@ -6,7 +6,7 @@ import task from './task'
 import uiState, * as fromUiState from './uiState'
 import auth, * as fromAuth from './auth.js'
 import tracking, * as fromTracking from './tracking'
-import order from './order'
+import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
@@ -88,4 +88,18 @@ export const isSelectedSectionComplete = createSelector(
         return false
     }
   }
+)
+
+// Ordered Projects
+const projectOrder = (state = fromJS({})) => fromOrder.getProjectOrder(state.get('order'))
+export const getOrderedProjectsList = createSelector(
+  [projectOrder, getProjects],
+  (order, mapForOrdering) => fromOrder.sortedList(order, mapForOrdering)
+)
+
+// Ordered Contexts
+const contextOrder = (state = fromJS({})) => fromOrder.getContextOrder(state.get('order'))
+export const getOrderedContextsList = createSelector(
+  [contextOrder, getContexts],
+  (order, mapForOrdering) => fromOrder.sortedList(order, mapForOrdering)
 )
