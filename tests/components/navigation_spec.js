@@ -9,6 +9,16 @@ import * as navGroupTypes from '../../src/constants/navGroupTypes'
 import Navigation from '../../src/components/navigation/Navigation'
 
 describe('Navigation', () => {
+  Navigation.__Rewire__('NavigationGroup', class extends Component {
+    render() {
+      return <div className='nav-group' />
+    }
+  })
+  Navigation.__Rewire__('DropScrollTarget', class extends Component {
+    render() {
+      return null
+    }
+  })
   const testClickOnItem = () => {}
   const testAddNew = () => {}
   const testStopEditing = () => {}
