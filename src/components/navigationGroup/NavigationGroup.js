@@ -3,7 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import './NavigationGroup.less'
 
-import NavigationItem from '../navigationItem/NavigationItem'
+import { NavigationItemConnectedDropTarget as NavigationItem } from '../navigationItem/NavigationItem'
 
 export default class NavigationGroup extends React.Component {
   constructor(props) {
