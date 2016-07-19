@@ -52,7 +52,7 @@ const collect = (connect, monitor) => ({
   isDragging: monitor.isDragging()
 })
 
-class Task extends React.Component {
+export default class Task extends React.Component {
   constructor(props) {
     super(props)
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
@@ -125,4 +125,4 @@ Task.propTypes = {
   isTracking: React.PropTypes.bool
 }
 
-export default DragSource(TASK, taskSource, collect)(Task)
+export const TaskConnectedDragSource = DragSource(TASK, taskSource, collect)(Task)

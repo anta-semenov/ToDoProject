@@ -6,6 +6,16 @@ import { fromJS } from 'immutable'
 import TaskGroup from '../../src/components/tasks/taskGroup/TaskGroup'
 
 describe('TaskGroup component tests', () => {
+  TaskGroup.__Rewire__('Task', class extends React.Component {
+    render() {
+      return(
+        <div className='task'>
+          <div className='task__title'>{this.props.title}</div>
+        </div>
+      )
+    }
+  })
+
   it('Should render group name if it has one', () => {
     const groupName = 'Test group'
     const groupClassName='task-group__title'
