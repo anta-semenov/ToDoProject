@@ -17,7 +17,9 @@ const sectionTarget = {
 
 const collect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isHovering: monitor.isOver(),
+  isTaskHovering: monitor.isOver() && monitor.getItemType() === TASK,
+  isSectionHovering: monitor.isOver() && monitor.getItemType() === SECTION,
+  hoveringSectionType: monitor.isOver() && monitor.getItemType() === SECTION ? monitor.getItem().type : '',
   canDrop: monitor.canDrop()
 })
 
@@ -28,7 +30,13 @@ const sectionSource = {
     type: props.type,
     id: props.id
   }),
-  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.editing && !props.isHovering && !props.isDragging
+  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.editing && !props.isHovering && !props.isDragging,
+  endDrag: (props, monitor) => {
+    const drop = monitor.getDropResult()
+    if (drop && monitor.getItemType() === SECTION && drop.type === props.type && (props.type === PROJECT || props.type === CONTEXT)) {
+      props.changePosition(props.type, props.id, drop.id)
+    }
+  }
 }
 
 const collectSource = (connect, monitor) => ({
@@ -93,12 +101,20 @@ export default class NavigationItem extends React.Component {
         </li>
       )
     } else if (this.props.isDragging) {
-      return(<li className='nav-item__dragging'/>)
+      return(<li />)
     } else {
       return(
         this.props.connectDropTarget(
           this.props.connectDragSource(
-            <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isHovering && this.props.canDrop ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
+            this.props.isSectionHovering && this.props.hoveringSectionType === this.props.type ?
+            <div>
+              <div className='nav-item__dragging'/>
+              <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isTaskHovering && this.props.canDrop && !this.props.active ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
+                {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
+                {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
+              </li>
+            </div> :
+            <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isTaskHovering && this.props.canDrop && !this.props.active ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
               {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
               {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
             </li>

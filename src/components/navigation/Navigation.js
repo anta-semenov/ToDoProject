@@ -28,6 +28,7 @@ export default class Navigation extends React.Component {
               addNewTitle={group.addNewTitle}
               addNew={this.props.addNew}
               onStopEditing={this.props.onStopEditing}
+              changePosition={this.props.changePosition}
             />
           )}
         </ul>
@@ -61,5 +62,6 @@ Navigation.propTypes = {
   ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   addNew: React.PropTypes.func,
-  onStopEditing: React.PropTypes.func
+  onStopEditing: React.PropTypes.func,
+  changePosition: React.PropTypes.func
 }
