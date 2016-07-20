@@ -44,7 +44,7 @@ export default order
 Staff function
 */
 export const changeOrder = (orderMap, changingId, newNextId) => {
-  if (!orderMap.get(changingId) || !orderMap.get(newNextId)) {
+  if (!orderMap.get(changingId) || !orderMap.get(newNextId) || orderMap.getIn([changingId, 'nextId']) === newNextId) {
     return orderMap
   }
 
@@ -56,10 +56,14 @@ export const changeOrder = (orderMap, changingId, newNextId) => {
   return orderMap.withMutations(map => {
     map.setIn([changingId, 'nextId'], newNextId)
 
-    if (currentNextId) {
+    if (currentNextId && prevId) {
       map.setIn([prevId, 'nextId'], currentNextId)
-    } else {
+    } else if (prevId) {
       map.set(prevId, Map())
+    } else if (currentNextId) {
+      //changing first elements
+      map.setIn([currentNextId, 'isFirst'], true)
+      .deleteIn([changingId, 'isFirst'])
     }
 
     if (prevNextId) {

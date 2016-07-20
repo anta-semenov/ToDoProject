@@ -170,6 +170,65 @@ describe('Order', () => {
       expect(fromOrder.getOrderedList(nextOrderedMap)).to.deep.equal(expectedOrderArray)
     })
 
+    it('Should change position of first element when newId is last element', () => {
+      const expectedOrderArray = [
+        'b41sogy3s0o3',
+        'b41sogy3s0o4',
+        'b41sogy3s0o5',
+        'b41sogy3s0o6',
+        'b41sogy3s0o7',
+        'b41sogy3s0o8',
+        'b41sogy3s0o9',
+        'b41sogy3s010',
+        'b41sogy3s011',
+        'b41sogy3s012',
+        'b41sogy3s0o2',
+        'b41sogy3s0o1'
+      ]
+
+      const nextOrderedMap = fromOrder.changeOrder(testOrderMap, 'b41sogy3s0o2', 'b41sogy3s0o1')
+
+      const expectedMap = fromJS({
+        b41sogy3s0o1: {},
+        b41sogy3s0o2: {nextId: 'b41sogy3s0o1'},
+        b41sogy3s0o4: {nextId: 'b41sogy3s0o5'},
+        b41sogy3s0o3: {nextId: 'b41sogy3s0o4', isFirst: true},
+        b41sogy3s0o7: {nextId: 'b41sogy3s0o8'},
+        b41sogy3s0o9: {nextId: 'b41sogy3s010'},
+        b41sogy3s0o8: {nextId: 'b41sogy3s0o9'},
+        b41sogy3s0o6: {nextId: 'b41sogy3s0o7'},
+        b41sogy3s010: {nextId: 'b41sogy3s011'},
+        b41sogy3s012: {nextId: 'b41sogy3s0o2'},
+        b41sogy3s0o5: {nextId: 'b41sogy3s0o6'},
+        b41sogy3s011: {nextId: 'b41sogy3s012'}
+      })
+
+      expect(nextOrderedMap).to.equal(expectedMap)
+      expect(fromOrder.getOrderedList(nextOrderedMap)).to.deep.equal(expectedOrderArray)
+    })
+
+    it('Should do nothing when nextId is the same nextId', () => {
+      const expectedOrderArray = [
+        'b41sogy3s0o2',
+        'b41sogy3s0o3',
+        'b41sogy3s0o4',
+        'b41sogy3s0o5',
+        'b41sogy3s0o6',
+        'b41sogy3s0o7',
+        'b41sogy3s0o8',
+        'b41sogy3s0o9',
+        'b41sogy3s010',
+        'b41sogy3s011',
+        'b41sogy3s012',
+        'b41sogy3s0o1'
+      ]
+
+      const nextOrderedMap = fromOrder.changeOrder(testOrderMap, 'b41sogy3s0o7', 'b41sogy3s0o8')
+
+      expect(nextOrderedMap).to.equal(testOrderMap)
+      expect(fromOrder.getOrderedList(nextOrderedMap)).to.deep.equal(expectedOrderArray)
+    })
+
     it('Should do nothing with wrong nextId', () => {
       const expectedOrderArray = [
         'b41sogy3s0o2',
