@@ -103,3 +103,15 @@ export const getOrderedContextsList = createSelector(
   [contextOrder, getContexts],
   (order, mapForOrdering) => fromOrder.sortedList(order, mapForOrdering)
 )
+
+//Order initialisation
+export const initOrderState = (fullState) => {
+  if (fullState.get('order', fromJS({})).size() === 2) {
+    return fullState
+  }
+
+  const projectOrderArray = fullState.get('project').toList().filter(project => !project.get('completedDeleted')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
+  const contextOrderArray = fullState.get('context').toList().filter(context => !context.get('deleted')).sortBy(context => context.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
+
+  return fullState.set('order', fromOrder.initState(projectOrderArray.toArray(), contextOrderArray.toArray()))
+}

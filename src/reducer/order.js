@@ -162,8 +162,4 @@ export const sortedList = (orderArray, mapForOrdering) => {
   return result.asImmutable()
 }
 
-export const initOrderState = (fullState) => {
-  if (fullState.get('order')) {
-    return fullState
-  }
-}
+export const initOrderState = (projectArray, contextArray) => Map().set('project', createOrderMap(projectArray)).set('context', createOrderMap(contextArray))
