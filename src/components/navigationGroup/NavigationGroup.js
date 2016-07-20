@@ -34,7 +34,8 @@ export default class NavigationGroup extends React.Component {
               editing={item.get('editing')}
               count={item.get('count')}
               onItemClick={this.props.onItemClick}
-              onStopEditing={this.props.onStopEditing}/>
+              onStopEditing={this.props.onStopEditing}
+              changePosition={this.props.changePosition}/>
           )}
         </ul>
       </li>
@@ -55,6 +56,7 @@ NavigationGroup.propTypes = {
   ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
+  changePosition: React.PropTypes.func,
 
   title: React.PropTypes.string,
 

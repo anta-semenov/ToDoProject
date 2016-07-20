@@ -5,6 +5,7 @@ import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
 import { TASK } from '../../constants/dndTypes'
 import './NavigationItem.less'
 
+// Drop Target
 const sectionTarget = {
   canDrop: props => props.type === TODAY || props.type === SOMEDAY || props.type === PROJECT || props.type === CONTEXT && !props.editing,
   drop: props => ({
@@ -19,6 +20,19 @@ const collect = (connect, monitor) => ({
   canDrop: monitor.canDrop()
 })
 
+
+// Drag Source
+const sectionSource = {
+  beginDrag: props => ({
+    type: props.type,
+    id: props.id
+  }),
+  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.editing && !props.isHovering
+
+}
+
+
+// React Class
 export default class NavigationItem extends React.Component {
   state = {text: ''}
   constructor(props) {
@@ -93,6 +107,7 @@ NavigationItem.propTypes = {
 
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
+  changePosition: React.func.isRequired,
 
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,
