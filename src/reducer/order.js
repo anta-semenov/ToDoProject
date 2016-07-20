@@ -1,4 +1,4 @@
-import { fromJS, Map, List } from 'immutable'
+import { fromJS, Map, List, is } from 'immutable'
 import { createSelector } from 'reselect'
 import * as actionTypes from '../constants/actionTypes'
 
@@ -44,17 +44,21 @@ export default order
 Staff function
 */
 export const changeOrder = (orderMap, changingId, newNextId) => {
-  if (!orderMap.get(changingId) || !orderMap.get(newNextId) || orderMap.getIn([changingId, 'nextId']) === newNextId) {
+  if (!orderMap.get(changingId) || (!orderMap.get(newNextId) && newNextId) || orderMap.getIn([changingId, 'nextId']) === newNextId) {
     return orderMap
   }
 
   const currentNextId = orderMap.getIn([changingId, 'nextId'])
   const prevId = orderMap.findKey(item => item.get('nextId') === changingId)
-  const prevNextId = orderMap.findKey(item => item.get('nextId') === newNextId)
+  const prevNextId = newNextId ? orderMap.findKey(item => item.get('nextId') === newNextId) : orderMap.findKey(item => is(item, Map()))
   const willBeFirst = prevNextId === undefined
 
   return orderMap.withMutations(map => {
-    map.setIn([changingId, 'nextId'], newNextId)
+    if (newNextId) {
+      map.setIn([changingId, 'nextId'], newNextId)
+    } else {
+      map.set(changingId, Map())
+    }
 
     if (currentNextId && prevId) {
       map.setIn([prevId, 'nextId'], currentNextId)

@@ -49,7 +49,7 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: getOrderedContextsList(state).map(item => {
+      items: getOrderedContextsList(state).push(fromJS({type: sectionTypes.CONTEXT})).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -65,7 +65,7 @@ export const mapStateToProps = (state) => {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: getOrderedProjectsList(state).map(item => {
+      items: getOrderedProjectsList(state).push(fromJS({type: sectionTypes.PROJECT})).map(item => {
         const id = item.get('id')
         return fromJS({
           id: id,
