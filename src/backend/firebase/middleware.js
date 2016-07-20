@@ -52,6 +52,7 @@ const passToFirebase = actionType =>
   actionType === actionTypes.COMPLETE_PROJECT ||
   actionType === actionTypes.EDIT_PROJECT ||
   actionType === actionTypes.DELETE_PROJECT ||
+  actionType === actionTypes.CHANGE_PROJECT_POSITION ||
 
   actionType === actionTypes.ADD_TASK ||
   actionType === actionTypes.REMOVE_TASK ||
@@ -71,5 +72,6 @@ const passToFirebase = actionType =>
   actionType === actionTypes.EDIT_CONTEXT ||
   actionType === actionTypes.SWITCH_TASK_CONTEXT ||
   actionType === actionTypes.DELETE_CONTEXT ||
+  actionType === actionTypes.CHANGE_CONTEXT_POSITION ||
 
   actionType === actionTypes.PROCESS_STATE
