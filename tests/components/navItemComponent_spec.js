@@ -7,6 +7,8 @@ import * as sectionNames from '../../src/constants/sectionNames'
 import NavigationItem from '../../src/components/navigationItem/NavigationItem'
 
 const connectDropTarget = element => element
+const connectDragSource = element => element
+const connectDragPreview = element => element
 
 const testItem1 = {
   key: 0,
@@ -16,7 +18,9 @@ const testItem1 = {
   count: 4,
   editing: false,
   onItemClick: () => {},
-  connectDropTarget
+  connectDropTarget,
+  connectDragSource,
+  connectDragPreview
 }
 const testItem2 = {
   key: 0,
@@ -25,7 +29,9 @@ const testItem2 = {
   active: false,
   editing: false,
   onItemClick: () => {},
-  connectDropTarget
+  connectDropTarget,
+  connectDragSource,
+  connectDragPreview
 }
 
 describe('Navigation Item', () => {
@@ -65,7 +71,9 @@ describe('Navigation Item', () => {
         count: 4,
         editing: false,
         onItemClick: (type) => callbackParametr1 = type,
-        connectDropTarget
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...testProps}/>)
@@ -92,7 +100,9 @@ describe('Navigation Item', () => {
           callbackParametr1 = type
           callbackParametr2 = id
         },
-        connectDropTarget
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...testProps}/>)
@@ -119,7 +129,9 @@ describe('Navigation Item', () => {
         count: 4,
         editing: true,
         onItemClick: () => {},
-        connectDropTarget
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
@@ -143,7 +155,9 @@ describe('Navigation Item', () => {
         count: 4,
         editing: true,
         onStopEditing: (callback) => {item = callback},
-        connectDropTarget
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
@@ -168,7 +182,9 @@ describe('Navigation Item', () => {
         count: 4,
         editing: true,
         onStopEditing: (callback) => {item = callback},
-        connectDropTarget
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
       const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
