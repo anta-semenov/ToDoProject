@@ -5,6 +5,7 @@ import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
 import { TASK, SECTION } from '../../constants/dndTypes'
 import './NavigationItem.less'
 import flow from 'lodash/flow'
+import { Motion, spring } from 'react-motion'
 
 // Drop Target
 const sectionTarget = {
@@ -87,6 +88,8 @@ export default class NavigationItem extends React.Component {
   }
 
   render() {
+    const style = this.props.isSectionHovering && this.props.hoveringSectionType === this.props.type ? {height: spring(20)} : {height: spring(0)}
+
     if (this.props.editing) {
       return(
         <li>
@@ -106,18 +109,16 @@ export default class NavigationItem extends React.Component {
       return(
         this.props.connectDropTarget(
           this.props.connectDragSource(
-            this.props.isSectionHovering && this.props.hoveringSectionType === this.props.type ?
             <div>
-              <div className='nav-item__dragging'/>
-              <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isTaskHovering && this.props.canDrop && !this.props.active ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
+              <Motion style={style}>
+                  {({height}) =><div style={{height: `${height}px`}}/>}
+              </Motion>
+              <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isTaskHovering && this.props.canDrop && !this.props.active ? 'nav-item-drop-over' : ''} ${this.props.isSectionHovering && this.props.canDrop && this.props.type === this.props.hoveringSectionType ? 'nav-item-drop-over-section' : ''}`}
+                onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
                 {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
                 {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
               </li>
-            </div> :
-            <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isTaskHovering && this.props.canDrop && !this.props.active ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
-              {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
-              {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
-            </li>
+            </div>
           )
         )
       )
