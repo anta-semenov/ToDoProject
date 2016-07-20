@@ -1,6 +1,6 @@
 import React from 'react'
 import { DropTarget } from 'react-dnd'
-import { TASK } from '../../../constants/dndTypes'
+import { TASK, SECTION } from '../../../constants/dndTypes'
 
 const scrollTarget = {
   canDrop: () => false
@@ -33,4 +33,4 @@ DropScrollTarget.propTypes = {
   className: React.PropTypes.string
 }
 
-export default DropTarget(TASK, scrollTarget, collect)(DropScrollTarget)
+export default DropTarget([TASK, SECTION], scrollTarget, collect)(DropScrollTarget)

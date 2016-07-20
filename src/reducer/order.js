@@ -33,9 +33,6 @@ const order = (state = fromJS({}), action) => {
     case actionTypes.CHANGE_CONTEXT_POSITION:
       return state.updateIn(['context'], orderMap => changeOrder(orderMap, action.id, action.nextId))
 
-    // common
-    case actionTypes.PROCESS_STATE:
-      return initState(state)
     default:
       return state
   }
@@ -162,4 +159,4 @@ export const sortedList = (orderArray, mapForOrdering) => {
   return result.asImmutable()
 }
 
-export const initOrderState = (projectArray, contextArray) => Map().set('project', createOrderMap(projectArray)).set('context', createOrderMap(contextArray))
+export const initState = (projectArray, contextArray) => Map().set('project', createOrderMap(projectArray)).set('context', createOrderMap(contextArray))

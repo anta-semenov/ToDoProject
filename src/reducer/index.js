@@ -106,7 +106,7 @@ export const getOrderedContextsList = createSelector(
 
 //Order initialisation
 export const initOrderState = (fullState) => {
-  if (fullState.get('order', fromJS({})).size() === 2) {
+  if (fullState.get('order', fromJS({})).size === 2) {
     return fullState
   }
 

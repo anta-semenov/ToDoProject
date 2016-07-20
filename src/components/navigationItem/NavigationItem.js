@@ -1,13 +1,14 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import { DropTarget } from 'react-dnd'
+import { DropTarget, DragSource } from 'react-dnd'
 import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
-import { TASK } from '../../constants/dndTypes'
+import { TASK, SECTION } from '../../constants/dndTypes'
 import './NavigationItem.less'
+import flow from 'lodash/flow'
 
 // Drop Target
 const sectionTarget = {
-  canDrop: props => props.type === TODAY || props.type === SOMEDAY || props.type === PROJECT || props.type === CONTEXT && !props.editing,
+  canDrop: props => props.type === TODAY || props.type === SOMEDAY || props.type === PROJECT || props.type === CONTEXT && !props.active && !props.editing,
   drop: props => ({
     type: props.type,
     id: props.id
@@ -27,10 +28,14 @@ const sectionSource = {
     type: props.type,
     id: props.id
   }),
-  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.editing && !props.isHovering
-
+  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.editing && !props.isHovering && !props.isDragging
 }
 
+const collectSource = (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging()
+})
 
 // React Class
 export default class NavigationItem extends React.Component {
@@ -87,13 +92,17 @@ export default class NavigationItem extends React.Component {
           />
         </li>
       )
+    } else if (this.props.isDragging) {
+      return(<li className='nav-item__dragging'/>)
     } else {
       return(
         this.props.connectDropTarget(
-          <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isHovering && this.props.canDrop ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
-            <span className='nav-item__title'>{this.props.title}</span>
-            {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
-          </li>
+          this.props.connectDragSource(
+            <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isHovering && this.props.canDrop ? 'nav-item-drop-over' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
+              {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
+              {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
+            </li>
+          )
         )
       )
     }
@@ -107,11 +116,14 @@ NavigationItem.propTypes = {
 
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
-  changePosition: React.func.isRequired,
+  changePosition: React.PropTypes.func.isRequired,
 
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,
   count: React.PropTypes.number
 }
 
-export const NavigationItemConnectedDropTarget = DropTarget(TASK, sectionTarget, collect)(NavigationItem)
+export const NavigationItemConnectedDropTarget = flow(
+  DropTarget([TASK, SECTION], sectionTarget, collect),
+  DragSource(SECTION, sectionSource, collectSource)
+)(NavigationItem)
