@@ -1,8 +1,41 @@
 import { fromJS, Map, List } from 'immutable'
 import { createSelector } from 'reselect'
+import * as actionTypes from '../constants/actionTypes'
 
 const order = (state = fromJS({}), action) => {
   switch (action.type) {
+    //projects
+    case actionTypes.DELETE_PROJECT:
+    case actionTypes.COMPLETE_PROJECT:
+      if (action.status) {
+        return state.updateIn(['project'], orderMap => deleteId(orderMap, action.id))
+      } else {
+        return state.updateIn(['project'], orderMap => addId(orderMap, action.id))
+      }
+    case actionTypes.REMOVE_PROJECT:
+      return state.updateIn(['project'], orderMap => deleteId(orderMap, action.id))
+    case actionTypes.ADD_PROJECT:
+      return state.updateIn(['project'], orderMap => addId(orderMap, action.id))
+    case actionTypes.CHANGE_PROJECT_POSITION:
+      return state.updateIn(['project'], orderMap => changeOrder(orderMap, action.id, action.nextId))
+
+    //contexts
+    case actionTypes.DELETE_CONTEXT:
+      if (action.status) {
+        return state.updateIn(['context'], orderMap => deleteId(orderMap, action.id))
+      } else {
+        return state.updateIn(['context'], orderMap => addId(orderMap, action.id))
+      }
+    case actionTypes.REMOVE_CONTEXT:
+      return state.updateIn(['context'], orderMap => deleteId(orderMap, action.id))
+    case actionTypes.ADD_CONTEXT:
+      return state.updateIn(['context'], orderMap => addId(orderMap, action.id))
+    case actionTypes.CHANGE_CONTEXT_POSITION:
+      return state.updateIn(['context'], orderMap => changeOrder(orderMap, action.id, action.nextId))
+
+    // common
+    case actionTypes.PROCESS_STATE:
+      return initState(state)
     default:
       return state
   }
@@ -127,4 +160,10 @@ export const sortedList = (orderArray, mapForOrdering) => {
   })
 
   return result.asImmutable()
+}
+
+export const initOrderState = (fullState) => {
+  if (fullState.get('order')) {
+    return fullState
+  }
 }
