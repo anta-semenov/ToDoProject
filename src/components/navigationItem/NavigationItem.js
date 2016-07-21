@@ -21,7 +21,8 @@ const collect = (connect, monitor) => ({
   isTaskHovering: monitor.isOver() && monitor.getItemType() === TASK,
   isSectionHovering: monitor.isOver() && monitor.getItemType() === SECTION,
   hoveringSectionType: monitor.isOver() && monitor.getItemType() === SECTION ? monitor.getItem().type : '',
-  canDrop: monitor.canDrop()
+  canDrop: monitor.canDrop(),
+  didDrop: monitor.didDrop()
 })
 
 
@@ -88,7 +89,7 @@ export default class NavigationItem extends React.Component {
   }
 
   render() {
-    const style = this.props.isSectionHovering && this.props.hoveringSectionType === this.props.type ? {height: spring(20)} : {height: spring(0)}
+    const style = this.props.isSectionHovering && this.props.hoveringSectionType === this.props.type ? {height: spring(26)} : {height: spring(0)}
 
     if (this.props.editing) {
       return(
@@ -104,15 +105,22 @@ export default class NavigationItem extends React.Component {
         </li>
       )
     } else if (this.props.isDragging) {
-      return(<li />)
+      return(
+        //<li />
+        <Motion defaultStyle={{height: 18}} style={{height: spring(0)}}>
+          {({height}) => <li style={{height: `${height}px`}}/>}
+        </Motion>
+      )
     } else {
       return(
         this.props.connectDropTarget(
           this.props.connectDragSource(
             <div>
-              <Motion style={style}>
+              {this.props.didDrop ?
+                null:
+                <Motion style={style}>
                   {({height}) =><div style={{height: `${height}px`}}/>}
-              </Motion>
+                </Motion>}
               <li className={`nav-item ${this.props.active ? 'is-active' : ''} ${this.props.isTaskHovering && this.props.canDrop && !this.props.active ? 'nav-item-drop-over' : ''} ${this.props.isSectionHovering && this.props.canDrop && this.props.type === this.props.hoveringSectionType ? 'nav-item-drop-over-section' : ''}`}
                 onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
                 {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}

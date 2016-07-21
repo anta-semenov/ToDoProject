@@ -8,30 +8,30 @@ const order = (state = fromJS({}), action) => {
     case actionTypes.DELETE_PROJECT:
     case actionTypes.COMPLETE_PROJECT:
       if (action.status) {
-        return state.updateIn(['project'], orderMap => deleteId(orderMap, action.id))
+        return state.updateIn(['project'], orderArray => deleteId(orderArray, action.id))
       } else {
-        return state.updateIn(['project'], orderMap => addId(orderMap, action.id))
+        return state.updateIn(['project'], orderArray => addId(orderArray, action.id))
       }
     case actionTypes.REMOVE_PROJECT:
-      return state.updateIn(['project'], orderMap => deleteId(orderMap, action.id))
+      return state.updateIn(['project'], orderArray => deleteId(orderArray, action.id))
     case actionTypes.ADD_PROJECT:
-      return state.updateIn(['project'], orderMap => addId(orderMap, action.id))
+      return state.updateIn(['project'], orderArray => addId(orderArray, action.properties.id))
     case actionTypes.CHANGE_PROJECT_POSITION:
-      return state.updateIn(['project'], orderMap => changeOrder(orderMap, action.id, action.nextId))
+      return state.updateIn(['project'], orderArray => changeOrder(orderArray, action.id, action.nextId))
 
     //contexts
     case actionTypes.DELETE_CONTEXT:
       if (action.status) {
-        return state.updateIn(['context'], orderMap => deleteId(orderMap, action.id))
+        return state.updateIn(['context'], orderArray => deleteId(orderArray, action.id))
       } else {
-        return state.updateIn(['context'], orderMap => addId(orderMap, action.id))
+        return state.updateIn(['context'], orderArray => addId(orderArray, action.id))
       }
     case actionTypes.REMOVE_CONTEXT:
-      return state.updateIn(['context'], orderMap => deleteId(orderMap, action.id))
+      return state.updateIn(['context'], orderArray => deleteId(orderArray, action.id))
     case actionTypes.ADD_CONTEXT:
-      return state.updateIn(['context'], orderMap => addId(orderMap, action.id))
+      return state.updateIn(['context'], orderArray => addId(orderArray, action.properties.id))
     case actionTypes.CHANGE_CONTEXT_POSITION:
-      return state.updateIn(['context'], orderMap => changeOrder(orderMap, action.id, action.nextId))
+      return state.updateIn(['context'], orderArray => changeOrder(orderArray, action.id, action.nextId))
 
     default:
       return state
@@ -43,90 +43,32 @@ export default order
 /*
 Staff function
 */
-export const changeOrder = (orderMap, changingId, newNextId) => {
-  if (!orderMap.get(changingId) || (!orderMap.get(newNextId) && newNextId) || orderMap.getIn([changingId, 'nextId']) === newNextId) {
-    return orderMap
+export const changeOrder = (orderArray, changingId, newNextId) => {
+  const tempArray = orderArray.filter(item => item !== changingId)
+
+  if (tempArray.size === orderArray.size) {
+    return orderArray
   }
 
-  const currentNextId = orderMap.getIn([changingId, 'nextId'])
-  const prevId = orderMap.findKey(item => item.get('nextId') === changingId)
-  const prevNextId = newNextId ? orderMap.findKey(item => item.get('nextId') === newNextId) : orderMap.findKey(item => is(item, Map()))
-  const willBeFirst = prevNextId === undefined
-
-  return orderMap.withMutations(map => {
-    if (newNextId) {
-      map.setIn([changingId, 'nextId'], newNextId)
-    } else {
-      map.set(changingId, Map())
-    }
-
-    if (currentNextId && prevId) {
-      map.setIn([prevId, 'nextId'], currentNextId)
-    } else if (prevId) {
-      map.set(prevId, Map())
-    } else if (currentNextId) {
-      //changing first elements
-      map.setIn([currentNextId, 'isFirst'], true)
-      .deleteIn([changingId, 'isFirst'])
-    }
-
-    if (prevNextId) {
-      map.setIn([prevNextId, 'nextId'], changingId)
-    }
-
-    if (willBeFirst) {
-      map.setIn([changingId, 'isFirst'], true).deleteIn([newNextId, 'isFirst'])
-    }
-  })
-}
-
-export const deleteId = (orderMap, id) => {
-  if (!orderMap.get(id)) {
-    return orderMap
+  if (!newNextId) {
+    return tempArray.push(changingId)
   }
 
-  const prevId = orderMap.findKey(item => item.get('nextId') === id)
-  const nextId = orderMap.getIn([id, 'nextId'])
+  const insertIndex = tempArray.findIndex(item => item === newNextId)
+  if (insertIndex === -1) {
+    return orderArray
+  }
 
-  return orderMap.withMutations(map => {
-    map.delete(id)
-
-    if (nextId && prevId) {
-      map.setIn([prevId, 'nextId'], nextId)
-    } else if (!nextId) {
-      map.set(prevId, Map())
-    } else {
-      map.setIn([nextId, 'isFirst'], true)
-    }
-  })
-
+  return tempArray.insert(insertIndex, changingId)
 }
 
-export const addId = (orderMap, id) => {
-  const firstId = orderMap.findKey(item => item.get('isFirst', false))
-  return orderMap.withMutations(map => {
-    map.set(id, Map({nextId: firstId, isFirst: true}))
-    .deleteIn([firstId, 'isFirst'])
-  })
+export const deleteId = (orderArray, id) => orderArray.filter(item => item !== id)
+
+export const addId = (orderArray, id) => {
+  return orderArray.insert(0, id)
 }
 
-export const createOrderMap = (array) => {
-  const result = Map().asMutable()
-
-  array.forEach((value, index, array) => {
-    if (index === array.length-1) {
-      result.set(value, Map())
-    } else {
-      result.setIn([value, 'nextId'], array[index+1])
-    }
-
-    if (index === 0) {
-      result.setIn([value, 'isFirst'], true)
-    }
-  })
-
-  return result.asImmutable()
-}
+export const createOrderMap = array => fromJS(array)
 
 /*
 Selectors
@@ -134,24 +76,12 @@ Selectors
 
 export const getProjectOrder = createSelector(
   state => state.get('project'),
-  orderMap => getOrderedList(orderMap)
+  list => list.toArray()
 )
 export const getContextOrder = createSelector(
   state => state.get('context'),
-  orderMap => getOrderedList(orderMap)
+  list => list.toArray()
 )
-
-export const getOrderedList = (orderMap) => {
-  const result = []
-  let nextId = orderMap.findKey(item => item.get('isFirst', false))
-
-  while (nextId) {
-    result.push(nextId)
-    nextId = orderMap.getIn([nextId, 'nextId'])
-  }
-
-  return result
-}
 
 /*
 Helper function
