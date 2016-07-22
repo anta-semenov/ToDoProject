@@ -1,11 +1,10 @@
 import { expect } from 'chai'
 import React from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, findRenderedDOMComponentWithTag, Simulate} from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
+import { renderIntoDocument, findRenderedDOMComponentWithTag, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
+import Task from '../../src/components/tasks/task/Task'
 import * as priorityLevels from '../../src/constants/priorityLevels'
 import { DATE_FORMAT } from '../../src/constants/defaults'
-
-import Task from '../../src/components/tasks/task/Task'
 
 const testTasks = fromJS([
   {
@@ -36,15 +35,12 @@ const mockDragFunctions = {
 
 describe('Task component', () => {
   it('Should render Task component with active and completed classes', () => {
-    const taskClass = 'task'
-    const activeClass = 'is-active'
-    const completedClass = 'is-completed'
     const taskComponent = renderIntoDocument(<Task active={true} completed={true} {...mockDragFunctions}/>)
     const taskElement = findRenderedDOMComponentWithTag(taskComponent, 'li')
 
-    expect(taskElement.className).to.include(taskClass)
-    expect(taskElement.className).to.include(activeClass)
-    expect(taskElement.className).to.include(completedClass)
+    expect(taskElement.className).to.include('task')
+      .and.to.include('is-active')
+      .and.to.include('is-completed')
   })
   it('Should render Task component without active and completed classes', () => {
     const taskClass = 'task'
@@ -204,13 +200,11 @@ describe('Task component', () => {
       const bodyClass = 'task__body'
       const titleClass = 'task__title'
       const descriptionClass = 'task__description'
-      const dateClass = 'task__date'
 
       const taskComponent = renderIntoDocument(<Task id={'b41sogy3s0o0'} title={testTasks.get(0).get('title')} description={testTasks.get(0).get('description')} date={testTasks.get(0).get('date')} onTaskClick={callback} {...mockDragFunctions} />)
       const bodyComponent = findRenderedDOMComponentWithClass(taskComponent, bodyClass)
       const titleComponent = findRenderedDOMComponentWithClass(taskComponent, titleClass)
       const descriptionComponent = findRenderedDOMComponentWithClass(taskComponent, descriptionClass)
-      const dateComponent = findRenderedDOMComponentWithClass(taskComponent, dateClass)
 
       expect(callbackId).to.equal(-12)
       Simulate.click(bodyComponent)
@@ -224,11 +218,6 @@ describe('Task component', () => {
       callbackId = -12
       expect(callbackId).to.equal(-12)
       Simulate.click(descriptionComponent)
-      expect(callbackId).to.equal('b41sogy3s0o0')
-
-      callbackId = -12
-      expect(callbackId).to.equal(-12)
-      Simulate.click(dateComponent)
       expect(callbackId).to.equal('b41sogy3s0o0')
     })
   })

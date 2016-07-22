@@ -1,12 +1,14 @@
 import { expect } from 'chai'
 import React, { Component } from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
+import { renderIntoDocument, createRenderer } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 import * as navGroupTypes from '../../src/constants/navGroupTypes'
 
 import NavigationGroup from '../../src/components/navigationGroup/NavigationGroup'
+
+const shallowRenderer = createRenderer()
 
 describe('Navigation Group', () => {
   const testGroup = {
@@ -38,32 +40,16 @@ describe('Navigation Group', () => {
 
   describe('Correct render', () => {
     it('Should render group title', () => {
-      NavigationGroup.__Rewire__('NavigationItem', class extends Component {
-        render() {
-          return(
-            null
-          )
-        }
-      })
+      shallowRenderer.render(<NavigationGroup {...testGroup} />)
+      const group = shallowRenderer.getRenderOutput()
 
-      const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
-      const titleElement = findRenderedDOMComponentWithClass(groupComponent, 'nav-group__title')
-
-      expect(titleElement.textContent).to.equal(sectionNames.CONTEXTS)
+      expect(group.props.children[0].props.children[0]).to.deep.equal(<div className='nav-group__title-text' >{sectionNames.CONTEXTS}</div>)
     })
     it('Should render correct count of items', () => {
-      NavigationGroup.__Rewire__('NavigationItem', class extends Component {
-        render() {
-          return(
-            <div className='nav-item'/>
-          )
-        }
-      })
+      shallowRenderer.render(<NavigationGroup {...testGroup} />)
+      const group = shallowRenderer.getRenderOutput()
 
-      const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
-      const itemElements = scryRenderedDOMComponentsWithClass(groupComponent, 'nav-item')
-
-      expect(itemElements.length).to.equal(2)
+      expect(group.props.children[1].props.children.size).to.equal(2)
     })
     it('Should pass correct props to navigation items', () => {
       let itemElementProps
@@ -96,30 +82,4 @@ describe('Navigation Group', () => {
       expect(itemElementProps.onStopEditing).to.equal(itemStopEditCallback)
     })
   })
-
-  describe('Add button render', () => {
-    it('Should invoke addButton callback when clicked', () => {
-      NavigationGroup.__Rewire__('NavigationItem', class extends Component {
-        render() {
-          return(
-            null
-          )
-        }
-      })
-
-      let callback = -12
-      testGroup.addNew = () => {callback = 12}
-
-      const groupComponent = renderIntoDocument(<NavigationGroup {...testGroup} />)
-      const addButton = findRenderedDOMComponentWithClass(groupComponent, 'nav-group__add-button')
-
-      expect(callback).to.equal(-12)
-
-      Simulate.click(addButton)
-
-      expect(callback).to.equal(12)
-    })
-  })
-
-  NavigationGroup.__ResetDependency__('NavigationItem')
 })

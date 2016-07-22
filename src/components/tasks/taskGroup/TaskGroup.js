@@ -1,53 +1,58 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import FlipMove from 'react-flip-move'
-import {TaskConnectedDragSource as Task } from '../task/Task'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
+import { TransitionMotion, spring } from 'react-motion'
+import Task from '../task/Task'
 
 import './TaskGroup.less'
 
-export default class TaskGroup extends React.Component {
-  constructor(props) {
-    super(props)
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
-  }
+const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, ...rest}) => {
+  const getDefaultStyles = () => tasks.toArray().map(task => ({
+    key: task.get('id'),
+    style: { opacity: 0, height: 0 },
+    data: task
+  }))
+  const getStyles = () => tasks.toArray().map(task => ({
+    key: task.get('id'),
+    style: { opacity: spring(1) },
+    data: task
+  }))
+  const willEnter = () => ({ opacity: 0 })
 
-  render() {
-    return (
-      <li className='task-group'>
-        {this.props.groupTitle ? <div className='task-group__title'>{this.props.groupTitle}</div> : null}
-        <ul className='task-group__list'>
-          <FlipMove enterAnimation='fade' leaveAnimation='fade'>
-            {this.props.tasks.map(task =>
-              <Task
-                key={`task-${task.get('id')}`}
-                id={task.get('id')}
-                title={task.get('title')}
-                completed={task.get('completed')}
-                today={task.get('today')}
-                someday={task.get('someday', false)}
+  return (
+    <li className='task-group'>
+      {groupTitle ? <div className='task-group__title'>{groupTitle}</div> : null}
+      <TransitionMotion
+        defaultStyles={getDefaultStyles()}
+        styles={getStyles()}
+        willEnter={willEnter}
+      >
+        {styles => {
+          return <ul className='task-group__list'>
+            {styles.map(({ key, style, data }) => {
+              return <Task
+                {...rest}
+                key={key}
+                id={data.get('id')}
+                style={style}
 
-                description={task.get('description')}
-                priority={task.get('priority')}
-                date={task.get('date') ? new Date(task.get('date')) : undefined}
-                active={this.props.activeItem === task.get('id')}
-                latent={this.props.latentTasks ? this.props.latentTasks.has(task.get('id')) : undefined}
-                isTracking={this.props.trackingTask === task.get('id')}
+                title={data.get('title')}
+                completed={data.get('completed')}
+                today={data.get('today')}
+                someday={data.get('someday', false)}
+                description={data.get('description')}
+                priority={data.get('priority')}
+                date={data.get('date') ? new Date(data.get('date')) : undefined}
 
-                onTaskClick={this.props.onTaskClick}
-                onTaskCheckboxClick={this.props.onTaskCheckboxClick}
-                onTaskTodayClick={this.props.onTaskTodayClick}
-                onPriorityClick={this.props.onPriorityClick}
-                onTrackingClick={this.props.onTrackingClick}
-                onTaskSomedayClick={this.props.onTaskSomedayClick}
-                addTaskToProject={this.props.addTaskToProject}
-                addTaskContext={this.props.addTaskContext}
+                active={activeTask === data.get('id')}
+                latent={latentTasks ? latentTasks.has(data.get('id')) : undefined}
+                tracking={trackingTask === data.get('id')}
               />
-            )}
-          </FlipMove>
-        </ul>
-      </li>)
-  }
+            })}
+          </ul>
+        }}
+      </TransitionMotion>
+    </li>
+  )
 }
 
 TaskGroup.propTypes = {
@@ -66,15 +71,19 @@ TaskGroup.propTypes = {
       date: React.PropTypes.number
     })
   ).isRequired,
-  activeItem: React.PropTypes.string,
+  activeTask: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
   trackingTask: React.PropTypes.string,
+
   onTaskClick: React.PropTypes.func.isRequired,
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
-  onPriorityClick: React.PropTypes.func.isRequired,
-  onTrackingClick: React.PropTypes.func.isRequired,
+  onTaskPriorityClick: React.PropTypes.func.isRequired,
+  onTaskTrackingClick: React.PropTypes.func.isRequired,
   onTaskSomedayClick: React.PropTypes.func.isRequired,
+
   addTaskToProject: React.PropTypes.func.isRequired,
   addTaskContext: React.PropTypes.func.isRequired
 }
+
+export default TaskGroup

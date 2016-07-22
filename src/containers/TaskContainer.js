@@ -13,7 +13,7 @@ import uniqueKey from '../utils/uniqueKeyGenerator'
 const mapStateToProps = (state) => {
   return {
     groups: getTasksGroups(state),
-    activeItem: getActiveItemID(state),
+    activeTask: getActiveItemID(state),
     latentTasks: getLatentTasks(state),
     trackingTask: getTrackingTaskId(state),
 
@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setTaskToday(taskId, status))
     },
     onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))},
-    onTrackingClick: (taskId, trackingTask) => {
+    onTaskTrackingClick: (taskId, trackingTask) => {
       if (trackingTask === taskId) {dispatch(stopTaskTracking(taskId))}
       else {
         dispatch(stopTaskTracking(trackingTask))
@@ -115,7 +115,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
     onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
     onTaskPriorityClick: dispatchProps.onTaskPriorityClick,
-    onTrackingClick: (taskId) => dispatchProps.onTrackingClick(taskId, stateProps.trackingTask),
+    onTaskTrackingClick: (taskId) => dispatchProps.onTaskTrackingClick(taskId, stateProps.trackingTask),
     onTaskSomedayClick: (taskId, status) => dispatchProps.onTaskSomedayClick(taskId, status, stateProps.sectionType),
     addTaskToProject: dispatchProps.addTaskToProject,
     addTaskContext: dispatchProps.addTaskContext

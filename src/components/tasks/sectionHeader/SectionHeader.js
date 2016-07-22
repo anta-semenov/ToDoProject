@@ -7,9 +7,9 @@ import './SectionHeader.less'
 const headerPlaceholder = (sectionType) => {
   switch (sectionType) {
     case PROJECT:
-      return 'Project name'
+      return 'New Project'
     case CONTEXT:
-      return 'Context name'
+      return 'New Context'
   }
 }
 
@@ -21,7 +21,12 @@ const SectionHeader = ({ sectionName, sectionType, onSectionNameChange, onSectio
         null
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?
-        <Textfield appearance='section-header' text={sectionName} onChange={onSectionNameChange} placeholder={headerPlaceholder(sectionType)} /> :
+        <Textfield
+          appearance='section-header'
+          text={sectionName}
+          onChange={onSectionNameChange}
+          placeholder={headerPlaceholder(sectionType)}
+        /> :
         <h1 className='section-header__title'>{sectionName}</h1>
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?
