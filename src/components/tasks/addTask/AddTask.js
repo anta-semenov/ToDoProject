@@ -26,16 +26,16 @@ export default class AddTask extends Component {
   }
 
   render() {
-    const addTaskClasses = classNames({
-      'add-task': true,
+    const inputClasses = classNames({
+      'add-task__textfield': true,
       'is-empty': this.props.isSectionEmpty
     })
     return (
-      <div className={addTaskClasses} ref={(c) => this.frame = c}>
+      <div className='add-task' ref={(c) => this.frame = c}>
         <input
           type='text'
           ref={(c) => this.input = c}
-          className='add-task__textfield'
+          className={inputClasses}
           onKeyDown={this.handleKeyDown}
           onFocus={() => this.handleFocus()}
           onBlur={() => this.handleBlur()}
