@@ -32,12 +32,11 @@ const Tasks = ({
             sectionName={sectionName}
             sectionType={sectionType}
             isSectionComplete={isSectionComplete}
-            isSectionEmpty = {groups ? false : true}
             onSectionNameChange={onSectionNameChange}
             onSectionDelete={onSectionDelete}
             onSectionComplete={onSectionComplete}
           />
-          <AddTask addTask={addTask} />
+          <AddTask addTask={addTask} isSectionEmpty = {groups ? false : true} />
           {groups ?
             <ul className='tasks__list'>
               {groups.toSeq().map((group, index) =>

@@ -13,7 +13,13 @@ const headerPlaceholder = (sectionType) => {
   }
 }
 
-const SectionHeader = ({ sectionName, sectionType, onSectionNameChange, onSectionDelete, isSectionComplete, onSectionComplete }) => {
+const SectionHeader = ({
+  sectionName,
+  sectionType,
+  isSectionComplete = false,
+  onSectionNameChange,
+  onSectionDelete,
+  onSectionComplete }) => {
   return (
     <div className='section-header'>
       {sectionType === PROJECT ?
@@ -52,6 +58,7 @@ SectionHeader.propTypes = {
   sectionName: React.PropTypes.string.isRequired,
   sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT]).isRequired,
   isSectionComplete: React.PropTypes.bool,
+  isSectionEmpty: React.PropTypes.bool,
 
   onSectionNameChange: React.PropTypes.func.isRequired,
   onSectionDelete: React.PropTypes.func.isRequired,
