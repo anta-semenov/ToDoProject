@@ -23,6 +23,7 @@ const Tasks = ({
   ...rest }) => {
   const getDefaultStyle = () => ({ width: 0, opacity: 0 })
   const getStyle = (isActive) => ({ width: isActive ? spring(DEFAULT_TASKINFO_SIZE, STANDART_SPRING) : spring(0, STANDART_SPRING), opacity: 1 })
+  const isEmpty = groups ? false : true
 
   return (
     <Motion defaultSyle={getDefaultStyle} style={getStyle(activeTask)}>
@@ -36,7 +37,7 @@ const Tasks = ({
             onSectionDelete={onSectionDelete}
             onSectionComplete={onSectionComplete}
           />
-          <AddTask addTask={addTask} isSectionEmpty = {groups ? false : true} />
+          <AddTask addTask={addTask} isSectionEmpty={isEmpty} hasFocus={isEmpty} />
           {groups ?
             <ul className='tasks__list'>
               {groups.toSeq().map((group, index) =>

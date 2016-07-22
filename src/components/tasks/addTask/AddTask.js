@@ -8,7 +8,7 @@ export default class AddTask extends Component {
   handleKeyDown = e => {
     switch (e.keyCode) {
       case 13: {
-        this.props.addTask(this.refs.input.value)
+        this.props.addTask(this.input.value)
         this.input.value = ''
       }
     }
@@ -24,18 +24,21 @@ export default class AddTask extends Component {
     this.input.value = ''
     this.input.focus()
   }
+  componentDidUpdate() {
+    if (this.props.hasFocus) {this.input.focus()}
+  }
 
   render() {
-    const inputClasses = classNames({
-      'add-task__textfield': true,
+    const addTaskClasses = classNames({
+      'add-task': true,
       'is-empty': this.props.isSectionEmpty
     })
     return (
-      <div className='add-task' ref={(c) => this.frame = c}>
+      <div className={addTaskClasses} ref={(c) => this.frame = c}>
         <input
           type='text'
           ref={(c) => this.input = c}
-          className={inputClasses}
+          className='add-task__textfield'
           onKeyDown={this.handleKeyDown}
           onFocus={() => this.handleFocus()}
           onBlur={() => this.handleBlur()}
@@ -48,8 +51,10 @@ export default class AddTask extends Component {
 
 AddTask.propTypes = {
   addTask: React.PropTypes.func.isRequired,
-  isSectionEmpty: React.PropTypes.bool
+  isSectionEmpty: React.PropTypes.bool,
+  hasFocus: React.PropTypes.bool
 }
 AddTask.defaultProps = {
-  isSectionEmpty: false
+  isSectionEmpty: false,
+  hasFocus: false
 }
