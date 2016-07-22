@@ -2,19 +2,16 @@ import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import './NavigationGroup.less'
 
-import { NavigationItemConnectedDropTarget as NavigationItem } from '../navigationItem/NavigationItem'
+import NavigationItem from '../navigationItem/NavigationItem'
 
 const NavigationGroup = ({ items, title, type, addNew, onItemClick, onStopEditing}) => (
   <li className='nav-group'>
     {title ?
       <div className='nav-group__title'>
         <div className='nav-group__title-text' >{title}</div>
-        {addNew ?
-          <div className='nav-group__add-button' onClick={() => addNew(type)} /> :
-          null
-        }
+        {addNew ? <div className='nav-group__add-button' onClick={() => addNew(type)} /> : null}
       </div>
-    : null}
+      : null}
     <ul className='nav-group__list'>
       {items.map(item =>
         <NavigationItem

@@ -32,6 +32,7 @@ const Tasks = ({
             sectionName={sectionName}
             sectionType={sectionType}
             isSectionComplete={isSectionComplete}
+            isSectionEmpty = {groups ? false : true}
             onSectionNameChange={onSectionNameChange}
             onSectionDelete={onSectionDelete}
             onSectionComplete={onSectionComplete}

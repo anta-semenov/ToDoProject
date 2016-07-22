@@ -135,4 +135,10 @@ Task.propTypes = {
   tracking: React.PropTypes.bool
 }
 
-export const TaskConnectedDragSource = DragSource(TASK, taskSource, collect)(Task)
+Task.defaultProps = {
+  completed: false,
+  today: false
+}
+
+const TaskConnectedDragSource = DragSource(TASK, taskSource, collect)(Task)
+export default TaskConnectedDragSource
