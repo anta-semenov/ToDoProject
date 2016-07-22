@@ -10,7 +10,7 @@ import firebaseUpdateMiddleware from './backend/firebase/middleware'
 
 const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
 store.subscribe(throttle(() => {
-  saveState(store.getState().delete('past').delete('future'))
+  saveState(store.getState())
 }, 1500))
 
 initFirebase(store)

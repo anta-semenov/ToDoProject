@@ -13,12 +13,14 @@ describe('Sidebar container', () => {
         id: 'b41sogy3s0oc',
         title: 'test task 1',
         completed: false,
+        completedDeleted: false,
         today: false
       },
       b41sogy3s0ok: {
         id: 'b41sogy3s0ok',
         title: 'test task 2',
         completed: false,
+        completedDeleted: false,
         today: true,
         project: 'ab6sof83s1o1'
       },
@@ -26,6 +28,7 @@ describe('Sidebar container', () => {
         id: 'b41sogy3s0om',
         title: 'test task 3',
         completed: true,
+        completedDeleted: true,
         today: false,
         project: 'ab6sof83s1o1'
       },
@@ -33,6 +36,7 @@ describe('Sidebar container', () => {
         id: 'b41sogy3s0oq',
         title: 'test task 4',
         completed: false,
+        completedDeleted: false,
         today: true,
         project: 'ab6sof83s1o2',
         context: Set(['a23sogy3s0oq'])
@@ -41,28 +45,33 @@ describe('Sidebar container', () => {
     context: {
       a21sogy3s0oq: {
         id: 'a21sogy3s0oq',
-        title: 'test context 1'
+        title: 'test context 1',
+        deleted: false
       },
       a23sogy3s0oq: {
         id: 'a23sogy3s0oq',
-        title: 'test context 2'
+        title: 'test context 2',
+        delted: false
       }
     },
     project: {
       ab6sof83s1oq: {
         id: 'ab6sof83s1oq',
         title: 'test project 1',
-        completed: true
+        completed: true,
+        completedDeleted: true
       },
       ab6sof83s1o1: {
         id: 'ab6sof83s1o1',
         title: 'test project 2',
-        completed: false
+        completed: false,
+        completedDeleted: false
       },
       ab6sof83s1o2: {
         id: 'ab6sof83s1o2',
         title: 'test project 3',
-        completed: false
+        completed: false,
+        completedDeleted: false
       }
     },
     uiState: {
@@ -94,6 +103,11 @@ describe('Sidebar container', () => {
       {
         type: sectionTypes.NEXT,
         title: sectionNames.NEXT,
+        active: false
+      },
+      {
+        type: sectionTypes.SOMEDAY,
+        title: sectionNames.SOMEDAY,
         active: false
       }
     ]))
@@ -136,7 +150,7 @@ describe('Sidebar container', () => {
         title: 'test project 2',
         active: false,
         editing: false
-      }      
+      }
     ]))
   })
 })

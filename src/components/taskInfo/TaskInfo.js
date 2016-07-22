@@ -12,6 +12,7 @@ import Today from '../elements/today/Today'
 import Checkbox from '../elements/checkbox/Checkbox'
 import Priority from '../elements/priority/Priority'
 import CloseBtn from '../elements/closeBtn/CloseBtn'
+import Someday from '../elements/someday/Someday'
 
 import './TaskInfo.less'
 
@@ -23,23 +24,24 @@ export default class TaskInfo extends React.Component {
 
   render() {
     return (
-      <div className='task-info' ref='taskInfo' >
-        <CloseBtn appearance='task-info' ref='closeBtn' onClick={this.props.onCloseClick} />
+      <div className='task-info'>
+        <CloseBtn appearance='task-info'onClick={this.props.onCloseClick} />
           <div className='task-info__content'>
             <div className='task-info__controls'>
               <Checkbox appearance='task-info' checked={this.props.completed} onChange={() => this.props.onTaskCheckboxClick(this.props.id, !this.props.completed)} />
               <Today appearance='task-info' checked={this.props.today} onClick={() => this.props.onTaskTodayClick(this.props.id, !this.props.today)}/>
+              <Someday appearance='task-info' checked={this.props.someday} onClick={() => this.props.onTaskSomedayClick(this.props.id, !this.props.someday)}/>
               <Priority appearance='task-info' priority={this.props.priority} onClick={(priority) => this.props.onPriorityClick(this.props.id, priority)} />
             </div>
             <div className='task-info__body'>
               <div className='task-info__body-top'>
-                <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} onBlur={this.props.onTitleChange} ref='taskTitle' />
-                <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} onBlur={this.props.onDescriptionChange} ref='taskDescription' />
-                <TaskProject taskProject={this.props.taskProject} projects={this.props.projects} onProjectChange={(newProject) => this.props.onProjectChange(this.props.id, newProject)} ref='taskProject' />
-                <TaskContexts contexts={this.props.contexts} taskContexts={this.props.taskContexts} onContextClick={(context, status) => this.props.onContextClick(this.props.id, context, status)} ref='taskContexts' />
+                <TaskTitle id={this.props.id} title={this.props.title} onChange={this.props.onTitleChange} onBlur={this.props.onTitleChange} />
+                <TaskDescription id={this.props.id} description={this.props.description} onChange={this.props.onDescriptionChange} onBlur={this.props.onDescriptionChange} />
+                <TaskProject taskProject={this.props.taskProject} projects={this.props.projects} onProjectChange={(newProject) => this.props.onProjectChange(this.props.id, newProject)} />
+                <TaskContexts contexts={this.props.contexts} taskContexts={this.props.taskContexts} onContextClick={(context, status) => this.props.onContextClick(this.props.id, context, status)} />
                 <TaskCalendar ref='taskCalendar' id={this.props.id} selectedDate={this.props.date ? new Date(this.props.date) : undefined} onChange={this.props.onDateChange}/>
               </div>
-              <button ref='taskDeleteBtn' className='task-info__delete' onClick={() => this.props.onTaskDeleteClick(this.props.id)} tabIndex='0' >Delete task</button>
+              <button className='task-info__delete' onClick={() => this.props.onTaskDeleteClick()} tabIndex='0' >{this.props.deleted ? 'Recover task' : 'Delete task'}</button>
             </div>
           </div>
       </div>
@@ -52,6 +54,8 @@ TaskInfo.propTypes = {
   title: React.PropTypes.string,
   completed: React.PropTypes.bool,
   today: React.PropTypes.bool,
+  someday: React.PropTypes.bool,
+  deleted: React.PropTypes.bool,
 
   description: React.PropTypes.oneOfType([
     React.PropTypes.string,
@@ -85,5 +89,6 @@ TaskInfo.propTypes = {
   onContextClick: React.PropTypes.func.isRequired,
   onDateChange: React.PropTypes.func.isRequired,
   onTaskDeleteClick: React.PropTypes.func.isRequired,
-  onCloseClick: React.PropTypes.func.isRequired
+  onCloseClick: React.PropTypes.func.isRequired,
+  onTaskSomedayClick: React.PropTypes.func.isRequired
 }

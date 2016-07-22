@@ -28,7 +28,7 @@ const groupTasksByProject = (tasks, projects) => {
 // Composable selectors
 const getTasks = createSelector(
   [getAllTasks, getLatentTasks],
-  (allTasks, latentTasks) => allTasks.filter(task => !task.get('completed', false) || latentTasks.has(task.get('id'))).sort((a, b) => {
+  (allTasks, latentTasks) => allTasks.filter(task => (!task.get('completed', false) || latentTasks.has(task.get('id'))) && !task.get('deleted', false)).sort((a, b) => {
     return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
             PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
             a.get('id') > b.get('id') ? 1 :
@@ -56,12 +56,18 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.NEXT: {
-        return tasks.count() > 0 ? groupTasksByProject(tasks, projects) : undefined
+        const sectionTasks = tasks.filter(task => !task.get('someday', false) || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }
 
       case sectionTypes.INBOX: {
-        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.has('contexts') || latentTasks.has(task.get('id')))
+        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.get('someday', false) && !task.has('contexts') || latentTasks.has(task.get('id')))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
+      }
+
+      case sectionTypes.SOMEDAY: {
+        const sectionTasks = tasks.filter(task => !task.get('today') && task.get('someday', false) || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
       }
 
       default:

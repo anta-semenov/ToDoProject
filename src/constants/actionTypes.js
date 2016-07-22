@@ -6,6 +6,7 @@ export const REMOVE_PROJECT = 'REMOVE_PROJECT'
 export const COMPLETE_PROJECT = 'COMPLETE_PROJECT'
 export const EDIT_PROJECT = 'EDIT_PROJECT'
 export const REPLACE_PROJECT = 'REPLACE_PROJECT'
+export const DELETE_PROJECT = 'DELETE_PROJECT'
 
 /*
  * Task
@@ -15,12 +16,14 @@ export const REMOVE_TASK = 'REMOVE_TASK'
 export const COMPLETE_TASK = 'COMPLETE_TASK'
 export const EDIT_TASK = 'EDIT_TASK'
 export const REPLACE_TASK = 'REPLACE_TASK'
+export const DELETE_TASK = 'DELETE_TASK'
 export const ADD_TASK_TO_PROJECT = 'ADD_TASK_TO_PROJECT'
 export const ADD_TASK_CONTEXT = 'ADD_TASK_CONTEXT'
 export const REMOVE_TASK_CONTEXT = 'REMOVE_TASK_CONTEXT'
 export const SET_TASK_TODAY = 'SET_TASK_TODAY'
 export const START_TASK_TRACKING = 'START_TASK_TRACKING'
 export const STOP_TASK_TRACKING = 'STOP_TASK_TRACKING'
+export const SET_TASK_SOMEDAY = 'SET_SOMEDAY'
 
 /*
  * Context
@@ -30,6 +33,7 @@ export const REMOVE_CONTEXT = 'REMOVE_CONTEXT'
 export const EDIT_CONTEXT = 'EDIT_CONTEXT'
 export const SWITCH_TASK_CONTEXT = 'SWITCH_TASK_CONTEXT'
 export const REPLACE_CONTEXT = 'REPLACE_CONTEXT'
+export const DELETE_CONTEXT = 'DELETE_CONTEXT'
 
 /*
 * UI State
@@ -61,6 +65,4 @@ export const REQUEST_DATA = 'REQUEST_DATA'
 export const RECIEVE_DATA = 'RECIEVE_DATA'
 export const ERROR_DATA = 'ERROR_DATA'
 
-export const UNDO = 'UNDO'
-export const REDO = 'REDO'
-export const CLEAR_UNDO_REDO = 'CLEAR_UNDO_REDO'
+export const PROCESS_STATE = 'PROCESS_STATE'

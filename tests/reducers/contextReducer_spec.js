@@ -4,6 +4,7 @@ import reducer from '../../src/reducer/context'
 import * as types from '../../src/constants/actionTypes'
 import { NEW_CONTEXT_TITLE } from '../../src/constants/defaults'
 import * as commonActions from '../../src/actions/commonActions'
+import { deleteContext } from '../../src/actions/contextActions'
 
 describe('Context reducer', () => {
     it('Should return initial state', () => {
@@ -43,7 +44,8 @@ describe('Context reducer', () => {
           const nextState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
-                  title: NEW_CONTEXT_TITLE
+                  title: NEW_CONTEXT_TITLE,
+                  deleted: false
               }
           })
           expect(reducer(initialState, action)).to.equal(fromJS(nextState))
@@ -60,7 +62,8 @@ describe('Context reducer', () => {
           const nextState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
-                  title: 'New custom context'
+                  title: 'New custom context',
+                  deleted: false
               }
           })
           expect(reducer(initialState, action)).to.equal(fromJS(nextState))
@@ -86,7 +89,8 @@ describe('Context reducer', () => {
               },
               cf1sobz4s0oc: {
                   id: 'cf1sobz4s0oc',
-                  title: 'New custom context'
+                  title: 'New custom context',
+                  deleted: false
               }
           })
           expect(reducer(initialState, action)).to.equal(nextState)
@@ -381,6 +385,140 @@ describe('Context reducer', () => {
 
         const action = commonActions.setState(newState)
 
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+    })
+
+    describe('Delete context', () => {
+      it('Should handle DELETE_CONTEXT with true status', () => {
+        const initialState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context'
+            }
+        })
+        const action = deleteContext('cf1sobz4s0oc', true)
+        const nextState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context',
+                deleted: true
+            }
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+
+      it('Should handle DELETE_CONTEXT with true status and true deleted', () => {
+        const initialState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context',
+                deleted: true
+            }
+        })
+        const action = deleteContext('cf1sobz4s0oc', true)
+        const nextState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context',
+                deleted: true
+            }
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+
+      it('Should handle DELETE_CONTEXT with empty status and true deleted', () => {
+        const initialState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context'
+            }
+        })
+        const action = deleteContext('cf1sobz4s0oc')
+        const nextState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context',
+                deleted: false
+            }
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+
+      it('Should handle DELETE_CONTEXT with false status and true deleted', () => {
+        const initialState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context',
+                deleted: true
+            }
+        })
+        const action = deleteContext('cf1sobz4s0oc', false)
+        const nextState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context',
+                deleted: false
+            }
+        })
+        expect(reducer(initialState, action)).to.equal(nextState)
+      })
+
+      it('Should handle DELETE_CONTEXT with false status and empty deleted', () => {
+        const initialState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context'
+            }
+        })
+        const action = deleteContext('cf1sobz4s0oc', false)
+        const nextState = fromJS({
+            cf1sobz3s0oc: {
+                id: 'cf1sobz3s0oc',
+                title: 'Existing context'
+            },
+            cf1sobz4s0oc: {
+                id: 'cf1sobz4s0oc',
+                title: 'New custom context',
+                deleted: false
+            }
+        })
         expect(reducer(initialState, action)).to.equal(nextState)
       })
     })

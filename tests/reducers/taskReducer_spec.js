@@ -5,8 +5,9 @@ import * as types from '../../src/constants/actionTypes'
 import { NEW_TASK_TITLE } from '../../src/constants/defaults'
 import { PRIORITY_NONE } from '../../src/constants/priorityLevels'
 import * as commonActions from '../../src/actions/commonActions'
-import { removeProject } from '../../src/actions/projectActions'
+import { removeProject, deleteProject } from '../../src/actions/projectActions'
 import { removeContext } from '../../src/actions/contextActions'
+import * as taskActions from '../../src/actions/taskActions'
 
 describe('Task reducer', () => {
   // Empty action
@@ -52,7 +53,9 @@ describe('Task reducer', () => {
           title: NEW_TASK_TITLE,
           completed: false,
           today: false,
-          priority: PRIORITY_NONE
+          priority: PRIORITY_NONE,
+          deleted: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(fromJS(nextState))
@@ -74,7 +77,9 @@ describe('Task reducer', () => {
           description: 'Task description',
           completed: false,
           today: false,
-          priority: PRIORITY_NONE
+          priority: PRIORITY_NONE,
+          deleted: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(fromJS(nextState))
@@ -107,7 +112,9 @@ describe('Task reducer', () => {
           title: 'Test Task',
           completed: false,
           today: false,
-          priority: PRIORITY_NONE
+          priority: PRIORITY_NONE,
+          deleted: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -387,6 +394,257 @@ describe('Task reducer', () => {
     })
   })
 
+  describe('Delete task', () => {
+    it('Should handle DELETE_TASK', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = taskActions.deleteTask('b41sogy3s0ok', true)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: true,
+          completedDeleted: true
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_TASK already deleted', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: true
+        }
+      })
+      const action = taskActions.deleteTask('b41sogy3s0ok', true)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: true,
+          completedDeleted: true
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_TASK with deleted task and empty status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: true
+        }
+      })
+      const action = taskActions.deleteTask('b41sogy3s0ok')
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_TASK with deleted task', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: true
+        }
+      })
+      const action = taskActions.deleteTask('b41sogy3s0ok', false)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_TASK without deleted property and status false', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = taskActions.deleteTask('b41sogy3s0ok', false)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_TASK with delete property false and false status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: false
+        }
+      })
+      const action = taskActions.deleteTask('b41sogy3s0ok', false)
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_TASK without delete property and empty status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false
+        }
+      })
+      const action = taskActions.deleteTask('b41sogy3s0ok')
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          today: false
+        },
+        b41sogy3s0ok: {
+          id: 'b41sogy3s0ok',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          deleted: false,
+          completedDeleted: false
+        }
+      })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
   describe('Complete', () => {
     it('Should handle COMPLETE_TASK', () => {
       const initialState = fromJS({
@@ -421,7 +679,8 @@ describe('Task reducer', () => {
           title: 'New Task',
           completed: true,
           today: false,
-          completedDate: 1467200092084
+          completedDate: 1467200092084,
+          completedDeleted: true
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -461,7 +720,8 @@ describe('Task reducer', () => {
           title: 'New Task',
           completed: true,
           completedDate: 1468200092084,
-          today: false
+          today: false,
+          completedDeleted: true
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -498,7 +758,8 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
-          today: false
+          today: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -537,7 +798,8 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
-          today: false
+          today: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -574,7 +836,8 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
-          today: false
+          today: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -610,7 +873,8 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0ok',
           title: 'New Task',
           completed: false,
-          today: false
+          today: false,
+          completedDeleted: false
         }
       })
       expect(reducer(initialState, action)).to.equal(nextState)
@@ -989,6 +1253,239 @@ describe('Task reducer', () => {
       const action = removeProject('bh52ogy5s0fm')
 
       const nextState = fromJS({
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT action without status', () => {
+      const initialState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      const action = deleteProject('bh52ogy5s0fm')
+
+      const nextState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: false,
+          completedDeleted: false
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: false,
+          completedDeleted: false
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT action with true status', () => {
+      const initialState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      const action = deleteProject('bh52ogy5s0fm', true)
+
+      const nextState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: true,
+          completedDeleted: true
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: true,
+          completedDeleted: true
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT action with false status', () => {
+      const initialState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: true,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      const action = deleteProject('bh52ogy5s0fm', false)
+
+      const nextState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: true,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: false,
+          completedDeleted: true
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: false,
+          completedDeleted: false
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle DELETE_PROJECT action with true status and already deleted task', () => {
+      const initialState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: true
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm'
+        },
+        b41sogy3s0o3: {
+          id: 'b41sogy3s0o3',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0f2'
+        }
+      })
+
+      const action = deleteProject('bh52ogy5s0fm', true)
+
+      const nextState = fromJS({
+        b41sogy3s0o1: {
+          id: 'b41sogy3s0o1',
+          title: 'Existing Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: true,
+          completedDeleted: true
+        },
+        b41sogy3s0o2: {
+          id: 'b41sogy3s0o2',
+          title: 'New Task',
+          completed: false,
+          today: false,
+          project: 'bh52ogy5s0fm',
+          deleted: true,
+          completedDeleted: true
+        },
         b41sogy3s0o3: {
           id: 'b41sogy3s0o3',
           title: 'New Task',
@@ -1602,6 +2099,224 @@ describe('Task reducer', () => {
           today: false
         }
       })
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+  })
+
+  describe('Someday', () => {
+    it('Should handle SET_TASK_SOMEDAY', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', true)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday true and true status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', true)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday true and empty status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om')
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday true and false status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: true
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', false)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday false and false status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om', false)
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      expect(reducer(initialState, action)).to.equal(nextState)
+    })
+
+    it('Should handle SET_TASK_SOMEDAY with someday false and empty status', () => {
+      const initialState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
+      const action = taskActions.setTaskSomeday('b41sogy3s0om')
+
+      const nextState = fromJS({
+        b41sogy3s0oc: {
+          id: 'b41sogy3s0oc',
+          title: 'Existing Task',
+          completed: false,
+          someday: false
+        },
+        b41sogy3s0om: {
+          id: 'b41sogy3s0om',
+          title: 'New Task',
+          completed: false,
+          someday: false
+        }
+      })
+
       expect(reducer(initialState, action)).to.equal(nextState)
     })
   })

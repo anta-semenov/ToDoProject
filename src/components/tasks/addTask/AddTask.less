@@ -11,10 +11,8 @@
   flex-direction: row;
   flex-wrap: nowrap;
   flex-shrink: 0;
-  transition: @transition-basic;
   border: 1px solid @color-border-gray;
   border-radius: 2px;
-  //overflow: hidden;
 
   &::after {
     content: '';
@@ -39,6 +37,9 @@
     &::after {
       opacity: 1;
     }
+  }
+  &.is-empty {
+    max-width: @size-max-width-tasks - 100;
   }
 }
 
@@ -84,7 +85,7 @@
   outline: none;
   border-left: 1px solid @color-border-light-gray;
   cursor: pointer;
-  transition: @transition-basic;
+  transition: border-color @transition-basic, color @transition-basic, background-color @transition-basic;
 
   .add-task.has-focus & {
     border-color: @color-border-light-gray;
