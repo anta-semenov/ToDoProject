@@ -1,5 +1,6 @@
 import React from 'react'
 import { Editor, EditorState, ContentState } from 'draft-js'
+import classNames from 'classnames'
 import './Textfield.less'
 
 const textIntoState = (text = '') => EditorState.createWithContent(ContentState.createFromText(text))
@@ -15,7 +16,7 @@ export default class Textfield extends React.Component {
       }
     }
     this.onChange = editorState => this._onChange(editorState)
-    this.focus = () => this.refs.editor.focus()
+    this.focus = () => this.editor.focus()
   }
   _onChange(editorState) {
     this.setState({editorState})
@@ -26,7 +27,7 @@ export default class Textfield extends React.Component {
       if (this.props.onChange) {
         this.props.onChange(editorState.getCurrentContent().getPlainText())
       }
-      this.refs.frame.classList.remove('is-active')
+      this.frame.classList.remove('is-active')
     } else {
       if (this.state.stackLenght.undo !== editorState.getUndoStack().count() || this.state.stackLenght.redo !== editorState.getRedoStack().count()) {
         if (this.props.onChange) {
@@ -39,8 +40,13 @@ export default class Textfield extends React.Component {
           }
         })
       }
-      if (!this.refs.frame.classList.contains('is-active')) {
-        this.refs.frame.classList.add('is-active')
+      if (editorState.getCurrentContent().getPlainText() === '') {
+        this.frame.classList.add('is-empty')
+      } else if (editorState.getCurrentContent().getPlainText() !== '') {
+        this.frame.classList.remove('is-empty')
+      }
+      if (!this.frame.classList.contains('is-active')) {
+        this.frame.classList.add('is-active')
       }
     }
   }
@@ -57,9 +63,13 @@ export default class Textfield extends React.Component {
     }
   }
   render() {
+    const textfieldClasses = classNames({
+      'textfield': true,
+      [`textfield--${this.props.appearance}`]: true
+    })
     return (
-      <div className={`textfield textfield--${this.props.appearance}`} ref='frame'>
-        <Editor ref='editor' editorState={this.state.editorState} onChange={this.onChange} placeholder={this.props.placeholder} blockStyleFn={() => 'textfield__block'} />
+      <div className={textfieldClasses} ref={(c) => this.frame = c}>
+        <Editor ref={(c) => this.editor = c} editorState={this.state.editorState} onChange={this.onChange} placeholder={this.props.placeholder} blockStyleFn={() => 'textfield__block'} />
       </div>
     )
   }

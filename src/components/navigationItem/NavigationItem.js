@@ -1,4 +1,5 @@
 import React from 'react'
+<<<<<<< HEAD
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { DropTarget, DragSource } from 'react-dnd'
 import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
@@ -133,6 +134,12 @@ export default class NavigationItem extends React.Component {
     }
   }
 }
+=======
+import NavigationTextfield from './NavigationTextfield'
+import NavigationTitle from './NavigationTitle'
+
+const NavigationItem = ({ editing, ...rest }) => editing ? <NavigationTextfield {...rest} /> : <NavigationTitle {...rest} />
+>>>>>>> master
 
 NavigationItem.propTypes = {
   type: React.PropTypes.string.isRequired,
@@ -148,7 +155,11 @@ NavigationItem.propTypes = {
   count: React.PropTypes.number
 }
 
+<<<<<<< HEAD
 export const NavigationItemConnectedDropTarget = flow(
   DropTarget([TASK, SECTION], sectionTarget, collect),
   DragSource(SECTION, sectionSource, collectSource)
 )(NavigationItem)
+=======
+export default NavigationItem
+>>>>>>> master
