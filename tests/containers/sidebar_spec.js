@@ -121,7 +121,8 @@ describe('Sidebar container', () => {
         title: 'test context 2',
         active: false ,
         editing: false,
-        count: 1
+        count: 1,
+        nextId: 'a21sogy3s0oq'
       },
       {
         id: 'a21sogy3s0oq',
@@ -129,7 +130,8 @@ describe('Sidebar container', () => {
         title: 'test context 1',
         active: true,
         editing: false,
-        count: 0
+        count: 0,
+        nextId: undefined
       }
     ]))
 
@@ -142,14 +144,16 @@ describe('Sidebar container', () => {
         type: sectionTypes.PROJECT,
         title: 'test project 3',
         active: false,
-        editing: false
+        editing: false,
+        nextId: 'ab6sof83s1o1'
       },
       {
         id: 'ab6sof83s1o1',
         type: sectionTypes.PROJECT,
         title: 'test project 2',
         active: false,
-        editing: false
+        editing: false,
+        nextId: undefined
       }
     ]))
   })

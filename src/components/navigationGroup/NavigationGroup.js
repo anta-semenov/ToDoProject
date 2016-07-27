@@ -4,46 +4,7 @@ import './NavigationGroup.less'
 
 import NavigationItem from '../navigationItem/NavigationItem'
 
-<<<<<<< HEAD
-export default class NavigationGroup extends React.Component {
-  constructor(props) {
-    super(props)
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
-  }
-
-  render() {
-    return (
-      <li className='nav-group'>
-        {this.props.title ?
-          <div className='nav-group__title'>
-            <div className='nav-group__title-text' >{this.props.title}</div>
-            {this.props.addNew ?
-              <div className='nav-group__add-button' onClick={() => this.props.addNew(this.props.type)} /> :
-              null
-            }
-          </div>
-        : null}
-        <ul className='nav-group__list'>
-          {this.props.items.map(item =>
-            <NavigationItem
-              key={`${item.get('type')}-${item.get('id')}`}
-              id={item.get('id')}
-              type={item.get('type')}
-              title={item.get('title')}
-              active={item.get('active')}
-              editing={item.get('editing')}
-              count={item.get('count')}
-              onItemClick={this.props.onItemClick}
-              onStopEditing={this.props.onStopEditing}
-              changePosition={this.props.changePosition}/>
-          )}
-        </ul>
-      </li>
-    )
-  }
-}
-=======
-const NavigationGroup = ({ items, title, type, addNew, onItemClick, onStopEditing}) => (
+const NavigationGroup = ({ items, title, type, addNew, onItemClick, onStopEditing, changePosition}) => (
   <li className='nav-group'>
     {title ?
       <div className='nav-group__title'>
@@ -62,12 +23,12 @@ const NavigationGroup = ({ items, title, type, addNew, onItemClick, onStopEditin
           editing={item.get('editing')}
           count={item.get('count')}
           onItemClick={onItemClick}
-          onStopEditing={onStopEditing}/>
+          onStopEditing={onStopEditing}
+          changePosition={changePosition}/>
       )}
     </ul>
   </li>
 )
->>>>>>> master
 
 NavigationGroup.propTypes = {
   items: ImmutablePropTypes.listOf(
@@ -77,7 +38,8 @@ NavigationGroup.propTypes = {
       active: React.PropTypes.bool.isRequired,
       id: React.PropTypes.string,
       count: React.PropTypes.number,
-      editing: React.PropTypes.bool
+      editing: React.PropTypes.bool,
+      nextId: React.PropTypes.string
     })
   ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,

@@ -15,7 +15,8 @@ NavigationItem.propTypes = {
 
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,
-  count: React.PropTypes.number
+  count: React.PropTypes.number,
+  nextId: React.PropTypes.string
 }
 
 export default NavigationItem
