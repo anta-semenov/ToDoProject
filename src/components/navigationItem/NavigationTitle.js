@@ -1,11 +1,13 @@
 import React from 'react'
 import shallowCompare from 'react-addons-shallow-compare'
-import { DropTarget } from 'react-dnd'
+import { DropTarget, DragSource } from 'react-dnd'
 import classNames from 'classnames'
 import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
-import { TASK } from '../../constants/dndTypes'
+import { TASK, SECTION } from '../../constants/dndTypes'
+import flow from 'lodash/flow'
 import './NavigationItem.less'
 
+// Drop Target
 const sectionTarget = {
   canDrop: props => props.type === TODAY || props.type === SOMEDAY || props.type === PROJECT || props.type === CONTEXT && !props.editing,
   drop: props => ({
@@ -20,6 +22,28 @@ const collect = (connect, monitor) => ({
   canDrop: monitor.canDrop()
 })
 
+// Drag Source
+const sectionSource = {
+  beginDrag: props => ({
+    type: props.type,
+    id: props.id
+  }),
+  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.editing && !props.isHovering && !props.isDragging,
+  endDrag: (props, monitor) => {
+    const drop = monitor.getDropResult()
+    if (drop && monitor.getItemType() === SECTION && drop.type === props.type && (props.type === PROJECT || props.type === CONTEXT)) {
+      props.changePosition(props.type, props.id, drop.id)
+    }
+  }
+}
+
+const collectSource = (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview(),
+  isDragging: monitor.isDragging()
+})
+
+// React Class
 class NavigationTitle extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState)
@@ -31,7 +55,7 @@ class NavigationTitle extends React.Component {
       'is-active': this.props.active,
       'nav-item-drop-over': this.props.isHovering && this.props.canDrop
     })
-    
+
     return this.props.connectDropTarget(
       <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
         <span className='nav-item__title'>{this.props.title}</span>
@@ -52,4 +76,7 @@ NavigationTitle.propTypes = {
   count: React.PropTypes.number
 }
 
-export default DropTarget(TASK, sectionTarget, collect)(NavigationTitle)
+export default flow(
+  DropTarget(TASK, sectionTarget, collect),
+  DragSource(SECTION, sectionSource, collectSource)
+)(NavigationTitle)
