@@ -24,31 +24,20 @@ const sectionTarget = {
     if (props.type !== item.type || props.id === item.id) {
       return
     }
-
     // Get target coordinates
     const targetRect = findDOMNode(component).getBoundingClientRect()
     const hoverMiddleY = (targetRect.bottom - targetRect.top)/2
     const hoverClientY = monitor.getClientOffset().y - targetRect.top
 
-    if (hoverClientY < hoverMiddleY && item.nextId === props.id) {
+    if (hoverClientY < hoverMiddleY && item.index < props.index) {
       return
     }
 
-    if (hoverClientY > hoverMiddleY && props.nextId === item.id) {
+    if (hoverClientY > hoverMiddleY && item.index > props.index) {
       return
     }
-
-    if (hoverClientY < hoverMiddleY && item.nextId !== props.id) {
-      props.changePosition(item.type, item.id, props.id)
-      item.nextId = props.id
-      return
-    }
-
-    if (hoverClientY > hoverMiddleY && props.nextId !== item.id) {
-      props.changePosition(item.type, item.id, props.nextId)
-      item.nextId = props.nextId
-      return
-    }
+    props.changeOrder(item.index, props.index)
+    item.index = props.index
   }
 }
 
@@ -63,7 +52,8 @@ const sectionSource = {
   beginDrag: props => ({
     type: props.type,
     id: props.id,
-    nextId: props.nextId
+    nextId: props.nextId,
+    index: props.index
   }),
   canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.isTaskHovering && !props.isDragging
   // endDrag: (props, monitor) => {
