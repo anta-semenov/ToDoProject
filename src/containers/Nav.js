@@ -49,7 +49,7 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: getOrderedContextsList(state).map((item, index, list) => {
+      items: getOrderedContextsList(state).map((item) => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -57,8 +57,7 @@ export const mapStateToProps = (state) => {
           title: item.get('title'),
           active: selectedSectionType === sectionTypes.CONTEXT && selectedSectionID === id ? true : false,
           editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size,
-          nextId: list.getIn([index+1,'id'])
+          count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size
         })
       })
     },
@@ -66,15 +65,14 @@ export const mapStateToProps = (state) => {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: getOrderedProjectsList(state).map((item, index, list) => {
+      items: getOrderedProjectsList(state).map((item) => {
         const id = item.get('id')
         return fromJS({
           id: id,
           type: sectionTypes.PROJECT,
           title: item.get('title'),
           active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false,
-          editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false,
-          nextId: list.getIn([index+1,'id'])
+          editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false
         })
       })
     }

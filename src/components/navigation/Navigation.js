@@ -3,8 +3,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import './Navigation.less'
 import NavigationGroup from '../navigationGroup/NavigationGroup'
 import DropScrollTarget from '../elements/dropScrollTarget/DropScrollTarget'
+import shallowCompare from 'react-addons-shallow-compare'
 
 class Navigation extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
+  }
+
   render() {
     const {groups, ...rest} = this.props
     return (
@@ -47,8 +52,7 @@ Navigation.propTypes = {
           active: React.PropTypes.bool.isRequired,
           id: React.PropTypes.string,
           count: React.PropTypes.number,
-          editing: React.PropTypes.bool,
-          nextId: React.PropTypes.string
+          editing: React.PropTypes.bool
         })
       ).isRequired,
       title: React.PropTypes.string,
