@@ -29,7 +29,7 @@ const sectionTarget = {
     const targetRect = findDOMNode(component).getBoundingClientRect()
     const hoverMiddleY = (targetRect.bottom - targetRect.top)/2
     const hoverClientY = monitor.getClientOffset().y - targetRect.top
-    
+
     if (hoverClientY < hoverMiddleY && item.nextId === props.id) {
       return
     }
@@ -90,7 +90,8 @@ class NavigationTitle extends React.Component {
     const navItemClasses = classNames({
       'nav-item': true,
       'is-active': this.props.active,
-      'nav-item-drop-over': this.props.isTaskHovering && this.props.canDrop
+      'nav-item-drop-over': this.props.isTaskHovering && this.props.canDrop,
+      'nav-item__dragging': this.props.isDragging
     })
 
     return this.props.connectDragSource(
