@@ -140,5 +140,8 @@ Task.defaultProps = {
   today: false
 }
 
+export const TaskClass = Task
+
 const TaskConnectedDragSource = DragSource(TASK, taskSource, collect)(Task)
+
 export default TaskConnectedDragSource

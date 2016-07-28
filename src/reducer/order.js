@@ -1,4 +1,4 @@
-import { fromJS, Map, List, is } from 'immutable'
+import { fromJS, Map, List } from 'immutable'
 import { createSelector } from 'reselect'
 import * as actionTypes from '../constants/actionTypes'
 

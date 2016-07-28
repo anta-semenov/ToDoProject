@@ -58,7 +58,7 @@ export const mapStateToProps = (state) => {
           active: selectedSectionType === sectionTypes.CONTEXT && selectedSectionID === id ? true : false,
           editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
           count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size,
-          nextId: list.getIn([index+1,id])
+          nextId: list.getIn([index+1,'id'])
         })
       })
     },
@@ -74,7 +74,7 @@ export const mapStateToProps = (state) => {
           title: item.get('title'),
           active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false,
           editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false,
-          nextId: list.getIn([index+1,id])
+          nextId: list.getIn([index+1,'id'])
         })
       })
     }

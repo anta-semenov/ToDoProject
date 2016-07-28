@@ -22,6 +22,7 @@ const NavigationGroup = ({ items, title, type, addNew, onItemClick, onStopEditin
           active={item.get('active')}
           editing={item.get('editing')}
           count={item.get('count')}
+          nextId={item.get('nextId')}
           onItemClick={onItemClick}
           onStopEditing={onStopEditing}
           changePosition={changePosition}/>

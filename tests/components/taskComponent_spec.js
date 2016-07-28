@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import React from 'react'
 import { fromJS } from 'immutable'
 import { renderIntoDocument, findRenderedDOMComponentWithTag, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
-import Task from '../../src/components/tasks/task/Task'
+import { TaskClass as Task } from '../../src/components/tasks/task/Task'
 import * as priorityLevels from '../../src/constants/priorityLevels'
 import { DATE_FORMAT } from '../../src/constants/defaults'
 
@@ -136,11 +136,11 @@ describe('Task component', () => {
       const priorityLevelHighClass = 'priority-level--high'
       const priorityLevelMaxClass = 'priority-level--max'
 
-      const taskComponentNone = renderIntoDocument(<Task id={'b41sogy3s0o0'} onPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentLow = renderIntoDocument(<Task id={'b41sogy3s0o1'}  onPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentMedium = renderIntoDocument(<Task id={'b41sogy3s0o2'} onPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentHigh = renderIntoDocument(<Task id={'b41sogy3s0o3'} onPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentMax = renderIntoDocument(<Task id={'b41sogy3s0o4'} onPriorityClick={callback} {...mockDragFunctions} />)
+      const taskComponentNone = renderIntoDocument(<Task id={'b41sogy3s0o0'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
+      const taskComponentLow = renderIntoDocument(<Task id={'b41sogy3s0o1'}  onTaskPriorityClick={callback} {...mockDragFunctions} />)
+      const taskComponentMedium = renderIntoDocument(<Task id={'b41sogy3s0o2'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
+      const taskComponentHigh = renderIntoDocument(<Task id={'b41sogy3s0o3'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
+      const taskComponentMax = renderIntoDocument(<Task id={'b41sogy3s0o4'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
 
       const priorityLevelComponentNone = findRenderedDOMComponentWithClass(taskComponentNone, priorityLevelNoneClass)
       const priorityLevelComponentLow = findRenderedDOMComponentWithClass(taskComponentLow, priorityLevelLowClass)
