@@ -52,16 +52,15 @@ const sectionSource = {
   beginDrag: props => ({
     type: props.type,
     id: props.id,
-    nextId: props.nextId,
     index: props.index
   }),
-  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.isTaskHovering && !props.isDragging
-  // endDrag: (props, monitor) => {
-  //   const drop = monitor.getDropResult()
-  //   if (drop && monitor.getItemType() === SECTION && drop.type === props.type && (props.type === PROJECT || props.type === CONTEXT)) {
-  //     props.changePosition(props.type, props.id, drop.id)
-  //   }
-  // }
+  canDrag: props => props.type === PROJECT || props.type === CONTEXT && !props.isTaskHovering && !props.isDragging,
+  endDrag: (props, monitor) => {
+    const item = monitor.getItem()
+    if (monitor.getItemType() === SECTION && (props.type === PROJECT || props.type === CONTEXT)) {
+      props.endDrag(item.index)
+    }
+  }
 }
 
 const collectSource = (connect, monitor) => ({
@@ -101,11 +100,11 @@ NavigationTitle.propTypes = {
   id: React.PropTypes.string,
 
   onItemClick: React.PropTypes.func.isRequired,
-  changePosition: React.PropTypes.func,
+  changeOrder: React.PropTypes.func,
+  endDrag: React.PropTypes.func,
 
   active: React.PropTypes.bool.isRequired,
-  count: React.PropTypes.number,
-  nextId: React.PropTypes.string
+  count: React.PropTypes.number
 }
 
 export default flow(

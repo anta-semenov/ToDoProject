@@ -52,8 +52,7 @@ Navigation.propTypes = {
           active: React.PropTypes.bool.isRequired,
           id: React.PropTypes.string,
           count: React.PropTypes.number,
-          editing: React.PropTypes.bool,
-          nextId: React.PropTypes.string
+          editing: React.PropTypes.bool
         })
       ).isRequired,
       title: React.PropTypes.string,
