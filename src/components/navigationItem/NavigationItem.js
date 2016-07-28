@@ -11,12 +11,12 @@ NavigationItem.propTypes = {
 
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
-  changePosition: React.PropTypes.func.isRequired,
+  changeOrder: React.PropTypes.func,
+  endDrag: React.PropTypes.func,
 
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,
-  count: React.PropTypes.number,
-  nextId: React.PropTypes.string
+  count: React.PropTypes.number
 }
 
 export default NavigationItem

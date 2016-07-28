@@ -17,14 +17,13 @@ class NavigationGroup extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (shallowCompare({props: this.props, state: {}}, nextProps, {})) {
-      this.setState({})
+      this.setState({items: undefined})
     }
   }
 
   changeItemOrder(firstIndex, secondIndex) {
     const items = this.state.items || this.props.items
     const item = items.get(firstIndex)
-
     this.setState({items: items.splice(firstIndex,1).splice(secondIndex,0,item)})
   }
 

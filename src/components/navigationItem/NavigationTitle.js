@@ -29,11 +29,11 @@ const sectionTarget = {
     const hoverMiddleY = (targetRect.bottom - targetRect.top)/2
     const hoverClientY = monitor.getClientOffset().y - targetRect.top
 
-    if (hoverClientY < hoverMiddleY && item.index < props.index) {
+    if (hoverClientY < hoverMiddleY+2 && item.index < props.index) {
       return
     }
 
-    if (hoverClientY > hoverMiddleY && item.index > props.index) {
+    if (hoverClientY > hoverMiddleY-2 && item.index > props.index) {
       return
     }
     props.changeOrder(item.index, props.index)
@@ -71,8 +71,30 @@ const collectSource = (connect, monitor) => ({
 
 // React Class
 class NavigationTitle extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState)
+  }
+
+  componentWillReceiveProps() {
+    this.setState({prevY: this._ref.getBoundingClientRect().top})
+  }
+
+  componentDidUpdate() {
+    const domNode = this._ref
+    const currentY = this._ref.getBoundingClientRect().top
+    const deltaY = this.state.prevY - currentY
+
+    domNode.style.transform = `translateY(${deltaY}px)`
+    domNode.style.transition = 'transform 0ms'
+    requestAnimationFrame( () => {
+      domNode.style.transform  = '';
+      domNode.style.transition = 'transform 500ms'
+    })
   }
 
   render() {
@@ -85,7 +107,7 @@ class NavigationTitle extends React.Component {
 
     return this.props.connectDragSource(
       this.props.connectDropTarget(
-        <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
+        <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)} ref={(ref) => {this._ref = ref}}>
           {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
           {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
         </li>
