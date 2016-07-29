@@ -7,6 +7,7 @@ import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
 import { TASK, SECTION } from '../../constants/dndTypes'
 import flow from 'lodash/flow'
 import './NavigationItem.less'
+import { Motion, spring } from 'react-motion'
 
 // Drop Target
 const sectionTarget = {
@@ -73,28 +74,29 @@ const collectSource = (connect, monitor) => ({
 class NavigationTitle extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {startYTranslate:0}
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState)
   }
 
-  componentWillReceiveProps() {
-    this.setState({prevY: this._ref.getBoundingClientRect().top})
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.index !== this.props.index) {
+      this.setState({prevY: this._ref.getBoundingClientRect().top, startYTranslate: undefined})
+    } else if (this.state.prevY) {
+      this.setState({prevY: undefined})
+    }
   }
 
   componentDidUpdate() {
-    const domNode = this._ref
-    const currentY = this._ref.getBoundingClientRect().top
-    const deltaY = this.state.prevY - currentY
+    if (this.state.prevY) {
+      const currentY = this._ref.getBoundingClientRect().top
+      const deltaY = this.state.prevY - currentY
 
-    domNode.style.transform = `translateY(${deltaY}px)`
-    domNode.style.transition = 'transform 0ms'
-    requestAnimationFrame( () => {
-      domNode.style.transform  = '';
-      domNode.style.transition = 'transform 500ms'
-    })
+      //this._ref.style.transform = `translateY(${deltaY}px)`
+      this.setState({startYTranslate: deltaY, prevY: undefined})
+    }
   }
 
   render() {
@@ -105,12 +107,27 @@ class NavigationTitle extends React.Component {
       'nav-item__dragging': this.props.isDragging
     })
 
-    return this.props.connectDragSource(
-      this.props.connectDropTarget(
-        <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)} ref={(ref) => {this._ref = ref}}>
-          {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
-          {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
-        </li>
+    return(
+      this.state.startYTranslate ?
+      <Motion defaultStyle={{translateY: this.state.startYTranslate}} style={{translateY: spring(0)}}>
+        {({translateY}) => {
+          return this.props.connectDragSource(
+            this.props.connectDropTarget(
+              <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)} ref={(ref) => {this._ref = ref}} style={{transform: `translateY(${translateY}px)`}}>
+                {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
+                {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
+              </li>
+            )
+          )
+        }}
+      </Motion> :
+      this.props.connectDragSource(
+        this.props.connectDropTarget(
+          <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)} ref={(ref) => {this._ref = ref}}>
+            {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
+            {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
+          </li>
+        )
       )
     )
   }
@@ -120,6 +137,7 @@ NavigationTitle.propTypes = {
   type: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
   id: React.PropTypes.string,
+  index: React.PropTypes.number,
 
   onItemClick: React.PropTypes.func.isRequired,
   changeOrder: React.PropTypes.func,
