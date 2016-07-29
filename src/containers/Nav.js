@@ -1,14 +1,15 @@
 import Navigation from '../components/navigation/Navigation'
 import { connect } from 'react-redux'
 import { setSelectedSection, setEditingSection, clearLatentTasks } from '../actions/uiStateActions'
-import { addProject, editProject } from '../actions/projectActions'
-import { addContext, editContext } from '../actions/contextActions'
+import { addProject, editProject, changeProjectPosition } from '../actions/projectActions'
+import { addContext, editContext, changeContextPosition } from '../actions/contextActions'
 import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
-import { fromJS, Map } from 'immutable'
+import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import uniqueKey from '../utils/uniqueKeyGenerator'
 import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defaults'
+import { getOrderedProjectsList, getOrderedContextsList } from '../reducer'
 
 export const mapStateToProps = (state) => {
   const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
@@ -48,7 +49,7 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: state.get('context', Map()).toList().filter(context => !context.get('deleted')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => {
+      items: getOrderedContextsList(state).map((item) => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -64,7 +65,7 @@ export const mapStateToProps = (state) => {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: state.get('project', Map()).toList().filter(project => !project.get('completedDeleted')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => {
+      items: getOrderedProjectsList(state).map((item) => {
         const id = item.get('id')
         return fromJS({
           id: id,
@@ -118,6 +119,16 @@ export const mapDispatchToProps = (dispatch) => {
             dispatch(editContext(item.id, properties))
             break
         }
+      }
+    },
+    changePosition: (type, id, nextId) => {
+      switch (type) {
+        case sectionTypes.PROJECT:
+          dispatch(changeProjectPosition(id, nextId))
+          break
+        case sectionTypes.CONTEXT:
+          dispatch(changeContextPosition(id, nextId))
+          break
       }
     }
   }

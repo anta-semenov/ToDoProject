@@ -24,7 +24,7 @@ const onAuth = (userData, store) => {
   } else if (!userData || !userData.uid) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(logout())
-    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, tracking: {}, uiState: INITIAL_UI_STATE })))
+    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, tracking: {}, order: {}, uiState: INITIAL_UI_STATE })))
   }
 }
 

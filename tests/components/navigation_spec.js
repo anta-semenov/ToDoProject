@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import React, { Component } from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate, createRenderer } from 'react-addons-test-utils'
+import { renderIntoDocument, createRenderer } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
@@ -84,7 +84,8 @@ describe('Navigation', () => {
     shallowRenderer.render(<Navigation {...testProps} />)
     const navigation = shallowRenderer.getRenderOutput()
 
-    expect(navigation.props.children.length).to.equal(2)
+    expect(navigation.props.children.length).to.equal(3)
+    expect(navigation.props.children[1].props.children.length).to.equal(2)
   })
 
   it('Should pass correct props to groupComponents', () => {

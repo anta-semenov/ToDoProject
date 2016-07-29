@@ -6,6 +6,7 @@ import task from './task'
 import uiState, * as fromUiState from './uiState'
 import auth, * as fromAuth from './auth.js'
 import tracking, * as fromTracking from './tracking'
+import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
@@ -17,6 +18,7 @@ const rootReducer = (state, action) => {
     .set('uiState', uiState(map.get('uiState'), action))
     .set('auth', auth(map.get('auth'), action))
     .set('tracking', tracking(map.get('tracking'), action))
+    .set('order', order(map.get('order'), action))
   )
 }
 
@@ -87,3 +89,29 @@ export const isSelectedSectionComplete = createSelector(
     }
   }
 )
+
+// Ordered Projects
+const projectOrder = (state = fromJS({})) => fromOrder.getProjectOrder(state.get('order'))
+export const getOrderedProjectsList = createSelector(
+  [projectOrder, getProjects],
+  (order, mapForOrdering) => fromOrder.sortedList(order, mapForOrdering)
+)
+
+// Ordered Contexts
+const contextOrder = (state = fromJS({})) => fromOrder.getContextOrder(state.get('order'))
+export const getOrderedContextsList = createSelector(
+  [contextOrder, getContexts],
+  (order, mapForOrdering) => fromOrder.sortedList(order, mapForOrdering)
+)
+
+//Order initialisation
+export const initOrderState = (fullState) => {
+  // if (fullState.get('order', fromJS({})).size === 2) {
+  //   return fullState
+  // }
+
+  const projectOrderArray = fullState.get('project').toList().filter(project => !project.get('completedDeleted')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
+  const contextOrderArray = fullState.get('context').toList().filter(context => !context.get('deleted')).sortBy(context => context.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
+
+  return fullState.set('order', fromOrder.initState(projectOrderArray.toArray(), contextOrderArray.toArray()))
+}

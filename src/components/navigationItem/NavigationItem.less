@@ -5,17 +5,17 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding: 5px 3px 5px 0px;
+  padding: 5px 3px 5px 3px;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   border: 1px solid transparent;
   border-radius: 2px;
+  transition: opacity 500ms;
 
   &.is-active {
     cursor: default;
-    pointer-events: none;
   }
 }
 
@@ -81,4 +81,8 @@
   font-weight: 400;
   color: @color-font-light;
   vertical-align: top;
+}
+
+.nav-item__dragging {
+  opacity: 0
 }
