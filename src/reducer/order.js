@@ -76,27 +76,12 @@ export const createOrderMap = array => fromJS(array)
  * Selectors
  */
 
-export const getProjectOrder = createSelector(
-  state => state.get('project', fromJS([])),
-  list => list.toArray()
-)
-export const getContextOrder = createSelector(
-  state => state.get('context', fromJS([])),
-  list => list.toArray()
-)
+export const getProjectOrder = (state = fromJS({})) => state.get('project', fromJS([]))
+export const getContextOrder = (state = fromJS({})) => state.get('context', fromJS([]))
 
 /*
  * Helper function
  */
 
-export const sortedList = (orderArray, mapForOrdering) => {
-  const result = List().asMutable()
-
-  orderArray.forEach(id => {
-    result.push(mapForOrdering.get(id))
-  })
-
-  return result.asImmutable()
-}
-
+export const sortedList = (orderList, mapForOrdering) => orderList.size > 0 ? orderList.map(id => mapForOrdering.get(id)) : mapForOrdering.toList()
 export const initState = (projectArray, contextArray) => Map().set('project', createOrderMap(projectArray)).set('context', createOrderMap(contextArray))
