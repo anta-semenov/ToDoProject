@@ -11,6 +11,8 @@ NavigationItem.propTypes = {
 
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
+  changeOrder: React.PropTypes.func,
+  endDrag: React.PropTypes.func,
 
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,

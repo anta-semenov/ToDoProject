@@ -1,49 +1,21 @@
 @import '../../styles/variables.less';
 
-.task-info__transition {
-  flex-shrink: 0;
-}
 .task-info {
-  position: relative;
   box-sizing: border-box;
   top: 0;
   height: 100%;
-  width: @size-width-task-info;
+  width: 100%;
   padding: 40px 60px 40px 50px;
   margin: 0;
   overflow-y: auto;
 
   background-color: #ffffff;
   border-left: 1px solid @color-border-light-gray;
-}
 
-.task-info.task-info-enter {
-  opacity: 0;
-  padding: 40px 0;
-  transform: translateX(100%);
-  width: 0;
+  @media (max-width: 1270px) {
+    box-shadow: -2px 0 30px 0 fade(#000000, 6%), 0 0 10px 0 fade(#000000, 4%);
+  }
 }
-
-.task-info.task-info-enter.task-info-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  width: @size-width-task-info;
-  padding: 40px 60px 40px 50px;
-  transition: width 400ms ease-in-out, opacity 300ms ease-in, padding 400ms ease-in;
-}
-
-.task-info.task-info-leave {
-  opacity: 1;
-  width: @size-width-task-info;
-}
-
-.task-info.task-info-leave.task-info-leave-active {
-  opacity: 0;
-  width: 0;
-  padding: 40px 0;
-  transition: 300ms ease-out;
-}
-
 
 .task-info__content {
   position: relative;
@@ -51,11 +23,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-
-  .task-info-enter.task-info-enter-active &,
-  .task-info-leave.task-info-leave-active & {
-    min-width: @size-width-task-info - 110;
-  }
 }
 
 .task-info__controls {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NEW_TASK_TITLE } from '../../../constants/defaults'
+import classNames from 'classnames'
 import './AddTask.less'
 
 export default class AddTask extends Component {
@@ -7,29 +8,36 @@ export default class AddTask extends Component {
   handleKeyDown = e => {
     switch (e.keyCode) {
       case 13: {
-        this.props.addTask(this.refs.input.value)
-        this.refs.input.value = ''
+        this.props.addTask(this.input.value)
+        this.input.value = ''
       }
     }
   }
   handleFocus = () => {
-    this.refs.frame.classList.add('has-focus')
+    this.frame.classList.add('has-focus')
   }
   handleBlur = () => {
-    this.refs.frame.classList.remove('has-focus')
+    this.frame.classList.remove('has-focus')
   }
   handleButtonClick = () => {
-    this.props.addTask(this.refs.input.value)
-    this.refs.input.value = ''
-    this.refs.input.focus()
+    this.props.addTask(this.input.value)
+    this.input.value = ''
+    this.input.focus()
+  }
+  componentDidUpdate() {
+    if (this.props.hasFocus) {this.input.focus()}
   }
 
   render() {
+    const addTaskClasses = classNames({
+      'add-task': true,
+      'is-empty': this.props.isSectionEmpty
+    })
     return (
-      <div className='add-task' ref='frame'>
+      <div className={addTaskClasses} ref={(c) => this.frame = c}>
         <input
           type='text'
-          ref='input'
+          ref={(c) => this.input = c}
           className='add-task__textfield'
           onKeyDown={this.handleKeyDown}
           onFocus={() => this.handleFocus()}
@@ -42,5 +50,11 @@ export default class AddTask extends Component {
 }
 
 AddTask.propTypes = {
-  addTask: React.PropTypes.func.isRequired
+  addTask: React.PropTypes.func.isRequired,
+  isSectionEmpty: React.PropTypes.bool,
+  hasFocus: React.PropTypes.bool
+}
+AddTask.defaultProps = {
+  isSectionEmpty: false,
+  hasFocus: false
 }

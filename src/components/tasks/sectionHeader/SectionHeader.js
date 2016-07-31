@@ -7,13 +7,19 @@ import './SectionHeader.less'
 const headerPlaceholder = (sectionType) => {
   switch (sectionType) {
     case PROJECT:
-      return 'Project name'
+      return 'New Project'
     case CONTEXT:
-      return 'Context name'
+      return 'New Context'
   }
 }
 
-const SectionHeader = ({ sectionName, sectionType, onSectionNameChange, onSectionDelete, isSectionComplete, onSectionComplete }) => {
+const SectionHeader = ({
+  sectionName,
+  sectionType,
+  isSectionComplete = false,
+  onSectionNameChange,
+  onSectionDelete,
+  onSectionComplete }) => {
   return (
     <div className='section-header'>
       {sectionType === PROJECT ?
@@ -21,7 +27,12 @@ const SectionHeader = ({ sectionName, sectionType, onSectionNameChange, onSectio
         null
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?
-        <Textfield appearance='section-header' text={sectionName} onChange={onSectionNameChange} placeholder={headerPlaceholder(sectionType)} /> :
+        <Textfield
+          appearance='section-header'
+          text={sectionName}
+          onChange={onSectionNameChange}
+          placeholder={headerPlaceholder(sectionType)}
+        /> :
         <h1 className='section-header__title'>{sectionName}</h1>
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?
@@ -47,6 +58,7 @@ SectionHeader.propTypes = {
   sectionName: React.PropTypes.string.isRequired,
   sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT]).isRequired,
   isSectionComplete: React.PropTypes.bool,
+  isSectionEmpty: React.PropTypes.bool,
 
   onSectionNameChange: React.PropTypes.func.isRequired,
   onSectionDelete: React.PropTypes.func.isRequired,

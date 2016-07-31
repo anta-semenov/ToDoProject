@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import Tasks from '../components/tasks/Tasks'
-import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking, setTaskSomeday } from '../actions/taskActions'
+import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking, setTaskSomeday, addTaskToProject, addTaskContext } from '../actions/taskActions'
 import { setActiveItem, toggleTaskLatency} from '../actions/uiStateActions'
 import { deleteContext, editContext } from '../actions/contextActions'
 import { deleteProject, editProject, completeProject } from '../actions/projectActions'
@@ -98,7 +98,9 @@ const mapDispatchToProps = (dispatch) => {
       if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
       if (sectionType === sectionTypes.NEXT) {dispatch(toggleTaskLatency(taskId, status))}
       dispatch(setTaskSomeday(taskId, status))
-    }
+    },
+    addTaskToProject: (taskId, projectId) => {dispatch(addTaskToProject(taskId, projectId))},
+    addTaskContext: (taskId, contextId) => {dispatch(addTaskContext(taskId, contextId))}
   }
 }
 
@@ -114,7 +116,9 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
     onTaskPriorityClick: dispatchProps.onTaskPriorityClick,
     onTaskTrackingClick: (taskId) => dispatchProps.onTaskTrackingClick(taskId, stateProps.trackingTask),
-    onTaskSomedayClick: (taskId, status) => dispatchProps.onTaskSomedayClick(taskId, status, stateProps.sectionType)
+    onTaskSomedayClick: (taskId, status) => dispatchProps.onTaskSomedayClick(taskId, status, stateProps.sectionType),
+    addTaskToProject: dispatchProps.addTaskToProject,
+    addTaskContext: dispatchProps.addTaskContext
   })
 }
 

@@ -4,21 +4,23 @@
   position: absolute;
   z-index: 10;
   opacity: 0;
-  width: 24px;
+  //width: 24px;
   height: 18px;
   top: 50%;
   right: 0;
-  margin: 0;
+  margin: 0 8px 0 0;
   padding: 0 0 0 6px;
   transform: translateY(-50%);
-  background-color: lighten(@color-bg-light-gray, 1%);
+  background: linear-gradient(to right, fade(@color-task-hover, 0%), @color-task-hover 20%, @color-task-hover);
   outline: none;
   cursor: pointer;
   transition: opacity @transition-basic;
+  flex-shrink: 0;
 
   &.is-tracking {
     position: relative;
     transform: none;
+    margin: 0;
     opacity: 1;
     background-color: transparent;
 
@@ -54,7 +56,7 @@
     }
 
     .task.is-active & {
-      background-color: @color-bg-light-gray;
+      background: linear-gradient(to right, fade(@color-bg-light-gray, 0%), @color-bg-light-gray 20%, @color-bg-light-gray);
       &::before {
         background-color: @color-bg-light-gray;
       }
@@ -63,6 +65,10 @@
 
   .task:hover & {
     opacity: 1;
+    &.is-disabled {
+      pointer-events: none;
+      opacity: 0;
+    }
   }
 }
 

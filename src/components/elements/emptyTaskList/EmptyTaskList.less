@@ -1,0 +1,45 @@
+@import '../../../styles/variables.less';
+
+.empty-tasks {
+  auto: @size-max-width-tasks;
+  margin: 60px 30px 0 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  //transform: translate(-50px, 0px);
+}
+
+.empty-tasks__text {
+  margin: 40px 0 0 60px;
+  //padding-top: 160px;
+  width: 100%;
+  max-width: 250px;
+  //text-align: center;
+  line-height: 1.4;
+  //transform: translate(50px, -170%);
+  //background-color: @color-bg-app;
+}
+
+.empty-tasks__text-lead {
+  margin: 20px 0 15px 0;
+  font-size: 16px;
+  font-weight: @font-weight-bold;
+  animation: empty-text-lead 1.2s ease-out 0.5s backwards;
+}
+@keyframes empty-text-lead {
+  0% {opacity: 0; transform: translateY(-10px);}
+  80% {transform: none;}
+  100% {opacity: 1;}
+}
+.empty-tasks__text-basic {
+  margin: 0;
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+  line-height: 1.5;
+  animation: empty-text-basic 1.2s ease-out 0.7s backwards;
+}
+@keyframes empty-text-basic {
+  0% {opacity: 0; transform: scale(0.95)}
+  80% {transorm: none;}
+  100% {opacity: 1;}
+}

@@ -1,6 +1,6 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { TransitionMotion, spring, presets } from 'react-motion'
+import { TransitionMotion, spring } from 'react-motion'
 import Task from '../task/Task'
 
 import './TaskGroup.less'
@@ -13,11 +13,10 @@ const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, .
   }))
   const getStyles = () => tasks.toArray().map(task => ({
     key: task.get('id'),
-    style: { opacity: spring(1), height: spring(46) },
+    style: { opacity: spring(1) },
     data: task
   }))
-  const willEnter = () => ({ opacity: 0, height: 0 })
-  const willLeave = () => ({ opacity: spring(0), height: spring(0) })
+  const willEnter = () => ({ opacity: 0 })
 
   return (
     <li className='task-group'>
@@ -26,7 +25,6 @@ const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, .
         defaultStyles={getDefaultStyles()}
         styles={getStyles()}
         willEnter={willEnter}
-        //willLeave={willLeave}
       >
         {styles => {
           return <ul className='task-group__list'>
@@ -37,18 +35,17 @@ const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, .
                 id={data.get('id')}
                 style={style}
 
+                title={data.get('title')}
+                completed={data.get('completed')}
+                today={data.get('today')}
+                someday={data.get('someday', false)}
+                description={data.get('description')}
+                priority={data.get('priority')}
+                date={data.get('date') ? new Date(data.get('date')) : undefined}
+
                 active={activeTask === data.get('id')}
                 latent={latentTasks ? latentTasks.has(data.get('id')) : undefined}
                 tracking={trackingTask === data.get('id')}
-
-                completed={data.get('completed')}
-                today={data.get('today')}
-                priority={data.get('priority')}
-                someday={data.get('someday', false)}
-
-                title={data.get('title')}
-                description={data.get('description')}
-                date={data.get('date') ? new Date(data.get('date')) : undefined}
               />
             })}
           </ul>
@@ -83,7 +80,10 @@ TaskGroup.propTypes = {
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
   onTaskTrackingClick: React.PropTypes.func.isRequired,
-  onTaskSomedayClick: React.PropTypes.func.isRequired
+  onTaskSomedayClick: React.PropTypes.func.isRequired,
+
+  addTaskToProject: React.PropTypes.func.isRequired,
+  addTaskContext: React.PropTypes.func.isRequired
 }
 
 export default TaskGroup

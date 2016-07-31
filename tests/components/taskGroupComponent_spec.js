@@ -8,6 +8,16 @@ import TaskGroup from '../../src/components/tasks/taskGroup/TaskGroup'
 const shallowRenderer = createRenderer()
 
 describe('TaskGroup component tests', () => {
+  TaskGroup.__Rewire__('Task', class extends React.Component {
+    render() {
+      return(
+        <div className='task'>
+          <div className='task__title'>{this.props.title}</div>
+        </div>
+      )
+    }
+  })
+
   it('Should render group name if it has one', () => {
     shallowRenderer.render(<TaskGroup groupTitle='Test group' tasks={fromJS([])} />)
     const taskGroup = shallowRenderer.getRenderOutput()

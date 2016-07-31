@@ -5,13 +5,25 @@ import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../constants/sectionTyp
 import TaskGroup from './taskGroup/TaskGroup'
 import AddTask from './addTask/AddTask'
 import SectionHeader from './sectionHeader/SectionHeader'
+import EmptyTaskList from '../elements/emptyTaskList/EmptyTaskList'
 import { DEFAULT_SIDEBAR_SIZE, DEFAULT_TASKINFO_SIZE, STANDART_SPRING } from '../../constants/defaults'
 
 import './Tasks.less'
 
-const Tasks = ({ groups, activeTask, sectionName, sectionType, isSectionComplete, onSectionNameChange, onSectionDelete, onSectionComplete, addTask, ...rest }) => {
+const Tasks = ({
+  groups,
+  activeTask,
+  sectionName,
+  sectionType,
+  isSectionComplete,
+  onSectionNameChange,
+  onSectionDelete,
+  onSectionComplete,
+  addTask,
+  ...rest }) => {
   const getDefaultStyle = () => ({ width: 0, opacity: 0 })
   const getStyle = (isActive) => ({ width: isActive ? spring(DEFAULT_TASKINFO_SIZE, STANDART_SPRING) : spring(0, STANDART_SPRING), opacity: 1 })
+  const isEmpty = groups ? false : true
 
   return (
     <Motion defaultSyle={getDefaultStyle} style={getStyle(activeTask)}>
@@ -25,7 +37,7 @@ const Tasks = ({ groups, activeTask, sectionName, sectionType, isSectionComplete
             onSectionDelete={onSectionDelete}
             onSectionComplete={onSectionComplete}
           />
-          <AddTask addTask={addTask} />
+          <AddTask addTask={addTask} isSectionEmpty={isEmpty} hasFocus={isEmpty} />
           {groups ?
             <ul className='tasks__list'>
               {groups.toSeq().map((group, index) =>
@@ -39,11 +51,10 @@ const Tasks = ({ groups, activeTask, sectionName, sectionType, isSectionComplete
               )}
             </ul>
             :
-            <div className='tasks__empty-state'>This section doesn't have any tasks. This text should be replaced with a component for empty space.</div>
+            <EmptyTaskList sectionType={sectionType} />
           }
         </div>
       }
-
     </Motion>
   )
 }
@@ -86,6 +97,8 @@ Tasks.propTypes = {
   onTaskPriorityClick: React.PropTypes.func.isRequired,
   onTaskTrackingClick: React.PropTypes.func.isRequired,
   onTaskSomedayClick: React.PropTypes.func.isRequired,
+  addTaskToProject: React.PropTypes.func.isRequired,
+  addTaskContext: React.PropTypes.func.isRequired,
 
   addTask: React.PropTypes.func.isRequired
 }

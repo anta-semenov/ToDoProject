@@ -1,9 +1,15 @@
 import React from 'react'
+import classNames from 'classnames'
 import './Stopwatch.less'
 
-const Stopwatch = ({ appearance = 'tasks-list', tracking = false, onClick }) => {
+const Stopwatch = ({ appearance = 'tasks-list', tracking = false, disabled = false, onClick }) => {
+  const stopwatchClasses = classNames({
+    [`stopwatch--${appearance}`]: true,
+    'is-tracking': tracking,
+    'is-disabled': disabled
+  })
   return (
-    <div className={`stopwatch--${appearance}${tracking ? ' is-tracking' : ''}`} onClick={() => onClick()}>
+    <div className={stopwatchClasses} onClick={() => onClick()}>
       <svg className={`stopwatch__svg--${appearance}${tracking ? ' is-tracking' : ''}`} width='18px' height='18px' viewBox='0 0 18 18' version='1.1' vectorEffect='non-scaling-stroke'>
         <g transform='translate(1.000000, 0.000000)'>
           <circle className='stopwatch__bezel' stroke='#000000' fill='none' strokeWidth='1' cx='9' cy='10' r='6'></circle>
@@ -26,6 +32,7 @@ const Stopwatch = ({ appearance = 'tasks-list', tracking = false, onClick }) => 
 Stopwatch.propTypes = {
   appearance: React.PropTypes.oneOf(['default', 'tasks-list']).isRequired,
   tracking: React.PropTypes.bool,
+  disabled: React.PropTypes.bool,
   onClick: React.PropTypes.func.isRequired
 }
 
