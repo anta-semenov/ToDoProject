@@ -47,8 +47,8 @@ const order = (state = fromJS({}), action) => {
 export default order
 
 /*
-Staff function
-*/
+ * Staff function
+ */
 export const changeOrder = (orderArray, changingId, newNextId) => {
   const tempArray = orderArray.filter(item => item !== changingId)
 
@@ -69,29 +69,25 @@ export const changeOrder = (orderArray, changingId, newNextId) => {
 }
 
 export const deleteId = (orderArray, id) => orderArray.filter(item => item !== id)
-
-export const addId = (orderArray, id) => {
-  return orderArray.insert(0, id)
-}
-
+export const addId = (orderArray, id) => orderArray.insert(0, id)
 export const createOrderMap = array => fromJS(array)
 
 /*
-Selectors
-*/
+ * Selectors
+ */
 
 export const getProjectOrder = createSelector(
-  state => state.get('project'),
+  state => state.get('project', fromJS([])),
   list => list.toArray()
 )
 export const getContextOrder = createSelector(
-  state => state.get('context'),
+  state => state.get('context', fromJS([])),
   list => list.toArray()
 )
 
 /*
-Helper function
-*/
+ * Helper function
+ */
 
 export const sortedList = (orderArray, mapForOrdering) => {
   const result = List().asMutable()
