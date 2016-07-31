@@ -13,6 +13,7 @@ store.subscribe(throttle(() => {
   saveState(store.getState().delete('past').delete('future'))
 }, 1500))
 
+
 initFirebase(store)
 
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'))
