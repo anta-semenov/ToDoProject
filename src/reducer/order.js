@@ -33,6 +33,12 @@ const order = (state = fromJS({}), action) => {
     case actionTypes.CHANGE_CONTEXT_POSITION:
       return state.updateIn(['context'], orderArray => changeOrder(orderArray, action.id, action.nextId))
 
+    //common
+    case actionTypes.REPLACE_ORDER:
+      return state.set(action.orderType, fromJS(action.value))
+    case actionTypes.SET_STATE:
+      return action.state.has('order') ? action.state.get('order', fromJS({})) : state
+
     default:
       return state
   }
