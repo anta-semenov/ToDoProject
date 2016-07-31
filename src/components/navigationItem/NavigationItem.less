@@ -17,11 +17,15 @@
   &.is-active {
     cursor: default;
   }
-}
 
-.nav-item-drop-over {
-  border-color: @color-border-gray;
-  background-color: @color-bg-light-gray;
+  &.is-drop-over-task {
+    border-color: @color-border-gray;
+    background-color: @color-bg-light-gray;
+  }
+
+  &.is-dragging {
+    opacity: 0;
+  }
 }
 
 .nav-item__title {
@@ -62,14 +66,11 @@
   &:focus,
   &:active {
     border-color: @color-accent;
+    outline: none;
   }
   &::-webkit-input-placeholder {
     .placeholder();
   }
-}
-
-.nav-item__input:focus {
-  outline: none;
 }
 
 .nav-item__count {
@@ -81,8 +82,4 @@
   font-weight: 400;
   color: @color-font-light;
   vertical-align: top;
-}
-
-.nav-item__dragging {
-  opacity: 0
 }

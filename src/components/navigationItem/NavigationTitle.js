@@ -103,8 +103,8 @@ class NavigationTitle extends React.Component {
     const navItemClasses = classNames({
       'nav-item': true,
       'is-active': this.props.active,
-      'nav-item-drop-over': this.props.isTaskHovering && this.props.canDrop,
-      'nav-item__dragging': this.props.isDragging
+      'is-drop-over-task': this.props.isTaskHovering && this.props.canDrop,
+      'is-dragging': this.props.isDragging
     })
 
     return(
