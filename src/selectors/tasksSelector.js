@@ -1,28 +1,35 @@
 import { createSelector } from 'reselect'
-import { fromJS, Map, Set } from 'immutable'
+import { fromJS, Map, Set, List } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import { PRIORITY } from '../constants/priorityLevels'
+import { getOrderedProjectsList } from '../reducer/index'
 
 export const getActiveItemID = state => state.getIn(['uiState', 'activeItem'], '')
 export const getSelectedSectionType = state => state.getIn(['uiState', 'selectedSection', 'type'])
 export const getSelectedSectionID = state => state.getIn(['uiState', 'selectedSection', 'id'], '')
 export const getLatentTasks = state => state.getIn(['uiState', 'sectionLatentTasks'], Map())
 export const getAllTasks = state => state.get('task', Map()).toList()
-const getProjects = state => state.get('project', Map()).toList()
 
 //Helper functions
 const groupTasksByProject = (tasks, projects) => {
   const groupedTasks = tasks.groupBy(task => task.get('project'))
-  return groupedTasks.map((tasks, projectID) => {
-    const projectIndex = projects.findIndex(project => project.get('id') === projectID)
-    if (projectIndex >= 0 ) {
-      return fromJS({
-        title: projects.getIn([projectIndex, 'title'], undefined),
-        items: tasks
-      })
+  const result = List().asMutable()
+  let index = 0
+  if (groupedTasks.get(undefined)) {
+    result.set(index, fromJS({items: groupedTasks.get(undefined)}))
+    index++
+  }
+  projects.forEach((item) => {
+    const projectTasks = groupedTasks.get(item.get('id'))
+    if (projectTasks) {
+      result.set(index, fromJS({
+        title: item.get('title'),
+        items: projectTasks
+      }))
+      index++
     }
-    return fromJS({items: tasks})
-  }).toList().sortBy(group => group.get('title'), (a, b) => a && b ? (a > b ? 1 : a < b ? -1 : 0) : (a ? 1 : -1))
+  })
+  return result.asImmutable()
 }
 
 // Composable selectors
@@ -37,7 +44,7 @@ const getTasks = createSelector(
 )
 
 export const getTasksGroups = createSelector(
-  [getSelectedSectionType, getSelectedSectionID, getTasks, getLatentTasks, getProjects],
+  [getSelectedSectionType, getSelectedSectionID, getTasks, getLatentTasks, getOrderedProjectsList],
   (sectionType, sectionID, tasks, latentTasks, projects) => {
     switch (sectionType) {
       case sectionTypes.CONTEXT: {
