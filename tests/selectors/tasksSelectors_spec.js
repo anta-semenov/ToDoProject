@@ -146,6 +146,11 @@ const testContexts = fromJS({
   }
 })
 
+const testOrder = fromJS({
+  project: ['bh52ogy5s0fm', 'bh52ogy5s0f1'],
+  context: ['cf1sobz3s0oc', 'cf1sobz3s0o1']
+})
+
 describe('Tasks Selectors', () => {
   describe('getTasksGroup selector', () => {
     describe('INBOX', () => {
@@ -154,6 +159,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.INBOX
@@ -179,6 +185,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.INBOX
@@ -215,6 +222,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.INBOX
@@ -230,6 +238,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.TODAY
@@ -278,6 +287,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.TODAY
@@ -314,6 +324,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.TODAY
@@ -329,6 +340,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.NEXT
@@ -392,6 +404,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.NEXT
@@ -450,6 +463,7 @@ describe('Tasks Selectors', () => {
           },
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.NEXT
@@ -465,6 +479,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.PROJECT,
@@ -494,6 +509,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.PROJECT,
@@ -539,6 +555,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.PROJECT,
@@ -553,6 +570,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.PROJECT,
@@ -569,6 +587,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.CONTEXT,
@@ -619,6 +638,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.CONTEXT,
@@ -679,6 +699,7 @@ describe('Tasks Selectors', () => {
           task: testTasks2,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.CONTEXT,
@@ -693,6 +714,7 @@ describe('Tasks Selectors', () => {
           task: testTasks1,
           project: testProjects,
           context: testContexts,
+          order: testOrder,
           uiState: {
             selectedSection: {
               type: sectionTypes.CONTEXT,
@@ -725,6 +747,7 @@ describe('Tasks Selectors', () => {
         ],
         project: testProjects,
         context: testContexts,
+        order: testOrder,
         uiState: {
           selectedSection: {
             type: sectionTypes.INBOX
