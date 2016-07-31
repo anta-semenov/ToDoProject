@@ -55,6 +55,11 @@ export const SET_AUTH_ERROR_MESSAGE = 'SET_AUTH_ERROR_MESSAGE'
 export const SET_PROPERTY = 'SET_PROPERTY'
 
 /*
+* Order
+*/
+export const REPLACE_ORDER = 'REPLACE_ORDER'
+
+/*
 * Common
 */
 export const SET_STATE = 'SET_STATE'
