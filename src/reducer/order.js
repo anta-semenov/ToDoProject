@@ -1,5 +1,4 @@
-import { fromJS, Map, List } from 'immutable'
-import { createSelector } from 'reselect'
+import { fromJS, Map } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 
 const order = (state = fromJS({}), action) => {

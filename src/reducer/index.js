@@ -10,6 +10,23 @@ import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
+const orderState = (state = fromJS({})) => {
+  if (
+    (!state.hasIn(['order', 'project']) && state.get('project', fromJS({})).size > 0) ||
+    (!state.hasIn(['order', 'context']) && state.get('context', fromJS({})).size > 0)
+  ) {
+    const orderAsMutable = state.get('order', fromJS({})).asMutable()
+    if (!state.hasIn(['order', 'project'])) {
+      orderAsMutable.set('project', state.get('project', fromJS({})).keySeq().toList())
+    }
+    if (!state.hasIn(['order', 'context'])) {
+      orderAsMutable.set('context', state.get('context', fromJS({})).keySeq().toList())
+    }
+    return orderAsMutable.asImmutable()
+  }
+  return state.get('order')
+}
+
 const rootReducer = (state, action) => {
   return state.withMutations(map => map
     .set('task', task(map.get('task'), action))
@@ -18,7 +35,7 @@ const rootReducer = (state, action) => {
     .set('uiState', uiState(map.get('uiState'), action))
     .set('auth', auth(map.get('auth'), action))
     .set('tracking', tracking(map.get('tracking'), action))
-    .set('order', order(map.get('order'), action))
+    .set('order', order(orderState(state), action))
   )
 }
 
