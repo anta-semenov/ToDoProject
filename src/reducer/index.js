@@ -101,14 +101,14 @@ export const isSelectedSectionComplete = createSelector(
 const getProjectOrder = (state = fromJS({})) => fromOrder.getProjectOrder(state.get('order'))
 export const getOrderedProjectsList = createSelector(
   [getProjectOrder, getProjects],
-  (order, projects) => order.length > 0 ? fromOrder.sortedList(order, projects) : projects.toList()
+  (order, projects) => fromOrder.sortedList(order, projects)
 )
 
 // Ordered Contexts
 const getContextOrder = (state = fromJS({})) => fromOrder.getContextOrder(state.get('order'))
 export const getOrderedContextsList = createSelector(
   [getContextOrder, getContexts],
-  (order, contexts) => order.length > 0 ? fromOrder.sortedList(order, contexts) : contexts.toList()
+  (order, contexts) => fromOrder.sortedList(order, contexts)
 )
 
 //Order initialisation
