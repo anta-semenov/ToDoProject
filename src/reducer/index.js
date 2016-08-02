@@ -12,9 +12,6 @@ import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
-<<<<<<< HEAD
-const appLogicReducer = (state, action) => {
-=======
 const orderState = (state = fromJS({})) => {
   if (
     (!state.hasIn(['order', 'project']) && state.get('project', fromJS({})).size > 0) ||
@@ -33,7 +30,6 @@ const orderState = (state = fromJS({})) => {
 }
 
 const rootReducer = (state, action) => {
->>>>>>> master
   return state.withMutations(map => map
     .set('task', task(map.get('task'), action))
     .set('context', context(map.get('context'), action))
@@ -44,11 +40,6 @@ const rootReducer = (state, action) => {
     .set('order', order(orderState(state), action))
   )
 }
-
-const rootReducer = undoRedo(appLogicReducer, {
-  undoProps: ['task', 'project', 'context'],
-  undoActions: [REMOVE_TASK, REMOVE_CONTEXT, REMOVE_PROJECT]
-})
 
 export default rootReducer
 
@@ -131,15 +122,3 @@ export const getOrderedContextsList = createSelector(
   [getContextOrder, getContexts],
   (order, contexts) => fromOrder.sortedList(order, contexts)
 )
-
-//Order initialisation
-export const initOrderState = (fullState) => {
-  if (fullState.get('order', fromJS({})).size === 2) {
-    return fullState
-  }
-
-  const projectOrderArray = fullState.get('project').toList().filter(project => !project.get('completedDeleted')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
-  const contextOrderArray = fullState.get('context').toList().filter(context => !context.get('deleted')).sortBy(context => context.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
-
-  return fullState.set('order', fromOrder.initState(projectOrderArray.toArray(), contextOrderArray.toArray()))
-}
