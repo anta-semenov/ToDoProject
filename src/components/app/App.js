@@ -20,7 +20,7 @@ const App = () => (
 
 let DragDropApp
 
-if ('ontouchstart' in window && !('onmousedown' in window)) {
+if ('ontouchstart' in window) {
   DragDropApp = DragDropContext(TouchBackend)(StatefulComponent(App))
 } else {
   DragDropApp = DragDropContext(HTML5Backend)(StatefulComponent(App))
