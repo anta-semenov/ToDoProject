@@ -1,5 +1,4 @@
-import { fromJS, Map, List } from 'immutable'
-import { createSelector } from 'reselect'
+import { fromJS, Map } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 
 const order = (state = fromJS({}), action) => {
@@ -47,8 +46,8 @@ const order = (state = fromJS({}), action) => {
 export default order
 
 /*
-Staff function
-*/
+ * Staff function
+ */
 export const changeOrder = (orderArray, changingId, newNextId) => {
   const tempArray = orderArray.filter(item => item !== changingId)
 
@@ -69,38 +68,19 @@ export const changeOrder = (orderArray, changingId, newNextId) => {
 }
 
 export const deleteId = (orderArray, id) => orderArray.filter(item => item !== id)
-
-export const addId = (orderArray, id) => {
-  return orderArray.insert(0, id)
-}
-
+export const addId = (orderArray, id) => orderArray.insert(0, id)
 export const createOrderMap = array => fromJS(array)
 
 /*
-Selectors
-*/
+ * Selectors
+ */
 
-export const getProjectOrder = createSelector(
-  state => state.get('project'),
-  list => list.toArray()
-)
-export const getContextOrder = createSelector(
-  state => state.get('context'),
-  list => list.toArray()
-)
+export const getProjectOrder = (state = fromJS({})) => state.get('project', fromJS([]))
+export const getContextOrder = (state = fromJS({})) => state.get('context', fromJS([]))
 
 /*
-Helper function
-*/
+ * Helper function
+ */
 
-export const sortedList = (orderArray, mapForOrdering) => {
-  const result = List().asMutable()
-
-  orderArray.forEach(id => {
-    result.push(mapForOrdering.get(id))
-  })
-
-  return result.asImmutable()
-}
-
+export const sortedList = (orderList, mapForOrdering) => orderList.size > 0 ? orderList.map(id => mapForOrdering.get(id)) : mapForOrdering.toList()
 export const initState = (projectArray, contextArray) => Map().set('project', createOrderMap(projectArray)).set('context', createOrderMap(contextArray))

@@ -74,7 +74,7 @@ const collectSource = (connect, monitor) => ({
 class NavigationTitle extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {startYTranslate:0}
+    this.state = {startYTranslate:undefined}
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -94,7 +94,6 @@ class NavigationTitle extends React.Component {
       const currentY = this._ref.getBoundingClientRect().top
       const deltaY = this.state.prevY - currentY
 
-      //this._ref.style.transform = `translateY(${deltaY}px)`
       this.setState({startYTranslate: deltaY, prevY: undefined})
     }
   }
@@ -108,6 +107,7 @@ class NavigationTitle extends React.Component {
     })
 
     return(
+      //Just setting new defaultStyle don't start animation. Animation plays with component mounting, it is reason for using this 'if'
       this.state.startYTranslate ?
       <Motion defaultStyle={{translateY: this.state.startYTranslate}} style={{translateY: spring(0)}}>
         {({translateY}) => {

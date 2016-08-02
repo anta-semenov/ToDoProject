@@ -12,7 +12,28 @@ import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 
+<<<<<<< HEAD
 const appLogicReducer = (state, action) => {
+=======
+const orderState = (state = fromJS({})) => {
+  if (
+    (!state.hasIn(['order', 'project']) && state.get('project', fromJS({})).size > 0) ||
+    (!state.hasIn(['order', 'context']) && state.get('context', fromJS({})).size > 0)
+  ) {
+    const orderAsMutable = state.get('order', fromJS({})).asMutable()
+    if (!state.hasIn(['order', 'project'])) {
+      orderAsMutable.set('project', state.get('project', fromJS({})).keySeq().toList())
+    }
+    if (!state.hasIn(['order', 'context'])) {
+      orderAsMutable.set('context', state.get('context', fromJS({})).keySeq().toList())
+    }
+    return orderAsMutable.asImmutable()
+  }
+  return state.get('order')
+}
+
+const rootReducer = (state, action) => {
+>>>>>>> master
   return state.withMutations(map => map
     .set('task', task(map.get('task'), action))
     .set('context', context(map.get('context'), action))
@@ -20,7 +41,7 @@ const appLogicReducer = (state, action) => {
     .set('uiState', uiState(map.get('uiState'), action))
     .set('auth', auth(map.get('auth'), action))
     .set('tracking', tracking(map.get('tracking'), action))
-    .set('order', order(map.get('order'), action))
+    .set('order', order(orderState(state), action))
   )
 }
 
@@ -98,17 +119,17 @@ export const isSelectedSectionComplete = createSelector(
 )
 
 // Ordered Projects
-const projectOrder = (state = fromJS({})) => fromOrder.getProjectOrder(state.get('order'))
+const getProjectOrder = (state = fromJS({})) => fromOrder.getProjectOrder(state.get('order'))
 export const getOrderedProjectsList = createSelector(
-  [projectOrder, getProjects],
-  (order, mapForOrdering) => fromOrder.sortedList(order, mapForOrdering)
+  [getProjectOrder, getProjects],
+  (order, projects) => fromOrder.sortedList(order, projects)
 )
 
 // Ordered Contexts
-const contextOrder = (state = fromJS({})) => fromOrder.getContextOrder(state.get('order'))
+const getContextOrder = (state = fromJS({})) => fromOrder.getContextOrder(state.get('order'))
 export const getOrderedContextsList = createSelector(
-  [contextOrder, getContexts],
-  (order, mapForOrdering) => fromOrder.sortedList(order, mapForOrdering)
+  [getContextOrder, getContexts],
+  (order, contexts) => fromOrder.sortedList(order, contexts)
 )
 
 //Order initialisation
