@@ -71,3 +71,5 @@ export const ERROR_AUTH = 'ERROR_AUTH'
 export const REQUEST_DATA = 'REQUEST_DATA'
 export const RECIEVE_DATA = 'RECIEVE_DATA'
 export const ERROR_DATA = 'ERROR_DATA'
+
+export const PROCESS_STATE = 'PROCESS_STATE'
