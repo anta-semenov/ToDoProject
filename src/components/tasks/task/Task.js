@@ -119,7 +119,6 @@ Task.propTypes = {
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
   onTaskTrackingClick: React.PropTypes.func.isRequired,
-  onTaskSomedayClick: React.PropTypes.func.isRequired,
   addTaskToProject: React.PropTypes.func.isRequired,
   addTaskContext: React.PropTypes.func.isRequired,
 

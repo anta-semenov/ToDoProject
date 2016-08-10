@@ -1,126 +1,83 @@
 import { connect } from 'react-redux'
-
-import Tasks from '../components/tasks/Tasks'
-import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking, setTaskSomeday, addTaskToProject, addTaskContext } from '../actions/taskActions'
-import { setActiveItem, toggleTaskLatency} from '../actions/uiStateActions'
-import { deleteContext, editContext } from '../actions/contextActions'
-import { deleteProject, editProject, completeProject } from '../actions/projectActions'
-import { getTasksGroups, getActiveItemID, getLatentTasks } from '../selectors/tasksSelector'
-import { getTrackingTaskId, getSelectedSectionName, getSelectedSectionType, getSelectedSectionId, isSelectedSectionComplete } from '../reducer'
+import { browserHistory } from 'react-router'
+import TaskInfoTransition from '../components/taskInfo/TaskInfoTransition'
+import { completeTask, setTaskToday, editTask, addTaskToProject, deleteTask, addTaskContext, removeTaskContext, setTaskSomeday } from '../actions/taskActions'
+import { toggleTaskLatency } from '../actions/uiStateActions'
 import * as sectionTypes from '../constants/sectionTypes'
-import uniqueKey from '../utils/uniqueKeyGenerator'
+import { getProjects, getContexts, getSelectedSection, getSelectedTask } from '../reducer'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const { sectionType, sectionId } = getSelectedSection(state, ownProps)
   return {
-    groups: getTasksGroups(state),
-    activeTask: getActiveItemID(state),
-    latentTasks: getLatentTasks(state),
-    trackingTask: getTrackingTaskId(state),
+  ...getSelectedTask(state, ownProps),
+  sectionType: sectionType,
+  sectionId: sectionId,
+  projects: getProjects(state),
+  contexts: getContexts(state)
+}}
 
-    sectionId: getSelectedSectionId(state),
-    sectionName: getSelectedSectionName(state),
-    sectionType: getSelectedSectionType(state),
-    isSectionComplete: isSelectedSectionComplete(state)
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSectionNameChange: (sectionId, sectionType, newSectionName) => {
-      switch (sectionType) {
-        case sectionTypes.PROJECT:
-          dispatch(editProject(sectionId, { title: newSectionName || 'New Project' }))
-          break
-        case sectionTypes.CONTEXT:
-          dispatch(editContext(sectionId, { title: newSectionName || 'New Context' }))
-          break
-      }
-    },
-    onSectionDelete: (sectionId, sectionType) => {
-      switch (sectionType) {
-        case sectionTypes.PROJECT:
-          dispatch(deleteProject(sectionId, true))
-          break
-        case sectionTypes.CONTEXT:
-          dispatch(deleteContext(sectionId, true))
-          break
-      }
-    },
-    onSectionComplete: (sectionId, sectionType, isSectionComplete) => {
-      if (sectionType === sectionTypes.PROJECT) {dispatch(completeProject(sectionId, !isSectionComplete))}
-    },
-    addTask: (taskTitle, sectionType, sectionId) => {
-      let properties = {id: uniqueKey()}
-      if (taskTitle !== '') {
-        properties.title = taskTitle
-      }
-      switch (sectionType) {
-        case sectionTypes.TODAY:
-          properties.today = true
-          break
-
-          case sectionTypes.SOMEDAY:
-            properties.someday = true
-            break
-
-        case sectionTypes.CONTEXT:
-          properties.contexts = [sectionId]
-          break
-
-        case sectionTypes.PROJECT:
-          properties.project = sectionId
-          break
-      }
-      dispatch(addTask(properties))
-    },
-    onTaskClick: (taskId) => {dispatch(setActiveItem(taskId))},
-    onTaskCheckboxClick: (taskId, status) => {
-      dispatch(toggleTaskLatency(taskId, status))
-      dispatch(completeTask(taskId, status))
-      if (status) {dispatch(stopTaskTracking(taskId))}
-    },
-    onTaskTodayClick: (taskId, status, sectionType) => {
-      if (sectionType === sectionTypes.TODAY) {dispatch(toggleTaskLatency(taskId, !status))}
-      if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
-      if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, status))}
-      dispatch(setTaskToday(taskId, status))
-    },
-    onTaskPriorityClick: (taskId, taskPriority) => {dispatch(editTask(taskId, {priority: taskPriority}))},
-    onTaskTrackingClick: (taskId, trackingTask) => {
-      if (trackingTask === taskId) {dispatch(stopTaskTracking(taskId))}
-      else {
-        dispatch(stopTaskTracking(trackingTask))
-        dispatch(startTaskTracking(taskId))
-      }
-    },
-    onTaskSomedayClick: (taskId, status, sectionType) => {
-      if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, !status))}
-      if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
-      if (sectionType === sectionTypes.NEXT) {dispatch(toggleTaskLatency(taskId, status))}
-      dispatch(setTaskSomeday(taskId, status))
-    },
-    addTaskToProject: (taskId, projectId) => {dispatch(addTaskToProject(taskId, projectId))},
-    addTaskContext: (taskId, contextId) => {dispatch(addTaskContext(taskId, contextId))}
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  onTaskCheckboxClick: (taskId, status) => {
+    dispatch(toggleTaskLatency(taskId, status))
+    dispatch(completeTask(taskId, status))
+  },
+  onTaskTodayClick: (taskId, status, sectionType) => {
+    if (sectionType === sectionTypes.TODAY) {dispatch(toggleTaskLatency(taskId, !status))}
+    if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
+    if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, status))}
+    dispatch(setTaskToday(taskId, status))
+  },
+  onTaskSomedayClick: (taskId, status, sectionType) => {
+    if (sectionType === sectionTypes.SOMEDAY) {dispatch(toggleTaskLatency(taskId, !status))}
+    if (sectionType === sectionTypes.INBOX) {dispatch(toggleTaskLatency(taskId, status))}
+    if (sectionType === sectionTypes.NEXT) {dispatch(toggleTaskLatency(taskId, status))}
+    dispatch(setTaskSomeday(taskId, status))
+  },
+  onPriorityClick: (taskId, priority) => dispatch(editTask(taskId, {priority})),
+  onTitleChange: (taskId, title) => dispatch(editTask(taskId, {title})),
+  onDescriptionChange: (taskId, description) => dispatch(editTask(taskId, {description})),
+  onProjectChange: (taskId, projectId, sectionType, sectionId) => {
+    dispatch(addTaskToProject(taskId, projectId))
+    if ((sectionType === sectionTypes.PROJECT && sectionId === projectId) || (sectionType === sectionTypes.INBOX && !projectId)) {
+      dispatch(toggleTaskLatency(taskId, false))
+    } else if ((sectionType === sectionTypes.PROJECT && sectionId !== projectId) || (sectionType === sectionTypes.INBOX && projectId)) {
+      dispatch(toggleTaskLatency(taskId, true))
+    }
+  },
+  onContextClick: (taskId, contextId, contextStatus, sectionType, sectionId) => {
+    if (sectionType === sectionTypes.CONTEXT && sectionId === contextId) {
+      dispatch(toggleTaskLatency(taskId, !contextStatus))
+    } else if (sectionType === sectionTypes.INBOX) {
+      dispatch(toggleTaskLatency(taskId, contextStatus))
+    }
+    if (contextStatus) {dispatch(addTaskContext(taskId, contextId))}
+    else {dispatch(removeTaskContext(taskId, contextId))}
+  },
+  onDateChange: (taskId, date) => dispatch(editTask(taskId, {date: date})),
+  onTaskDeleteClick: (taskId, status, section) => {
+    dispatch(deleteTask(taskId, !status))
+    if (!status) {browserHistory.push(`/${section}`)}
+  },
+  onCloseClick: (section) => browserHistory.push(`/${section}`)
+})
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  return Object.assign({}, ownProps, stateProps, {
-    onSectionNameChange: (newSectionName) => dispatchProps.onSectionNameChange(stateProps.sectionId, stateProps.sectionType, newSectionName),
-    onSectionDelete: () => dispatchProps.onSectionDelete(stateProps.sectionId, stateProps.sectionType),
-    onSectionComplete: () => dispatchProps.onSectionComplete(stateProps.sectionId, stateProps.sectionType, stateProps.isSectionComplete),
-
-    addTask: (taskTitle) => dispatchProps.addTask(taskTitle, stateProps.sectionType, stateProps.sectionId),
-    onTaskClick: dispatchProps.onTaskClick,
-    onTaskCheckboxClick: dispatchProps.onTaskCheckboxClick,
-    onTaskTodayClick: (taskId, status) => dispatchProps.onTaskTodayClick(taskId, status, stateProps.sectionType),
-    onTaskPriorityClick: dispatchProps.onTaskPriorityClick,
-    onTaskTrackingClick: (taskId) => dispatchProps.onTaskTrackingClick(taskId, stateProps.trackingTask),
-    onTaskSomedayClick: (taskId, status) => dispatchProps.onTaskSomedayClick(taskId, status, stateProps.sectionType),
-    addTaskToProject: dispatchProps.addTaskToProject,
-    addTaskContext: dispatchProps.addTaskContext
-  })
+  const { id, sectionType, sectionId, deleted } = stateProps
+  const { section } = ownProps
+  const { onTaskTodayClick, onTaskSomedayClick, onProjectChange, onContextClick, onTaskDeleteClick, onCloseClick } = dispatchProps
+  return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    onTaskTodayClick: (taskId, status) => onTaskTodayClick(taskId, status, sectionType),
+    onTaskSomedayClick: (taskId, status) => onTaskSomedayClick(taskId, status, sectionType),
+    onProjectChange: (taskId, projectId) => onProjectChange(taskId, projectId, sectionType, sectionId),
+    onContextClick: (taskId, contextId, contextStatus) => onContextClick(taskId, contextId, contextStatus, sectionType, sectionId),
+    onTaskDeleteClick: () => onTaskDeleteClick(id, deleted, section),
+    onCloseClick: () => onCloseClick(section)
+  }
 }
 
-const TaskContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(Tasks)
-export default TaskContainer
+const TaskInfoContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskInfoTransition)
+
+export default TaskInfoContainer

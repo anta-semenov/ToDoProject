@@ -24,9 +24,6 @@ export default class AddTask extends Component {
     this.input.value = ''
     this.input.focus()
   }
-  componentDidUpdate() {
-    if (this.props.hasFocus) {this.input.focus()}
-  }
 
   render() {
     const addTaskClasses = classNames({
