@@ -1,12 +1,9 @@
 import React from 'react'
-import Navigation from '../../containers/Nav'
-import Auth from '../../containers/AuthContainer'
 import './Sidebar.less'
 
-const Sidebar = () => (
+const Sidebar = ({ children }) => (
   <div className='sidebar' >
-    <Auth />
-    <Navigation />
+    {children}
   </div>
 )
 export default Sidebar

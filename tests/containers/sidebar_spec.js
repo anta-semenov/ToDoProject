@@ -87,7 +87,8 @@ describe('Sidebar container', () => {
   })
 
   it('Should generate correct props from state', () => {
-    const props = mapStateToProps(testState)
+    const ownProps = { section: 'a21sogy3s0oq'}
+    const props = mapStateToProps(testState, ownProps)
 
     expect(props.groups.length).to.equal(3)
     expect(props.groups[0].type).to.equal(BASIC)

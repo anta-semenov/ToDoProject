@@ -82,5 +82,6 @@ export const getContextOrder = (state = fromJS({})) => state.get('context', from
  * Helper function
  */
 
-export const sortedList = (orderList, mapForOrdering) => orderList.size > 0 ? orderList.map(id => mapForOrdering.get(id)) : mapForOrdering.toList()
+export const sortedList = (orderList, mapForOrdering) =>
+  orderList.size > 0 ? orderList.map(id => mapForOrdering.get(id)).filter(id => id) : mapForOrdering.toList()
 export const initState = (projectArray, contextArray) => Map().set('project', createOrderMap(projectArray)).set('context', createOrderMap(contextArray))
