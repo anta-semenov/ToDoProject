@@ -9,6 +9,7 @@ import tracking, * as fromTracking from './tracking'
 import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
+import { PRIORITY } from '../constants/priorityLevels'
 
 const orderState = (state = fromJS({})) => {
   if (
@@ -47,6 +48,27 @@ export default rootReducer
 
 // Tasks
 const getTasks = (state = fromJS({})) => state.get('task')
+export const getLatentTasks = (state = fromJS({})) => fromUiState.getLatentTasks(state.get('uiState'))
+const getVisibleTasks = createSelector(
+  [getTasks, getLatentTasks],
+  (tasks, latentTasks) => tasks.filter(task => (!task.get('completed', false) || latentTasks.has(task.get('id'))) && !task.get('deleted', false)).sort((a, b) => {
+    return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
+            PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
+            a.get('id') > b.get('id') ? 1 :
+            a.get('id') < b.get('id') ? -1 : 0
+  })
+)
+const groupTasksByProject = (tasks, projects) => {
+  const NO_PROJECT = 'NO_PROJECT'
+  const groupedTasks = tasks.groupBy(task => task.get('project', NO_PROJECT))
+  const groups = groupedTasks.has(NO_PROJECT) ? fromJS([{ items: groupedTasks.get(NO_PROJECT).toList() }]) : fromJS([])
+  return groups.concat(projects.filter(project => groupedTasks.has(project.get('id'))).map((project) => {
+    return fromJS({
+      title: project.get('title'),
+      items: groupedTasks.get(project.get('id'), fromJS({})).toList()
+    })
+  }))
+}
 
 // Projects
 export const getProjects = (state = fromJS({})) => fromProject.getProjects(state.get('project'))
@@ -70,39 +92,59 @@ export const getTrackingTaskStartTime = createSelector([getTrackingTask], (task 
 )
 
 // Selected Section
-export const getSelectedSectionType = (state = fromJS({})) => fromUiState.getSelectedSectionType(state.get('uiState'), undefined)
-export const getSelectedSectionId = (state = fromJS({})) => fromUiState.getSelectedSectionId(state.get('uiState'), undefined)
-export const getSelectedSectionName = createSelector(
-  [getSelectedSectionType, getSelectedSectionId, getProjects, getContexts],
-  (sectionType, sectionId, projects = fromJS({}), contexts = fromJS({})) => {
-    switch (sectionType) {
-      case sectionTypes.PROJECT:
-        return projects.getIn([sectionId, 'title'], undefined)
-
-      case sectionTypes.CONTEXT:
-        return contexts.getIn([sectionId, 'title'], undefined)
-
+const getSectionFromProps = (state, props = {}) => props.section
+export const getSelectedSection = createSelector(
+  [getProjects, getContexts, getSectionFromProps],
+  (projects, contexts, section) => {
+    switch (section) {
       case sectionTypes.INBOX:
-        return sectionNames.INBOX
-
       case sectionTypes.TODAY:
-        return sectionNames.TODAY
-
       case sectionTypes.NEXT:
-        return sectionNames.NEXT
       case sectionTypes.SOMEDAY:
-        return sectionNames.SOMEDAY
+        return {
+          sectionType: section,
+          sectionName: sectionNames[section.toUpperCase()]
+        }
+
+      default:
+        if (contexts.has(section)) {
+          return {
+            sectionType: sectionTypes.CONTEXT,
+            sectionId: section,
+            sectionName: contexts.getIn([section, 'title'], undefined)
+          }
+        } else {
+          const project = projects.get(section, fromJS({}))
+          return {
+            sectionType: sectionTypes.PROJECT,
+            sectionId: section,
+            sectionName: project.get('title'),
+            isSectionComplete: project.get('completed')
+          }
+        }
     }
   }
 )
-export const isSelectedSectionComplete = createSelector(
-  [getSelectedSectionType, getSelectedSectionId, getProjects],
-  (sectionType, sectionId, projects) => {
-    switch (sectionType) {
-      case sectionTypes.PROJECT:
-        return projects.getIn([sectionId, 'completed'], false)
-      default:
-        return false
+
+// Active Task
+const getTaskFromProps = (state, props = {}) => props.task
+export const getSelectedTask = createSelector(
+  [getTasks, getTaskFromProps],
+  (tasks, taskId) => {
+    if (!taskId) { return undefined }
+    const task = tasks.get(taskId, fromJS({}))
+    return {
+      id: task.get('id'),
+      title: task.get('title'),
+      description: task.get('description'),
+      date: task.get('date'),
+      completed: task.get('completed'),
+      today: task.get('today'),
+      someday: task.get('someday'),
+      deleted: task.get('deleted'),
+      priority: task.get('priority'),
+      taskProject: task.get('project'),
+      taskContexts: task.get('contexts')
     }
   }
 )
@@ -119,4 +161,57 @@ const getContextOrder = (state = fromJS({})) => fromOrder.getContextOrder(state.
 export const getOrderedContextsList = createSelector(
   [getContextOrder, getContexts],
   (order, contexts) => fromOrder.sortedList(order, contexts)
+)
+
+//Order initialisation
+export const initOrderState = (fullState) => {
+  if (fullState.get('order', fromJS({})).size === 2) {
+    return fullState
+  }
+
+  const projectOrderArray = fullState.get('project').toList().filter(project => !project.get('completedDeleted')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
+  const contextOrderArray = fullState.get('context').toList().filter(context => !context.get('deleted')).sortBy(context => context.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
+
+  return fullState.set('order', fromOrder.initState(projectOrderArray.toArray(), contextOrderArray.toArray()))
+}
+
+// Grouped Tasks
+export const getTasksGroups = createSelector(
+  [getSelectedSection, getVisibleTasks, getLatentTasks, getOrderedProjectsList],
+  ({ sectionType, sectionId }, tasks, latentTasks, projects) => {
+    switch (sectionType) {
+      case sectionTypes.CONTEXT: {
+        const sectionTasks = tasks.filter(task => task.get('contexts', fromJS([])).includes(sectionId) || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
+      }
+
+      case sectionTypes.PROJECT: {
+        const sectionTasks = tasks.filter(task => task.get('project') === sectionId || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks.toList()}]) : undefined
+      }
+
+      case sectionTypes.TODAY: {
+        const sectionTasks = tasks.filter(task => task.get('today') === true || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
+      }
+
+      case sectionTypes.NEXT: {
+        const sectionTasks = tasks.filter(task => !task.get('someday', false) || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
+      }
+
+      case sectionTypes.INBOX: {
+        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.get('someday', false) && !task.has('contexts') || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
+      }
+
+      case sectionTypes.SOMEDAY: {
+        const sectionTasks = tasks.filter(task => !task.get('today') && task.get('someday', false) || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
+      }
+
+      default:
+        return fromJS([{items: tasks}])
+    }
+  }
 )

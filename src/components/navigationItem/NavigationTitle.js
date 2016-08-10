@@ -74,7 +74,7 @@ const collectSource = (connect, monitor) => ({
 class NavigationTitle extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {startYTranslate:undefined}
+    this.state = {translateY:0}
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -83,7 +83,7 @@ class NavigationTitle extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.index !== this.props.index) {
-      this.setState({prevY: this._ref.getBoundingClientRect().top, startYTranslate: undefined})
+      this.setState({prevY: this._ref.getBoundingClientRect().top, translateY: undefined})
     } else if (this.state.prevY) {
       this.setState({prevY: undefined})
     }
@@ -94,7 +94,7 @@ class NavigationTitle extends React.Component {
       const currentY = this._ref.getBoundingClientRect().top
       const deltaY = this.state.prevY - currentY
 
-      this.setState({startYTranslate: deltaY, prevY: undefined})
+      this.setState({translateY: deltaY, prevY: undefined})
     }
   }
 
@@ -105,30 +105,25 @@ class NavigationTitle extends React.Component {
       'is-drop-over-task': this.props.isTaskHovering && this.props.canDrop,
       'is-dragging': this.props.isDragging
     })
-
-    return(
-      //Just setting new defaultStyle don't start animation. Animation plays with component mounting, it is reason for using this 'if'
-      this.state.startYTranslate ?
-      <Motion defaultStyle={{translateY: this.state.startYTranslate}} style={{translateY: spring(0)}}>
-        {({translateY}) => {
+    const translateY = this.state.translateY
+    return (
+      <Motion defaultStyle={{ translateY: translateY }} style={{translateY: spring(translateY)}}>
+        {({ interpolatedY }) => {
           return this.props.connectDragSource(
             this.props.connectDropTarget(
-              <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)} ref={(ref) => {this._ref = ref}} style={{transform: `translateY(${translateY}px)`}}>
+              <li
+                className={navItemClasses}
+                onClick={() => this.props.onItemClick(this.props.type, this.props.id)}
+                ref={(ref) => {this._ref = ref}}
+                style={{transform: `translateY(${translateY - interpolatedY}px)`}}
+              >
                 {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
                 {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
               </li>
             )
           )
         }}
-      </Motion> :
-      this.props.connectDragSource(
-        this.props.connectDropTarget(
-          <li className={navItemClasses} onClick={() => this.props.onItemClick(this.props.type, this.props.id)} ref={(ref) => {this._ref = ref}}>
-            {this.props.connectDragPreview(<span className='nav-item__title'>{this.props.title}</span>)}
-            {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
-          </li>
-        )
-      )
+      </Motion>
     )
   }
 }

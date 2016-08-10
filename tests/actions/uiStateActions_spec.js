@@ -4,18 +4,6 @@ import * as actions from '../../src/actions/uiStateActions'
 import * as sections from '../../src/constants/sectionTypes'
 
 describe('UI state action creators', () => {
-  it('Should create an action to set selected section', () => {
-    const section = {
-      type: sections.PROJECT,
-      id: 0
-    }
-    const expectedAction = {
-      type: types.SET_SELECTED_SECTION,
-      section
-    }
-    expect(actions.setSelectedSection(section)).to.deep.equal(expectedAction)
-  })
-
   it('Should create an action to set sidebar size', () => {
     const size = '250px'
     const expectedAction = {
@@ -23,15 +11,6 @@ describe('UI state action creators', () => {
       size
     }
     expect(actions.setSidebarSize(size)).to.deep.equal(expectedAction)
-  })
-
-  it('Should create an action to set active item', () => {
-    const id = 2
-    const expectedAction = {
-      type: types.SET_ACTIVE_ITEM,
-      id
-    }
-    expect(actions.setActiveItem(id)).to.deep.equal(expectedAction)
   })
 
   it('Should create an action to set editing item', () => {

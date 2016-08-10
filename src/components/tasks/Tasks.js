@@ -4,7 +4,7 @@ import { Motion, spring } from 'react-motion'
 import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../constants/sectionTypes.js'
 import TaskGroup from './taskGroup/TaskGroup'
 import AddTask from './addTask/AddTask'
-import SectionHeader from './sectionHeader/SectionHeader'
+import SectionHeader from '../sectionHeader/SectionHeader'
 import EmptyTaskList from '../elements/emptyTaskList/EmptyTaskList'
 import { DEFAULT_SIDEBAR_SIZE, DEFAULT_TASKINFO_SIZE, STANDART_SPRING } from '../../constants/defaults'
 
@@ -96,7 +96,6 @@ Tasks.propTypes = {
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
   onTaskTrackingClick: React.PropTypes.func.isRequired,
-  onTaskSomedayClick: React.PropTypes.func.isRequired,
   addTaskToProject: React.PropTypes.func.isRequired,
   addTaskContext: React.PropTypes.func.isRequired,
 
