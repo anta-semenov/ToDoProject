@@ -6,4 +6,5 @@ script:
   - npm run deploy
   - cp index.prod.html dist/index.html
   - cp CNAME dist/CNAME
+  - cp _config.yml dist/_config.yml
   - bash ./.deploy.sh
