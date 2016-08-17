@@ -9,7 +9,6 @@ import Auth from '../../containers/AuthContainer'
 import Section from '../../containers/Section'
 import Task from '../../containers/TaskContainer'
 import TaskTrackerContainer from '../../containers/TaskTrackerContainer'
-import DevTool  from '../../containers/DevTool'
 import { INBOX } from '../../constants/sectionTypes'
 import './App.less'
 
@@ -24,7 +23,6 @@ const App = ({ children, params }) => {
     <Section section={section || INBOX} task={task} />
     <Task section={section || INBOX} task={task} />
     <TaskTrackerContainer />
-    <DevTool />
     {children}
   </div>
 )}
