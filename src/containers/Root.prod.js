@@ -11,6 +11,6 @@ export default class Root extends Component {
           <Route path='/(:section)(/:task)' component={App} />
         </Router>
       </Provider>
-    );
+    )
   }
 }
