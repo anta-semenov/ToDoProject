@@ -119,7 +119,6 @@ Task.propTypes = {
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
   onTaskTrackingClick: React.PropTypes.func.isRequired,
-  onTaskSomedayClick: React.PropTypes.func.isRequired,
   addTaskToProject: React.PropTypes.func.isRequired,
   addTaskContext: React.PropTypes.func.isRequired,
 
@@ -140,5 +139,8 @@ Task.defaultProps = {
   today: false
 }
 
+export const TaskClass = Task
+
 const TaskConnectedDragSource = DragSource(TASK, taskSource, collect)(Task)
+
 export default TaskConnectedDragSource

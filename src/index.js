@@ -7,6 +7,7 @@ import initFirebase from './backend/firebase/init'
 import { loadState, saveState } from './backend/localStore'
 import throttle from 'lodash/throttle'
 import firebaseUpdateMiddleware from './backend/firebase/middleware'
+import { initOrderState } from './reducer/index'
 
 const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
 store.subscribe(throttle(() => {

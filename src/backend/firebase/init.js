@@ -4,6 +4,7 @@ import { recieveAuth, logout, errorAuth, requestAuth, setState } from '../../act
 import * as taskActions from '../../actions/taskActions'
 import * as projectActions from '../../actions/projectActions'
 import * as contextActions from '../../actions/contextActions'
+import * as orderActions from '../../actions/orderActions'
 import { getUid, getClientId } from '../../reducer'
 import { capitalize } from '../../utils/string'
 import uniqueKey from '../../utils/uniqueKeyGenerator'
@@ -24,18 +25,21 @@ const onAuth = (userData, store) => {
   } else if (!userData || !userData.uid) {
     unsubscribeFromDataUpdates(store)
     store.dispatch(logout())
-    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, tracking: {}, uiState: INITIAL_UI_STATE })))
+    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, tracking: {}, order: {}, uiState: INITIAL_UI_STATE })))
   }
 }
 
 const subscribeToDataUpdates = (store) => {
-  const actions = { taskActions, projectActions, contextActions }
+  const actions = { taskActions, projectActions, contextActions, orderActions }
   const uid = getUid(store.getState())
   DATA_TYPES.forEach(type => {
     switch (type) {
       case 'tracking':
         subscribeToDataUpdate(uid, type, '', 'child_removed', data => store.dispatch(actionClientIdEnchancer(setState(fromJS({ tracking: {} })), data.getPriority())))
         subscribeToDataUpdate(uid, type, '', 'child_added', data => store.dispatch(actionClientIdEnchancer(setState(fromJS({ tracking: { [data.key]: data.val()} })), data.getPriority())))
+        break
+      case 'order':
+        subscribeToDataUpdate(uid, type, '', 'child_changed', editData(type, store, actions))
         break
       default:
       subscribeToDataUpdate(uid, type, uniqueKey(), 'child_added', addData(type, store, actions))

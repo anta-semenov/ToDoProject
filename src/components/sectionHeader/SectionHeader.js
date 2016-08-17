@@ -1,7 +1,7 @@
 import React from 'react'
-import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../../constants/sectionTypes.js'
-import Textfield from '../../elements/textfield/Textfield'
-import Checkbox from '../../elements/checkbox/Checkbox'
+import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../constants/sectionTypes.js'
+import Textfield from '../elements/textfield/Textfield'
+import Checkbox from '../elements/checkbox/Checkbox'
 import './SectionHeader.less'
 
 const headerPlaceholder = (sectionType) => {

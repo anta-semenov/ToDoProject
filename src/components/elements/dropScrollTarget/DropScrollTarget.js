@@ -1,26 +1,19 @@
 import React from 'react'
 import { DropTarget } from 'react-dnd'
-import { TASK } from '../../../constants/dndTypes'
+import { TASK, SECTION } from '../../../constants/dndTypes'
 
 const scrollTarget = {
-  canDrop: () => false
+  canDrop: () => false,
+  hover: (props) => {
+    props.scrollCallback()
+  }
 }
 
-const collect = (connect, monitor) => ({
-  connectTarget: connect.dropTarget(),
-  isHovering: monitor.isOver()
+const collect = (connect) => ({
+  connectTarget: connect.dropTarget()
 })
 
 class DropScrollTarget extends React.Component {
-  componentDidUpdate() {
-    if (this.props.isHovering) {
-      this._intervalID = setInterval(this.props.scrollCallback, 50)
-    } else if (!this.props.isHovering && this._intervalID) {
-      clearInterval(this._intervalID)
-      this._intervalID = undefined
-    }
-  }
-
   render() {
     return(
       this.props.connectTarget(<div className={this.props.className}/>)
@@ -33,4 +26,4 @@ DropScrollTarget.propTypes = {
   className: React.PropTypes.string
 }
 
-export default DropTarget(TASK, scrollTarget, collect)(DropScrollTarget)
+export default DropTarget([TASK, SECTION], scrollTarget, collect)(DropScrollTarget)

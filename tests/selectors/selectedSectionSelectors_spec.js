@@ -1,8 +1,7 @@
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
-import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
-import { getSelectedSectionName } from '../../src/reducer'
+import { getSelectedSection } from '../../src/reducer'
 
 const testProjects = fromJS({
   bh52ogy5s0fm: {
@@ -27,59 +26,34 @@ const testContexts = fromJS({
   }
 })
 
-describe('getSelectedSectionName selector', () => {
-  it('Should return name for INBOX', () => {
-    const state = fromJS({
-      uiState: {
-        selectedSection: {
-          type: sectionTypes.INBOX
-        }
-      }
-    })
-    expect(getSelectedSectionName(state)).to.equal(sectionNames.INBOX)
+describe('getSelectedSection selector', () => {
+  it('Should return correct name for INBOX', () => {
+    const state = fromJS({})
+    const ownProps = { section: 'inbox' }
+    expect(getSelectedSection(state, ownProps).sectionName).to.equal(sectionNames.INBOX)
   })
   it('Should return name for TODAY', () => {
-    const state = fromJS({
-      uiState: {
-        selectedSection: {
-          type: sectionTypes.TODAY
-        }
-      }
-    })
-    expect(getSelectedSectionName(state)).to.equal(sectionNames.TODAY)
+    const state = fromJS({})
+    const ownProps = { section: 'today' }
+    expect(getSelectedSection(state, ownProps).sectionName).to.equal(sectionNames.TODAY)
   })
   it('Should return name for NEXT', () => {
-    const state = fromJS({
-      uiState: {
-        selectedSection: {
-          type: sectionTypes.NEXT
-        }
-      }
-    })
-    expect(getSelectedSectionName(state)).to.equal(sectionNames.NEXT)
+    const state = fromJS({})
+    const ownProps = { section: 'next' }
+    expect(getSelectedSection(state, ownProps).sectionName).to.equal(sectionNames.NEXT)
   })
   it('Should return name for PROJECT', () => {
     const state = fromJS({
-      project: testProjects,
-      uiState: {
-        selectedSection: {
-          type: sectionTypes.PROJECT,
-          id: 'bh52ogy5s0fm'
-        }
-      }
+      project: testProjects
     })
-    expect(getSelectedSectionName(state)).to.equal('Test project 0')
+    const ownProps = { section: 'bh52ogy5s0fm' }
+    expect(getSelectedSection(state, ownProps).sectionName).to.equal('Test project 0')
   })
   it('Should return name for CONTEXT', () => {
     const state = fromJS({
-      context: testContexts,
-      uiState: {
-        selectedSection: {
-          type: sectionTypes.CONTEXT,
-          id: 'cf1sobz3s0oc'
-        }
-      }
+      context: testContexts
     })
-    expect(getSelectedSectionName(state)).to.equal('Test context 0')
+    const ownProps = { section: 'cf1sobz3s0oc' }
+    expect(getSelectedSection(state, ownProps).sectionName).to.equal('Test context 0')
   })
 })

@@ -16,7 +16,9 @@ const EmptyTaskList = ({ sectionType = INBOX }) => {
         </div>
       )
     default:
-
+      return (
+        <div />
+      )
   }
 
 }

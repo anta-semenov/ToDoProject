@@ -127,5 +127,4 @@ const removeSection = (state, id, status) => status && state.getIn(['selectedSec
 /*
  * Selectors
  */
- export const getSelectedSectionType = (state = fromJS({})) => state.getIn(['selectedSection', 'type'])
- export const getSelectedSectionId = (state = fromJS({})) => state.getIn(['selectedSection', 'id'])
+export const getLatentTasks = (state = fromJS({})) => state.get('sectionLatentTasks', fromJS({}))
