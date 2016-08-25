@@ -24,13 +24,11 @@
 
 .section-header__delete {
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 0;
   width: 36px;
   height: 36px;
   cursor: pointer;
-  top: 8px;
-  //transform: translateY(-50%);
 
   &::before {
     content: '';
@@ -50,27 +48,22 @@
   &:active::before {
     background-color: @color-border-light-gray;
   }
-
-  svg {
-    position: relative;
-    width: 16px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    #trash {
-      fill: @color-font-light;
-      transition: @transition-basic;
-    }
-  }
-  &:hover {
-    svg {
-      #trash {
-        fill: @color-red;
-      }
-    }
-  }
   &:focus,
   &:active {
     outline: none;
+  }
+}
+
+.section-header__delete-icon {
+  position: relative;
+  width: 17px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  fill: #cccccc;
+  transition: @transition-basic;
+
+  .section-header__delete:hover & {
+    fill: @color-red;
   }
 }

@@ -1,0 +1,79 @@
+@import '../../../styles/variables.less';
+
+.someday-image {
+  position: relative;
+  width: 370px;
+
+  #box-1 {
+    stroke-dasharray: 140;
+    stroke-dashoffset: 140;
+  }
+  #box-2 {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+  }
+  #box-3 {
+    stroke-dasharray: 215;
+    stroke-dashoffset: 215;
+  }
+  #box-4 {
+    stroke-dasharray: 78;
+    stroke-dashoffset: 78;
+  }
+  #box-5 {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+  }
+  #cap-1 {
+    stroke-dasharray: 145;
+    stroke-dashoffset: 145;
+  }
+  #cap-2 {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+  }
+  #cap-3 {
+    stroke-dasharray: 295;
+    stroke-dashoffset: 295;
+  }
+  #cap-4 {
+    stroke-dasharray: 295;
+    stroke-dashoffset: 295;
+  }
+  #paper-1 {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+  }
+  #paper-2 {
+    stroke-dasharray: 75;
+    stroke-dashoffset: 75;
+  }
+  #label-1 {
+    stroke-dasharray: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 90;
+    stroke-dashoffset: 90;
+  }
+  #label-2 {
+    stroke-dasharray: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 89;
+    stroke-dashoffset: 89;
+  }
+}
+
+.someday-image__stroke {
+  stroke: #507397;
+  animation: inbox-image-stroke 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+.someday-image__shadow {
+  animation: someday-image-frame 2s ease-out backwards 0.9s;
+}
+.someday-image__box {
+  animation: someday-image-frame 2s ease-out backwards 0.3s;
+}
+
+@keyframes someday-image-frame {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+@keyframes someday-image-stroke {
+  to {stroke-dashoffset: 0}
+}

@@ -13,6 +13,7 @@
   flex-shrink: 0;
   border: 1px solid @color-border-gray;
   border-radius: 2px;
+  transition: border-color 0.3s ease-out;
 
   &::after {
     content: '';
@@ -39,7 +40,7 @@
     }
   }
   &.is-empty {
-    max-width: @size-max-width-tasks - 150;
+    //max-width: @size-max-width-tasks - 150;
   }
 }
 
@@ -51,15 +52,12 @@
   font-size: @font-size-basic;
   font-weight: 400;
 
-  //border: 1px solid @color-border-light-gray;
   border: none;
   background-color: transparent;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   transition: @transition-basic;
 
-  &:hover {
-  }
   &:focus,
   &:active {
     background-color: transparent;
@@ -106,5 +104,4 @@
   margin-left: 5px;
   vertical-align: baseline;
   font-size: 16px;
-
 }
