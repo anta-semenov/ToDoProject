@@ -48,7 +48,7 @@ export default order
 /*
  * Staff function
  */
-export const changeOrder = (orderArray, changingId, newNextId) => {
+export const changeOrder = (orderArray = fromJS([]), changingId, newNextId) => {
   const tempArray = orderArray.filter(item => item !== changingId)
 
   if (tempArray.size === orderArray.size) {
@@ -67,9 +67,9 @@ export const changeOrder = (orderArray, changingId, newNextId) => {
   return tempArray.insert(insertIndex, changingId)
 }
 
-export const deleteId = (orderArray, id) => orderArray.filter(item => item !== id)
-export const addId = (orderArray, id) => orderArray.insert(0, id)
-export const createOrderMap = array => fromJS(array)
+export const deleteId = (orderArray = fromJS([]), id) => orderArray.filter(item => item !== id)
+export const addId = (orderArray = fromJS([]), id) => orderArray.insert(0, id)
+export const createOrderMap = (array = []) => fromJS(array)
 
 /*
  * Selectors
