@@ -10,6 +10,18 @@
   transition: @transition-basic;
   cursor: pointer;
 
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 -5px 30px 30px fade(@color-bg-app, 90%);
+  }
+
   &.user--image {
     background-position: center;
     background-repeat: no-repeat;

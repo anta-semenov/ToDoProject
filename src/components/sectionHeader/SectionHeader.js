@@ -37,15 +37,13 @@ const SectionHeader = ({
       }
       {sectionType === PROJECT || sectionType === CONTEXT ?
         <div className='section-header__delete' onClick={() => onSectionDelete()}>
-          <svg width='16px' viewBox='0 0 26 32' version='1.1' >
-            <g id="trash" fill="#FF6666">
-              <rect id="Rectangle-path" x="8" y="10" width="2" height="16"></rect>
-              <rect id="Rectangle-path" x="12" y="10" width="2" height="16"></rect>
-              <rect id="Rectangle-path" x="16" y="10" width="2" height="16"></rect>
-              <rect id="Rectangle-path" x="0" y="4" width="26" height="2"></rect>
-              <path d="M17.9,5 L16,5 L16,3 C16,2.4 15.5,1.9 14.9,1.9 L10.9,1.9 C10.3,1.9 9.8,2.4 9.8,3 L9.8,5 L7.9,5 L7.9,3 C7.9,1.4 9.2,0.1 10.8,0.1 L14.8,0.1 C16.4,0.1 17.7,1.4 17.7,3 L17.7,5 L17.9,5 Z" id="Shape"></path>
-              <path d="M19,32 L7,32 C5.4,32 4,30.7 3.8,29.1 L2,5.1 L4,4.9 L5.8,28.9 C5.8,29.5 6.4,30 7,30 L19,30 C19.6,30 20.1,29.5 20.2,28.9 L22,4.9 L24,5.1 L22.2,29.1 C22,30.7 20.6,32 19,32 L19,32 Z" id="Shape"></path>
-            </g>
+          <svg className='section-header__delete-icon' viewBox='0 0 17 20' version='1.1' >
+            <path d='M3,3 L2,3 L2,17.9998938 C2,19.1099416 2.89666625,20 4.00276013,20 L12.9972399,20 C14.1064574,20 15,19.104522 15,17.9998938 L15,3 L14,3 L14,18.0066023 C14,18.5552407 13.555163,19 13.0044225,19 L3.9955775,19 C3.44573523,19 3,18.5550537 3,18.0066023 L3,3 L3,3 Z' id='Path'></path>
+            <polygon id='Path' points='11 5 12 5 12 17 11 17'></polygon>
+            <polygon id='Path' points='8 5 9 5 9 17 8 17'></polygon>
+            <polygon id='Path' points='5 5 6 5 6 17 5 17'></polygon>
+            <polygon id='Path' points='0 2 17 2 17 3 0 3'></polygon>
+            <path d='M10,2 L11,2 L11,1 C11,0.443864822 10.5523709,0 10.0001925,0 L6.99980749,0 C6.44371665,0 6,0.44771525 6,1 L6,2 L7,2 L7,1 L10,1 L10,2 L10,2 Z' id='trash-icon'></path>
           </svg>
         </div> :
         null

@@ -1,0 +1,115 @@
+@import '../../../styles/variables.less';
+
+.project-image {
+  position: relative;
+  margin: 0 20px 0 37px;
+  width: 313px;
+}
+
+.project-image__stroke {
+  stroke: #507397;
+  animation: project-image-stroke 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+#project-image-folder-2 {
+  stroke-dasharray: 235;
+  stroke-dashoffset: 235;
+}
+#project-image-folder-1-1 {
+  stroke-dasharray: 275;
+  stroke-dashoffset: 275;
+}
+#project-image-folder-1-2 {
+  stroke-dasharray: 265;
+  stroke-dashoffset: 265;
+}
+#project-image-sheet-0-1 {
+  stroke-dasharray: 230;
+  stroke-dashoffset: 230;
+}
+#project-image-sheet-0-2 {
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+}
+#project-image-sheet-0-3 {
+  stroke-dasharray: 125;
+  stroke-dashoffset: 125;
+}
+#project-image-sheet-1-1 {
+  stroke-dasharray: 110;
+  stroke-dashoffset: 110;
+}
+#project-image-sheet-1-2 {
+  stroke-dasharray: 95;
+  stroke-dashoffset: 95;
+}
+#project-image-sheet-1-3 {
+  stroke-dasharray: 15;
+  stroke-dashoffset: 15;
+}
+#project-image-sheet-2-1 {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+#project-image-sheet-2-2 {
+  stroke-dasharray: 105;
+  stroke-dashoffset: 105;
+}
+#project-image-sheet-3-1 {
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+}
+#project-image-sheet-3-2 {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+}
+#project-image-sheet-3-3 {
+  stroke-dasharray: 25;
+  stroke-dashoffset: 25;
+}
+#project-image-sheet-4-1 {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+}
+#project-image-sheet-4-2 {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+#project-image-sheet-5-1 {
+  stroke-dasharray: 45;
+  stroke-dashoffset: 45;
+}
+#project-image-sheet-5-2 {
+  stroke-dasharray: 5;
+  stroke-dashoffset: 5;
+}
+#project-image-sheet-5-3 {
+  stroke-dasharray: 15;
+  stroke-dashoffset: 15;
+}
+#project-image-sheet-6-1 {
+  stroke-dasharray: 15;
+  stroke-dashoffset: 15;
+}
+#project-image-sheet-6-2 {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+}
+
+.project-image__shadow {
+  animation: project-image-frame 2s ease-out backwards 0.9s;
+}
+.project-image__folder {
+  animation: project-image-frame 2s ease-out backwards 0.3s;
+}
+.project-image__paper {
+  animation: project-image-frame 2s ease-out backwards 0.3s;
+}
+
+@keyframes project-image-frame {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+@keyframes project-image-stroke {
+  to {stroke-dashoffset: 0}
+}
