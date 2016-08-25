@@ -14,7 +14,7 @@ class Navigation extends React.Component {
     const {groups, ...rest} = this.props
     return (
       <div className='navigation'>
-        <DropScrollTarget className='nav-scroll' scrollCallback = {() => {
+        <DropScrollTarget className='nav-scroll nav-scroll--up' scrollCallback = {() => {
           if (this._navScrollView.scrollTop > 0) {
             this._navScrollView.scrollTop -=10
           }
@@ -22,7 +22,7 @@ class Navigation extends React.Component {
         <ul className='nav' ref={(ref) => this._navScrollView = ref} >
           {groups.map((group, index) =>
             <NavigationGroup
-              key={index} //We should pass unique identificator for array items
+              key={index}
               items={group.items}
               title={group.title}
               type={group.type}
@@ -31,7 +31,7 @@ class Navigation extends React.Component {
             />
           )}
         </ul>
-        <DropScrollTarget className='nav-scroll' scrollCallback = {() => {
+        <DropScrollTarget className='nav-scroll nav-scroll--down' scrollCallback = {() => {
           if (this._navScrollView.scrollTop < this._navScrollView.scrollHeight - this._navScrollView.clientHeight) {
             this._navScrollView.scrollTop +=10
           }
