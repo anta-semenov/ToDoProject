@@ -1,5 +1,5 @@
 import React from 'react'
-import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../constants/sectionTypes.js'
+import { PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY } from '../../constants/sectionTypes.js'
 import Textfield from '../elements/textfield/Textfield'
 import Checkbox from '../elements/checkbox/Checkbox'
 import './SectionHeader.less'
@@ -56,7 +56,7 @@ const SectionHeader = ({
 
 SectionHeader.propTypes = {
   sectionName: React.PropTypes.string.isRequired,
-  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT]).isRequired,
+  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY]).isRequired,
   isSectionComplete: React.PropTypes.bool,
   isSectionEmpty: React.PropTypes.bool,
 

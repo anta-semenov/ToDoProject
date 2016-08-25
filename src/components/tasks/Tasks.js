@@ -1,7 +1,7 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Motion, spring } from 'react-motion'
-import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../constants/sectionTypes.js'
+import { PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY } from '../../constants/sectionTypes.js'
 import TaskGroup from './taskGroup/TaskGroup'
 import AddTask from './addTask/AddTask'
 import SectionHeader from '../sectionHeader/SectionHeader'
@@ -84,7 +84,7 @@ Tasks.propTypes = {
   trackingTask: React.PropTypes.string,
 
   sectionName: React.PropTypes.string.isRequired,
-  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT]).isRequired,
+  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY]).isRequired,
   isSectionComplete: React.PropTypes.bool,
 
   onSectionNameChange: React.PropTypes.func.isRequired,
