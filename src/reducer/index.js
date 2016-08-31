@@ -51,12 +51,15 @@ const getTasks = (state = fromJS({})) => state.get('task')
 export const getLatentTasks = (state = fromJS({})) => fromUiState.getLatentTasks(state.get('uiState'))
 const getVisibleTasks = createSelector(
   [getTasks, getLatentTasks],
-  (tasks, latentTasks) => tasks.filter(task => (!task.get('completed', false) || latentTasks.has(task.get('id'))) && !task.get('deleted', false)).sort((a, b) => {
-    return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
-            PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
-            a.get('id') > b.get('id') ? 1 :
-            a.get('id') < b.get('id') ? -1 : 0
-  })
+  (tasks, latentTasks) =>
+    tasks
+      .filter(task => (!task.get('completed', false) || latentTasks.has(task.get('id'))) && !task.get('deleted', false))
+      .sort((a, b) => {
+        return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
+                PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
+                a.get('id') > b.get('id') ? 1 :
+                a.get('id') < b.get('id') ? -1 : 0
+      })
 )
 const groupTasksByProject = (tasks, projects) => {
   const NO_PROJECT = 'NO_PROJECT'
