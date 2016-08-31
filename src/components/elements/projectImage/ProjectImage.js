@@ -1,5 +1,5 @@
 import React from 'react'
-import './projectImage.less'
+import './ProjectImage.less'
 
 const ProjectImage = () => (
   <svg className='project-image' viewBox='0 0 255 250' fill='none'>
