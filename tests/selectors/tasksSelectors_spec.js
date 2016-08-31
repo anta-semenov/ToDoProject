@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { fromJS, Map, Set } from 'immutable'
 import { PRIORITY_NONE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
-import { getTasksGroups, getActiveItemID } from '../../src/selectors/tasksSelector'
+import { getTasksGroups, getActiveItemID } from '../../src/reducer'
 
 const testTasks1 = fromJS({
   b41sogy3s0oc: {

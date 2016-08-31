@@ -13,9 +13,7 @@ import { AUTH_NONE } from './constants/authStatus'
 const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
 store.subscribe(throttle(() => {
   const state = store.getState()
-  console.log(state.getIn(['auth', 'authStatus'], undefined))
   if (state.getIn(['auth', 'authStatus'], undefined) === AUTH_NONE) {
-    console.log('Save to local storage')
     saveState(fromJS({
       task: state.get('task', fromJS([])),
       context: state.get('context', fromJS([])),

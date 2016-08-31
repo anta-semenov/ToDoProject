@@ -30,7 +30,7 @@ const firebaseUpdateMiddleware = store => next => action => {
           return {
             ...updates,
             [`/order/${parsedPath.orderType}`]: {
-              ...nextState.getIn(['order', parsedPath.orderType]).toArray(),
+              ...nextState.getIn(['order', parsedPath.orderType]).toJS(),
               ['.priority']: getClientId(nextState)
             }
           }
