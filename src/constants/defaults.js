@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable'
-import * as sectionTypes from './sectionTypes'
 
 export const NEW_CONTEXT_TITLE = 'New Context'
 
@@ -10,10 +9,14 @@ export const NEW_PROJECT_TITLE = 'New Project'
 export const DEFAULT_SIDEBAR_SIZE = 220
 export const DEFAULT_TASKINFO_SIZE = 480
 
-export const INITIAL_UI_STATE = fromJS({
-  selectedSection: {
-    type: sectionTypes.INBOX
-  }
+export const INITIAL_UI_STATE = fromJS({})
+export const INITIAL_STATE = fromJS({
+  task: {},
+  project: {},
+  context: {},
+  tracking: {},
+  order: {},
+  uiState: INITIAL_UI_STATE
 })
 
 export const DATE_FORMAT = {

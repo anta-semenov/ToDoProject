@@ -202,7 +202,7 @@ export const getTasksGroups = createSelector(
 
       case sectionTypes.INBOX: {
         const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.get('someday', false) && !task.has('contexts') || latentTasks.has(task.get('id')))
-        return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
+        return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks.toList()}]) : undefined
       }
 
       case sectionTypes.SOMEDAY: {

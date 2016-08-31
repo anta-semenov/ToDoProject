@@ -1,6 +1,6 @@
 import { Map } from 'immutable'
 import { REQUEST_AUTH, RECIEVE_AUTH, ERROR_AUTH, LOG_OUT } from '../constants/actionTypes'
-import { AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR } from '../constants/authStatus'
+import { AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR, AUTH_NONE } from '../constants/authStatus'
 
 
 const auth = (state = Map(), action) => {
@@ -21,7 +21,9 @@ const auth = (state = Map(), action) => {
         .set('errorMessage', action.errorMessage)
       )
     case LOG_OUT:
-      return Map()
+      return Map({
+        authStatus: AUTH_NONE
+      })
 
     default:
       return state
