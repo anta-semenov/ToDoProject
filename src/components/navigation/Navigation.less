@@ -3,7 +3,39 @@
 .nav {
   position: relative;
   margin: 0;
-  padding: 0;
+  padding: 110px 0 0 0;
   list-style: none;
   overflow-y: auto;
+
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.nav-scroll {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  height: 20px;
+  width: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  &.nav-scroll--up {
+    top: 0;
+    height: 105px;
+  }
+  &.nav-scroll--down {
+    bottom: 0;
+  }
+}
+
+.navigation {
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }

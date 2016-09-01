@@ -1,47 +1,63 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { PROJECT, CONTEXT, INBOX, TODAY, NEXT } from '../../constants/sectionTypes.js'
+import { Motion, spring } from 'react-motion'
+import { PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY } from '../../constants/sectionTypes.js'
 import TaskGroup from './taskGroup/TaskGroup'
 import AddTask from './addTask/AddTask'
-import SectionHeader from './sectionHeader/SectionHeader'
+import SectionHeader from '../sectionHeader/SectionHeader'
+import EmptyTaskList from '../elements/emptyTaskList/EmptyTaskList'
+import { DEFAULT_SIDEBAR_SIZE, DEFAULT_TASKINFO_SIZE, STANDART_SPRING } from '../../constants/defaults'
 
 import './Tasks.less'
 
-const Tasks = props => (
-  <div className={`tasks ${props.activeItem != '' ? 'has-active-item' : ''}`}>
-    <SectionHeader
-      sectionName={props.sectionName}
-      sectionType={props.sectionType}
-      isSectionComplete={props.isSectionComplete}
-      onSectionNameChange={props.onSectionNameChange}
-      onSectionDelete={props.onSectionDelete}
-      onSectionComplete={props.onSectionComplete}
-    />
-    <AddTask addTask={props.addTask} />
-    {props.groups ?
-      <ul className='tasks__list'>
-        {props.groups.map((group, index) =>
-          <TaskGroup
-            key={index}
-            groupTitle={group.get('title')}
-            tasks={group.get('items')}
-            activeItem={props.activeItem}
-            latentTasks={props.latentTasks}
-            trackingTask={props.trackingTask}
-            onTaskClick={props.onTaskClick}
-            onTaskCheckboxClick={props.onTaskCheckboxClick}
-            onTaskTodayClick={props.onTaskTodayClick}
-            onPriorityClick={props.onTaskPriorityClick}
-            onTrackingClick={props.onTrackingClick}
-            onTaskSomedayClick={props.onTaskSomedayClick}
+const Tasks = ({
+  groups,
+  activeTask,
+  sectionName,
+  sectionType,
+  isSectionComplete,
+  onSectionNameChange,
+  onSectionDelete,
+  onSectionComplete,
+  addTask,
+  ...rest }) => {
+  const getDefaultStyle = () => ({ width: 0, opacity: 0 })
+  const getStyle = (isActive) => ({ width: isActive ? spring(DEFAULT_TASKINFO_SIZE, STANDART_SPRING) : spring(0, STANDART_SPRING), opacity: 1 })
+  const isEmpty = groups ? false : true
+
+  return (
+    <Motion defaultSyle={getDefaultStyle} style={getStyle(activeTask)}>
+      {interpolatedStyle =>
+        <div className='tasks' style={{ width: `calc(100% - ${DEFAULT_SIDEBAR_SIZE}px - ${interpolatedStyle.width}px)`, opacity: interpolatedStyle.opacity}}>
+          <SectionHeader
+            sectionName={sectionName}
+            sectionType={sectionType}
+            isSectionComplete={isSectionComplete}
+            onSectionNameChange={onSectionNameChange}
+            onSectionDelete={onSectionDelete}
+            onSectionComplete={onSectionComplete}
           />
-        )}
-      </ul>
-      :
-      <div className='tasks__empty-state'>This section doesn't have any tasks. This text should be replaced with a component for empty space.</div>
-    }
-  </div>
-)
+          <AddTask addTask={addTask} isSectionEmpty={isEmpty} hasFocus={isEmpty} />
+          {groups ?
+            <ul className='tasks__list'>
+              {groups.toSeq().map((group, index) =>
+                <TaskGroup
+                  {...rest}
+                  key={index}
+                  groupTitle={group.get('title')}
+                  tasks={group.get('items')}
+                  activeItem={activeTask}
+                />
+              )}
+            </ul>
+            :
+            <EmptyTaskList sectionType={sectionType} />
+          }
+        </div>
+      }
+    </Motion>
+  )
+}
 
 Tasks.propTypes = {
   groups: ImmutablePropTypes.listOf(
@@ -63,12 +79,12 @@ Tasks.propTypes = {
       title: React.PropTypes.string
     })
   ),
-  activeItem: React.PropTypes.string,
+  activeTask: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
   trackingTask: React.PropTypes.string,
 
   sectionName: React.PropTypes.string.isRequired,
-  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT]).isRequired,
+  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY]).isRequired,
   isSectionComplete: React.PropTypes.bool,
 
   onSectionNameChange: React.PropTypes.func.isRequired,
@@ -79,8 +95,9 @@ Tasks.propTypes = {
   onTaskCheckboxClick: React.PropTypes.func.isRequired,
   onTaskTodayClick: React.PropTypes.func.isRequired,
   onTaskPriorityClick: React.PropTypes.func.isRequired,
-  onTrackingClick: React.PropTypes.func.isRequired,
-  onTaskSomedayClick: React.PropTypes.func.isRequired,
+  onTaskTrackingClick: React.PropTypes.func.isRequired,
+  addTaskToProject: React.PropTypes.func.isRequired,
+  addTaskContext: React.PropTypes.func.isRequired,
 
   addTask: React.PropTypes.func.isRequired
 }

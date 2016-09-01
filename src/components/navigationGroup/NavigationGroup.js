@@ -1,40 +1,66 @@
 import React from 'react'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import shallowCompare from 'react-addons-shallow-compare'
 import './NavigationGroup.less'
 
 import NavigationItem from '../navigationItem/NavigationItem'
 
-export default class NavigationGroup extends React.Component {
+class NavigationGroup extends React.Component {
   constructor(props) {
     super(props)
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
+    this.state = {}
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (shallowCompare({props: this.props, state: {}}, nextProps, {})) {
+      this.setState({items: undefined})
+    }
+  }
+
+  changeItemOrder(firstIndex, secondIndex) {
+    const items = this.state.items || this.props.items
+    const item = items.get(firstIndex)
+    this.setState({items: items.splice(firstIndex,1).splice(secondIndex,0,item)})
+  }
+
+  endDrag(index) {
+    const items = this.state.items || this.props.items
+    const item = items.get(index)
+    const nextId = items.getIn([index+1,'id'])
+    this.props.changePosition(item.get('type'), item.get('id'), nextId)
   }
 
   render() {
-    return (
+    const { title, type, addNew, onItemClick, onStopEditing} = this.props
+    const items = this.state.items || this.props.items
+
+    return(
       <li className='nav-group'>
-        {this.props.title ?
+        {title ?
           <div className='nav-group__title'>
-            <div className='nav-group__title-text' >{this.props.title}</div>
-            {this.props.addNew ?
-              <div className='nav-group__add-button' onClick={() => this.props.addNew(this.props.type)} /> :
-              null
-            }
+            <div className='nav-group__title-text' >{title}</div>
+            {addNew ? <div className='nav-group__add-button' onClick={() => addNew(type)} /> : null}
           </div>
-        : null}
+          : null}
         <ul className='nav-group__list'>
-          {this.props.items.map(item =>
+          {items.map((item, index) =>
             <NavigationItem
               key={`${item.get('type')}-${item.get('id')}`}
               id={item.get('id')}
+              index = {index}
               type={item.get('type')}
               title={item.get('title')}
               active={item.get('active')}
               editing={item.get('editing')}
               count={item.get('count')}
-              onItemClick={this.props.onItemClick}
-              onStopEditing={this.props.onStopEditing}/>
+              onItemClick={onItemClick}
+              onStopEditing={onStopEditing}
+              endDrag={(index) => this.endDrag(index)}
+              changeOrder={(firstIndex, secondIndex) => this.changeItemOrder(firstIndex, secondIndex)}/>
           )}
         </ul>
       </li>
@@ -55,6 +81,7 @@ NavigationGroup.propTypes = {
   ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
+  changePosition: React.PropTypes.func,
 
   title: React.PropTypes.string,
 
@@ -62,3 +89,5 @@ NavigationGroup.propTypes = {
   addNewTitle : React.PropTypes.string,
   addNew: React.PropTypes.func
 }
+
+export default NavigationGroup

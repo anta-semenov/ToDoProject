@@ -1,18 +1,18 @@
 import Navigation from '../components/navigation/Navigation'
 import { connect } from 'react-redux'
-import { setSelectedSection, setEditingSection, clearLatentTasks } from '../actions/uiStateActions'
-import { addProject, editProject } from '../actions/projectActions'
-import { addContext, editContext } from '../actions/contextActions'
+import { browserHistory } from 'react-router'
+import { setEditingSection, clearLatentTasks } from '../actions/uiStateActions'
+import { addProject, editProject, changeProjectPosition } from '../actions/projectActions'
+import { addContext, editContext, changeContextPosition } from '../actions/contextActions'
 import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
-import { fromJS, Map } from 'immutable'
+import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import uniqueKey from '../utils/uniqueKeyGenerator'
 import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defaults'
+import { getOrderedProjectsList, getOrderedContextsList } from '../reducer'
 
-export const mapStateToProps = (state) => {
-  const selectedSectionType = state.getIn(['uiState', 'selectedSection', 'type'])
-  const selectedSectionID = state.getIn(['uiState', 'selectedSection', 'id'])
+export const mapStateToProps = (state, ownProps) => {
   const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
   const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'])
 
@@ -23,24 +23,24 @@ export const mapStateToProps = (state) => {
         {
           type: sectionTypes.INBOX,
           title: sectionNames.INBOX,
-          active: selectedSectionType === sectionTypes.INBOX ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.get('someday') && !task.has('project') && !task.has('contexts')).size
+          active: ownProps.section === sectionTypes.INBOX ? true : false,
+          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.get('someday') && !task.has('project') && !task.has('contexts') && !task.get('deleted')).size
         },
         {
           type: sectionTypes.TODAY,
           title: sectionNames.TODAY,
-          active: selectedSectionType === sectionTypes.TODAY ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && task.get('today')).size
+          active: ownProps.section === sectionTypes.TODAY ? true : false,
+          count: state.get('task').filter(task => !task.get('completed') && !task.get('deleted') && task.get('today')).size
         },
         {
           type: sectionTypes.NEXT,
           title: sectionNames.NEXT,
-          active: selectedSectionType === sectionTypes.NEXT ? true : false
+          active: ownProps.section === sectionTypes.NEXT ? true : false
         },
         {
           type: sectionTypes.SOMEDAY,
           title: sectionNames.SOMEDAY,
-          active: selectedSectionType === sectionTypes.SOMEDAY ? true : false
+          active: ownProps.section === sectionTypes.SOMEDAY ? true : false
         }
       ])
     },
@@ -48,15 +48,15 @@ export const mapStateToProps = (state) => {
       type: CONTEXTS,
       title: sectionNames.CONTEXTS,
       addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: state.get('context', Map()).toList().sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => {
+      items: getOrderedContextsList(state).map((item) => {
         const id = item.get('id')
         return fromJS({
           id: id,
           type: sectionTypes.CONTEXT,
           title: item.get('title'),
-          active: selectedSectionType === sectionTypes.CONTEXT && selectedSectionID === id ? true : false,
+          active: ownProps.section === id ? true : false,
           editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && task.get('context', fromJS([])).has(id)).size
+          count: state.get('task').filter(task => !task.get('completed') && !task.get('deleted') && task.get('context', fromJS([])).has(id)).size
         })
       })
     },
@@ -64,13 +64,13 @@ export const mapStateToProps = (state) => {
       type: PROJECTS,
       title: sectionNames.PROJECTS,
       addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: state.get('project', Map()).toList().filter(project => !project.get('completed')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => {
+      items: getOrderedProjectsList(state).map((item) => {
         const id = item.get('id')
         return fromJS({
           id: id,
           type: sectionTypes.PROJECT,
           title: item.get('title'),
-          active: selectedSectionType === sectionTypes.PROJECT && selectedSectionID === id ? true : false,
+          active: ownProps.section === id ? true : false,
           editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false
         })
       })
@@ -85,7 +85,7 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     onItemClick: (type, id) => {
       dispatch(clearLatentTasks())
-      dispatch(setSelectedSection({type: type, id: id}))
+      browserHistory.push(`/${id ? id : type}`)
     },
     addNew: (type) => {
       const newKey = uniqueKey()
@@ -118,6 +118,16 @@ export const mapDispatchToProps = (dispatch) => {
             dispatch(editContext(item.id, properties))
             break
         }
+      }
+    },
+    changePosition: (type, id, nextId) => {
+      switch (type) {
+        case sectionTypes.PROJECT:
+          dispatch(changeProjectPosition(id, nextId))
+          break
+        case sectionTypes.CONTEXT:
+          dispatch(changeContextPosition(id, nextId))
+          break
       }
     }
   }

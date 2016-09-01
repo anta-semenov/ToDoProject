@@ -1,71 +1,8 @@
 import React from 'react'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
-import './NavigationItem.less'
+import NavigationTextfield from './NavigationTextfield'
+import NavigationTitle from './NavigationTitle'
 
-export default class NavigationItem extends React.Component {
-  state = {text: ''}
-  constructor(props) {
-    super(props)
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
-  }
-
-  componentDidMount() {
-    if (this.titleInput) {
-      this.titleInput.focus()
-    }
-  }
-
-  handleKeyDown = (e) => {
-    switch (e.keyCode) {
-      case 13:
-        this.props.onStopEditing({
-          type: this.props.type,
-          id: this.props.id,
-          newTitle: e.target.value
-        })
-        break
-      case 27:
-        e.preventDefault()
-        this.props.onStopEditing({
-          type: this.props.type,
-          id: this.props.id
-        })
-        break
-    }
-  }
-
-  handleOnBlur = (e) => {
-    this.props.onStopEditing({
-      type: this.props.type,
-      id: this.props.id,
-      newTitle: e.target.value
-    })
-  }
-
-  render() {
-    if (this.props.editing) {
-      return(
-        <li>
-          <input
-            className='nav-item__input'
-            type='text'
-            placeholder={this.props.title}
-            onKeyDown={this.handleKeyDown}
-            onBlur={this.handleOnBlur}
-            ref={ref => this.titleInput = ref}
-          />
-        </li>
-      )
-    } else {
-      return(
-        <li className={`nav-item ${this.props.active ? 'is-active' : ''}`} onClick={() => this.props.onItemClick(this.props.type, this.props.id)}>
-          <span className='nav-item__title'>{this.props.title}</span>
-          {this.props.count ? <span className='nav-item__count'>{this.props.count}</span> : null}
-        </li>
-      )
-    }
-  }
-}
+const NavigationItem = ({ editing, ...rest }) => editing ? <NavigationTextfield {...rest} /> : <NavigationTitle {...rest} />
 
 NavigationItem.propTypes = {
   type: React.PropTypes.string.isRequired,
@@ -74,8 +11,12 @@ NavigationItem.propTypes = {
 
   onItemClick: React.PropTypes.func.isRequired,
   onStopEditing: React.PropTypes.func,
+  changeOrder: React.PropTypes.func,
+  endDrag: React.PropTypes.func,
 
   active: React.PropTypes.bool.isRequired,
   editing: React.PropTypes.bool,
   count: React.PropTypes.number
 }
+
+export default NavigationItem

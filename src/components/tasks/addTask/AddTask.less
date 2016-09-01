@@ -11,10 +11,9 @@
   flex-direction: row;
   flex-wrap: nowrap;
   flex-shrink: 0;
-  transition: @transition-basic;
   border: 1px solid @color-border-gray;
   border-radius: 2px;
-  //overflow: hidden;
+  transition: border-color 0.3s ease-out;
 
   &::after {
     content: '';
@@ -40,6 +39,9 @@
       opacity: 1;
     }
   }
+  &.is-empty {
+    //max-width: @size-max-width-tasks - 150;
+  }
 }
 
 .add-task__textfield {
@@ -50,15 +52,12 @@
   font-size: @font-size-basic;
   font-weight: 400;
 
-  //border: 1px solid @color-border-light-gray;
   border: none;
   background-color: transparent;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   transition: @transition-basic;
 
-  &:hover {
-  }
   &:focus,
   &:active {
     background-color: transparent;
@@ -84,7 +83,7 @@
   outline: none;
   border-left: 1px solid @color-border-light-gray;
   cursor: pointer;
-  transition: @transition-basic;
+  transition: border-color @transition-basic, color @transition-basic, background-color @transition-basic;
 
   .add-task.has-focus & {
     border-color: @color-border-light-gray;
@@ -105,5 +104,4 @@
   margin-left: 5px;
   vertical-align: baseline;
   font-size: 16px;
-
 }

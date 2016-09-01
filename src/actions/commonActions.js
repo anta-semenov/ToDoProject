@@ -46,7 +46,22 @@ export const logoutThunk = () => (dispatch) => {
 export const recieveAuth = (userData, clientId) => (dispatch) => {
   dispatch({ type: actionTypes.RECIEVE_AUTH, userData, clientId })
   dispatch(requestData())
-  Promise.all(DATA_TYPES.map(dataType => api.fetchData(userData.uid, dataType, dataType === 'context' || dataType === 'tracking' ? null : false))).then(
+  Promise.all(DATA_TYPES.map(dataType => {
+    let filter
+    switch (dataType) {
+      case 'context':
+        filter = {type: '<=', key:'deleted', value: false}
+        break
+      case 'task':
+      case 'project':
+        filter = {type: '<=', key:'completedDeleted', value: false}
+        break
+      default:
+        filter = {}
+        break
+    }
+    return api.fetchData(userData.uid, dataType, filter)
+  })).then(
     results => {
       dispatch(recieveData())
       dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))

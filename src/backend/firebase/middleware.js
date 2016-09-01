@@ -14,15 +14,24 @@ const firebaseUpdateMiddleware = store => next => action => {
 
   if (difference.length > 0) {
     const updateObject = difference.reduce((updates, diff) => {
-      if (parsePath(diff.path).isPathToFirebaseData) {
+      const parsedPath = parsePath(diff.path)
+      if (parsedPath.isPathToFirebaseData) {
         if (diff.op === 'remove') {
           return { ...updates, [diff.path]: null }
-        } else if (parsePath(diff.path).isPathToObject) {
+        } else if (parsedPath.isPathToObject) {
           return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
-        } else if (parsePath(diff.path).isTrackingPath) {
+        } else if (parsedPath.isTrackingPath) {
           return { ...updates, [diff.path]: diff.value || null }
+        } else if (parsedPath.orderType) {
+          if (updates[`/order/${parsedPath.orderType}`]) {
+            return updates
+          }
+          return {
+            ...updates,
+            [`/order/${parsedPath.orderType}`]: {...nextState.getIn(['order',parsedPath.orderType]).toArray(), ['.priority']: getClientId(nextState)}
+          }
         } else {
-          return { ...updates, [diff.path]: diff.value, [priorityForPath(diff.path)]: getClientId(nextState) }
+          return { ...updates, [diff.path]: diff.value, [priorityForPath(parsedPath)]: getClientId(nextState) }
         }
       }
       return updates
@@ -33,16 +42,18 @@ const firebaseUpdateMiddleware = store => next => action => {
 }
 export default firebaseUpdateMiddleware
 
-const priorityForPath = path => parsePath(path).type && parsePath(path).id ? `/${parsePath(path).type}/${parsePath(path).id}/.priority` : ''
+const priorityForPath = parsePath => parsePath.type && parsePath.id ? `/${parsePath.type}/${parsePath.id}/.priority` : ''
 const parsePath = path => {
-  const typeReg = /(task|project|context|tracking)/
+  const typeReg = /(task|project|context|tracking|order)/
   const idReg = /\d+/
+  const splitPath = path.split('/')
   return {
-    type: typeReg.test(path.split('/')[1]) ? path.split('/')[1] : '',
-    id: idReg.test(path.split('/')[2]) ? path.split('/')[2] : '',
-    isPathToObject: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && idReg.test(path.split('/')[2]),
-    isPathToFirebaseData: typeReg.test(path.split('/')[1]),
-    isTrackingPath: path.split('/').length === 3 && typeReg.test(path.split('/')[1]) && path.split('/')[2].includes('task')
+    type: typeReg.test(splitPath[1]) ? splitPath[1] : '',
+    id: idReg.test(splitPath[2]) ? splitPath[2] : '',
+    isPathToObject: splitPath.length === 3 && typeReg.test(splitPath[1]) && idReg.test(splitPath[2]),
+    isPathToFirebaseData: typeReg.test(splitPath[1]),
+    isTrackingPath: splitPath.length === 3 && typeReg.test(splitPath[1]) && splitPath[2].includes('task'),
+    orderType: splitPath[1] === 'order' ? splitPath[2] : undefined
   }
 }
 
@@ -51,6 +62,8 @@ const passToFirebase = actionType =>
   actionType === actionTypes.REMOVE_PROJECT ||
   actionType === actionTypes.COMPLETE_PROJECT ||
   actionType === actionTypes.EDIT_PROJECT ||
+  actionType === actionTypes.DELETE_PROJECT ||
+  actionType === actionTypes.CHANGE_PROJECT_POSITION ||
 
   actionType === actionTypes.ADD_TASK ||
   actionType === actionTypes.REMOVE_TASK ||
@@ -63,11 +76,13 @@ const passToFirebase = actionType =>
   actionType === actionTypes.START_TASK_TRACKING ||
   actionType === actionTypes.STOP_TASK_TRACKING ||
   actionType === actionTypes.SET_TASK_SOMEDAY ||
+  actionType === actionTypes.DELETE_TASK ||
 
   actionType === actionTypes.ADD_CONTEXT ||
   actionType === actionTypes.REMOVE_CONTEXT ||
   actionType === actionTypes.EDIT_CONTEXT ||
   actionType === actionTypes.SWITCH_TASK_CONTEXT ||
+  actionType === actionTypes.DELETE_CONTEXT ||
+  actionType === actionTypes.CHANGE_CONTEXT_POSITION ||
 
-  actionType === actionTypes.UNDO ||
-  actionType === actionTypes.REDO
+  actionType === actionTypes.PROCESS_STATE

@@ -1,10 +1,15 @@
 import { expect } from 'chai'
 import React from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
+import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate, createRenderer } from 'react-addons-test-utils'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 
-import NavigationItem from '../../src/components/navigationItem/NavigationItem'
+import { NavigationTitleClass } from '../../src/components/navigationItem/NavigationTitle'
+import NavigationTextfield from '../../src/components/navigationItem/NavigationTextfield'
+
+const connectDropTarget = element => element
+const connectDragSource = element => element
+const connectDragPreview = element => element
 
 const testItem1 = {
   key: 0,
@@ -13,7 +18,10 @@ const testItem1 = {
   active: true,
   count: 4,
   editing: false,
-  onItemClick: () => {}
+  onItemClick: () => {},
+  connectDropTarget,
+  connectDragSource,
+  connectDragPreview
 }
 const testItem2 = {
   key: 0,
@@ -21,19 +29,24 @@ const testItem2 = {
   title: sectionNames.NEXT,
   active: false,
   editing: false,
-  onItemClick: () => {}
+  onItemClick: () => {},
+  connectDropTarget,
+  connectDragSource,
+  connectDragPreview
 }
+
+const shallowRenderer = createRenderer()
 
 describe('Navigation Item', () => {
   describe('Active item class', () => {
     it('Active element should has "is-active" class', () => {
-      const itemComponent = renderIntoDocument(<NavigationItem {...testItem1} />)
+      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testItem1} />)
       const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
 
       expect(itemElement.className).to.include('is-active')
     })
     it('Inactive element shouldn\'t has "is-active" class', () => {
-      const itemComponent = renderIntoDocument(<NavigationItem {...testItem2} />)
+      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testItem2} />)
       const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
 
       expect(itemElement.className).to.not.include('is-active')
@@ -42,7 +55,7 @@ describe('Navigation Item', () => {
 
   describe('Render not editing component', () => {
     it('Should render component', () => {
-      const itemComponent = renderIntoDocument(<NavigationItem {...testItem1}/>)
+      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testItem1}/>)
       const titleElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__title')
       const countElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__count')
       const editElements = scryRenderedDOMComponentsWithClass(itemComponent, 'nav-item__input')
@@ -60,10 +73,13 @@ describe('Navigation Item', () => {
         active: true,
         count: 4,
         editing: false,
-        onItemClick: (type) => callbackParametr1 = type
+        onItemClick: (type) => callbackParametr1 = type,
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationItem {...testProps}/>)
+      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testProps}/>)
       const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
 
       expect(callbackParametr1).to.equal('')
@@ -86,10 +102,13 @@ describe('Navigation Item', () => {
         onItemClick: (type, id) => {
           callbackParametr1 = type
           callbackParametr2 = id
-        }
+        },
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationItem {...testProps}/>)
+      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testProps}/>)
       const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
 
       expect(callbackParametr1).to.equal('')
@@ -112,10 +131,13 @@ describe('Navigation Item', () => {
         active: false,
         count: 4,
         editing: true,
-        onItemClick: () => {}
+        onItemClick: () => {},
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
+      const itemComponent = renderIntoDocument(<NavigationTextfield {...editingProps}/>)
       const titleElement = scryRenderedDOMComponentsWithClass(itemComponent, 'nav-item__title')
       const countElement = scryRenderedDOMComponentsWithClass(itemComponent, 'nav-item__count')
       const editElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__input')
@@ -135,10 +157,13 @@ describe('Navigation Item', () => {
         active: false,
         count: 4,
         editing: true,
-        onStopEditing: (callback) => {item = callback}
+        onStopEditing: (callback) => {item = callback},
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
+      const itemComponent = renderIntoDocument(<NavigationTextfield {...editingProps}/>)
       const editElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__input')
       editElement.value = 'test'
 
@@ -159,10 +184,13 @@ describe('Navigation Item', () => {
         active: false,
         count: 4,
         editing: true,
-        onStopEditing: (callback) => {item = callback}
+        onStopEditing: (callback) => {item = callback},
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationItem {...editingProps}/>)
+      const itemComponent = renderIntoDocument(<NavigationTextfield {...editingProps}/>)
       const editElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__input')
       editElement.value = 'test'
 

@@ -2,28 +2,41 @@ import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import './Navigation.less'
 import NavigationGroup from '../navigationGroup/NavigationGroup'
+import DropScrollTarget from '../elements/dropScrollTarget/DropScrollTarget'
+import shallowCompare from 'react-addons-shallow-compare'
 
-export default class Navigation extends React.Component {
-  constructor(props) {
-    super(props)
+class Navigation extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
   }
 
   render() {
+    const {groups, ...rest} = this.props
     return (
-      <ul className='nav'>
-        {this.props.groups.map((group, index) =>
-          <NavigationGroup
-            key={index} //We should pass unique identificator for array items
-            items={group.items}
-            title={group.title}
-            onItemClick={this.props.onItemClick}
-            type={group.type}
-            addNewTitle={group.addNewTitle}
-            addNew={this.props.addNew}
-            onStopEditing={this.props.onStopEditing}
-          />
-        )}
-      </ul>
+      <div className='navigation'>
+        <DropScrollTarget className='nav-scroll nav-scroll--up' scrollCallback = {() => {
+          if (this._navScrollView.scrollTop > 0) {
+            this._navScrollView.scrollTop -=10
+          }
+        }} />
+        <ul className='nav' ref={(ref) => this._navScrollView = ref} >
+          {groups.map((group, index) =>
+            <NavigationGroup
+              key={index}
+              items={group.items}
+              title={group.title}
+              type={group.type}
+              addNewTitle={group.addNewTitle}
+              {...rest}
+            />
+          )}
+        </ul>
+        <DropScrollTarget className='nav-scroll nav-scroll--down' scrollCallback = {() => {
+          if (this._navScrollView.scrollTop < this._navScrollView.scrollHeight - this._navScrollView.clientHeight) {
+            this._navScrollView.scrollTop +=10
+          }
+        }} />
+      </div>
     )
   }
 }
@@ -48,5 +61,8 @@ Navigation.propTypes = {
   ).isRequired,
   onItemClick: React.PropTypes.func.isRequired,
   addNew: React.PropTypes.func,
-  onStopEditing: React.PropTypes.func
+  onStopEditing: React.PropTypes.func,
+  changePosition: React.PropTypes.func
 }
+
+export default Navigation

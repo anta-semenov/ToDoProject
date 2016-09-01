@@ -5,6 +5,18 @@
 .login {
   position: relative;
   min-width: 160px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    pointer-events: none;
+    box-shadow: 0px -5px 30px 30px fade(@color-bg-app, 100%);
+  }
 }
 .login__title {
   .small__title();
@@ -17,10 +29,11 @@
 
 .login__list {
   position: relative;
-  display: flex;
+  display: inline-flex;;
   flex-direction: row;
-  margin: 6px 0 2px 0;
+  padding: 6px 0 2px 0;
   left: -2px;
+  background-color: @color-bg-app;
 }
 
 .login__btn {
