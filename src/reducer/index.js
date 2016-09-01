@@ -5,8 +5,6 @@ import project, * as fromProject from './project'
 import task from './task'
 import uiState, * as fromUiState from './uiState'
 import auth, * as fromAuth from './auth.js'
-import undoRedo from './undoRedo'
-import { REMOVE_TASK, REMOVE_PROJECT, REMOVE_CONTEXT } from '../constants/actionTypes'
 import tracking, * as fromTracking from './tracking'
 import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
@@ -30,7 +28,7 @@ const orderState = (state = fromJS({})) => {
   return state.get('order')
 }
 
-const appLogicReducer = (state, action) => {
+const rootReducer = (state, action) => {
   return state.withMutations(map => map
     .set('task', task(map.get('task'), action))
     .set('context', context(map.get('context'), action))
@@ -41,11 +39,6 @@ const appLogicReducer = (state, action) => {
     .set('order', order(orderState(state), action))
   )
 }
-
-const rootReducer = undoRedo(appLogicReducer, {
-  undoProps: ['task', 'project', 'context'],
-  undoActions: [REMOVE_TASK, REMOVE_CONTEXT, REMOVE_PROJECT]
-})
 
 export default rootReducer
 

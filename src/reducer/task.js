@@ -165,7 +165,7 @@ const setState = (state, newState) => newState.has('task') ? newState.get('task'
 
 const processState = (state) => state.map(item => item.withMutations(task => {
   //check if someday has expired
-  if (task.get('someday') && task.get('somedayDate', 0) + SOMEDAY_WAITING_PERIOD >= Date.now()) {
+  if (task.get('someday') && task.get('somedayDate',0) + SOMEDAY_WAITING_PERIOD >= Date.now()) {
     task.set('someday', false)
   }
   //check today date
@@ -195,3 +195,7 @@ const removeContextFromTasks = (state, contextId) => {
     }
   })
 }
+
+/*
+ * Selectors
+ */
