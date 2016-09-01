@@ -1,5 +1,5 @@
 import React from 'react'
-import PureRenderMixins from 'react-addons-pure-render-mixin'
+import shallowCompare from 'react-addons-shallow-compare'
 import { Map, Set } from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
@@ -17,9 +17,8 @@ import Someday from '../elements/someday/Someday'
 import './TaskInfo.less'
 
 export default class TaskInfo extends React.Component {
-  constructor(props) {
-    super(props)
-    this.shouldComponentUpdate = PureRenderMixins.shouldComponentUpdate.bind(this)
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState)
   }
 
   render() {

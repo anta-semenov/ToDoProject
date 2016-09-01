@@ -10,7 +10,7 @@ import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import uniqueKey from '../utils/uniqueKeyGenerator'
 import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defaults'
-import { getOrderedProjectsList, getOrderedContextsList } from '../reducer'
+import { getOrderedProjectsList, getOrderedContextsList, getDataStatus, getAuthStatus } from '../reducer'
 
 export const mapStateToProps = (state, ownProps) => {
   const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
@@ -77,6 +77,8 @@ export const mapStateToProps = (state, ownProps) => {
     }
   ]
   return {
+    dataStatus: getDataStatus(state),
+    authStatus: getAuthStatus(state),
     groups: groups
   }
 }

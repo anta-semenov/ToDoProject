@@ -5,6 +5,8 @@ import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 import * as navGroupTypes from '../../src/constants/navGroupTypes'
+import { DATA_RECIEVED } from '../../src/constants/dataStatuses'
+import { AUTH_SUCESS } from '../../src/constants/authStatus'
 
 import Navigation from '../../src/components/navigation/Navigation'
 
@@ -26,6 +28,8 @@ describe('Navigation', () => {
   const testStopEditing = () => {}
 
   const testProps = {
+    dataStatus: DATA_RECIEVED,
+    authStatus: AUTH_SUCESS,
     groups: [
       {
         type: navGroupTypes.BASIC,

@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable'
+import { DATA_NONE } from './dataStatuses'
 
 export const NEW_CONTEXT_TITLE = 'New Context'
 
@@ -9,7 +10,9 @@ export const NEW_PROJECT_TITLE = 'New Project'
 export const DEFAULT_SIDEBAR_SIZE = 220
 export const DEFAULT_TASKINFO_SIZE = 480
 
-export const INITIAL_UI_STATE = fromJS({})
+export const INITIAL_UI_STATE = fromJS({
+  dataStatus: DATA_NONE
+})
 export const INITIAL_STATE = fromJS({
   task: {},
   project: {},

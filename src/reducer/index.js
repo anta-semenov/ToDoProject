@@ -46,6 +46,9 @@ export default rootReducer
  * Selectors
  */
 
+// Data status
+export const getDataStatus = (state = fromJS({})) => fromUiState.getDataStatus(state.get('uiState'))
+
 // Tasks
 const getTasks = (state = fromJS({})) => state.get('task')
 export const getLatentTasks = (state = fromJS({})) => fromUiState.getLatentTasks(state.get('uiState'))
@@ -82,6 +85,7 @@ export const getContexts = (state = fromJS({})) => fromContext.getContexts(state
 // Client Data
 export const getUid = state => fromAuth.getUid(state.get('auth'))
 export const getClientId = state => fromAuth.getClientId(state.get('auth'))
+export const getAuthStatus = (state = fromJS({})) => fromAuth.getAuthStatus(state.get('auth'))
 
 // Tracking tasks
 export const getTrackingTaskId = (state = fromJS({})) => fromTracking.getTrackingTaskId(state.get('tracking'))
@@ -116,13 +120,18 @@ export const getSelectedSection = createSelector(
             sectionId: section,
             sectionName: contexts.getIn([section, 'title'], undefined)
           }
-        } else {
+        } else if (projects.has(section)) {
           const project = projects.get(section, fromJS({}))
           return {
             sectionType: sectionTypes.PROJECT,
             sectionId: section,
             sectionName: project.get('title'),
             isSectionComplete: project.get('completed')
+          }
+        } else {
+          return {
+            sectionType: sectionTypes.INBOX,
+            sectionName: sectionNames.INBOX
           }
         }
     }

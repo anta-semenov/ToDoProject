@@ -63,7 +63,7 @@ export const recieveAuth = (userData, clientId) => (dispatch) => {
     return api.fetchData(userData.uid, dataType, filter)
   })).then(
     results => {
-      dispatch(recieveData())
+
       // Check if there exist any data in this account. If not, then we will try to load data from local storage, and then from initial state
       const doesDataExist = results.reduce((check, result) => check || result.val() !== null, false)
       if (doesDataExist) {
@@ -72,8 +72,8 @@ export const recieveAuth = (userData, clientId) => (dispatch) => {
         dispatch(setState(INITIAL_STATE)) // Reset state, so diff function in firebase middleware could find difference
         dispatch(forceFirebaseEnchancer(setState(loadState() || INITIAL_STATE)))
       }
-
       dispatch(processState())
+      dispatch(recieveData())
     },
     error => dispatch(errorData(error))
   )

@@ -36,3 +36,4 @@ export default auth
  */
 export const getUid = state => state.get('uid')
 export const getClientId = state => state.get('clientId')
+export const getAuthStatus = (state = Map()) => state.get('authStatus', AUTH_NONE)
