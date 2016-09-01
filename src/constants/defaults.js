@@ -35,4 +35,4 @@ export const DATA_TYPES = ['task', 'project', 'context', 'tracking', 'order']
 
 export const SOMEDAY_WAITING_PERIOD = 31*24*60*60*1000
 
-export const STANDART_SPRING = { stiffness: 90, damping: 15}
+export const STANDART_SPRING = { stiffness: 210, damping: 24 }
