@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable'
+import { fromJS } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 
 const order = (state = fromJS({}), action) => {
@@ -69,7 +69,6 @@ export const changeOrder = (orderArray = fromJS([]), changingId, newNextId) => {
 
 export const deleteId = (orderArray = fromJS([]), id) => orderArray.filter(item => item !== id)
 export const addId = (orderArray = fromJS([]), id) => orderArray.insert(0, id)
-export const createOrderMap = (array = []) => fromJS(array)
 
 /*
  * Selectors
@@ -84,4 +83,3 @@ export const getContextOrder = (state = fromJS({})) => state.get('context', from
 
 export const sortedList = (orderList, mapForOrdering) =>
   orderList.size > 0 ? orderList.map(id => mapForOrdering.get(id)).filter(id => id) : mapForOrdering.toList()
-export const initState = (projectArray, contextArray) => Map().set('project', createOrderMap(projectArray)).set('context', createOrderMap(contextArray))

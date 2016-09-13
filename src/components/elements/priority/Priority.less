@@ -2,7 +2,7 @@
 
 .priority {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   box-sizing: border-box;
 
   cursor: pointer;
@@ -73,42 +73,57 @@
   &:hover {
     background-color: @color-border-dark-gray;
   }
+}
 
-  &.priority-level--none {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.priority-level--none {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  &:hover {
     background-color: transparent;
   }
+}
 
-  &.priority-level--low {
-    width: 8px;
-    .priority.priority--low & {
-      background-color: #000000;
-    }
+.priority-level--low {
+  width: 8px;
+  .priority.priority--low & {
+    background-color: @color-border-darkest-gray;
   }
-
-  &.priority-level--medium {
-    width: 10px;
-    .priority.priority--medium & {
-      background-color: #000000;
-    }
+  .priority.is-disabled & {
+    background-color: @color-border-gray;
   }
+}
 
-  &.priority-level--high {
-    width: 12px;
-    .priority.priority--high & {
-      background-color: #000000;
-    }
+.priority-level--medium {
+  width: 10px;
+  .priority.priority--medium & {
+    background-color: @color-border-darkest-gray;
   }
+  .priority.is-disabled & {
+    background-color: @color-border-gray;
+  }
+}
 
-  &.priority-level--max {
-    width: 14px;
-    .priority.priority--max & {
-      background-color: #000000;
-    }
+.priority-level--high {
+  width: 12px;
+  .priority.priority--high & {
+    background-color: @color-border-darkest-gray;
+  }
+  .priority.is-disabled & {
+    background-color: @color-border-gray;
+  }
+}
+
+.priority-level--max {
+  width: 14px;
+  .priority.priority--max & {
+    background-color: @color-border-darkest-gray;
+  }
+  .priority.is-disabled & {
+    background-color: @color-border-gray;
   }
 }

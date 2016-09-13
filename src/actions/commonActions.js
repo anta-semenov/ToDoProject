@@ -4,6 +4,11 @@ import * as actionTypes from '../constants/actionTypes'
 import * as api from '../backend/firebase/api'
 import uniqueKey from '../utils/uniqueKeyGenerator'
 import { DATA_TYPES } from '../constants/defaults'
+import { loadState } from '../backend/localStore'
+import { INITIAL_STATE } from '../constants/defaults'
+
+// Helper
+const forceFirebaseEnchancer = (action) => ({...action, saveToFirebase: true})
 
 //Plain action creators
 export const setState = (state) => ({ type: actionTypes.SET_STATE, state })
@@ -37,9 +42,7 @@ export const login = (type) => (dispatch) => {
   )
 }
 
-export const logoutThunk = () => (dispatch) => {
-  return api.unAuth().then(() => dispatch(logout()))
-}
+export const logoutThunk = () => api.unAuth()
 export const recieveAuth = (userData, clientId) => (dispatch) => {
   dispatch({ type: actionTypes.RECIEVE_AUTH, userData, clientId })
   dispatch(requestData())
@@ -60,9 +63,17 @@ export const recieveAuth = (userData, clientId) => (dispatch) => {
     return api.fetchData(userData.uid, dataType, filter)
   })).then(
     results => {
-      dispatch(recieveData())
-      dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
+
+      // Check if there exist any data in this account. If not, then we will try to load data from local storage, and then from initial state
+      const doesDataExist = results.reduce((check, result) => check || result.val() !== null, false)
+      if (doesDataExist) {
+        dispatch(setState(results.reduce((newState, result, index) => newState.set(DATA_TYPES[index], fromJS(result.val() || {})), fromJS({}))))
+      } else {
+        dispatch(setState(INITIAL_STATE)) // Reset state, so diff function in firebase middleware could find difference
+        dispatch(forceFirebaseEnchancer(setState(loadState() || INITIAL_STATE)))
+      }
       dispatch(processState())
+      dispatch(recieveData())
     },
     error => dispatch(errorData(error))
   )

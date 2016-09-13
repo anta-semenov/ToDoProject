@@ -10,9 +10,15 @@ export default class TaskContexts extends React.Component {
         {
           this.props.contexts && this.props.contexts.size > 0 ?
           <div className='contexts__list'>
-            {this.props.contexts.map(context => {
+            {this.props.contexts.valueSeq().map(context => {
               const active = this.props.taskContexts ? this.props.taskContexts.includes(context.get('id')) : false
-              return <div className={`context ${this.props.taskContexts ? active ? 'is-active' : '' : ''}`} onClick={() => this.props.onContextClick(context.get('id'), !active)} >{context.get('title')}</div>
+              return (
+                <div
+                  key={context.get('id')}
+                  className={`context ${active ? 'is-active' : ''}`}
+                  onClick={() => this.props.onContextClick(context.get('id'), !active)}
+                >{context.get('title')}</div>
+              )
             }
             )}
           </div> :

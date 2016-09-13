@@ -2,6 +2,7 @@ import * as actionTypes from '../constants/actionTypes'
 import { fromJS, is, Set, Map } from 'immutable'
 import { INITIAL_UI_STATE } from '../constants/defaults'
 import { INBOX } from '../constants/sectionTypes'
+import { DATA_NONE, DATA_REQUESTED, DATA_ERROR, DATA_RECIEVED } from '../constants/dataStatuses'
 
 
 export default function uiState(state = INITIAL_UI_STATE, action) {
@@ -36,6 +37,12 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
     case actionTypes.DELETE_PROJECT:
     case actionTypes.DELETE_CONTEXT:
       return removeSection(state, action.id, action.status || false)
+    case actionTypes.REQUEST_DATA:
+      return state.set('dataStatus', DATA_REQUESTED)
+    case actionTypes.RECIEVE_DATA:
+      return state.set('dataStatus', DATA_RECIEVED)
+    case actionTypes.ERROR_DATA:
+      return state.set('dataStatus', DATA_ERROR)
     default:
       return state
   }
@@ -128,3 +135,4 @@ const removeSection = (state, id, status) => status && state.getIn(['selectedSec
  * Selectors
  */
 export const getLatentTasks = (state = fromJS({})) => state.get('sectionLatentTasks', fromJS({}))
+export const getDataStatus = (state = fromJS({})) => state.get('dataStatus', DATA_NONE)

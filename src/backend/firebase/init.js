@@ -8,7 +8,8 @@ import * as orderActions from '../../actions/orderActions'
 import { getUid, getClientId } from '../../reducer'
 import { capitalize } from '../../utils/string'
 import uniqueKey from '../../utils/uniqueKeyGenerator'
-import { DATA_TYPES, INITIAL_UI_STATE } from '../../constants/defaults'
+import { loadState } from '../localStore'
+import { DATA_TYPES, INITIAL_STATE } from '../../constants/defaults'
 
 
 const initFirebase = (store) => {
@@ -24,8 +25,8 @@ const onAuth = (userData, store) => {
     subscribeToDataUpdates(store)
   } else if (!userData || !userData.uid) {
     unsubscribeFromDataUpdates(store)
-    store.dispatch(logout())
-    store.dispatch(setState(fromJS({ task: {}, project: {}, context: {}, tracking: {}, order: {}, uiState: INITIAL_UI_STATE })))
+    store.dispatch(setState(loadState() || INITIAL_STATE))
+    store.dispatch(logout())    
   }
 }
 

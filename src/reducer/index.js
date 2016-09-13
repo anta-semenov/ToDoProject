@@ -46,17 +46,23 @@ export default rootReducer
  * Selectors
  */
 
+// Data status
+export const getDataStatus = (state = fromJS({})) => fromUiState.getDataStatus(state.get('uiState'))
+
 // Tasks
 const getTasks = (state = fromJS({})) => state.get('task')
 export const getLatentTasks = (state = fromJS({})) => fromUiState.getLatentTasks(state.get('uiState'))
 const getVisibleTasks = createSelector(
   [getTasks, getLatentTasks],
-  (tasks, latentTasks) => tasks.filter(task => (!task.get('completed', false) || latentTasks.has(task.get('id'))) && !task.get('deleted', false)).sort((a, b) => {
-    return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
-            PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
-            a.get('id') > b.get('id') ? 1 :
-            a.get('id') < b.get('id') ? -1 : 0
-  })
+  (tasks, latentTasks) =>
+    tasks
+      .filter(task => (!task.get('completed', false) || latentTasks.has(task.get('id'))) && !task.get('deleted', false))
+      .sort((a, b) => {
+        return  PRIORITY.indexOf(a.get('priority')) > PRIORITY.indexOf(b.get('priority')) ? -1 :
+                PRIORITY.indexOf(a.get('priority')) < PRIORITY.indexOf(b.get('priority')) ? 1 :
+                a.get('id') > b.get('id') ? 1 :
+                a.get('id') < b.get('id') ? -1 : 0
+      })
 )
 const groupTasksByProject = (tasks, projects) => {
   const NO_PROJECT = 'NO_PROJECT'
@@ -79,6 +85,7 @@ export const getContexts = (state = fromJS({})) => fromContext.getContexts(state
 // Client Data
 export const getUid = state => fromAuth.getUid(state.get('auth'))
 export const getClientId = state => fromAuth.getClientId(state.get('auth'))
+export const getAuthStatus = (state = fromJS({})) => fromAuth.getAuthStatus(state.get('auth'))
 
 // Tracking tasks
 export const getTrackingTaskId = (state = fromJS({})) => fromTracking.getTrackingTaskId(state.get('tracking'))
@@ -113,13 +120,18 @@ export const getSelectedSection = createSelector(
             sectionId: section,
             sectionName: contexts.getIn([section, 'title'], undefined)
           }
-        } else {
+        } else if (projects.has(section)) {
           const project = projects.get(section, fromJS({}))
           return {
             sectionType: sectionTypes.PROJECT,
             sectionId: section,
             sectionName: project.get('title'),
             isSectionComplete: project.get('completed')
+          }
+        } else {
+          return {
+            sectionType: sectionTypes.INBOX,
+            sectionName: sectionNames.INBOX
           }
         }
     }
@@ -163,18 +175,6 @@ export const getOrderedContextsList = createSelector(
   (order, contexts) => fromOrder.sortedList(order, contexts)
 )
 
-//Order initialisation
-export const initOrderState = (fullState) => {
-  if (fullState.get('order', fromJS({})).size === 2) {
-    return fullState
-  }
-
-  const projectOrderArray = fullState.get('project').toList().filter(project => !project.get('completedDeleted')).sortBy(project => project.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
-  const contextOrderArray = fullState.get('context').toList().filter(context => !context.get('deleted')).sortBy(context => context.get('id'), (a, b) => a > b ? -1 : a < b ? 1 : 0).map(item => item.get('id'))
-
-  return fullState.set('order', fromOrder.initState(projectOrderArray.toArray(), contextOrderArray.toArray()))
-}
-
 // Grouped Tasks
 export const getTasksGroups = createSelector(
   [getSelectedSection, getVisibleTasks, getLatentTasks, getOrderedProjectsList],
@@ -202,7 +202,7 @@ export const getTasksGroups = createSelector(
 
       case sectionTypes.INBOX: {
         const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.get('someday', false) && !task.has('contexts') || latentTasks.has(task.get('id')))
-        return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks}]) : undefined
+        return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks.toList()}]) : undefined
       }
 
       case sectionTypes.SOMEDAY: {
