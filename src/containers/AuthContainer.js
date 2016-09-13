@@ -1,5 +1,6 @@
 import Auth from '../components/auth/Auth'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import { login, logoutThunk } from '../actions/commonActions'
 
 const mapStateToProps = (state) => {
@@ -14,7 +15,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     login: (type) => dispatch(login(type)),
-    logout: () => dispatch(logoutThunk())
+    logout: () => {      
+      browserHistory.push('/')
+      dispatch(logoutThunk())
+    }
   }
 }
 

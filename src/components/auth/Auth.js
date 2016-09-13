@@ -1,5 +1,5 @@
 import React from 'react'
-import { AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR } from '../../constants/authStatus'
+import { AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR, AUTH_NONE } from '../../constants/authStatus'
 import User from './user/User.js'
 import Login from './login/Login.js'
 import './Auth.less'
@@ -14,7 +14,7 @@ const Auth = ({ authStatus, userName, userImage, login, logout}) =>  (
 )
 
 Auth.propTypes = {
-  authStatus: React.PropTypes.oneOf([AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR]),
+  authStatus: React.PropTypes.oneOf([AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR, AUTH_NONE]),
   authErrorMessage: React.PropTypes.string,
   userName: React.PropTypes.string,
   userImage: React.PropTypes.string,
