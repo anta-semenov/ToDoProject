@@ -17,7 +17,7 @@ const firebaseUpdateMiddleware = store => next => action => {
     const updateObject = difference.reduce((updates, diff) => {
       const parsedPath = parsePath(diff.path)
       if (parsedPath.isPathToFirebaseData) {
-        if (diff.op === 'remove') {
+        if (diff.op === 'remove' && parsedPath.type !== 'order') {
           return { ...updates, [diff.path]: null }
         } else if (parsedPath.isPathToObject) {
           return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
