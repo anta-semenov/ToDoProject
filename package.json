@@ -59,6 +59,7 @@
     "immutable": "^3.8.1",
     "immutablediff": "^0.4.2",
     "lodash": "^4.13.1",
+    "moment": "^2.16.0",
     "react": "^15.2.1",
     "react-addons-css-transition-group": "^15.2.1",
     "react-addons-pure-render-mixin": "^15.2.1",
