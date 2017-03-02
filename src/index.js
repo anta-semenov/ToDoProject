@@ -8,13 +8,6 @@ import initFirebase from './backend/firebase/init'
 import { loadState, saveState } from './backend/localStore'
 import throttle from 'lodash/throttle'
 import firebaseUpdateMiddleware from './backend/firebase/middleware'
-<<<<<<< HEAD
-import { initOrderState } from './reducer/index'
-
-const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
-store.subscribe(throttle(() => {
-  saveState(store.getState())
-=======
 import { AUTH_NONE } from './constants/authStatus'
 
 const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
@@ -29,7 +22,6 @@ store.subscribe(throttle(() => {
       order: state.get('order', fromJS([]))
     }))
   }
->>>>>>> test-production
 }, 1500))
 
 
