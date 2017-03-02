@@ -10,6 +10,6 @@ const Loader = ({ appearance = 'default' }) => (
 )
 
 Loader.propTypes = {
-  appearance: React.PropTypes.oneOf(['default', 'sidebar'])
+  appearance: React.PropTypes.oneOf(['default', 'sidebar', 'section'])
 }
 export default Loader

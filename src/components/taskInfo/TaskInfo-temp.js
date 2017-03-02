@@ -55,7 +55,6 @@ export default class TaskInfo extends React.Component {
         willEnter={this.willEnter}
         styles={this.props.id ? [this.getStyle(this.props.id)] : []}>
         {interpolatedStyles => {
-          console.log(interpolatedStyles)
           return <div >
             {
               interpolatedStyles.map(config =>

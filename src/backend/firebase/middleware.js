@@ -4,7 +4,8 @@ import diff from 'immutablediff'
 import { getUid, getClientId } from '../../reducer'
 
 const firebaseUpdateMiddleware = store => next => action => {
-  if (!passToFirebase(action.type) || (action.clientId && action.clientId !== getClientId(store.getState())) || !getUid(store.getState())) {
+  const saveToFirebase = passToFirebase(action.type) || action.saveToFirebase
+  if (!saveToFirebase || (action.clientId && action.clientId !== getClientId(store.getState())) || !getUid(store.getState())) {
     return next(action)
   }
   const currentState = store.getState()
@@ -16,7 +17,7 @@ const firebaseUpdateMiddleware = store => next => action => {
     const updateObject = difference.reduce((updates, diff) => {
       const parsedPath = parsePath(diff.path)
       if (parsedPath.isPathToFirebaseData) {
-        if (diff.op === 'remove') {
+        if (diff.op === 'remove' && parsedPath.type !== 'order') {
           return { ...updates, [diff.path]: null }
         } else if (parsedPath.isPathToObject) {
           return { ...updates, [diff.path]: {...diff.value, ['.priority']: getClientId(nextState) } }
@@ -28,7 +29,10 @@ const firebaseUpdateMiddleware = store => next => action => {
           }
           return {
             ...updates,
-            [`/order/${parsedPath.orderType}`]: {...nextState.getIn(['order',parsedPath.orderType]).toArray(), ['.priority']: getClientId(nextState)}
+            [`/order/${parsedPath.orderType}`]: {
+              ...nextState.getIn(['order', parsedPath.orderType]).toJS(),
+              ['.priority']: getClientId(nextState)
+            }
           }
         } else {
           return { ...updates, [diff.path]: diff.value, [priorityForPath(parsedPath)]: getClientId(nextState) }

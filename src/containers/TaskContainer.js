@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     if (contextStatus) {dispatch(addTaskContext(taskId, contextId))}
     else {dispatch(removeTaskContext(taskId, contextId))}
   },
-  onDateChange: (taskId, date) => dispatch(editTask(taskId, {date: date})),
+  onDateChange: (taskId, date) => dispatch(editTask(taskId, { date: date || 0 })), // Set date to 0, so it could sync with Firebase
   onTaskDeleteClick: (taskId, status, section) => {
     dispatch(deleteTask(taskId, !status))
     if (!status) {browserHistory.push(`/${section}`)}

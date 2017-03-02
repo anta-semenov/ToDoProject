@@ -6,11 +6,16 @@ import TaskGroup from './taskGroup/TaskGroup'
 import AddTask from './addTask/AddTask'
 import SectionHeader from '../sectionHeader/SectionHeader'
 import EmptyTaskList from '../elements/emptyTaskList/EmptyTaskList'
+import Loader from '../elements/loader/Loader'
 import { DEFAULT_SIDEBAR_SIZE, DEFAULT_TASKINFO_SIZE, STANDART_SPRING } from '../../constants/defaults'
+import { AUTH_SUCESS, AUTH_IN_PROGRESS, AUTH_ERROR, AUTH_NONE } from '../../constants/authStatus'
+import { DATA_NONE, DATA_ERROR, DATA_REQUESTED, DATA_RECIEVED } from '../../constants/dataStatuses'
 
 import './Tasks.less'
 
 const Tasks = ({
+  dataStatus,
+  authStatus,
   groups,
   activeTask,
   sectionName,
@@ -24,6 +29,16 @@ const Tasks = ({
   const getDefaultStyle = () => ({ width: 0, opacity: 0 })
   const getStyle = (isActive) => ({ width: isActive ? spring(DEFAULT_TASKINFO_SIZE, STANDART_SPRING) : spring(0, STANDART_SPRING), opacity: 1 })
   const isEmpty = groups ? false : true
+
+  if (authStatus === AUTH_IN_PROGRESS || authStatus === AUTH_ERROR || (authStatus !== AUTH_NONE && dataStatus === DATA_NONE)) {
+    return null
+  } else if (dataStatus === DATA_REQUESTED) {
+    return  (
+      <div className='tasks'>
+        <Loader appearance='section' />
+      </div>
+    )
+  }
 
   return (
     <Motion defaultSyle={getDefaultStyle} style={getStyle(activeTask)}>
@@ -46,7 +61,7 @@ const Tasks = ({
                   key={index}
                   groupTitle={group.get('title')}
                   tasks={group.get('items')}
-                  activeItem={activeTask}
+                  activeTask={activeTask}
                 />
               )}
             </ul>
@@ -60,6 +75,8 @@ const Tasks = ({
 }
 
 Tasks.propTypes = {
+  dataStatus: React.PropTypes.oneOf([DATA_NONE, DATA_ERROR, DATA_REQUESTED, DATA_RECIEVED]).isRequired,
+  authStatus: React.PropTypes.oneOf([AUTH_SUCESS, AUTH_IN_PROGRESS, AUTH_ERROR, AUTH_NONE]).isRequired,
   groups: ImmutablePropTypes.listOf(
     ImmutablePropTypes.contains({
       items: ImmutablePropTypes.listOf(

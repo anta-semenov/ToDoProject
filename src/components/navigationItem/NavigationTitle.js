@@ -94,7 +94,6 @@ class NavigationTitle extends React.Component {
       const currentY = this._ref.getBoundingClientRect().top
       const deltaY = this.state.prevY - currentY
 
-      //this._ref.style.transform = `translateY(${deltaY}px)`
       this.setState({translateY: deltaY, prevY: undefined})
     }
   }

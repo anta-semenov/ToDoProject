@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { fromJS } from 'immutable'
 import auth from '../../src/reducer/auth'
 import { LOG_OUT, REQUEST_AUTH, RECIEVE_AUTH, ERROR_AUTH } from '../../src/constants/actionTypes'
-import { AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR } from '../../src/constants/authStatus.js'
+import { AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR, AUTH_NONE } from '../../src/constants/authStatus.js'
 
 describe('Auth reducer', () => {
   it('Should return initial state', () => {
@@ -119,7 +119,7 @@ describe('Auth reducer', () => {
   describe('LOG_OUT', () => {
     it('Should handle LOG_OUT action with empty state', () => {
       const action = { type: LOG_OUT }
-      const nextState = fromJS({})
+      const nextState = fromJS({ authStatus: AUTH_NONE })
       expect(auth(undefined, action)).to.equal(nextState)
     })
     it('Should handle LOG_OUT action with non empty state', () => {
@@ -128,7 +128,7 @@ describe('Auth reducer', () => {
         errorMesage: 'Wrong redirect link'
       })
       const action = { type: LOG_OUT }
-      const nextState = fromJS({})
+      const nextState = fromJS({ authStatus: AUTH_NONE })
       expect(auth(initialState, action)).to.equal(nextState)
     })
   })
