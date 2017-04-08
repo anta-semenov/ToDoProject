@@ -2,7 +2,7 @@ import React from 'react'
 import { List } from 'immutable'
 import moment from 'moment'
 import { WEEKDAY_SHORT_NAMES, MONTH_NAMES } from '../../../constants/date'
-import { shiftDate, areDatesEqual } from '../../../utils/date'
+import { areDatesEqual } from '../../../utils/date'
 import './TaskCalendar.less'
 
 export const weekdayNamesRow = (weekdayNames = WEEKDAY_SHORT_NAMES, weekStart = 1) => {
