@@ -1,8 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
 var autoprefixer = require('autoprefixer')
-var cssnano = require('cssnano')
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -42,6 +40,9 @@ module.exports = {
         include: path.join(__dirname, 'src')
       }
     ]
+  },
+  resolve: {
+    modulesDirectories: ['node_modules', 'src']
   },
   postcss: function() {
     return [autoprefixer]

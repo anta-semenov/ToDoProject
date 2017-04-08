@@ -33,8 +33,8 @@ const EmptyTaskList = ({ sectionType = INBOX }) => {
         <div className='empty-tasks'>
           <SomedayImage />
           <div className='empty-tasks__text' id='someday-empty-state'>
-            <p className='empty-tasks__text-lead'>Inbox is the best place to capture thoughts, plans, and ideas to classify them later.</p>
-            <p className='empty-tasks__text-basic'>By the way, It's a good idea to clean your inbox at least once a week.</p>
+            <p className='empty-tasks__text-lead'>Save tasks in Someday if you're not going to work on it in the near future.</p>
+            <p className='empty-tasks__text-basic'>In a while, it will appear in your inbox so you can reconsider or rethink it.</p>
           </div>
         </div>
       )

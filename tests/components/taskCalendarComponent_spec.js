@@ -154,6 +154,56 @@ describe('TaskCalendar Component', () => {
         ])
         expect(monthWeeksList(4, 2016, 2)).to.equal(monthList)
       })
+      it('Should return correct list for November of 2016 and startWeek 1', () => {
+        const monthList = fromJS([
+          [
+            new Date(2016, 9, 31),
+            new Date(2016, 10, 1),
+            new Date(2016, 10, 2),
+            new Date(2016, 10, 3),
+            new Date(2016, 10, 4),
+            new Date(2016, 10, 5),
+            new Date(2016, 10, 6)
+          ],
+          [
+            new Date(2016, 10, 7),
+            new Date(2016, 10, 8),
+            new Date(2016, 10, 9),
+            new Date(2016, 10, 10),
+            new Date(2016, 10, 11),
+            new Date(2016, 10, 12),
+            new Date(2016, 10, 13)
+          ],
+          [
+            new Date(2016, 10, 14),
+            new Date(2016, 10, 15),
+            new Date(2016, 10, 16),
+            new Date(2016, 10, 17),
+            new Date(2016, 10, 18),
+            new Date(2016, 10, 19),
+            new Date(2016, 10, 20)
+          ],
+          [
+            new Date(2016, 10, 21),
+            new Date(2016, 10, 22),
+            new Date(2016, 10, 23),
+            new Date(2016, 10, 24),
+            new Date(2016, 10, 25),
+            new Date(2016, 10, 26),
+            new Date(2016, 10, 27)
+          ],
+          [
+            new Date(2016, 10, 28),
+            new Date(2016, 10, 29),
+            new Date(2016, 10, 30),
+            new Date(2016, 11, 1),
+            new Date(2016, 11, 2),
+            new Date(2016, 11, 3),
+            new Date(2016, 11, 4)
+          ]
+        ])
+        expect(monthWeeksList(10, 2016, 1)).to.equal(monthList)
+      })
     })
     describe('weekdayNamesRow', () => {
       it('Should return correct list of weekday names for weekstart at Monday (1)', () => {
