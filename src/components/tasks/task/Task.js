@@ -63,6 +63,7 @@ class Task extends React.Component {
       'is-active': this.props.active,
       'is-latent-today': this.props.latent && !this.props.completed
     })
+    const desciption = descriptionToString(this.props.description)
     return (
       this.props.connectDragSource(
         <li className={taskClasses}>
@@ -89,7 +90,9 @@ class Task extends React.Component {
           <div className='task__body' onClick={() => this.props.onTaskClick(this.props.id)} >
             <div className='task__main' >
               <div className='task__title'>{this.props.title}</div>
-              {this.props.description ? <div className='task__description'>{descriptionToString(this.props.description)}</div> : null}
+              {desciption ?
+                <div className='task__description'>{desciption}</div> : null
+              }
             </div>
             <div className='task__extra'>
               {this.props.date ? <div className='task__date'>{this.props.date.toLocaleDateString('en-US', DATE_FORMAT)}</div> : null}
