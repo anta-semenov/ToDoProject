@@ -2,6 +2,7 @@
 
 .task {
   position: relative;
+  z-index: 1;
   margin: 0;
   padding: 2px 8px;
 
@@ -41,6 +42,7 @@
     border-top-color: @color-border-light-gray;
   }
   &:hover {
+    z-index: 3;
     &::before {
       opacity: 1;
       transition: none;
