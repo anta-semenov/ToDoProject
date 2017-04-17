@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import React from 'react'
-import { createRenderer } from 'react-addons-test-utils'
+import { renderIntoDocument, findRenderedDOMComponentWithClass, Simulate, createRenderer } from 'react-addons-test-utils'
 
 import Checkbox from '../../../src/components/elements/checkbox/Checkbox'
 
@@ -14,7 +14,7 @@ describe('Checkbox component', () => {
     expect(checkbox.props.className).to.include('checkbox--default')
       .and.not.include('checkbox--task-info')
       .and.not.include('checkbox--tasks-list')
-      .and.not.include('is-checked')
+      .and.not.include('is-active')
       .and.not.include('is-dimmed')
   })
   it('Should render component with right classes for passed props', () => {
@@ -23,7 +23,7 @@ describe('Checkbox component', () => {
 
     expect(checkbox.props.className)
       .to.include('checkbox--task-info')
-      .to.include('is-checked')
+      .to.include('is-active')
       .to.include('is-dimmed')
       .and.not.include('checkbox--tasks-list')
       .and.not.include('checkbox--default')
