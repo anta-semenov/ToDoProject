@@ -2,7 +2,8 @@ import { createStore, compose, applyMiddleware } from 'redux'
 import rootReducer from '../reducer'
 import { fromJS } from 'immutable'
 
-const enhancer = middleware => compose(
+const composeEnchancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const enhancer = middleware => composeEnchancer(
   applyMiddleware(...middleware)
 )
 
