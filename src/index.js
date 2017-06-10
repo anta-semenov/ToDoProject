@@ -9,6 +9,7 @@ import { loadState, saveState } from './backend/localStore'
 import throttle from 'lodash/throttle'
 import firebaseUpdateMiddleware from './backend/firebase/middleware'
 import { AUTH_NONE } from './constants/authStatus'
+import {initTouchDragDrop} from 'dnd-touch-polyfill'
 
 const store = configureStore(loadState(), [thunk, firebaseUpdateMiddleware])
 store.subscribe(throttle(() => {
@@ -24,6 +25,7 @@ store.subscribe(throttle(() => {
   }
 }, 1500))
 
+initTouchDragDrop()
 
 initFirebase(store)
 
