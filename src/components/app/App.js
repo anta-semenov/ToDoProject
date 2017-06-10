@@ -1,7 +1,6 @@
 import React from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import TouchBackend from 'react-dnd-touch-backend'
 import StatefulComponent from '../hoc/StatefulComponent'
 import Sidebar from '../sidebar/Sidebar'
 import Navigation from '../../containers/Nav'
@@ -27,12 +26,4 @@ const App = ({ children, params }) => {
   </div>
 )}
 
-let DragDropApp
-
-if ('ontouchstart' in window) {
-  DragDropApp = DragDropContext(TouchBackend)(StatefulComponent(App))
-} else {
-  DragDropApp = DragDropContext(HTML5Backend)(StatefulComponent(App))
-}
-
-export default DragDropApp
+export default DragDropContext(HTML5Backend)(StatefulComponent(App))
