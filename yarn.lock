@@ -1527,9 +1527,9 @@ dnd-core@^2.3.0:
     lodash "^4.2.0"
     redux "^3.2.0"
 
-dnd-touch-polyfill@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/dnd-touch-polyfill/-/dnd-touch-polyfill-0.0.0.tgz#f91b3268c4baad41c9198f6a8b12c309e9029181"
+dnd-touch-polyfill@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/dnd-touch-polyfill/-/dnd-touch-polyfill-0.0.4.tgz#963e957682132937a6618f98dc1c3ef583c385bb"
 
 doctrine@^1.1.0:
   version "1.5.0"
@@ -2388,7 +2388,7 @@ interpret@^0.6.4:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-0.6.6.tgz#fecd7a18e7ce5ca6abfb953e1f86213a49f1625b"
 
-invariant@^2.0.0, invariant@^2.1.0, invariant@^2.1.1, invariant@^2.2.0, invariant@^2.2.1:
+invariant@^2.0.0, invariant@^2.1.0, invariant@^2.2.0, invariant@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:
@@ -3761,14 +3761,7 @@ react-dnd-html5-backend@^2.1.2:
   dependencies:
     lodash "^4.2.0"
 
-react-dnd-touch-backend@^0.3.0:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.3.6.tgz#44adeb0dd302004ce737d18d3ddbe7445fcd93e2"
-  dependencies:
-    invariant "^2.1.1"
-    react-dnd "^2.0.0"
-
-react-dnd@^2.0.0, react-dnd@^2.1.4:
+react-dnd@^2.1.4:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-2.3.0.tgz#aede61c06b968554dcf2a2445657cdbb3100be49"
   dependencies:
