@@ -165,14 +165,14 @@ const setState = (state, newState) => newState.has('task') ? newState.get('task'
 
 const processState = (state) => state.map(item => item.withMutations(task => {
   //check if someday has expired
-  if (task.get('someday') && task.get('somedayDate', 0) + SOMEDAY_WAITING_PERIOD >= Date.now()) {
+  if (task.get('someday') && (task.get('somedayDate', 0) + SOMEDAY_WAITING_PERIOD) <= Date.now()) {
     task.set('someday', false)
   }
   //check today date
-  if (!task.get('today')) {
+  if (!task.get('today') && task.get('date')) {
     const today = new Date()
-    const taskDate = new Date(task.get('date',0))
-    if (task.get('date') && taskDate.getFullYear() === today.getFullYear() && taskDate.getMonth() === today.getMonth() && taskDate.getDate() === today.getDate()) {
+    const taskDate = new Date(task.get('date'))
+    if (taskDate.getFullYear() === today.getFullYear() && taskDate.getMonth() === today.getMonth() && taskDate.getDate() === today.getDate()) {
       task.set('today', true)
     }
   }
