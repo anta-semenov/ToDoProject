@@ -22,7 +22,7 @@ const task = (state = fromJS({}), action) => {
     case actionTypes.SET_TASK_TODAY:
       return setTaskToday(state, action.id, action.status)
     case actionTypes.SET_TASK_SOMEDAY:
-      return setTaskSomeday(state, action.id, action.status)
+      return setTaskSomeday(state, action.id, action.status, action.date)
 
     case actionTypes.ADD_TASK_TO_PROJECT:
       return addTaskToProject(state, action.id, action.project)
