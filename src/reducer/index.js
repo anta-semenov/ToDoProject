@@ -76,6 +76,8 @@ const groupTasksByProject = (tasks, projects) => {
   }))
 }
 
+export const getTaskById = (state, id) => getTasks(state).get(id)
+
 // Projects
 export const getProjects = (state = fromJS({})) => fromProject.getProjects(state.get('project'))
 
@@ -201,7 +203,7 @@ export const getTasksGroups = createSelector(
       }
 
       case sectionTypes.INBOX: {
-        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.get('someday', false) && !task.has('contexts') || latentTasks.has(task.get('id')))
+        const sectionTasks = tasks.filter(task => !task.get('today') && !task.has('project') && !task.get('someday', false) && !task.has('contexts') && !task.has('repeat', false) || latentTasks.has(task.get('id')))
         return sectionTasks.count() > 0 ? fromJS([{items: sectionTasks.toList()}]) : undefined
       }
 

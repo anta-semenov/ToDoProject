@@ -65,6 +65,18 @@ const testTasks1 = fromJS({
     today: true,
     priority: PRIORITY_NONE,
     contexts: List(['cf1sobz3s0oc'])
+  },
+  b41sogy3s0om: {
+    id: 'b41sogy3s0om',
+    title: 'Test task 8',
+    completed: false,
+    today: false,
+    priority: PRIORITY_NONE,
+    repeat: {
+      type: 'DAYS',
+      value: 4,
+      amount: -1
+    }
   }
 })
 const testTasks2 = fromJS({
@@ -353,6 +365,18 @@ describe('Tasks Selectors', () => {
                 today: true,
                 priority: PRIORITY_NONE,
                 contexts: List(['cf1sobz3s0oc'])
+              },
+              {
+                id: 'b41sogy3s0om',
+                title: 'Test task 8',
+                completed: false,
+                today: false,
+                priority: PRIORITY_NONE,
+                repeat: {
+                  type: 'DAYS',
+                  value: 4,
+                  amount: -1
+                }
               }
             ]
           },
