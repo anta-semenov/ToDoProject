@@ -1,0 +1,23 @@
+@import '../../../../styles/variables.less';
+
+.repeat-icon {
+  position: relative;
+  transition: @transition-basic;
+  cursor: pointer;
+  stroke: @color-border-dark-gray;
+  fill: @color-border-dark-gray;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  &:hover {
+    stroke: @color-dark-accent;
+    fill: @color-dark-accent;
+  }
+
+  &.is-checked {
+    stroke: @color-accent;
+    fill: @color-accent;
+  }
+}

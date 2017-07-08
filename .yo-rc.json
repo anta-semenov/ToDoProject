@@ -1,0 +1,7 @@
+{
+  "generator-react": {
+    "initProjectType": "react",
+    "initResolvingPaths": "relative",
+    "initStylePreprocessor": "less"
+  }
+}
