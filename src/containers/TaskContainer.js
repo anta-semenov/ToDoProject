@@ -8,6 +8,7 @@ import { getProjects, getContexts, getSelectedSection, getSelectedTask } from '.
 
 const mapStateToProps = (state, ownProps) => {
   const { sectionType, sectionId } = getSelectedSection(state, ownProps)
+
   return {
   ...getSelectedTask(state, ownProps),
   sectionType: sectionType,
@@ -58,7 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(deleteTask(taskId, !status))
     if (!status) {browserHistory.push(`/${section}`)}
   },
-  onCloseClick: (section) => browserHistory.push(`/${section}`)
+  onCloseClick: (section) => browserHistory.push(`/${section}`),
+  onRepeatChange: (taskId, repeat) => dispatch(editTask(taskId, {repeat}))
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {

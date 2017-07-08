@@ -1,0 +1,28 @@
+@import '../../../../styles/variables.less';
+
+.repeat-value {
+  position: relative;
+  width: 35px;
+  box-sizing: border-box;
+  padding: 5px 6px 4px 8px;
+  margin-left: 7px;
+  transition: @transition-basic;
+  text-align: center;
+
+  border: 1px solid transparent;
+  border-radius: 2px;
+
+  font-size: @font-size-basic;
+  font-weight: @font-weight-light;
+  color: @color-font-medium;
+  font-family: 'Fira Sans', sans-serif;
+
+  &:hover {
+    border-color: fade(@color-accent, 50%);
+  }
+
+  &:active,
+  &:focus {
+    border-color: @color-accent;
+  }
+}

@@ -1,3 +1,5 @@
+import * as repeatTypes from '../constants/repeatTypes'
+
 export const dateDayDifference = (startDate, endDate) => {
   const dateDiff = endDate.getTime() - startDate.getTime()
   const dayDiff = dateDiff >= 0 ? Math.floor(dateDiff / (1000*60*60*24)) : Math.ceil(dateDiff / (1000*60*60*24))
@@ -43,3 +45,16 @@ export const timeIntervalToComponents = interval => ({
   hours: Math.floor((interval % (1000*60*60*24)) / (1000*60*60)),
   minutes: Math.floor((interval % (1000*60*60)) / (1000*60))
 })
+
+export const nextRepeatDate = (date, repeatType, repeatValue) => {
+  switch (repeatType) {
+    case repeatTypes.DAYS:
+      return shiftDate(date, repeatValue)
+    case repeatTypes.WEEKS:
+      return shiftDate(date, repeatValue, 'week')
+    case repeatTypes.MONTHS:
+      return shiftDate(date, repeatValue, 'month')
+    default:
+      return date
+  }
+}

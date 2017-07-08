@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable'
 import { DATA_NONE } from './dataStatuses'
+import {WEEKS} from './repeatTypes'
 
 export const NEW_CONTEXT_TITLE = 'New Context'
 
@@ -36,3 +37,9 @@ export const DATA_TYPES = ['task', 'project', 'context', 'tracking', 'order']
 export const SOMEDAY_WAITING_PERIOD = 90*24*60*60*1000
 
 export const STANDART_SPRING = { stiffness: 210, damping: 24 }
+
+export const DEFAULT_REPEAT = {
+  type: WEEKS,
+  value: 1,
+  amount: -1
+}

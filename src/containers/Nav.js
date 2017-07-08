@@ -24,7 +24,7 @@ export const mapStateToProps = (state, ownProps) => {
           type: sectionTypes.INBOX,
           title: sectionNames.INBOX,
           active: ownProps.section === sectionTypes.INBOX ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.get('someday') && !task.has('project') && !task.has('contexts') && !task.get('deleted')).size
+          count: state.get('task').filter(task => !task.get('completed') && !task.get('today') && !task.get('someday') && !task.has('project') && !task.has('contexts') && !task.get('deleted') && !task.get('repeat')).size
         },
         {
           type: sectionTypes.TODAY,
