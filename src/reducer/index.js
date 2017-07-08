@@ -158,7 +158,8 @@ export const getSelectedTask = createSelector(
       deleted: task.get('deleted'),
       priority: task.get('priority'),
       taskProject: task.get('project'),
-      taskContexts: task.get('contexts')
+      taskContexts: task.get('contexts'),
+      repeat: task.get('repeat')
     }
   }
 )
