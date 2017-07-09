@@ -21,15 +21,16 @@ export const setTaskSomeday = (id, status) => ({ type: actionTypes.SET_TASK_SOME
 
 // Thunks
 export const completeTask = (id, status) => (dispatch, getState) => {
-  const completedDate = Date.now()
-  dispatch({type: actionTypes.COMPLETE_TASK, date: status ? completedDate : undefined, id, status})
+  const completedDate = new Date()
+  dispatch({type: actionTypes.COMPLETE_TASK, date: status ? completedDate.getTime() : undefined, id, status})
 
   if (status) {
     const originalTask = getTaskById(getState(), id).toJS()
     const {repeat, title, description, priority, project, contexts} = originalTask
+
     if (repeat && (repeat.amount == -1 || repeat.amount > 0)) {
       const {amount, type, value} = repeat
-      const nextDate = nextRepeatDate(completedDate, type, value)
+      const nextDate = nextRepeatDate(completedDate, type, value).getTime()
       const newRepeat = {
         type,
         value,
