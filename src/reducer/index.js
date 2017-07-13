@@ -50,7 +50,7 @@ export default rootReducer
 export const getDataStatus = (state = fromJS({})) => fromUiState.getDataStatus(state.get('uiState'))
 
 // Tasks
-const getTasks = (state = fromJS({})) => state.get('task')
+export const getTasks = (state = fromJS({})) => state.get('task')
 export const getLatentTasks = (state = fromJS({})) => fromUiState.getLatentTasks(state.get('uiState'))
 const getVisibleTasks = createSelector(
   [getTasks, getLatentTasks],
