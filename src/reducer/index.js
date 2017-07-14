@@ -10,6 +10,7 @@ import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import { PRIORITY } from '../constants/priorityLevels'
+import {startOfWeek, startOfMonth, startOfDay, format} from '../utils/date'
 
 const orderState = (state = fromJS({})) => {
   if (
@@ -74,6 +75,31 @@ const groupTasksByProject = (tasks, projects) => {
       items: groupedTasks.get(project.get('id'), fromJS({})).toList()
     })
   }))
+}
+
+const groupTasksByCompletedDate = tasks => {
+  const todayDate = new Date()
+  const startOfThisWeek = startOfWeek(todayDate).getTime()
+  const startOfThisMonth = startOfMonth(todayDate).getTime()
+  const today = startOfDay(todayDate).getTime()
+
+  const groupedTasks = tasks.groupBy(task => {
+    const completedDate = startOfDay(task.get('completedDate')).getTime()
+    if (completedDate === today) {
+      return 'Today'
+    } else if (completedDate >= startOfThisWeek) {
+      return 'Earlier this week'
+    } else if (completedDate >= startOfThisMonth) {
+      return 'Earlier this month'
+    } else {
+      return format(startOfMonth(completedDate), 'MMMM YYYY')
+    }
+  })
+
+  return groupedTasks.map((value, key) => fromJS({
+    title: key,
+    items: value
+  })).toList()
 }
 
 export const getTaskById = (state, id) => getTasks(state).get(id)
