@@ -1,4 +1,9 @@
+import startOfWeekDateFns from 'date-fns/startOfWeek'
+import startOfMonth from 'date-fns/startOfMonth'
 import * as repeatTypes from '../constants/repeatTypes'
+
+export {startOfMonth}
+export const startOfWeek = date => startOfWeekDateFns(date, {weekStartsOn: 1})
 
 export const dateDayDifference = (startDate, endDate) => {
   const dateDiff = endDate.getTime() - startDate.getTime()
