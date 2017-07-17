@@ -89,7 +89,7 @@ const deleteTask = (state, id, status = false) => state.withMutations(tasks => t
 const completeTask = (state, id, status = false, date) => {
   const newState = state.withMutations(tasks => tasks.setIn([id, 'completed'], status).setIn([id, 'completedDeleted'], status || state.getIn([id, 'deleted'], false)))
   if (status && date) {return newState.setIn([id, 'completedDate'], date)}
-  return newState.deleteIn([id, 'completedDate'])
+  return newState//.deleteIn([id, 'completedDate'])
 }
 
 const setTaskToday = (state, id, status = false) => state.setIn([id, 'today'], status)

@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch, { section }) => {
     },
     onTaskClick: (taskId) => {browserHistory.push(`/${section}/${taskId}`)},
     onTaskCheckboxClick: (taskId, status) => {
-      dispatch(toggleTaskLatency(taskId, status))
+      dispatch(toggleTaskLatency(taskId, section === sectionTypes.COMPLETED ? !status : status))
       dispatch(completeTask(taskId, status))
       if (status) {dispatch(stopTaskTracking(taskId))}
     },
