@@ -78,7 +78,7 @@ const groupTasksByProject = (tasks, projects) => {
   }))
 }
 
-const groupTasksByCompletedDate = tasks => {
+const groupTasksByCompletedDate = (tasks, projectOrder) => {
   const todayDate = new Date()
   const startOfThisWeek = startOfWeek(todayDate).getTime()
   const startOfThisMonth = startOfMonth(todayDate).getTime()
@@ -112,7 +112,24 @@ const groupTasksByCompletedDate = tasks => {
 
   return groupedTasks.map((value, key) => fromJS({
     title: groupName(key),
-    items: value,
+    items: value.sort((itemA, itemB) => {
+      const itemAProject = itemA.get('project')
+      const itemBProject = itemB.get('project')
+      if (itemAProject !== itemBProject) {
+        if (!itemAProject) return -1
+        if (!itemBProject) return 1
+        const orderIndexA = projectOrder.indexOf(itemAProject)
+        const orderIndexB = projectOrder.indexOf(itemBProject)
+        if (orderIndexA === -1 && orderIndexB !== -1) return 1
+        if (orderIndexA !== -1 && orderIndexB === -1) return -1
+        if (orderIndexA === -1 && orderIndexB === -1) {
+          return itemAProject > itemBProject ? -1 : 1
+        }
+        return orderIndexA - orderIndexB
+      } else {
+        return itemA.get('completedDate') - itemB.get('completedDate')
+      }
+    }),
     key
   })).toList().sort((groupA, groupB) => groupA.get('key') - groupB.get('key'))
 }
@@ -222,8 +239,8 @@ export const getOrderedContextsList = createSelector(
 
 // Grouped Tasks
 export const getTasksGroups = createSelector(
-  [getSelectedSection, getVisibleTasks, getLatentTasks, getOrderedProjectsList, getTasks],
-  ({ sectionType, sectionId }, tasks, latentTasks, projects, allTasks) => {
+  [getSelectedSection, getVisibleTasks, getLatentTasks, getOrderedProjectsList, getTasks, getProjectOrder],
+  ({ sectionType, sectionId }, tasks, latentTasks, projects, allTasks, projectOrder) => {
     switch (sectionType) {
       case sectionTypes.CONTEXT: {
         const sectionTasks = tasks.filter(task => task.get('contexts', fromJS([])).includes(sectionId) || latentTasks.has(task.get('id')))
@@ -257,7 +274,7 @@ export const getTasksGroups = createSelector(
 
       case sectionTypes.COMPLETED: {
         const sectionTasks = allTasks.filter(task => (task.get('completed') && !task.get('deleted')) || latentTasks.has(task.get('id')))
-        return sectionTasks.count() > 0 ? groupTasksByCompletedDate(sectionTasks) : undefined
+        return sectionTasks.count() > 0 ? groupTasksByCompletedDate(sectionTasks, projectOrder) : undefined
       }
 
       default:
