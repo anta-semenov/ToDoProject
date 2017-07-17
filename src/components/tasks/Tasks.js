@@ -1,7 +1,7 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Motion, spring } from 'react-motion'
-import { PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY } from '../../constants/sectionTypes.js'
+import { PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY, COMPLETED } from '../../constants/sectionTypes.js'
 import TaskGroup from './taskGroup/TaskGroup'
 import AddTask from './addTask/AddTask'
 import SectionHeader from '../sectionHeader/SectionHeader'
@@ -52,7 +52,10 @@ const Tasks = ({
             onSectionDelete={onSectionDelete}
             onSectionComplete={onSectionComplete}
           />
-          <AddTask addTask={addTask} isSectionEmpty={isEmpty} hasFocus={isEmpty} />
+          {
+            sectionType !== COMPLETED &&
+            <AddTask addTask={addTask} isSectionEmpty={isEmpty} hasFocus={isEmpty} />
+          }
           {groups ?
             <ul className='tasks__list'>
               {groups.toSeq().map((group, index) =>
