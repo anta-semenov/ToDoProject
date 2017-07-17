@@ -61,7 +61,7 @@ class Task extends React.Component {
       'task': true,
       'is-completed': this.props.completed,
       'is-active': this.props.active,
-      'is-latent-today': this.props.latent && !this.props.completed
+      'is-latent-today': this.props.latent
     })
     const desciption = descriptionToString(this.props.description)
     return (

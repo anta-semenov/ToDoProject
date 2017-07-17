@@ -3,9 +3,11 @@ import { fromJS } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import * as api from '../backend/firebase/api'
 import uniqueKey from '../utils/uniqueKeyGenerator'
+import {shiftDate} from '../utils/date'
 import { DATA_TYPES } from '../constants/defaults'
 import { loadState } from '../backend/localStore'
 import { INITIAL_STATE } from '../constants/defaults'
+import {getUid, getProjects, getTasks} from '../reducer'
 
 // Helper
 const forceFirebaseEnchancer = (action) => ({...action, saveToFirebase: true})
@@ -74,7 +76,55 @@ export const recieveAuth = (userData, clientId) => (dispatch) => {
       }
       dispatch(processState())
       dispatch(recieveData())
+      dispatch(loadCompletedTasks())
     },
     error => dispatch(errorData(error))
   )
+}
+
+export const loadCompletedTasks = () => (dispatch, getState) => {
+  const state = getState()
+  const startDate = shiftDate(new Date(), -1, 'month').getTime()
+  api.fetchData(
+    getUid(state),
+    'task',
+    {type: '>=', key: 'completedDate', value: startDate}
+  ).then(result => {
+    const completedTasks = result.val()
+
+    if (!completedTasks || Object.keys(completedTasks).length == 0) return
+
+    //retreive completed tasks projects
+    const completedTasksProjectsIds = []
+    Object.keys(completedTasks).forEach(({project}) => {
+      if (project && !completedTasksProjectsIds.includes(project)) {
+        completedTasksProjectsIds.push(project)
+      }
+    })
+
+    //get projects from state
+    const stateProjectsIds = getProjects(state).map(item => item.get('id')).toList().toArray()
+    const completedTasksProjectsNotInState = completedTasksProjectsIds.filter(
+      id => !stateProjectsIds.includes(id)
+    )
+
+    let projectRequest
+
+    if (completedTasksProjectsNotInState.length > 0) {
+      projectRequest = Promise.all(completedTasksProjectsNotInState.map(
+        id => api.fetchData(getUid(state), 'project', {type: '==', key: 'id', value: id})
+      ))
+    } else {
+      projectRequest = new Promise(resolve => resolve({val: () => ({})}))
+    }
+
+    projectRequest.then(projectResult => {
+      const projectsNotInState = projectResult.val()
+
+      const tasks = getTasks(state).merge(fromJS(completedTasks))
+      const projects = getProjects(state).merge(fromJS(projectsNotInState))
+      const newState = fromJS({}).set('task', tasks).set('project', projects)
+      dispatch(setState(newState))
+    })
+  })
 }

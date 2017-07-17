@@ -10,6 +10,7 @@ import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import { PRIORITY } from '../constants/priorityLevels'
+import {startOfWeek, startOfMonth, startOfDay, format} from '../utils/date'
 
 const orderState = (state = fromJS({})) => {
   if (
@@ -50,7 +51,7 @@ export default rootReducer
 export const getDataStatus = (state = fromJS({})) => fromUiState.getDataStatus(state.get('uiState'))
 
 // Tasks
-const getTasks = (state = fromJS({})) => state.get('task')
+export const getTasks = (state = fromJS({})) => state.get('task')
 export const getLatentTasks = (state = fromJS({})) => fromUiState.getLatentTasks(state.get('uiState'))
 const getVisibleTasks = createSelector(
   [getTasks, getLatentTasks],
@@ -64,6 +65,7 @@ const getVisibleTasks = createSelector(
                 a.get('id') < b.get('id') ? -1 : 0
       })
 )
+
 const groupTasksByProject = (tasks, projects) => {
   const NO_PROJECT = 'NO_PROJECT'
   const groupedTasks = tasks.groupBy(task => task.get('project', NO_PROJECT))
@@ -74,6 +76,62 @@ const groupTasksByProject = (tasks, projects) => {
       items: groupedTasks.get(project.get('id'), fromJS({})).toList()
     })
   }))
+}
+
+const groupTasksByCompletedDate = (tasks, projectOrder) => {
+  const todayDate = new Date()
+  const startOfThisWeek = startOfWeek(todayDate).getTime()
+  const startOfThisMonth = startOfMonth(todayDate).getTime()
+  const today = startOfDay(todayDate).getTime()
+
+  const groupedTasks = tasks.groupBy(task => {
+    const completedDate = startOfDay(task.get('completedDate')).getTime()
+    if (completedDate === today) {
+      return 0//'Today'
+    } else if (completedDate >= startOfThisWeek) {
+      return 1//'Earlier this week'
+    } else if (completedDate >= startOfThisMonth) {
+      return 2//'Earlier this month'
+    } else {
+      return startOfMonth(completedDate).getTime()//format(startOfMonth(completedDate), 'MMMM YYYY')
+    }
+  })
+
+  const groupName = key => {
+    switch (key) {
+      case 0:
+        return 'Today'
+      case 1:
+        return 'Earlier this week'
+      case 2:
+        return 'Earlier this month'
+      default:
+        return format(key, 'MMMM YYYY')
+    }
+  }
+
+  return groupedTasks.map((value, key) => fromJS({
+    title: groupName(key),
+    items: value.sort((itemA, itemB) => {
+      const itemAProject = itemA.get('project')
+      const itemBProject = itemB.get('project')
+      if (itemAProject !== itemBProject) {
+        if (!itemAProject) return -1
+        if (!itemBProject) return 1
+        const orderIndexA = projectOrder.indexOf(itemAProject)
+        const orderIndexB = projectOrder.indexOf(itemBProject)
+        if (orderIndexA === -1 && orderIndexB !== -1) return 1
+        if (orderIndexA !== -1 && orderIndexB === -1) return -1
+        if (orderIndexA === -1 && orderIndexB === -1) {
+          return itemAProject > itemBProject ? -1 : 1
+        }
+        return orderIndexA - orderIndexB
+      } else {
+        return itemA.get('completedDate') - itemB.get('completedDate')
+      }
+    }),
+    key
+  })).toList().sort((groupA, groupB) => groupA.get('key') - groupB.get('key'))
 }
 
 export const getTaskById = (state, id) => getTasks(state).get(id)
@@ -110,6 +168,7 @@ export const getSelectedSection = createSelector(
       case sectionTypes.TODAY:
       case sectionTypes.NEXT:
       case sectionTypes.SOMEDAY:
+      case sectionTypes.COMPLETED:
         return {
           sectionType: section,
           sectionName: sectionNames[section.toUpperCase()]
@@ -180,8 +239,8 @@ export const getOrderedContextsList = createSelector(
 
 // Grouped Tasks
 export const getTasksGroups = createSelector(
-  [getSelectedSection, getVisibleTasks, getLatentTasks, getOrderedProjectsList],
-  ({ sectionType, sectionId }, tasks, latentTasks, projects) => {
+  [getSelectedSection, getVisibleTasks, getLatentTasks, getOrderedProjectsList, getTasks, getProjectOrder],
+  ({ sectionType, sectionId }, tasks, latentTasks, projects, allTasks, projectOrder) => {
     switch (sectionType) {
       case sectionTypes.CONTEXT: {
         const sectionTasks = tasks.filter(task => task.get('contexts', fromJS([])).includes(sectionId) || latentTasks.has(task.get('id')))
@@ -211,6 +270,11 @@ export const getTasksGroups = createSelector(
       case sectionTypes.SOMEDAY: {
         const sectionTasks = tasks.filter(task => !task.get('today') && task.get('someday', false) || latentTasks.has(task.get('id')))
         return sectionTasks.count() > 0 ? groupTasksByProject(sectionTasks, projects) : undefined
+      }
+
+      case sectionTypes.COMPLETED: {
+        const sectionTasks = allTasks.filter(task => (task.get('completed') && !task.get('deleted')) || latentTasks.has(task.get('id')))
+        return sectionTasks.count() > 0 ? groupTasksByCompletedDate(sectionTasks, projectOrder) : undefined
       }
 
       default:

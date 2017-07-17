@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "date-fns": "^1.28.5",
     "draft-js": "^0.7.0",
     "firebase": "^3.0.3",
     "immutable": "^3.8.1",

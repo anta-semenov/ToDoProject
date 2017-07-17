@@ -41,6 +41,11 @@ export const mapStateToProps = (state, ownProps) => {
           type: sectionTypes.SOMEDAY,
           title: sectionNames.SOMEDAY,
           active: ownProps.section === sectionTypes.SOMEDAY ? true : false
+        },
+        {
+          type: sectionTypes.COMPLETED,
+          title: sectionNames.COMPLETED,
+          active: ownProps.section === sectionTypes.COMPLETED ? true : false
         }
       ])
     },
