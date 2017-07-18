@@ -72,7 +72,7 @@ TaskInfo.propTypes = {
   taskProject: React.PropTypes.string,
   taskContexts: React.PropTypes.instanceOf(Set),
 
-  projects: ImmutablePropTypes.mapOf(
+  projects: ImmutablePropTypes.listOf(
     ImmutablePropTypes.contains({
       id: React.PropTypes.string.isRequired,
       title: React.PropTypes.string.isRequired,

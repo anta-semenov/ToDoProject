@@ -4,7 +4,7 @@ import TaskInfoTransition from '../components/taskInfo/TaskInfoTransition'
 import { completeTask, setTaskToday, editTask, addTaskToProject, deleteTask, addTaskContext, removeTaskContext, setTaskSomeday } from '../actions/taskActions'
 import { toggleTaskLatency } from '../actions/uiStateActions'
 import * as sectionTypes from '../constants/sectionTypes'
-import { getProjects, getContexts, getSelectedSection, getSelectedTask } from '../reducer'
+import { getContexts, getSelectedSection, getSelectedTask, getOrderedProjectsList } from '../reducer'
 
 const mapStateToProps = (state, ownProps) => {
   const { sectionType, sectionId } = getSelectedSection(state, ownProps)
@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
   ...getSelectedTask(state, ownProps),
   sectionType: sectionType,
   sectionId: sectionId,
-  projects: getProjects(state),
+  projects: getOrderedProjectsList(state),
   contexts: getContexts(state)
 }}
 
