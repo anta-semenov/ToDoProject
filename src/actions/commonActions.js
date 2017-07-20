@@ -84,7 +84,7 @@ export const recieveAuth = (userData, clientId) => (dispatch) => {
 
 export const loadCompletedTasks = () => (dispatch, getState) => {
   const state = getState()
-  const startDate = shiftDate(new Date(), -1, 'month').getTime()
+  const startDate = shiftDate(new Date(), -2, 'week').getTime()
   api.fetchData(
     getUid(state),
     'task',
