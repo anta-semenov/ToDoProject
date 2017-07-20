@@ -37,16 +37,19 @@ export const completeTask = (id, status) => (dispatch, getState) => {
         amount: amount > 0 ? amount - 1 : amount
       }
 
-      dispatch(addTask({
+      const newTask = {
         id: uniqueKey(),
         repeat: newRepeat,
         date: nextDate,
         title,
-        description,
-        priority,
-        project,
-        contexts
-      }))
+        priority
+      }
+
+      if (description) newTask.description = description
+      if (project) newTask.project = project
+      if (contexts) newTask.contexts = contexts
+
+      dispatch(addTask(newTask))
     }
   }
 }
