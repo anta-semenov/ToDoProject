@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import { fromJS } from 'immutable'
 import * as actions from '../../src/actions/taskActions'
 import * as types from '../../src/constants/actionTypes'
 
@@ -37,7 +38,11 @@ describe('Task action creators', () => {
     it('Should create an action to complete a task', () => {
         const id = 0
         const status = true
-        expect(actions.completeTask(id, status)).to.deep.equal({ type: types.COMPLETE_TASK, date: Date.now(), id, status })
+        let action
+        const dispatch = a => action = a
+        const getState = () => fromJS({})
+        actions.completeTask(id, status)(dispatch, getState)
+        expect(action).to.deep.equal({ type: types.COMPLETE_TASK, date: Date.now(), id, status })
     })
 
     it('Should create an action to add task to a project', () => {

@@ -30,7 +30,7 @@ describe('AddTask component tests', () => {
     const taskTitle = 'New Task'
     const addTaskButtonClassName = 'add-task__button'
     const addTaskTextfieldClassName = 'add-task__textfield'
-    const addTaskComponent = renderIntoDocument(<AddTask addTask={callback}/>)
+    const addTaskComponent = renderIntoDocument(<AddTask addTask={callback} setSearchQuery={() => {}}/>)
     const addTaskTextfield = findRenderedDOMComponentWithClass(addTaskComponent, addTaskTextfieldClassName)
     const addTaskButton = findRenderedDOMComponentWithClass(addTaskComponent, addTaskButtonClassName)
 

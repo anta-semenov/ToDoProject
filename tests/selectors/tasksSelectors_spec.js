@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { fromJS, Map, List } from 'immutable'
 import { PRIORITY_NONE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
-import { getTasksGroups } from '../../src/reducer'
+import { getTasksGroups, getFilteredTasks } from '../../src/reducer'
 
 const testTasks1 = fromJS({
   b41sogy3s0oc: {
@@ -77,6 +77,13 @@ const testTasks1 = fromJS({
       value: 4,
       amount: -1
     }
+  },
+  r51sogy3s02d: {
+    id: 'r51sogy3s02d',
+    title: 'Test task 11',
+    completed: false,
+    today: true,
+    priority: PRIORITY_NONE
   }
 })
 const testTasks2 = fromJS({
@@ -258,6 +265,13 @@ describe('Tasks Selectors', () => {
                 today: true,
                 priority: PRIORITY_NONE,
                 contexts: List(['cf1sobz3s0oc'])
+              },
+              {
+                id: 'r51sogy3s02d',
+                title: 'Test task 11',
+                completed: false,
+                today: true,
+                priority: PRIORITY_NONE
               }
             ]
           },
@@ -377,6 +391,13 @@ describe('Tasks Selectors', () => {
                   value: 4,
                   amount: -1
                 }
+              },
+              {
+                id: 'r51sogy3s02d',
+                title: 'Test task 11',
+                completed: false,
+                today: true,
+                priority: PRIORITY_NONE
               }
             ]
           },
@@ -729,5 +750,40 @@ describe('Tasks Selectors', () => {
 
       expect(getTasksGroups(state)).to.equal(groups)
     })
+  })
+})
+
+describe('getFilteredTasks selector', () => {
+  it('should return filtered task groups', () => {
+    const state = fromJS({
+      task: testTasks1,
+      project: testProjects,
+      context: testContexts,
+      order: testOrder,
+      uiState: {
+        searchQuery: 'task 1'
+      }
+    })
+    const groups = fromJS([
+      {
+        items: [
+          {
+            id: 'b41sogy3s0od',
+            title: 'Test task 1',
+            completed: false,
+            today: true,
+            priority: PRIORITY_NONE
+          },
+          {
+            id: 'r51sogy3s02d',
+            title: 'Test task 11',
+            completed: false,
+            today: true,
+            priority: PRIORITY_NONE
+          }
+        ]
+      }
+    ])
+    expect(getFilteredTasks(state, { section: sectionTypes.NEXT })).to.equal(groups)
   })
 })

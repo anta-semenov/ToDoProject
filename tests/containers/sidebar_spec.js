@@ -114,6 +114,11 @@ describe('Sidebar container', () => {
         type: sectionTypes.SOMEDAY,
         title: sectionNames.SOMEDAY,
         active: false
+      },
+      {
+        type: sectionTypes.COMPLETED,
+        title: sectionNames.COMPLETED,
+        active: false
       }
     ]))
     expect(props.groups[1].type).to.equal(CONTEXTS)

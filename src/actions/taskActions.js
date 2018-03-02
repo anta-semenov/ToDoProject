@@ -25,7 +25,8 @@ export const completeTask = (id, status) => (dispatch, getState) => {
   dispatch({type: actionTypes.COMPLETE_TASK, date: status ? completedDate.getTime() : undefined, id, status})
 
   if (status) {
-    const originalTask = getTaskById(getState(), id).toJS()
+    const originalTaskImmutable = getTaskById(getState(), id)
+    const originalTask = originalTaskImmutable ? originalTaskImmutable.toJS() : {}
     const {repeat, title, description, priority, project, contexts} = originalTask
 
     if (repeat && (repeat.amount == -1 || repeat.amount > 0)) {

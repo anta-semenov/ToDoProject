@@ -2133,7 +2133,8 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0om',
           title: 'New Task',
           completed: false,
-          someday: true
+          someday: true,
+          somedayDate: new Date()
         }
       })
 
@@ -2169,7 +2170,8 @@ describe('Task reducer', () => {
           id: 'b41sogy3s0om',
           title: 'New Task',
           completed: false,
-          someday: true
+          someday: true,
+          somedayDate: new Date()
         }
       })
 
