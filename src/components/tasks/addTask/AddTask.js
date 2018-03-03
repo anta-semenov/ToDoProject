@@ -9,6 +9,7 @@ export default class AddTask extends Component {
     switch (e.keyCode) {
       case 13: {
         this.props.addTask(this.input.value)
+        this.props.setSearchQuery('')
         this.input.value = ''
       }
     }
