@@ -53,6 +53,7 @@ export const SET_OFFLINE = 'SET_OFFLINE'
 export const SET_AUTH_STATUS = 'SET_AUTH_STATUS'
 export const SET_AUTH_ERROR_MESSAGE = 'SET_AUTH_ERROR_MESSAGE'
 export const SET_PROPERTY = 'SET_PROPERTY'
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY'
 
 /*
 * Order

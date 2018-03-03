@@ -4,93 +4,15 @@ import { browserHistory } from 'react-router'
 import { setEditingSection, clearLatentTasks } from '../actions/uiStateActions'
 import { addProject, editProject, changeProjectPosition } from '../actions/projectActions'
 import { addContext, editContext, changeContextPosition } from '../actions/contextActions'
-import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
-import { fromJS } from 'immutable'
 import * as sectionTypes from '../constants/sectionTypes'
-import * as sectionNames from '../constants/sectionNames'
 import uniqueKey from '../utils/uniqueKeyGenerator'
-import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defaults'
-import { getOrderedProjectsList, getOrderedContextsList, getDataStatus, getAuthStatus } from '../reducer'
+import { getDataStatus, getAuthStatus, getNavGroups } from '../reducer'
 
-export const mapStateToProps = (state, ownProps) => {
-  const editingSectionType = state.getIn(['uiState', 'editingSection', 'type'])
-  const editingSectionID = state.getIn(['uiState', 'editingSection', 'id'])
-
-  const groups = [
-    {
-      type: BASIC,
-      items: fromJS([
-        {
-          type: sectionTypes.INBOX,
-          title: sectionNames.INBOX,
-          active: ownProps.section === sectionTypes.INBOX ? true : false,
-          count: state.get('task').filter(task =>
-            !task.get('completed') && !task.get('today') && !task.get('someday') &&
-            !task.has('project') && !task.has('contexts') && !task.get('deleted') &&
-            !task.get('repeat') && !task.get('date')
-          ).size
-        },
-        {
-          type: sectionTypes.TODAY,
-          title: sectionNames.TODAY,
-          active: ownProps.section === sectionTypes.TODAY ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && !task.get('deleted') && task.get('today')).size
-        },
-        {
-          type: sectionTypes.NEXT,
-          title: sectionNames.NEXT,
-          active: ownProps.section === sectionTypes.NEXT ? true : false
-        },
-        {
-          type: sectionTypes.SOMEDAY,
-          title: sectionNames.SOMEDAY,
-          active: ownProps.section === sectionTypes.SOMEDAY ? true : false
-        },
-        {
-          type: sectionTypes.COMPLETED,
-          title: sectionNames.COMPLETED,
-          active: ownProps.section === sectionTypes.COMPLETED ? true : false
-        }
-      ])
-    },
-    {
-      type: CONTEXTS,
-      title: sectionNames.CONTEXTS,
-      addNewTitle: ADD_NEW_CONTEXT_TITLE,
-      items: getOrderedContextsList(state).map((item) => {
-        const id = item.get('id')
-        return fromJS({
-          id: id,
-          type: sectionTypes.CONTEXT,
-          title: item.get('title'),
-          active: ownProps.section === id ? true : false,
-          editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
-          count: state.get('task').filter(task => !task.get('completed') && !task.get('deleted') && task.get('context', fromJS([])).has(id)).size
-        })
-      })
-    },
-    {
-      type: PROJECTS,
-      title: sectionNames.PROJECTS,
-      addNewTitle: ADD_NEW_PROJECT_TITLE,
-      items: getOrderedProjectsList(state).map((item) => {
-        const id = item.get('id')
-        return fromJS({
-          id: id,
-          type: sectionTypes.PROJECT,
-          title: item.get('title'),
-          active: ownProps.section === id ? true : false,
-          editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false
-        })
-      })
-    }
-  ]
-  return {
-    dataStatus: getDataStatus(state),
-    authStatus: getAuthStatus(state),
-    groups: groups
-  }
-}
+export const mapStateToProps = (state, ownProps) => ({
+  dataStatus: getDataStatus(state),
+  authStatus: getAuthStatus(state),
+  groups: getNavGroups(state, ownProps)
+})
 
 export const mapDispatchToProps = (dispatch) => {
   return {

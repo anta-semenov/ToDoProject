@@ -87,7 +87,11 @@ const editTask = (state, id, properties = {}) => {
 const deleteTask = (state, id, status = false) => state.withMutations(tasks => tasks.setIn([id, 'deleted'], status).setIn([id, 'completedDeleted'], status || state.getIn([id, 'completed'], false)))
 
 const completeTask = (state, id, status = false, date) => {
-  const newState = state.withMutations(tasks => tasks.setIn([id, 'completed'], status).setIn([id, 'completedDeleted'], status || state.getIn([id, 'deleted'], false)))
+  const newState = state.withMutations(tasks => tasks
+      .setIn([id, 'completed'], status)
+      .setIn([id, 'completedDeleted'], status || state.getIn([id, 'deleted'], false))
+      .deleteIn([id, 'completedDate'])
+    )
   if (status && date) {return newState.setIn([id, 'completedDate'], date)}
   return newState//.deleteIn([id, 'completedDate'])
 }

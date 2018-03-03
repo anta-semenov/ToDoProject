@@ -41,3 +41,5 @@ export function setAuthErrorMessage(message) {
 export function setProperty(property, value) {
   return {type: actionTypes.SET_PROPERTY, property, value}
 }
+
+export const setSearchQuery = (query) => ({ type: actionTypes.SET_SEARCH_QUERY, query })

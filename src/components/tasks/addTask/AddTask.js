@@ -19,9 +19,13 @@ export default class AddTask extends Component {
   handleBlur = () => {
     this.frame.classList.remove('has-focus')
   }
+  handleChange = (event) => {
+    this.props.setSearchQuery(event.target.value)
+  }
   handleButtonClick = () => {
     this.props.addTask(this.input.value)
     this.input.value = ''
+    this.props.setSearchQuery('')
     this.input.focus()
   }
 
@@ -37,8 +41,9 @@ export default class AddTask extends Component {
           ref={(c) => this.input = c}
           className='add-task__textfield'
           onKeyDown={this.handleKeyDown}
-          onFocus={() => this.handleFocus()}
-          onBlur={() => this.handleBlur()}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onChange={this.handleChange}
           placeholder={NEW_TASK_TITLE} />
         <button className='add-task__button' onClick={this.handleButtonClick} ><span className='add-task__button-text'>Add Task</span></button>
       </div>
@@ -48,6 +53,7 @@ export default class AddTask extends Component {
 
 AddTask.propTypes = {
   addTask: React.PropTypes.func.isRequired,
+  setSearchQuery: React.PropTypes.func.isRequired,
   isSectionEmpty: React.PropTypes.bool,
   hasFocus: React.PropTypes.bool
 }

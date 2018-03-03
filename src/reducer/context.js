@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable'
+import { createSelector } from 'reselect'
 import * as actionTypes from '../constants/actionTypes'
 import { NEW_CONTEXT_TITLE } from '../constants/defaults'
 
@@ -64,4 +65,7 @@ const processState = (state) => state.map(context => context.set('deleted', cont
  * Selectors
  */
 
-export const getContexts = (state = fromJS({})) => state.filter(context => !context.get('deleted'))
+export const getContexts = createSelector(
+  (state = fromJS({})) => state,
+  contexts => contexts.filter(context => !context.get('deleted'))
+)

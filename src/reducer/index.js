@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 import context, * as fromContext from './context'
 import project, * as fromProject from './project'
 import task from './task'
@@ -10,6 +10,8 @@ import order, * as fromOrder from './order'
 import * as sectionTypes from '../constants/sectionTypes'
 import * as sectionNames from '../constants/sectionNames'
 import { PRIORITY } from '../constants/priorityLevels'
+import { BASIC, PROJECTS, CONTEXTS} from '../constants/navGroupTypes'
+import { ADD_NEW_CONTEXT_TITLE, ADD_NEW_PROJECT_TITLE } from '../constants/defaults'
 import {startOfWeek, startOfMonth, startOfDay, format} from '../utils/date'
 
 const orderState = (state = fromJS({})) => {
@@ -49,9 +51,10 @@ export default rootReducer
 
 // Data status
 export const getDataStatus = (state = fromJS({})) => fromUiState.getDataStatus(state.get('uiState'))
+export const getSearchQuery = (state = fromJS({})) => fromUiState.getSearchQuery(state.get('uiState'))
 
 // Tasks
-export const getTasks = (state = fromJS({})) => state.get('task')
+export const getTasks = (state = fromJS({})) => state.get('task', Map())
 export const getLatentTasks = (state = fromJS({})) => fromUiState.getLatentTasks(state.get('uiState'))
 const getVisibleTasks = createSelector(
   [getTasks, getLatentTasks],
@@ -281,4 +284,98 @@ export const getTasksGroups = createSelector(
         return fromJS([{items: tasks}])
     }
   }
+)
+
+export const getFilteredTasks = createSelector(
+  getTasksGroups,
+  getSearchQuery,
+  (taskGroups, searchQuery) => searchQuery
+    ? taskGroups
+      .map(group =>
+          group.updateIn(
+            ['items'],
+            items => items.filter(item => item.get('title', '').toLowerCase().includes(searchQuery.toLowerCase())))
+        )
+      .filter(group => group.get('items').size > 0)
+    : taskGroups
+)
+
+const getEditingSectionType = (state = fromJS({})) => state.getIn(['uiState', 'editingSection', 'type'])
+const getEditingSectionID = (state = fromJS({})) => state.getIn(['uiState', 'editingSection', 'id'])
+export const getNavGroups = createSelector(
+  getEditingSectionType,
+  getEditingSectionID,
+  getSectionFromProps,
+  getTasks,
+  getOrderedContextsList,
+  getOrderedProjectsList,
+  (editingSectionType, editingSectionID, section, tasks, contexts, projects) => fromJS([
+    {
+      type: BASIC,
+      items: [
+        {
+          type: sectionTypes.INBOX,
+          title: sectionNames.INBOX,
+          active: section === sectionTypes.INBOX ? true : false,
+          count: tasks.filter(task =>
+            !task.get('completed') && !task.get('today') && !task.get('someday') &&
+            !task.has('project') && !task.has('contexts') && !task.get('deleted') &&
+            !task.get('repeat') && !task.get('date')
+          ).size
+        },
+        {
+          type: sectionTypes.TODAY,
+          title: sectionNames.TODAY,
+          active: section === sectionTypes.TODAY ? true : false,
+          count: tasks.filter(task => !task.get('completed') && !task.get('deleted') && task.get('today')).size
+        },
+        {
+          type: sectionTypes.NEXT,
+          title: sectionNames.NEXT,
+          active: section === sectionTypes.NEXT ? true : false
+        },
+        {
+          type: sectionTypes.SOMEDAY,
+          title: sectionNames.SOMEDAY,
+          active: section === sectionTypes.SOMEDAY ? true : false
+        },
+        {
+          type: sectionTypes.COMPLETED,
+          title: sectionNames.COMPLETED,
+          active: section === sectionTypes.COMPLETED ? true : false
+        }
+      ]
+    },
+    {
+      type: CONTEXTS,
+      title: sectionNames.CONTEXTS,
+      addNewTitle: ADD_NEW_CONTEXT_TITLE,
+      items: contexts.map((item) => {
+        const id = item.get('id')
+        return fromJS({
+          id: id,
+          type: sectionTypes.CONTEXT,
+          title: item.get('title'),
+          active: section === id ? true : false,
+          editing: editingSectionType === sectionTypes.CONTEXT && editingSectionID === id ? true : false,
+          count: tasks.filter(task => !task.get('completed') && !task.get('deleted') && task.get('context', fromJS([])).has(id)).size
+        })
+      })
+    },
+    {
+      type: PROJECTS,
+      title: sectionNames.PROJECTS,
+      addNewTitle: ADD_NEW_PROJECT_TITLE,
+      items: projects.map((item) => {
+        const id = item.get('id')
+        return fromJS({
+          id: id,
+          type: sectionTypes.PROJECT,
+          title: item.get('title'),
+          active: section === id ? true : false,
+          editing: editingSectionType === sectionTypes.PROJECT && editingSectionID === id ? true : false
+        })
+      })
+    }
+  ])
 )

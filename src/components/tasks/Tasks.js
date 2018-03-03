@@ -25,6 +25,7 @@ const Tasks = ({
   onSectionDelete,
   onSectionComplete,
   addTask,
+  setSearchQuery,
   ...rest }) => {
   const getDefaultStyle = () => ({ width: 0, opacity: 0 })
   const getStyle = (isActive) => ({ width: isActive ? spring(DEFAULT_TASKINFO_SIZE, STANDART_SPRING) : spring(0, STANDART_SPRING), opacity: 1 })
@@ -54,7 +55,7 @@ const Tasks = ({
           />
           {
             sectionType !== COMPLETED &&
-            <AddTask addTask={addTask} isSectionEmpty={isEmpty} hasFocus={isEmpty} />
+            <AddTask addTask={addTask} isSectionEmpty={isEmpty} hasFocus={isEmpty} setSearchQuery={setSearchQuery} />
           }
           {groups ?
             <ul className='tasks__list'>
@@ -99,6 +100,7 @@ Tasks.propTypes = {
       title: React.PropTypes.string
     })
   ),
+  searchQuery: React.PropTypes.string,
   activeTask: React.PropTypes.string,
   latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
   trackingTask: React.PropTypes.string,
@@ -119,7 +121,8 @@ Tasks.propTypes = {
   addTaskToProject: React.PropTypes.func.isRequired,
   addTaskContext: React.PropTypes.func.isRequired,
 
-  addTask: React.PropTypes.func.isRequired
+  addTask: React.PropTypes.func.isRequired,
+  setSearchQuery: React.PropTypes.func.isRequired
 }
 
 export default Tasks

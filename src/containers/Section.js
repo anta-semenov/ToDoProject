@@ -2,18 +2,20 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import Tasks from '../components/tasks/Tasks'
 import { addTask, completeTask, setTaskToday, editTask, stopTaskTracking, startTaskTracking, addTaskToProject, addTaskContext } from '../actions/taskActions'
-import { toggleTaskLatency} from '../actions/uiStateActions'
+import { toggleTaskLatency, setSearchQuery } from '../actions/uiStateActions'
 import { deleteContext, editContext } from '../actions/contextActions'
 import { deleteProject, editProject, completeProject } from '../actions/projectActions'
-import { getTrackingTaskId, getSelectedSection, getTasksGroups, getLatentTasks, getAuthStatus, getDataStatus } from '../reducer'
+import { getTrackingTaskId, getSelectedSection, getTasksGroups, getLatentTasks, getAuthStatus, getDataStatus, getSearchQuery, getFilteredTasks } from '../reducer'
 import * as sectionTypes from '../constants/sectionTypes'
 import uniqueKey from '../utils/uniqueKeyGenerator'
 
 const mapStateToProps = (state, ownProps) => ({
   ...getSelectedSection(state, ownProps),
   dataStatus: getDataStatus(state),
+  searchQuery: getSearchQuery(state),
   authStatus: getAuthStatus(state),
-  groups: getTasksGroups(state, ownProps),
+  initialGgroups: getTasksGroups(state, ownProps),
+  groups: getFilteredTasks(state, ownProps),
   activeTask: ownProps.task,
   latentTasks: getLatentTasks(state),
   trackingTask: getTrackingTaskId(state)
@@ -89,7 +91,8 @@ const mapDispatchToProps = (dispatch, { section }) => {
       }
     },
     addTaskToProject: (taskId, projectId) => {dispatch(addTaskToProject(taskId, projectId))},
-    addTaskContext: (taskId, contextId) => {dispatch(addTaskContext(taskId, contextId))}
+    addTaskContext: (taskId, contextId) => {dispatch(addTaskContext(taskId, contextId))},
+    setSearchQuery: (query) => {dispatch(setSearchQuery(query))}
   }
 }
 

@@ -43,6 +43,8 @@ export default function uiState(state = INITIAL_UI_STATE, action) {
       return state.set('dataStatus', DATA_RECIEVED)
     case actionTypes.ERROR_DATA:
       return state.set('dataStatus', DATA_ERROR)
+    case actionTypes.SET_SEARCH_QUERY:
+      return state.set('searchQuery', action.query)
     default:
       return state
   }
@@ -136,3 +138,4 @@ const removeSection = (state, id, status) => status && state.getIn(['selectedSec
  */
 export const getLatentTasks = (state = fromJS({})) => state.get('sectionLatentTasks', fromJS({}))
 export const getDataStatus = (state = fromJS({})) => state.get('dataStatus', DATA_NONE)
+export const getSearchQuery = (state = fromJS({})) => state.get('searchQuery')

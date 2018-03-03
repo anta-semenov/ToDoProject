@@ -50,7 +50,7 @@ describe('AddTask component tests', () => {
 
     const taskTitle = 'New Task'
     const addTaskTextfieldClassName = 'add-task__textfield'
-    const addTaskComponent = renderIntoDocument(<AddTask addTask={callback}/>)
+    const addTaskComponent = renderIntoDocument(<AddTask addTask={callback} setSearchQuery={() => {}}/>)
     const addTaskTextfield = findRenderedDOMComponentWithClass(addTaskComponent, addTaskTextfieldClassName)
 
     expect(addTaskTextfield.value).to.equal('')

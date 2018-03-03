@@ -751,6 +751,17 @@ describe('Tasks Selectors', () => {
       expect(getTasksGroups(state)).to.equal(groups)
     })
   })
+  it('Should return the same object is not related part of state had changed', () => {
+    const state1 = fromJS({
+      task: testTasks1,
+      project: testProjects,
+      context: testContexts,
+      order: testOrder
+    })
+    const state2 = state1.setIn(['uiState', 'searchQuery'], 're')
+    const props = { section: sectionTypes.TODAY }
+    expect(getTasksGroups(state1, props)).to.deep.equal(getTasksGroups(state2, props))
+  })
 })
 
 describe('getFilteredTasks selector', () => {
