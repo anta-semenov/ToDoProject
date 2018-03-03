@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import { fromJS, Map, List } from 'immutable'
 import { PRIORITY_NONE } from '../../src/constants/defaults'
 import * as sectionTypes from '../../src/constants/sectionTypes'
@@ -173,7 +172,7 @@ const testOrder = fromJS({
 describe('Tasks Selectors', () => {
   describe('getTasksGroup selector', () => {
     describe('INBOX', () => {
-      it('Should return tasks for INBOX', () => {
+      test('Should return tasks for INBOX', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -192,9 +191,9 @@ describe('Tasks Selectors', () => {
           ]
         }])
         const props = { section: sectionTypes.INBOX }
-        expect(getTasksGroups(state, props)).to.deep.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return latent tasks for INBOX section', () => {
+      test('Should return latent tasks for INBOX section', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -227,9 +226,9 @@ describe('Tasks Selectors', () => {
           ]
         }])
         const props = { section: sectionTypes.INBOX }
-        expect(getTasksGroups(state, props)).to.deep.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return undefined for no tasks for INBOX', () => {
+      test('Should return undefined for no tasks for INBOX', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -237,11 +236,11 @@ describe('Tasks Selectors', () => {
           order: testOrder
         })
         const props = { section: sectionTypes.INBOX }
-        expect(getTasksGroups(state, props)).to.equal(undefined)
+        expect(getTasksGroups(state, props)).toBeUndefined()
       })
     })
     describe('TODAY', () => {
-      it('Should return tasks for TODAY', () => {
+      test('Should return tasks for TODAY', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -291,9 +290,9 @@ describe('Tasks Selectors', () => {
           }
         ])
         const props = { section: sectionTypes.TODAY }
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return latent tasks for TODAY', () => {
+      test('Should return latent tasks for TODAY', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -326,9 +325,9 @@ describe('Tasks Selectors', () => {
           ]
         }])
         const props = { section: sectionTypes.NEXT }
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return undefined for no tasks for TODAY', () => {
+      test('Should return undefined for no tasks for TODAY', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -336,11 +335,11 @@ describe('Tasks Selectors', () => {
           order: testOrder
         })
         const props = { section: sectionTypes.TODAY }
-        expect(getTasksGroups(state, props)).to.equal(undefined)
+        expect(getTasksGroups(state, props)).toBeUndefined()
       })
     })
     describe('NEXT', () => {
-      it('Should return tasks for NEXT', () => {
+      test('Should return tasks for NEXT', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -417,9 +416,9 @@ describe('Tasks Selectors', () => {
           }
         ])
         const props = { section: sectionTypes.NEXT }
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return latent tasks for NEXT', () => {
+      test('Should return latent tasks for NEXT', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -459,9 +458,9 @@ describe('Tasks Selectors', () => {
           ]
         }])
         const props = { section: sectionTypes.NEXT }
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return undefined for no tasks for NEXT', () => {
+      test('Should return undefined for no tasks for NEXT', () => {
         const state = fromJS({
           task: {
             b41sogy3s0on: {
@@ -484,11 +483,11 @@ describe('Tasks Selectors', () => {
           order: testOrder
         })
         const props = { section: sectionTypes.NEXT }
-        expect(getTasksGroups(state, props)).to.equal(undefined)
+        expect(getTasksGroups(state, props)).toBeUndefined()
       })
     })
     describe('PROJECT', () => {
-      it('Should return tasks for PROJECT', () => {
+      test('Should return tasks for PROJECT', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -511,9 +510,9 @@ describe('Tasks Selectors', () => {
           }
         ])
         const props = { section: 'bh52ogy5s0fm' }
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return latent tasks for PROJECT', () => {
+      test('Should return latent tasks for PROJECT', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -554,9 +553,9 @@ describe('Tasks Selectors', () => {
           ]
         }])
         const props = { section: 'bh52ogy5s0fm' }
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return undefined for no tasks for PROJECT', () => {
+      test('Should return undefined for no tasks for PROJECT', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -564,9 +563,9 @@ describe('Tasks Selectors', () => {
           order: testOrder
         })
         const props = { section: 'bh52ogy5s0fm' }
-        expect(getTasksGroups(state, props)).to.equal(undefined)
+        expect(getTasksGroups(state, props)).toBeUndefined()
       })
-      it('Should return undefined for empty PROJECT', () => {
+      test('Should return undefined for empty PROJECT', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -574,11 +573,11 @@ describe('Tasks Selectors', () => {
           order: testOrder
         })
         const props = { section: 'bh52ogy5s0f1' }
-        expect(getTasksGroups(state, props)).to.equal(undefined)
+        expect(getTasksGroups(state, props)).toBeUndefined()
       })
     })
     describe('CONTEXT', () => {
-      it('Should return tasks for CONTEXT', () => {
+      test('Should return tasks for CONTEXT', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -628,9 +627,9 @@ describe('Tasks Selectors', () => {
           }
         ])
         const props = { section: 'cf1sobz3s0oc'}
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return latent tasks for CONTEXT', () => {
+      test('Should return latent tasks for CONTEXT', () => {
         const state = fromJS({
           task: testTasks1,
           project: testProjects,
@@ -690,9 +689,9 @@ describe('Tasks Selectors', () => {
           }
         ])
         const props = { section: 'cf1sobz3s0oc'}
-        expect(getTasksGroups(state, props)).to.equal(groups)
+        expect(getTasksGroups(state, props)).toEqual(groups)
       })
-      it('Should return undefined for no tasks for CONTEXT', () => {
+      test('Should return undefined for no tasks for CONTEXT', () => {
         const state = fromJS({
           task: testTasks2,
           project: testProjects,
@@ -700,11 +699,11 @@ describe('Tasks Selectors', () => {
           order: testOrder
         })
         const props = { section: 'cf1sobz3s0o1'}
-        expect(getTasksGroups(state, props)).to.equal(undefined)
+        expect(getTasksGroups(state, props)).toBeUndefined()
       })
     })
 
-    it('Should return completed latent tasks even if they are completed', () => {
+    test('Should return completed latent tasks even if they are completed', () => {
       const state = fromJS({
         task: [
           {
@@ -748,24 +747,27 @@ describe('Tasks Selectors', () => {
         ]
       }])
 
-      expect(getTasksGroups(state)).to.equal(groups)
+      expect(getTasksGroups(state)).toEqual(groups)
     })
   })
-  it('Should return the same object is not related part of state had changed', () => {
-    const state1 = fromJS({
-      task: testTasks1,
-      project: testProjects,
-      context: testContexts,
-      order: testOrder
-    })
-    const state2 = state1.setIn(['uiState', 'searchQuery'], 're')
-    const props = { section: sectionTypes.TODAY }
-    expect(getTasksGroups(state1, props)).to.deep.equal(getTasksGroups(state2, props))
-  })
+  test(
+    'Should return the same object is not related part of state had changed',
+    () => {
+      const state1 = fromJS({
+        task: testTasks1,
+        project: testProjects,
+        context: testContexts,
+        order: testOrder
+      })
+      const state2 = state1.setIn(['uiState', 'searchQuery'], 're')
+      const props = { section: sectionTypes.TODAY }
+      expect(getTasksGroups(state1, props)).toBe(getTasksGroups(state2, props))
+    }
+  )
 })
 
 describe('getFilteredTasks selector', () => {
-  it('should return filtered task groups', () => {
+  test('should return filtered task groups', () => {
     const state = fromJS({
       task: testTasks1,
       project: testProjects,
@@ -795,6 +797,6 @@ describe('getFilteredTasks selector', () => {
         ]
       }
     ])
-    expect(getFilteredTasks(state, { section: sectionTypes.NEXT })).to.equal(groups)
+    expect(getFilteredTasks(state, { section: sectionTypes.NEXT })).toEqual(groups)
   })
 })

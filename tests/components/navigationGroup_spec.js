@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import React, { Component } from 'react'
 import { renderIntoDocument, createRenderer } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
@@ -39,19 +38,19 @@ describe('Navigation Group', () => {
   }
 
   describe('Correct render', () => {
-    it('Should render group title', () => {
+    test('Should render group title', () => {
       shallowRenderer.render(<NavigationGroup {...testGroup} />)
       const group = shallowRenderer.getRenderOutput()
 
-      expect(group.props.children[0].props.children[0]).to.deep.equal(<div className='nav-group__title-text' >{sectionNames.CONTEXTS}</div>)
+      expect(group.props.children[0].props.children[0]).toEqual(<div className='nav-group__title-text' >{sectionNames.CONTEXTS}</div>)
     })
-    it('Should render correct count of items', () => {
+    test('Should render correct count of items', () => {
       shallowRenderer.render(<NavigationGroup {...testGroup} />)
       const group = shallowRenderer.getRenderOutput()
 
-      expect(group.props.children[1].props.children.size).to.equal(2)
+      expect(group.props.children[1].props.children.size).toBe(2)
     })
-    it('Should pass correct props to navigation items', () => {
+    test('Should pass correct props to navigation items', () => {
       let itemElementProps
       NavigationGroup.__Rewire__('NavigationItem', class extends Component {
         render() {
@@ -72,14 +71,14 @@ describe('Navigation Group', () => {
 
       NavigationGroup.__ResetDependency__('NavigationItem')
 
-      expect(itemElementProps.type).to.equal(sectionTypes.CONTEXT)
-      expect(itemElementProps.title).to.equal('Context 2')
-      expect(itemElementProps.id).to.equal('cf1sobz3s0o5')
-      expect(itemElementProps.active).to.equal(false)
-      expect(itemElementProps.count).to.equal(10)
-      expect(itemElementProps.editing).to.equal(false)
-      expect(itemElementProps.onItemClick).to.equal(itemClickCallback)
-      expect(itemElementProps.onStopEditing).to.equal(itemStopEditCallback)
+      expect(itemElementProps.type).toBe(sectionTypes.CONTEXT)
+      expect(itemElementProps.title).toBe('Context 2')
+      expect(itemElementProps.id).toBe('cf1sobz3s0o5')
+      expect(itemElementProps.active).toBe(false)
+      expect(itemElementProps.count).toBe(10)
+      expect(itemElementProps.editing).toBe(false)
+      expect(itemElementProps.onItemClick).toBe(itemClickCallback)
+      expect(itemElementProps.onStopEditing).toBe(itemStopEditCallback)
     })
   })
 })

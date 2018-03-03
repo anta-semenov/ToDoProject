@@ -20,7 +20,7 @@ class Navigation extends PureComponent {
             }
           }} />
           <ul className='nav' ref={(ref) => this._navScrollView = ref} >
-            {groups.map((group, index) =>
+            {groups.toArray().map((group, index) =>
               <NavigationGroup
                 key={index}
                 items={group.get('items')}

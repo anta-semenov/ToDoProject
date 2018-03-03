@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import React from 'react'
 import { createRenderer } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
@@ -18,10 +17,10 @@ describe('TaskGroup component tests', () => {
     }
   })
 
-  it('Should render group name if it has one', () => {
+  test('Should render group name if it has one', () => {
     shallowRenderer.render(<TaskGroup groupTitle='Test group' tasks={fromJS([])} />)
     const taskGroup = shallowRenderer.getRenderOutput()
 
-    expect(taskGroup.props.children).to.include(<div className='task-group__title'>Test group</div>)
+    expect(taskGroup.props.children).toContain(<div className='task-group__title'>Test group</div>)
   })
 })

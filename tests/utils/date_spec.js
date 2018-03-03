@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import { dateDayDifference, shiftDate, areDatesEqual } from '../../src/utils/date'
 
 describe('Date utils', () => {
@@ -44,60 +43,60 @@ describe('Date utils', () => {
   //   })
   // })
   describe('shiftDate', () => {
-    it('Should return correct date for day shift', () => {
+    test('Should return correct date for day shift', () => {
       const date1 = new Date(2016, 4, 17)
       const date2 = new Date(2016, 4, 16)
       const date3 = new Date(2016, 4, 21)
       const date4 = new Date(2016, 4, 24)
-      expect(shiftDate(date1, -1)).to.deep.equal(date2)
-      expect(shiftDate(date2, 1)).to.deep.equal(date1)
-      expect(shiftDate(date1, 4)).to.deep.equal(date3)
-      expect(shiftDate(date1, 7)).to.deep.equal(date4)
+      expect(shiftDate(date1, -1)).toEqual(date2)
+      expect(shiftDate(date2, 1)).toEqual(date1)
+      expect(shiftDate(date1, 4)).toEqual(date3)
+      expect(shiftDate(date1, 7)).toEqual(date4)
     })
-    it('Should return correct date for week shift', () => {
+    test('Should return correct date for week shift', () => {
       const date1 = new Date(2016, 4, 17)
       const date2 = new Date(2016, 4, 24)
-      expect(shiftDate(date1, 1, 'week')).to.deep.equal(date2)
-      expect(shiftDate(date2, -1, 'week')).to.deep.equal(date1)
+      expect(shiftDate(date1, 1, 'week')).toEqual(date2)
+      expect(shiftDate(date2, -1, 'week')).toEqual(date1)
     })
-    it('Should return correct date for month shift', () => {
+    test('Should return correct date for month shift', () => {
       const date1 = new Date(2016, 4, 17)
       const date2 = new Date(2016, 6, 17)
       const date3 = new Date(2017, 3, 17)
       const date4 = new Date(2018, 5, 17)
-      expect(shiftDate(date1, 2, 'month')).to.deep.equal(date2)
-      expect(shiftDate(date2, -2, 'month')).to.deep.equal(date1)
-      expect(shiftDate(date1, 11, 'month')).to.deep.equal(date3)
-      expect(shiftDate(date3, -11, 'month')).to.deep.equal(date1)
-      expect(shiftDate(date1, 25, 'month')).to.deep.equal(date4)
-      expect(shiftDate(date4, -25, 'month')).to.deep.equal(date1)
+      expect(shiftDate(date1, 2, 'month')).toEqual(date2)
+      expect(shiftDate(date2, -2, 'month')).toEqual(date1)
+      expect(shiftDate(date1, 11, 'month')).toEqual(date3)
+      expect(shiftDate(date3, -11, 'month')).toEqual(date1)
+      expect(shiftDate(date1, 25, 'month')).toEqual(date4)
+      expect(shiftDate(date4, -25, 'month')).toEqual(date1)
     })
-    it('Should return correct date for year shift', () => {
+    test('Should return correct date for year shift', () => {
       const date1 = new Date(2016, 4, 17)
       const date2 = new Date(2017, 4, 17)
-      expect(shiftDate(date1, 1, 'year')).to.deep.equal(date2)
-      expect(shiftDate(date2, -1, 'year')).to.deep.equal(date1)
+      expect(shiftDate(date1, 1, 'year')).toEqual(date2)
+      expect(shiftDate(date2, -1, 'year')).toEqual(date1)
     })
   })
   describe('areDatesEqual', () => {
-    it('Should return true for equal dates', () => {
+    test('Should return true for equal dates', () => {
       const date1 = new Date(2016, 4, 17)
       const date2 = new Date(2016, 4, 17, 20, 45)
-      expect(areDatesEqual(date1, date2)).to.equal(true)
-      expect(areDatesEqual(date2, date1)).to.equal(true)
+      expect(areDatesEqual(date1, date2)).toBe(true)
+      expect(areDatesEqual(date2, date1)).toBe(true)
     })
-    it('Should return false for different dates', () => {
+    test('Should return false for different dates', () => {
       const date1 = new Date(2016, 4, 17, 20, 45)
       const date2 = new Date(2016, 4, 16, 20, 45)
       const date3 = new Date(2016, 3, 17, 20, 45)
       const date4 = new Date(2017, 4, 17, 20, 45)
-      expect(areDatesEqual(date1, date2)).to.equal(false)
-      expect(areDatesEqual(date1, date3)).to.equal(false)
-      expect(areDatesEqual(date1, date4)).to.equal(false)
+      expect(areDatesEqual(date1, date2)).toBe(false)
+      expect(areDatesEqual(date1, date3)).toBe(false)
+      expect(areDatesEqual(date1, date4)).toBe(false)
     })
-    it('Should return false if one or both dates are undefined', () => {
-      expect(areDatesEqual(undefined, new Date(2016, 4, 17))).to.equal(false)
-      expect(areDatesEqual(undefined, undefined)).to.equal(false)
+    test('Should return false if one or both dates are undefined', () => {
+      expect(areDatesEqual(undefined, new Date(2016, 4, 17))).toBe(false)
+      expect(areDatesEqual(undefined, undefined)).toBe(false)
     })
   })
 })

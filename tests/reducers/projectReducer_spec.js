@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import { fromJS } from 'immutable'
 import reducer from '../../src/reducer/project'
 import * as types from '../../src/constants/actionTypes'
@@ -7,13 +6,13 @@ import * as commonActions from '../../src/actions/commonActions'
 import { deleteProject } from '../../src/actions/projectActions'
 
 describe('Project reducer', () => {
-  it('Should return initial state', () => {
+  test('Should return initial state', () => {
     const initialState = undefined
     const action = {}
     const nextState = fromJS({})
-    expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+    expect(reducer(initialState, action)).toEqual(fromJS(nextState))
   })
-  it('Should return state for empty action', () => {
+  test('Should return state for empty action', () => {
     const initialState = fromJS({
       bh52ogy5s0fm: {
         id: 'bh52ogy5s0fm',
@@ -22,19 +21,19 @@ describe('Project reducer', () => {
       }
     })
     const action = {}
-    expect(reducer(initialState, action)).to.equal(fromJS(initialState))
+    expect(reducer(initialState, action)).toEqual(fromJS(initialState))
   })
 
   describe('Add project', () => {
-    it('Should handle ADD_PROJECT with empty action', () => {
+    test('Should handle ADD_PROJECT with empty action', () => {
       const initialState = fromJS({})
       const action = {
         type: types.ADD_PROJECT
       }
       const nextState = fromJS({})
-      expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+      expect(reducer(initialState, action)).toEqual(fromJS(nextState))
     })
-    it('Should handle ADD_PROJECT with only id in action properties', () => {
+    test('Should handle ADD_PROJECT with only id in action properties', () => {
       const initialState = fromJS({})
       const action = {
         type: types.ADD_PROJECT,
@@ -51,9 +50,9 @@ describe('Project reducer', () => {
           completedDeleted: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+      expect(reducer(initialState, action)).toEqual(fromJS(nextState))
     })
-    it('Should handle ADD_PROJECT with empty store', () => {
+    test('Should handle ADD_PROJECT with empty store', () => {
       const initialState = fromJS({})
       const action = {
         type: types.ADD_PROJECT,
@@ -73,9 +72,9 @@ describe('Project reducer', () => {
           completedDeleted: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+      expect(reducer(initialState, action)).toEqual(fromJS(nextState))
     })
-    it('Should handle ADD_PROJECT with not empty store', () => {
+    test('Should handle ADD_PROJECT with not empty store', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -104,10 +103,10 @@ describe('Project reducer', () => {
           completedDeleted: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should do nothing when no id in properties', () => {
+    test('Should do nothing when no id in properties', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -128,10 +127,10 @@ describe('Project reducer', () => {
           completed: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should do nothing when add context with existing id', () => {
+    test('Should do nothing when add context with existing id', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -163,12 +162,12 @@ describe('Project reducer', () => {
           completed: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
   })
 
   describe('Remove project', () => {
-    it('Should handle REMOVE_PROJECT', () => {
+    test('Should handle REMOVE_PROJECT', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -192,9 +191,9 @@ describe('Project reducer', () => {
           completed: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
-    it('Should handle REMOVE_PROJECT with wrong id', () => {
+    test('Should handle REMOVE_PROJECT with wrong id', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -211,12 +210,12 @@ describe('Project reducer', () => {
         type: types.REMOVE_PROJECT,
         id: 'bh32ogy5s0fk'
       }
-      expect(reducer(initialState, action)).to.equal(initialState)
+      expect(reducer(initialState, action)).toEqual(initialState)
     })
   })
 
   describe('Edit project', () => {
-    it('Should handle EDIT_PROJECT', () => {
+    test('Should handle EDIT_PROJECT', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -248,10 +247,10 @@ describe('Project reducer', () => {
           completed: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle EDIT_PROJECT with new id', () => {
+    test('Should handle EDIT_PROJECT with new id', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -284,10 +283,10 @@ describe('Project reducer', () => {
           completed: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should do nothing when new id already exist', () => {
+    test('Should do nothing when new id already exist', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -320,12 +319,12 @@ describe('Project reducer', () => {
           completed: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
   })
 
   describe('Replace project', () => {
-    it('Should handle REPLACE_PROJECT with existing id', () => {
+    test('Should handle REPLACE_PROJECT with existing id', () => {
       const initialState = fromJS({
         b41sogy3s0oc: {
           id: 'b41sogy3s0oc',
@@ -349,12 +348,12 @@ describe('Project reducer', () => {
           completed: true
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
   })
 
   describe('Complete project', () => {
-    it('Should handle COMPLETE_PROJECT', () => {
+    test('Should handle COMPLETE_PROJECT', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -387,118 +386,127 @@ describe('Project reducer', () => {
           completedDeleted: true
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle COMPLETE_PROJECT with true status and true complete', () => {
-      const initialState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
+    test(
+      'Should handle COMPLETE_PROJECT with true status and true complete',
+      () => {
+        const initialState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: true,
+            completedDate: 1467200092084
+          }
+        })
+        const action = {
+          type: types.COMPLETE_PROJECT,
           id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: true,
-          completedDate: 1467200092084
+          status: true,
+          date: 1468200092084
         }
-      })
-      const action = {
-        type: types.COMPLETE_PROJECT,
-        id: 'bh32ogy5s0fm',
-        status: true,
-        date: 1468200092084
+        const nextState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: true,
+            completedDate: 1468200092084,
+            completedDeleted: true
+          }
+        })
+        expect(reducer(initialState, action)).toEqual(nextState)
       }
-      const nextState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
-          id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: true,
-          completedDate: 1468200092084,
-          completedDeleted: true
-        }
-      })
-      expect(reducer(initialState, action)).to.equal(nextState)
-    })
+    )
 
-    it('Should handle COMPLETE_PROJECT with false status and true complete', () => {
-      const initialState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
+    test(
+      'Should handle COMPLETE_PROJECT with false status and true complete',
+      () => {
+        const initialState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: true,
+            completedDate: 1468200092084
+          }
+        })
+        const action = {
+          type: types.COMPLETE_PROJECT,
           id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: true,
-          completedDate: 1468200092084
+          status: false,
+          date: undefined
         }
-      })
-      const action = {
-        type: types.COMPLETE_PROJECT,
-        id: 'bh32ogy5s0fm',
-        status: false,
-        date: undefined
+        const nextState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: false,
+            completedDeleted: false
+          }
+        })
+        expect(reducer(initialState, action)).toEqual(nextState)
       }
-      const nextState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
-          id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: false,
-          completedDeleted: false
-        }
-      })
-      expect(reducer(initialState, action)).to.equal(nextState)
-    })
+    )
 
-    it('Should handle COMPLETE_PROJECT with false status and false complete', () => {
-      const initialState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
+    test(
+      'Should handle COMPLETE_PROJECT with false status and false complete',
+      () => {
+        const initialState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: false
+          }
+        })
+        const action = {
+          type: types.COMPLETE_PROJECT,
           id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: false
+          status: false,
+          date: undefined
         }
-      })
-      const action = {
-        type: types.COMPLETE_PROJECT,
-        id: 'bh32ogy5s0fm',
-        status: false,
-        date: undefined
+        const nextState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: false,
+            completedDeleted: false
+          }
+        })
+        expect(reducer(initialState, action)).toEqual(nextState)
       }
-      const nextState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
-          id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: false,
-          completedDeleted: false
-        }
-      })
-      expect(reducer(initialState, action)).to.equal(nextState)
-    })
+    )
 
-    it('Should handle COMPLETE_PROJECT without status and true complete', () => {
+    test('Should handle COMPLETE_PROJECT without status and true complete', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -529,45 +537,48 @@ describe('Project reducer', () => {
           completedDeleted: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle COMPLETE_PROJECT without status and false complete', () => {
-      const initialState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
-          id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: false
+    test(
+      'Should handle COMPLETE_PROJECT without status and false complete',
+      () => {
+        const initialState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: false
+          }
+        })
+        const action = {
+          type: types.COMPLETE_PROJECT,
+          id: 'bh32ogy5s0fm'
         }
-      })
-      const action = {
-        type: types.COMPLETE_PROJECT,
-        id: 'bh32ogy5s0fm'
+        const nextState = fromJS({
+          bh52ogy5s0fm: {
+            id: 'bh52ogy5s0fm',
+            title: 'Existing Project',
+            completed: false
+          },
+          bh32ogy5s0fm: {
+            id: 'bh32ogy5s0fm',
+            title: 'New Custom Project',
+            completed: false,
+            completedDeleted: false
+          }
+        })
+        expect(reducer(initialState, action)).toEqual(nextState)
       }
-      const nextState = fromJS({
-        bh52ogy5s0fm: {
-          id: 'bh52ogy5s0fm',
-          title: 'Existing Project',
-          completed: false
-        },
-        bh32ogy5s0fm: {
-          id: 'bh32ogy5s0fm',
-          title: 'New Custom Project',
-          completed: false,
-          completedDeleted: false
-        }
-      })
-      expect(reducer(initialState, action)).to.equal(nextState)
-    })
+    )
   })
 
   describe('Delete project', () => {
-    it('Should handle DELETE_PROJECT with true status', () => {
+    test('Should handle DELETE_PROJECT with true status', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -596,10 +607,10 @@ describe('Project reducer', () => {
           completedDeleted: true
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle DELETE_PROJECT with true status and true delete', () => {
+    test('Should handle DELETE_PROJECT with true status and true delete', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -629,10 +640,10 @@ describe('Project reducer', () => {
           completedDeleted: true
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle DELETE_PROJECT with empty status and true delete', () => {
+    test('Should handle DELETE_PROJECT with empty status and true delete', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -662,10 +673,10 @@ describe('Project reducer', () => {
           completedDeleted: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle DELETE_PROJECT with false status', () => {
+    test('Should handle DELETE_PROJECT with false status', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -695,10 +706,10 @@ describe('Project reducer', () => {
           completedDeleted: true
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle DELETE_PROJECT with false status and false delete', () => {
+    test('Should handle DELETE_PROJECT with false status and false delete', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -728,10 +739,10 @@ describe('Project reducer', () => {
           completedDeleted: false
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
 
-    it('Should handle DELETE_PROJECT with empty status', () => {
+    test('Should handle DELETE_PROJECT with empty status', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -760,12 +771,12 @@ describe('Project reducer', () => {
           completedDeleted: true
         }
       })
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
   })
 
   describe('Set state', () => {
-    it('Should handle SET_STATE action without project field', () => {
+    test('Should handle SET_STATE action without project field', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -794,9 +805,9 @@ describe('Project reducer', () => {
       })
       const action = commonActions.setState(newState)
 
-      expect(reducer(initialState, action)).to.equal(initialState)
+      expect(reducer(initialState, action)).toEqual(initialState)
     })
-    it('Should handle SET_STATE action with project field', () => {
+    test('Should handle SET_STATE action with project field', () => {
       const initialState = fromJS({
         bh52ogy5s0fm: {
           id: 'bh52ogy5s0fm',
@@ -840,7 +851,7 @@ describe('Project reducer', () => {
 
       const action = commonActions.setState(newState)
 
-      expect(reducer(initialState, action)).to.equal(nextState)
+      expect(reducer(initialState, action)).toEqual(nextState)
     })
   })
 })

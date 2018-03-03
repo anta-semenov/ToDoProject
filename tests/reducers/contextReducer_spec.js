@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import { fromJS } from 'immutable'
 import reducer from '../../src/reducer/context'
 import * as types from '../../src/constants/actionTypes'
@@ -7,13 +6,13 @@ import * as commonActions from '../../src/actions/commonActions'
 import { deleteContext } from '../../src/actions/contextActions'
 
 describe('Context reducer', () => {
-    it('Should return initial state', () => {
+    test('Should return initial state', () => {
         const initialState = undefined
         const action = {}
         const nextState = fromJS({})
-        expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+        expect(reducer(initialState, action)).toEqual(fromJS(nextState))
     })
-    it('Should return state for empty action', () => {
+    test('Should return state for empty action', () => {
         const initialState = fromJS({
             cf1sobz3s0oc: {
                 id: 'cf1sobz3s0oc',
@@ -21,19 +20,19 @@ describe('Context reducer', () => {
             }
         })
         const action = {}
-        expect(reducer(initialState, action)).to.equal(fromJS(initialState))
+        expect(reducer(initialState, action)).toEqual(fromJS(initialState))
     })
 
     describe('Add context', () => {
-      it('Should handle ADD_CONTEXT with empty action', () => {
+      test('Should handle ADD_CONTEXT with empty action', () => {
           const initialState = fromJS({})
           const action = {
               type: types.ADD_CONTEXT
           }
           const nextState = fromJS({})
-          expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+          expect(reducer(initialState, action)).toEqual(fromJS(nextState))
       })
-      it('Should handle ADD_CONTEXT with only id in properties', () => {
+      test('Should handle ADD_CONTEXT with only id in properties', () => {
           const initialState = fromJS({})
           const action = {
               type: types.ADD_CONTEXT,
@@ -48,9 +47,9 @@ describe('Context reducer', () => {
                   deleted: false
               }
           })
-          expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+          expect(reducer(initialState, action)).toEqual(fromJS(nextState))
       })
-      it('Should handle ADD_CONTEXT with empty store', () => {
+      test('Should handle ADD_CONTEXT with empty store', () => {
           const initialState = fromJS({})
           const action = {
               type: types.ADD_CONTEXT,
@@ -66,9 +65,9 @@ describe('Context reducer', () => {
                   deleted: false
               }
           })
-          expect(reducer(initialState, action)).to.equal(fromJS(nextState))
+          expect(reducer(initialState, action)).toEqual(fromJS(nextState))
       })
-      it('Should handle ADD_CONTEXT with not empty store', () => {
+      test('Should handle ADD_CONTEXT with not empty store', () => {
           const initialState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
@@ -93,10 +92,10 @@ describe('Context reducer', () => {
                   deleted: false
               }
           })
-          expect(reducer(initialState, action)).to.equal(nextState)
+          expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should do nothing when adding context with existing id', () => {
+      test('Should do nothing when adding context with existing id', () => {
         const initialState = fromJS({
             cf1sobz3s0oc: {
                 id: 'cf1sobz3s0oc',
@@ -124,10 +123,10 @@ describe('Context reducer', () => {
                 title: 'Changed context title'
             }
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should do nothing when adding context without id', () => {
+      test('Should do nothing when adding context without id', () => {
         const initialState = fromJS({
             cf1sobz3s0oc: {
                 id: 'cf1sobz3s0oc',
@@ -146,12 +145,12 @@ describe('Context reducer', () => {
                 title: 'Existing context'
             }
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
     })
 
     describe('Remove context', () => {
-      it('Should handle REMOVE_CONTEXT', () => {
+      test('Should handle REMOVE_CONTEXT', () => {
           const initialState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
@@ -172,10 +171,10 @@ describe('Context reducer', () => {
                   title: 'Existing context'
               }
           })
-          expect(reducer(initialState, action)).to.equal(nextState)
+          expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should handle REMOVE_CONTEXT with wrong id', () => {
+      test('Should handle REMOVE_CONTEXT with wrong id', () => {
           const initialState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
@@ -190,12 +189,12 @@ describe('Context reducer', () => {
               type: types.REMOVE_CONTEXT,
               id: 'cb1sobz4s0oc'
           }
-          expect(reducer(initialState, action)).to.equal(initialState)
+          expect(reducer(initialState, action)).toEqual(initialState)
       })
     })
 
     describe('Edit context', () => {
-      it('Should handle EDIT_CONTEXT', () => {
+      test('Should handle EDIT_CONTEXT', () => {
           const initialState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
@@ -223,10 +222,10 @@ describe('Context reducer', () => {
                   title: 'Changed Context Tittle'
               }
           })
-          expect(reducer(initialState, action)).to.equal(nextState)
+          expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should handle EDIT_CONTEXT when id changed', () => {
+      test('Should handle EDIT_CONTEXT when id changed', () => {
           const initialState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
@@ -255,10 +254,10 @@ describe('Context reducer', () => {
                   title: 'Changed Context Tittle'
               }
           })
-          expect(reducer(initialState, action)).to.equal(nextState)
+          expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should do nothing when id changed and new id already exist', () => {
+      test('Should do nothing when id changed and new id already exist', () => {
           const initialState = fromJS({
               cf1sobz3s0oc: {
                   id: 'cf1sobz3s0oc',
@@ -287,12 +286,12 @@ describe('Context reducer', () => {
                   title: 'New custom context'
               }
           })
-          expect(reducer(initialState, action)).to.equal(nextState)
+          expect(reducer(initialState, action)).toEqual(nextState)
       })
     })
 
     describe('Replace context', () => {
-      it('Should handle REPLACE_CONTEXT with existing id', () => {
+      test('Should handle REPLACE_CONTEXT with existing id', () => {
         const initialState = fromJS({
           b41sogy3s0oc: {
             id: 'b41sogy3s0oc',
@@ -313,12 +312,12 @@ describe('Context reducer', () => {
             title: 'Changed Context Tittle'
           }
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
     })
 
     describe('Set state', () => {
-      it('Should handle SET_STATE action without context field', () => {
+      test('Should handle SET_STATE action without context field', () => {
         const initialState = fromJS({
           cf1sobz3s0oc: {
               id: 'cf1sobz3s0oc',
@@ -344,9 +343,9 @@ describe('Context reducer', () => {
         })
         const action = commonActions.setState(newState)
 
-        expect(reducer(initialState, action)).to.equal(initialState)
+        expect(reducer(initialState, action)).toEqual(initialState)
       })
-      it('Should handle SET_STATE action with context field', () => {
+      test('Should handle SET_STATE action with context field', () => {
         const initialState = fromJS({
           cf1sobz3s0oc: {
               id: 'cf1sobz3s0oc',
@@ -385,12 +384,12 @@ describe('Context reducer', () => {
 
         const action = commonActions.setState(newState)
 
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
     })
 
     describe('Delete context', () => {
-      it('Should handle DELETE_CONTEXT with true status', () => {
+      test('Should handle DELETE_CONTEXT with true status', () => {
         const initialState = fromJS({
             cf1sobz3s0oc: {
                 id: 'cf1sobz3s0oc',
@@ -413,10 +412,10 @@ describe('Context reducer', () => {
                 deleted: true
             }
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should handle DELETE_CONTEXT with true status and true deleted', () => {
+      test('Should handle DELETE_CONTEXT with true status and true deleted', () => {
         const initialState = fromJS({
             cf1sobz3s0oc: {
                 id: 'cf1sobz3s0oc',
@@ -440,10 +439,10 @@ describe('Context reducer', () => {
                 deleted: true
             }
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should handle DELETE_CONTEXT with empty status and true deleted', () => {
+      test('Should handle DELETE_CONTEXT with empty status and true deleted', () => {
         const initialState = fromJS({
             cf1sobz3s0oc: {
                 id: 'cf1sobz3s0oc',
@@ -466,10 +465,10 @@ describe('Context reducer', () => {
                 deleted: false
             }
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should handle DELETE_CONTEXT with false status and true deleted', () => {
+      test('Should handle DELETE_CONTEXT with false status and true deleted', () => {
         const initialState = fromJS({
             cf1sobz3s0oc: {
                 id: 'cf1sobz3s0oc',
@@ -493,33 +492,36 @@ describe('Context reducer', () => {
                 deleted: false
             }
         })
-        expect(reducer(initialState, action)).to.equal(nextState)
+        expect(reducer(initialState, action)).toEqual(nextState)
       })
 
-      it('Should handle DELETE_CONTEXT with false status and empty deleted', () => {
-        const initialState = fromJS({
-            cf1sobz3s0oc: {
-                id: 'cf1sobz3s0oc',
-                title: 'Existing context'
-            },
-            cf1sobz4s0oc: {
-                id: 'cf1sobz4s0oc',
-                title: 'New custom context'
-            }
-        })
-        const action = deleteContext('cf1sobz4s0oc', false)
-        const nextState = fromJS({
-            cf1sobz3s0oc: {
-                id: 'cf1sobz3s0oc',
-                title: 'Existing context'
-            },
-            cf1sobz4s0oc: {
-                id: 'cf1sobz4s0oc',
-                title: 'New custom context',
-                deleted: false
-            }
-        })
-        expect(reducer(initialState, action)).to.equal(nextState)
-      })
+      test(
+          'Should handle DELETE_CONTEXT with false status and empty deleted',
+          () => {
+            const initialState = fromJS({
+                cf1sobz3s0oc: {
+                    id: 'cf1sobz3s0oc',
+                    title: 'Existing context'
+                },
+                cf1sobz4s0oc: {
+                    id: 'cf1sobz4s0oc',
+                    title: 'New custom context'
+                }
+            })
+            const action = deleteContext('cf1sobz4s0oc', false)
+            const nextState = fromJS({
+                cf1sobz3s0oc: {
+                    id: 'cf1sobz3s0oc',
+                    title: 'Existing context'
+                },
+                cf1sobz4s0oc: {
+                    id: 'cf1sobz4s0oc',
+                    title: 'New custom context',
+                    deleted: false
+                }
+            })
+            expect(reducer(initialState, action)).toEqual(nextState)
+          }
+      )
     })
 })

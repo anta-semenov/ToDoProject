@@ -1,27 +1,28 @@
-import { expect } from 'chai'
 import { fromJS } from 'immutable'
 import * as actions from '../../src/actions/taskActions'
 import * as types from '../../src/constants/actionTypes'
 
 describe('Task action creators', () => {
-    it('Should create an action to add a task', () => {
+    test('Should create an action to add a task', () => {
       const properties = {
         title: 'New task',
         description: 'Description of the task'
       }
-      expect(actions.addTask(properties)).to.deep.equal({ type: types.ADD_TASK, properties: { ...properties, createdDate: Date.now() }})
+      expect(actions.addTask(properties)).toEqual(
+          { type: types.ADD_TASK, properties: { ...properties, createdDate: Date.now() }}
+      )
     })
 
-    it('Should create an action to remove a task', () => {
+    test('Should create an action to remove a task', () => {
         const id = 0
         const expectedAction = {
             type: types.REMOVE_TASK,
             id
         }
-        expect(actions.removeTask(id)).to.deep.equal(expectedAction)
+        expect(actions.removeTask(id)).toEqual(expectedAction)
     })
 
-    it('Should create an action to edit a task', () => {
+    test('Should create an action to edit a task', () => {
         const id = 0
         const properties = {
             title: 'New task title',
@@ -32,20 +33,20 @@ describe('Task action creators', () => {
             id,
             properties
         }
-        expect(actions.editTask(id, properties)).to.deep.equal(expectedAction)
+        expect(actions.editTask(id, properties)).toEqual(expectedAction)
     })
 
-    it('Should create an action to complete a task', () => {
+    test('Should create an action to complete a task', () => {
         const id = 0
         const status = true
         let action
         const dispatch = a => action = a
         const getState = () => fromJS({})
         actions.completeTask(id, status)(dispatch, getState)
-        expect(action).to.deep.equal({ type: types.COMPLETE_TASK, date: Date.now(), id, status })
+        expect(action).toEqual({ type: types.COMPLETE_TASK, date: Date.now(), id, status })
     })
 
-    it('Should create an action to add task to a project', () => {
+    test('Should create an action to add task to a project', () => {
         const id = 0
         const projectId = 0;
         const expectedAction = {
@@ -53,10 +54,10 @@ describe('Task action creators', () => {
             id,
             project: projectId
         }
-        expect(actions.addTaskToProject(id, projectId)).to.deep.equal(expectedAction);
+        expect(actions.addTaskToProject(id, projectId)).toEqual(expectedAction);
     })
 
-    it('Should create an action to add context to a task', () => {
+    test('Should create an action to add context to a task', () => {
         const id = 0
         const contextId = 0
         const expectedAction = {
@@ -64,10 +65,10 @@ describe('Task action creators', () => {
             id,
             context: contextId
         }
-        expect(actions.addTaskContext(id, contextId)).to.deep.equal(expectedAction)
+        expect(actions.addTaskContext(id, contextId)).toEqual(expectedAction)
     })
 
-    it('Should create an action to remove context from a task', () => {
+    test('Should create an action to remove context from a task', () => {
         const id = 0
         const contextId = 0
         const expectedAction = {
@@ -75,9 +76,9 @@ describe('Task action creators', () => {
             id,
             context: contextId
         }
-        expect(actions.removeTaskContext(id, contextId)).to.deep.equal(expectedAction)
+        expect(actions.removeTaskContext(id, contextId)).toEqual(expectedAction)
     })
-    it('Should create an action to switch task context', () => {
+    test('Should create an action to switch task context', () => {
         const id = 0
         const contextId = 0
         const expectedAction = {
@@ -85,10 +86,10 @@ describe('Task action creators', () => {
             id,
             context: contextId
         }
-        expect(actions.switchTaskContext(id, contextId)).to.deep.equal(expectedAction)
+        expect(actions.switchTaskContext(id, contextId)).toEqual(expectedAction)
     })
 
-    it('Should create an action to add task to today', () => {
+    test('Should create an action to add task to today', () => {
         const id = 0
         const status = true
         const expectedAction = {
@@ -96,7 +97,7 @@ describe('Task action creators', () => {
             id,
             status
         }
-        expect(actions.setTaskToday(id, status)).to.deep.equal(expectedAction)
+        expect(actions.setTaskToday(id, status)).toEqual(expectedAction)
     })
 
 })

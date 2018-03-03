@@ -5,8 +5,9 @@
   "scripts": {
     "start": "node server.js",
     "lint": "eslint src",
-    "test": "mocha --compilers js:babel-core/register --require ./tests/test_helper.js --require ignore-styles './tests/**/*_spec.@(js|jsx)'",
-    "test:watch": "npm test -- --watch",
+    "test": "jest",
+    "test-mocha": "mocha --compilers js:babel-core/register --require ./tests/test_helper.js --require ignore-styles './tests/**/*_spec.@(js|jsx)'",
+    "test:watch": "jest --watch",
     "deploy": "node build.prod.js"
   },
   "repository": {
@@ -26,8 +27,6 @@
     "babel-preset-es2015-loose": "^7.0.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.3.13",
-    "chai": "^3.5.0",
-    "chai-immutable": "^1.5.3",
     "css-loader": "^0.23.1",
     "cssnano": "^3.7.1",
     "eslint": "2.2.0",
@@ -36,8 +35,6 @@
     "ignore-styles": "^1.2.0",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
-    "mocha": "^2.4.5",
-    "mockery": "^1.7.0",
     "postcss": "^5.0.19",
     "postcss-loader": "^0.8.2",
     "react-addons-perf": "^15.2.0",
@@ -48,7 +45,6 @@
     "redux-devtools-log-monitor": "^1.0.11",
     "reselect": "^2.2.1",
     "style-loader": "^0.13.1",
-    "testdom": "^2.0.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
   },
@@ -59,6 +55,7 @@
     "firebase": "^3.0.3",
     "immutable": "^3.8.1",
     "immutablediff": "^0.4.2",
+    "jest": "^22.4.2",
     "lodash": "^4.13.1",
     "moment": "^2.16.0",
     "react": "^15.2.1",
@@ -77,5 +74,18 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
     "reselect": "^2.2.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm)$": "<rootDir>/tests/cfg/fileMock.js",
+      "^[./a-zA-Z0-9$_-]+\\.(less)$": "<rootDir>/tests/cfg/stylesMock.js"
+    },
+    "testMatch": [
+      "**/?(*)(_spec).js?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/(lib|node_modules|public)/",
+      "<rootDir>/tests/cfg/"
+    ]
   }
 }

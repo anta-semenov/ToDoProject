@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import React, { Component } from 'react'
 import { renderIntoDocument, createRenderer } from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
@@ -30,10 +29,10 @@ describe('Navigation', () => {
   const testProps = {
     dataStatus: DATA_RECIEVED,
     authStatus: AUTH_SUCESS,
-    groups: [
+    groups: fromJS([
       {
         type: navGroupTypes.BASIC,
-        items: fromJS([
+        items: [
           {
             type: sectionTypes.INBOX,
             title: sectionNames.INBOX,
@@ -51,12 +50,12 @@ describe('Navigation', () => {
             title: sectionNames.NEXT,
             active: false
           }
-        ])
+        ]
       },
       {
         type: navGroupTypes.CONTEXTS,
         title: sectionNames.CONTEXTS,
-        items: fromJS([
+        items: [
           {
             type: sectionTypes.CONTEXT,
             title: 'Context 1',
@@ -73,26 +72,26 @@ describe('Navigation', () => {
             count: 10,
             editing: false
           }
-        ]),
+        ],
         onItemClick: testClickOnItem,
         onStopEditing: testStopEditing,
         addNewTitle:'+ context',
         addNew: testAddNew
       }
-    ],
+    ]),
     onItemClick: () => {},
     addNew: () => {},
     onStopEditing: () => {}
   }
-  it('Should render correct amount of groups', () => {
+  test('Should render correct amount of groups', () => {
     shallowRenderer.render(<Navigation {...testProps} />)
     const navigation = shallowRenderer.getRenderOutput()
 
-    expect(navigation.props.children.length).to.equal(3)
-    expect(navigation.props.children[1].props.children.length).to.equal(2)
+    expect(navigation.props.children.length).toBe(3)
+    expect(navigation.props.children[1].props.children.length).toBe(2)
   })
 
-  it('Should pass correct props to groupComponents', () => {
+  test('Should pass correct props to groupComponents', () => {
     const navGroupsProps = []
 
     const onItemClickCallback = () => {return 1}
@@ -112,21 +111,21 @@ describe('Navigation', () => {
 
     renderIntoDocument(<Navigation {...testProps} />)
 
-    expect(navGroupsProps.length).to.equal(2)
-    expect(navGroupsProps[0].type).to.equal(navGroupTypes.BASIC)
-    expect(navGroupsProps[0].items.size).to.equal(3)
-    expect(navGroupsProps[1].type).to.equal(navGroupTypes.CONTEXTS)
-    expect(navGroupsProps[1].title).to.equal(sectionNames.CONTEXTS)
-    expect(navGroupsProps[1].items.size).to.equal(2)
-    expect(navGroupsProps[0].nextContextID).to.equal(undefined)
-    expect(navGroupsProps[0].nextProjectID).to.equal(undefined)
-    expect(navGroupsProps[0].onItemClick).to.equal(onItemClickCallback)
-    expect(navGroupsProps[0].addNew).to.equal(addNewCallback)
-    expect(navGroupsProps[0].onStopEditing).to.equal(onStopEditingCallback)
-    expect(navGroupsProps[1].nextContextID).to.equal(undefined)
-    expect(navGroupsProps[1].nextProjectID).to.equal(undefined)
-    expect(navGroupsProps[1].onItemClick).to.equal(onItemClickCallback)
-    expect(navGroupsProps[1].addNew).to.equal(addNewCallback)
-    expect(navGroupsProps[1].onStopEditing).to.equal(onStopEditingCallback)
+    expect(navGroupsProps.length).toBe(2)
+    expect(navGroupsProps[0].type).toBe(navGroupTypes.BASIC)
+    expect(navGroupsProps[0].items.size).toBe(3)
+    expect(navGroupsProps[1].type).toBe(navGroupTypes.CONTEXTS)
+    expect(navGroupsProps[1].title).toBe(sectionNames.CONTEXTS)
+    expect(navGroupsProps[1].items.size).toBe(2)
+    expect(navGroupsProps[0].nextContextID).toBe(undefined)
+    expect(navGroupsProps[0].nextProjectID).toBe(undefined)
+    expect(navGroupsProps[0].onItemClick).toBe(onItemClickCallback)
+    expect(navGroupsProps[0].addNew).toBe(addNewCallback)
+    expect(navGroupsProps[0].onStopEditing).toBe(onStopEditingCallback)
+    expect(navGroupsProps[1].nextContextID).toBe(undefined)
+    expect(navGroupsProps[1].nextProjectID).toBe(undefined)
+    expect(navGroupsProps[1].onItemClick).toBe(onItemClickCallback)
+    expect(navGroupsProps[1].addNew).toBe(addNewCallback)
+    expect(navGroupsProps[1].onStopEditing).toBe(onStopEditingCallback)
   })
 })

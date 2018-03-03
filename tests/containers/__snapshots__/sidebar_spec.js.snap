@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar container Should generate correct props from state 1`] = `
+Object {
+  "authStatus": "AUTH_NONE",
+  "dataStatus": "DATA_NONE",
+  "groups": Immutable.List [
+    Immutable.Map {
+      "type": "BASIC",
+      "items": Immutable.List [
+        Immutable.Map {
+          "type": "inbox",
+          "title": "Inbox",
+          "active": false,
+          "count": 1,
+        },
+        Immutable.Map {
+          "type": "today",
+          "title": "Today",
+          "active": false,
+          "count": 2,
+        },
+        Immutable.Map {
+          "type": "next",
+          "title": "Next",
+          "active": false,
+        },
+        Immutable.Map {
+          "type": "someday",
+          "title": "Someday",
+          "active": false,
+        },
+        Immutable.Map {
+          "type": "completed",
+          "title": "Completed",
+          "active": false,
+        },
+      ],
+    },
+    Immutable.Map {
+      "type": "CONTEXTS",
+      "title": "Contexts",
+      "addNewTitle": "Add context",
+      "items": Immutable.List [
+        Immutable.Map {
+          "id": "a21sogy3s0oq",
+          "type": "CONTEXT",
+          "title": "test context 1",
+          "active": true,
+          "editing": false,
+          "count": 0,
+        },
+        Immutable.Map {
+          "id": "a23sogy3s0oq",
+          "type": "CONTEXT",
+          "title": "test context 2",
+          "active": false,
+          "editing": false,
+          "count": 1,
+        },
+      ],
+    },
+    Immutable.Map {
+      "type": "PROJECTS",
+      "title": "Projects",
+      "addNewTitle": "Add project",
+      "items": Immutable.List [
+        Immutable.Map {
+          "id": "ab6sof83s1o1",
+          "type": "PROJECT",
+          "title": "test project 2",
+          "active": false,
+          "editing": false,
+        },
+        Immutable.Map {
+          "id": "ab6sof83s1o2",
+          "type": "PROJECT",
+          "title": "test project 3",
+          "active": false,
+          "editing": false,
+        },
+      ],
+    },
+  ],
+}
+`;
