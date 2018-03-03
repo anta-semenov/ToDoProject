@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { findDOMNode } from 'react-dom'
-import shallowCompare from 'react-addons-shallow-compare'
 import { DropTarget, DragSource } from 'react-dnd'
 import classNames from 'classnames'
 import { TODAY, SOMEDAY, PROJECT, CONTEXT } from '../../constants/sectionTypes'
@@ -72,14 +71,10 @@ const collectSource = (connect, monitor) => ({
 })
 
 // React Class
-class NavigationTitle extends React.Component {
+class NavigationTitle extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {translateY:0}
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
   }
 
   componentWillReceiveProps(nextProps) {

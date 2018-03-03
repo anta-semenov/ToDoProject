@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-var autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -11,40 +10,29 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
+  mode: 'production',
   plugins: [
     new webpack.DefinePlugin({
       'process.env' : {
         'NODE_ENV': JSON.stringify('production')
       }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      output: {
-        comments: false
-      }
-    }),
-    new webpack.optimize.DedupePlugin()
+    })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel'],
+        use: ['babel-loader'],
         include: path.join(__dirname, 'src')
       },
       {
         test: /\.less/,
-        loader: 'style!css!postcss!less',
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
         include: path.join(__dirname, 'src')
       }
     ]
   },
   resolve: {
-    modulesDirectories: ['node_modules', 'src']
-  },
-  postcss: function() {
-    return [autoprefixer]
+    modules: ['node_modules', 'src']
   }
 }

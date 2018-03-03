@@ -1,11 +1,7 @@
-import React from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
+import React, { PureComponent } from 'react'
 
 const StatefulComponent = (StatelessComponent) => {
-  class StatefulComponent extends React.Component {
-    shouldComponentUpdate(nextProps, nextState) {
-      return shallowCompare(this, nextProps, nextState)
-    }
+  class StatefulComponent extends PureComponent {
     render() {
       return <StatelessComponent {...this.props} />
     }

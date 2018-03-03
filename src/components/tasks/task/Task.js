@@ -1,6 +1,5 @@
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types';
-import React from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
 import { Map } from 'immutable'
 import { DragSource } from 'react-dnd'
 import classNames from 'classnames'
@@ -52,11 +51,7 @@ const collect = (connect, monitor) => ({
   isDragging: monitor.isDragging()
 })
 
-class Task extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
-
+class Task extends PureComponent {
   render() {
     const taskClasses = classNames({
       'task': true,

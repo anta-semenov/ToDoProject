@@ -1,23 +1,18 @@
 import PropTypes from 'prop-types';
-import React from 'react'
+import React, { PureComponent } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import shallowCompare from 'react-addons-shallow-compare'
 import './NavigationGroup.less'
 
 import NavigationItem from '../navigationItem/NavigationItem'
 
-class NavigationGroup extends React.Component {
+class NavigationGroup extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {}
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (shallowCompare({props: this.props, state: {}}, nextProps, {})) {
+    if (this.props.items !== nextProps.items && this.state.items) {
       this.setState({items: undefined})
     }
   }

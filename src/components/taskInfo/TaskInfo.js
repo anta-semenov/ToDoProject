@@ -1,6 +1,5 @@
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types';
-import React from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
 import { Map, Set } from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
@@ -18,11 +17,7 @@ import TaskRepeat from './taskRepeat/TaskRepeat'
 
 import './TaskInfo.less'
 
-export default class TaskInfo extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
-
+export default class TaskInfo extends PureComponent {
   render() {
     const {id, completed, today, someday, priority, title, description, taskProject, taskContexts,
       date, deleted, repeat, projects, contexts, onTaskCheckboxClick, onTaskTodayClick,

@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-var autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: 'eval',
@@ -14,27 +13,32 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
+  mode: 'development',
+  devServer: {
+    publicPath: '/static/',
+    hot: true,
+    historyApiFallback: true,
+    stats: { colors: true },
+    port: '3000'
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['react-hot', 'babel'],
+        use: ['babel-loader'],
         include: path.join(__dirname, 'src')
       },
       {
         test: /\.less$/,
-        loader: 'style!css!postcss!less',
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
         include: path.join(__dirname, 'src')
       }
     ]
   },
   resolve: {
-    modulesDirectories: ['node_modules', 'src']
-  },
-  postcss: function() {
-    return [autoprefixer]
+    modules: ['node_modules', 'src']
   }
 }

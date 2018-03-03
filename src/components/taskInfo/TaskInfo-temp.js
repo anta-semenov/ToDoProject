@@ -1,6 +1,5 @@
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types';
-import React from 'react'
-import PureRenderMixins from 'react-addons-pure-render-mixin'
 import { Map, Set } from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { TransitionMotion, spring } from 'react-motion'
@@ -19,12 +18,7 @@ import { DEFAULT_TASKINFO_SIZE } from '../../constants/defaults'
 
 import './TaskInfo.less'
 
-export default class TaskInfo extends React.Component {
-  constructor(props) {
-    super(props)
-    this.shouldComponentUpdate = PureRenderMixins.shouldComponentUpdate.bind(this)
-  }
-
+export default class TaskInfo extends PureComponent {
   willEnter() {
     return {
       width: 0,

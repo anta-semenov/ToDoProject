@@ -1,14 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
+import React, { PureComponent } from 'react'
 import './NavigationItem.less'
 
-export default class NavigationItem extends React.Component {
+export default class NavigationItem extends PureComponent {
   state = {text: ''}
-  constructor(props) {
-    super(props)
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
-  }
 
   componentDidMount() {
     if (this.titleInput) {

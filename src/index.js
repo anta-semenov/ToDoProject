@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { fromJS } from 'immutable'
-import Root from './containers/Root'
+import Root from './containers/Root.js'
 import thunk from 'redux-thunk'
 import configureStore from './store/configureStore'
 import initFirebase from './backend/firebase/init'
