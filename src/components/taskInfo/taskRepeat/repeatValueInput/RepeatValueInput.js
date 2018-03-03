@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import './RepeatValueInput.less'
 
@@ -25,8 +26,8 @@ class RepeatValueInput extends React.PureComponent {
 }
 
 RepeatValueInput.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default RepeatValueInput

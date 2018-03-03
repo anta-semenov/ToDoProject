@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import classNames from 'classnames'
 import './Checkbox.less'
@@ -19,10 +20,10 @@ const Checkbox = ({ appearance = 'default', dimmed = false, checked = false, onC
 }
 
 Checkbox.propTypes = {
-  appearance: React.PropTypes.oneOf(['task-info', 'tasks-list', 'default', 'section-header']),
-  checked: React.PropTypes.bool,
-  dimmed: React.PropTypes.bool,
-  onChange: React.PropTypes.func.isRequired
+  appearance: PropTypes.oneOf(['task-info', 'tasks-list', 'default', 'section-header']),
+  checked: PropTypes.bool,
+  dimmed: PropTypes.bool,
+  onChange: PropTypes.func.isRequired
 }
 
 Checkbox.defaultProps = {

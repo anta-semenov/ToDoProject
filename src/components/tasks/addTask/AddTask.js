@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react'
 import { NEW_TASK_TITLE } from '../../../constants/defaults'
 import classNames from 'classnames'
@@ -53,10 +54,10 @@ export default class AddTask extends Component {
 }
 
 AddTask.propTypes = {
-  addTask: React.PropTypes.func.isRequired,
-  setSearchQuery: React.PropTypes.func.isRequired,
-  isSectionEmpty: React.PropTypes.bool,
-  hasFocus: React.PropTypes.bool
+  addTask: PropTypes.func.isRequired,
+  setSearchQuery: PropTypes.func.isRequired,
+  isSectionEmpty: PropTypes.bool,
+  hasFocus: PropTypes.bool
 }
 AddTask.defaultProps = {
   isSectionEmpty: false,

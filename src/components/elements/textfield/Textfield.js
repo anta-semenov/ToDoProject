@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { Editor, EditorState, ContentState } from 'draft-js'
 import classNames from 'classnames'
@@ -76,11 +77,11 @@ export default class Textfield extends React.Component {
 }
 
 Textfield.propTypes = {
-  appearance: React.PropTypes.oneOf(['task-title', 'section-header', 'default']).isRequired,
-  text: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
-  onChange: React.PropTypes.func,
-  onBlur: React.PropTypes.func
+  appearance: PropTypes.oneOf(['task-title', 'section-header', 'default']).isRequired,
+  text: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
 }
 
 Textfield.defaultProps = {

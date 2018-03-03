@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import shallowCompare from 'react-addons-shallow-compare'
@@ -71,23 +72,23 @@ class NavigationGroup extends React.Component {
 NavigationGroup.propTypes = {
   items: ImmutablePropTypes.listOf(
     ImmutablePropTypes.contains({
-      type: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      active: React.PropTypes.bool.isRequired,
-      id: React.PropTypes.string,
-      count: React.PropTypes.number,
-      editing: React.PropTypes.bool
+      type: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      active: PropTypes.bool.isRequired,
+      id: PropTypes.string,
+      count: PropTypes.number,
+      editing: PropTypes.bool
     })
   ).isRequired,
-  onItemClick: React.PropTypes.func.isRequired,
-  onStopEditing: React.PropTypes.func,
-  changePosition: React.PropTypes.func,
+  onItemClick: PropTypes.func.isRequired,
+  onStopEditing: PropTypes.func,
+  changePosition: PropTypes.func,
 
-  title: React.PropTypes.string,
+  title: PropTypes.string,
 
-  type: React.PropTypes.string,
-  addNewTitle : React.PropTypes.string,
-  addNew: React.PropTypes.func
+  type: PropTypes.string,
+  addNewTitle : PropTypes.string,
+  addNew: PropTypes.func
 }
 
 export default NavigationGroup

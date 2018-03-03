@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import classNames from 'classnames'
 import './RepeatIcon.less'
@@ -15,8 +16,8 @@ const RepeatIcon = ({checked = false, onClick}) => (
 )
 
 RepeatIcon.propTypes = {
-  checked: React.PropTypes.bool,
-  onClick: React.PropTypes.func.isRequired
+  checked: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
 }
 
 export default RepeatIcon

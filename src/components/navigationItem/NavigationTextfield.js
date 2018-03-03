@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import './NavigationItem.less'
@@ -59,12 +60,12 @@ export default class NavigationItem extends React.Component {
 }
 
 NavigationItem.propTypes = {
-  type: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  id: React.PropTypes.string,
+  type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.string,
 
-  onStopEditing: React.PropTypes.func,
+  onStopEditing: PropTypes.func,
 
-  active: React.PropTypes.bool.isRequired,
-  count: React.PropTypes.number
+  active: PropTypes.bool.isRequired,
+  count: PropTypes.number
 }

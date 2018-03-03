@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import './Loader.less'
 
@@ -10,6 +11,6 @@ const Loader = ({ appearance = 'default' }) => (
 )
 
 Loader.propTypes = {
-  appearance: React.PropTypes.oneOf(['default', 'sidebar', 'section'])
+  appearance: PropTypes.oneOf(['default', 'sidebar', 'section'])
 }
 export default Loader

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { timeIntervalToComponents } from '../../utils/date'
 import './TaskTracker.less'
@@ -47,8 +48,8 @@ export default class TaskTracker extends React.Component {
 
 
 TaskTracker.propTypes = {
-  title: React.PropTypes.string,
-  startTime: React.PropTypes.number,
-  id: React.PropTypes.string,
-  stopTracking: React.PropTypes.func.isRequired
+  title: PropTypes.string,
+  startTime: PropTypes.number,
+  id: PropTypes.string,
+  stopTracking: PropTypes.func.isRequired
 }

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR, AUTH_NONE } from '../../constants/authStatus'
 import User from './user/User.js'
@@ -14,13 +15,13 @@ const Auth = ({ authStatus, userName, userImage, login, logout}) =>  (
 )
 
 Auth.propTypes = {
-  authStatus: React.PropTypes.oneOf([AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR, AUTH_NONE]),
-  authErrorMessage: React.PropTypes.string,
-  userName: React.PropTypes.string,
-  userImage: React.PropTypes.string,
+  authStatus: PropTypes.oneOf([AUTH_IN_PROGRESS, AUTH_SUCESS, AUTH_ERROR, AUTH_NONE]),
+  authErrorMessage: PropTypes.string,
+  userName: PropTypes.string,
+  userImage: PropTypes.string,
 
-  login: React.PropTypes.func.isRequired,
-  logout: React.PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 export default Auth

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import PureRenderMixins from 'react-addons-pure-render-mixin'
 import { Map, Set } from 'immutable'
@@ -91,44 +92,44 @@ export default class TaskInfo extends React.Component {
 }
 
 TaskInfo.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string,
-  completed: React.PropTypes.bool,
-  today: React.PropTypes.bool,
-  someday: React.PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  completed: PropTypes.bool,
+  today: PropTypes.bool,
+  someday: PropTypes.bool,
 
-  description: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.instanceOf(Map)
+  description: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Map)
   ]),
-  priority: React.PropTypes.string,
-  date: React.PropTypes.number,
-  taskProject: React.PropTypes.string,
-  taskContexts: React.PropTypes.instanceOf(Set),
+  priority: PropTypes.string,
+  date: PropTypes.number,
+  taskProject: PropTypes.string,
+  taskContexts: PropTypes.instanceOf(Set),
 
   projects: ImmutablePropTypes.mapOf(
     ImmutablePropTypes.contains({
-      id: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      completed: React.PropTypes.bool.isRequired
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired
     })
   ),
   contexts: ImmutablePropTypes.mapOf(
     ImmutablePropTypes.contains({
-      id: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
     })
   ),
 
-  onTaskCheckboxClick: React.PropTypes.func.isRequired,
-  onTaskTodayClick: React.PropTypes.func.isRequired,
-  onPriorityClick: React.PropTypes.func.isRequired,
-  onTitleChange: React.PropTypes.func.isRequired,
-  onDescriptionChange: React.PropTypes.func.isRequired,
-  onProjectChange: React.PropTypes.func.isRequired,
-  onContextClick: React.PropTypes.func.isRequired,
-  onDateChange: React.PropTypes.func.isRequired,
-  onTaskDeleteClick: React.PropTypes.func.isRequired,
-  onCloseClick: React.PropTypes.func.isRequired,
-  onTaskSomedayClick: React.PropTypes.func.isRequired
+  onTaskCheckboxClick: PropTypes.func.isRequired,
+  onTaskTodayClick: PropTypes.func.isRequired,
+  onPriorityClick: PropTypes.func.isRequired,
+  onTitleChange: PropTypes.func.isRequired,
+  onDescriptionChange: PropTypes.func.isRequired,
+  onProjectChange: PropTypes.func.isRequired,
+  onContextClick: PropTypes.func.isRequired,
+  onDateChange: PropTypes.func.isRequired,
+  onTaskDeleteClick: PropTypes.func.isRequired,
+  onCloseClick: PropTypes.func.isRequired,
+  onTaskSomedayClick: PropTypes.func.isRequired
 }

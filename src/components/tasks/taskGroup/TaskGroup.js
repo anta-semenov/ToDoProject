@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { TransitionMotion, spring } from 'react-motion'
@@ -56,33 +57,33 @@ const TaskGroup = ({ groupTitle, tasks, activeTask, latentTasks, trackingTask, .
 }
 
 TaskGroup.propTypes = {
-  groupTitle: React.PropTypes.string,
+  groupTitle: PropTypes.string,
   tasks: ImmutablePropTypes.listOf(
     ImmutablePropTypes.contains({
-      id: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      completed: React.PropTypes.bool.isRequired,
-      today: React.PropTypes.bool.isRequired,
-      priority: React.PropTypes.string.isRequired,
-      description: React.PropTypes.oneOfType([
-        React.PropTypes.string,
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
+      today: PropTypes.bool.isRequired,
+      priority: PropTypes.string.isRequired,
+      description: PropTypes.oneOfType([
+        PropTypes.string,
         ImmutablePropTypes.map
       ]),
-      date: React.PropTypes.number
+      date: PropTypes.number
     })
   ).isRequired,
-  activeTask: React.PropTypes.string,
-  latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
-  trackingTask: React.PropTypes.string,
+  activeTask: PropTypes.string,
+  latentTasks: ImmutablePropTypes.mapOf(PropTypes.number),
+  trackingTask: PropTypes.string,
 
-  onTaskClick: React.PropTypes.func.isRequired,
-  onTaskCheckboxClick: React.PropTypes.func.isRequired,
-  onTaskTodayClick: React.PropTypes.func.isRequired,
-  onTaskPriorityClick: React.PropTypes.func.isRequired,
-  onTaskTrackingClick: React.PropTypes.func.isRequired,
+  onTaskClick: PropTypes.func.isRequired,
+  onTaskCheckboxClick: PropTypes.func.isRequired,
+  onTaskTodayClick: PropTypes.func.isRequired,
+  onTaskPriorityClick: PropTypes.func.isRequired,
+  onTaskTrackingClick: PropTypes.func.isRequired,
 
-  addTaskToProject: React.PropTypes.func.isRequired,
-  addTaskContext: React.PropTypes.func.isRequired
+  addTaskToProject: PropTypes.func.isRequired,
+  addTaskContext: PropTypes.func.isRequired
 }
 
 export default TaskGroup

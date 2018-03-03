@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import './TaskProject.less'
@@ -21,15 +22,15 @@ const TaskProject = ({ taskProject, projects, onProjectChange}) => (
 )
 
 TaskProject.propTypes = {
-  taskProject: React.PropTypes.string,
+  taskProject: PropTypes.string,
   projects: ImmutablePropTypes.mapOf(
     ImmutablePropTypes.contains({
-      id: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      completed: React.PropTypes.bool.isRequired
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired
     })
   ),
-  onProjectChange: React.PropTypes.func.isRequired
+  onProjectChange: PropTypes.func.isRequired
 }
 
 export default TaskProject

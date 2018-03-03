@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Motion, spring } from 'react-motion'
@@ -79,50 +80,50 @@ const Tasks = ({
 }
 
 Tasks.propTypes = {
-  dataStatus: React.PropTypes.oneOf([DATA_NONE, DATA_ERROR, DATA_REQUESTED, DATA_RECIEVED]).isRequired,
-  authStatus: React.PropTypes.oneOf([AUTH_SUCESS, AUTH_IN_PROGRESS, AUTH_ERROR, AUTH_NONE]).isRequired,
+  dataStatus: PropTypes.oneOf([DATA_NONE, DATA_ERROR, DATA_REQUESTED, DATA_RECIEVED]).isRequired,
+  authStatus: PropTypes.oneOf([AUTH_SUCESS, AUTH_IN_PROGRESS, AUTH_ERROR, AUTH_NONE]).isRequired,
   groups: ImmutablePropTypes.listOf(
     ImmutablePropTypes.contains({
       items: ImmutablePropTypes.listOf(
         ImmutablePropTypes.contains({
-          id: React.PropTypes.string.isRequired,
-          title: React.PropTypes.string.isRequired,
-          completed: React.PropTypes.bool.isRequired,
-          today: React.PropTypes.bool.isRequired,
-          priority: React.PropTypes.string.isRequired,
-          description: React.PropTypes.oneOfType([
-            React.PropTypes.string,
+          id: PropTypes.string.isRequired,
+          title: PropTypes.string.isRequired,
+          completed: PropTypes.bool.isRequired,
+          today: PropTypes.bool.isRequired,
+          priority: PropTypes.string.isRequired,
+          description: PropTypes.oneOfType([
+            PropTypes.string,
             ImmutablePropTypes.map
           ]),
-          date: React.PropTypes.number
+          date: PropTypes.number
         })
       ).isRequired,
-      title: React.PropTypes.string
+      title: PropTypes.string
     })
   ),
-  searchQuery: React.PropTypes.string,
-  activeTask: React.PropTypes.string,
-  latentTasks: ImmutablePropTypes.mapOf(React.PropTypes.number),
-  trackingTask: React.PropTypes.string,
+  searchQuery: PropTypes.string,
+  activeTask: PropTypes.string,
+  latentTasks: ImmutablePropTypes.mapOf(PropTypes.number),
+  trackingTask: PropTypes.string,
 
-  sectionName: React.PropTypes.string.isRequired,
-  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY]).isRequired,
-  isSectionComplete: React.PropTypes.bool,
+  sectionName: PropTypes.string.isRequired,
+  sectionType: PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY]).isRequired,
+  isSectionComplete: PropTypes.bool,
 
-  onSectionNameChange: React.PropTypes.func.isRequired,
-  onSectionDelete: React.PropTypes.func.isRequired,
-  onSectionComplete: React.PropTypes.func.isRequired,
+  onSectionNameChange: PropTypes.func.isRequired,
+  onSectionDelete: PropTypes.func.isRequired,
+  onSectionComplete: PropTypes.func.isRequired,
 
-  onTaskClick: React.PropTypes.func.isRequired,
-  onTaskCheckboxClick: React.PropTypes.func.isRequired,
-  onTaskTodayClick: React.PropTypes.func.isRequired,
-  onTaskPriorityClick: React.PropTypes.func.isRequired,
-  onTaskTrackingClick: React.PropTypes.func.isRequired,
-  addTaskToProject: React.PropTypes.func.isRequired,
-  addTaskContext: React.PropTypes.func.isRequired,
+  onTaskClick: PropTypes.func.isRequired,
+  onTaskCheckboxClick: PropTypes.func.isRequired,
+  onTaskTodayClick: PropTypes.func.isRequired,
+  onTaskPriorityClick: PropTypes.func.isRequired,
+  onTaskTrackingClick: PropTypes.func.isRequired,
+  addTaskToProject: PropTypes.func.isRequired,
+  addTaskContext: PropTypes.func.isRequired,
 
-  addTask: React.PropTypes.func.isRequired,
-  setSearchQuery: React.PropTypes.func.isRequired
+  addTask: PropTypes.func.isRequired,
+  setSearchQuery: PropTypes.func.isRequired
 }
 
 export default Tasks

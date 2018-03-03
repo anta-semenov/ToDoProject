@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import './TaskContexts.less'
@@ -32,10 +33,10 @@ export default class TaskContexts extends React.Component {
 TaskContexts.propTypes = {
   contexts: ImmutablePropTypes.mapOf(
     ImmutablePropTypes.contains({
-      id: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
     })
   ),
-  taskContexts: ImmutablePropTypes.iterableOf(React.PropTypes.string),
-  onContextClick: React.PropTypes.func.isRequired
+  taskContexts: ImmutablePropTypes.iterableOf(PropTypes.string),
+  onContextClick: PropTypes.func.isRequired
 }

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { INBOX, TODAY, NEXT, SOMEDAY, CONTEXT, PROJECT } from '../../../constants/sectionTypes'
 import InboxImage from '../inboxImage/InboxImage'
@@ -57,6 +58,6 @@ const EmptyTaskList = ({ sectionType = INBOX }) => {
 }
 
 EmptyTaskList.propTypes = {
-  sectionType: React.PropTypes.oneOf([INBOX, TODAY, NEXT, SOMEDAY, CONTEXT, PROJECT])
+  sectionType: PropTypes.oneOf([INBOX, TODAY, NEXT, SOMEDAY, CONTEXT, PROJECT])
 }
 export default EmptyTaskList

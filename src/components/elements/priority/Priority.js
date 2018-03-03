@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import classNames from 'classnames'
 import { PRIORITY_NONE, PRIORITY_MAX, PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW } from '../../../constants/priorityLevels'
@@ -23,11 +24,11 @@ const Priority = ({ priority = PRIORITY_NONE, appearance = 'default', disabled =
 }
 
 Priority.propTypes = {
-  priority: React.PropTypes.oneOf([PRIORITY_NONE, PRIORITY_LOW, PRIORITY_MEDIUM, PRIORITY_HIGH, PRIORITY_MAX]),
-  appearance: React.PropTypes.oneOf(['task-info', 'tasks-list', 'default']),
-  disabled: React.PropTypes.bool,
-  dimmed: React.PropTypes.bool,
-  onClick: React.PropTypes.func.isRequired
+  priority: PropTypes.oneOf([PRIORITY_NONE, PRIORITY_LOW, PRIORITY_MEDIUM, PRIORITY_HIGH, PRIORITY_MAX]),
+  appearance: PropTypes.oneOf(['task-info', 'tasks-list', 'default']),
+  disabled: PropTypes.bool,
+  dimmed: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
 }
 
 export default Priority

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { Editor, EditorState, ContentState } from 'draft-js'
 import './TaskTitle.less'
@@ -60,9 +61,9 @@ export default class TaskTitle extends React.Component {
 }
 
 TaskTitle.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string,
-  onChange: React.PropTypes.func,
-  onBlur: React.PropTypes.func
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
 
 }

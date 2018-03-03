@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import  './User.less'
 
@@ -9,8 +10,8 @@ const User = (props) => (
 )
 
 User.propTypes = {
-  userName: React.PropTypes.string.isRequired,
-  userImage: React.PropTypes.string,
-  logout: React.PropTypes.func.isRequired
+  userName: PropTypes.string.isRequired,
+  userImage: PropTypes.string,
+  logout: PropTypes.func.isRequired
 }
 export default User

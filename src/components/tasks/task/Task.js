@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import shallowCompare from 'react-addons-shallow-compare'
 import { Map } from 'immutable'
@@ -111,30 +112,30 @@ class Task extends React.Component {
 }
 
 Task.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  completed: React.PropTypes.bool.isRequired,
-  today: React.PropTypes.bool.isRequired,
-  someday: React.PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  completed: PropTypes.bool.isRequired,
+  today: PropTypes.bool.isRequired,
+  someday: PropTypes.bool.isRequired,
 
-  onTaskClick: React.PropTypes.func.isRequired,
-  onTaskCheckboxClick: React.PropTypes.func.isRequired,
-  onTaskTodayClick: React.PropTypes.func.isRequired,
-  onTaskPriorityClick: React.PropTypes.func.isRequired,
-  onTaskTrackingClick: React.PropTypes.func.isRequired,
-  addTaskToProject: React.PropTypes.func.isRequired,
-  addTaskContext: React.PropTypes.func.isRequired,
+  onTaskClick: PropTypes.func.isRequired,
+  onTaskCheckboxClick: PropTypes.func.isRequired,
+  onTaskTodayClick: PropTypes.func.isRequired,
+  onTaskPriorityClick: PropTypes.func.isRequired,
+  onTaskTrackingClick: PropTypes.func.isRequired,
+  addTaskToProject: PropTypes.func.isRequired,
+  addTaskContext: PropTypes.func.isRequired,
 
-  description: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.instanceOf(Map)
+  description: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Map)
   ]),
-  priority: React.PropTypes.string,
-  date: React.PropTypes.instanceOf(Date),
+  priority: PropTypes.string,
+  date: PropTypes.instanceOf(Date),
 
-  active: React.PropTypes.bool,
-  latent: React.PropTypes.bool,
-  tracking: React.PropTypes.bool
+  active: PropTypes.bool,
+  latent: PropTypes.bool,
+  tracking: PropTypes.bool
 }
 
 Task.defaultProps = {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import './CloseBtn.less'
 
@@ -8,8 +9,8 @@ const CloseBtn = ({ appearance = 'default', onClick }) => (
 )
 
 CloseBtn.propTypes = {
-  appearance: React.PropTypes.oneOf(['task-info', 'default']),
-  onClick: React.PropTypes.func.isRequired
+  appearance: PropTypes.oneOf(['task-info', 'default']),
+  onClick: PropTypes.func.isRequired
 }
 
 export default CloseBtn

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY } from '../../constants/sectionTypes.js'
 import Textfield from '../elements/textfield/Textfield'
@@ -53,14 +54,14 @@ const SectionHeader = ({
 }
 
 SectionHeader.propTypes = {
-  sectionName: React.PropTypes.string.isRequired,
-  sectionType: React.PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY]).isRequired,
-  isSectionComplete: React.PropTypes.bool,
-  isSectionEmpty: React.PropTypes.bool,
+  sectionName: PropTypes.string.isRequired,
+  sectionType: PropTypes.oneOf([PROJECT, CONTEXT, INBOX, TODAY, NEXT, SOMEDAY]).isRequired,
+  isSectionComplete: PropTypes.bool,
+  isSectionEmpty: PropTypes.bool,
 
-  onSectionNameChange: React.PropTypes.func.isRequired,
-  onSectionDelete: React.PropTypes.func.isRequired,
-  onSectionComplete: React.PropTypes.func.isRequired
+  onSectionNameChange: PropTypes.func.isRequired,
+  onSectionDelete: PropTypes.func.isRequired,
+  onSectionComplete: PropTypes.func.isRequired
 }
 
 SectionHeader.defaultProps = {

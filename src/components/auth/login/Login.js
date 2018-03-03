@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import Loader from '../../elements/loader/Loader'
 import './Login.less'
@@ -30,9 +31,9 @@ const Login = props =>
 )
 
 Login.propTypes = {
-  providers: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  login: React.PropTypes.func.isRequired,
-  isAuthInProgress: React.PropTypes.bool
+  providers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  login: PropTypes.func.isRequired,
+  isAuthInProgress: PropTypes.bool
 }
 Login.defaultProps = {
   providers: ['facebook', 'twitter', 'google']

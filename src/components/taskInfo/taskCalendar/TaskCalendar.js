@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { List } from 'immutable'
 import moment from 'moment'
@@ -117,8 +118,8 @@ export default class TaskCalendar extends React.Component {
 }
 
 TaskCalendar.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  selectedDate: React.PropTypes.instanceOf(Date),
-  tasks: React.PropTypes.object,
-  onChange: React.PropTypes.func.isRequired
+  id: PropTypes.string.isRequired,
+  selectedDate: PropTypes.instanceOf(Date),
+  tasks: PropTypes.object,
+  onChange: PropTypes.func.isRequired
 }

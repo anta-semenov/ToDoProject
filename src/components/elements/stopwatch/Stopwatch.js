@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import classNames from 'classnames'
 import './Stopwatch.less'
@@ -30,10 +31,10 @@ const Stopwatch = ({ appearance = 'tasks-list', tracking = false, disabled = fal
 }
 
 Stopwatch.propTypes = {
-  appearance: React.PropTypes.oneOf(['default', 'tasks-list']).isRequired,
-  tracking: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  onClick: React.PropTypes.func.isRequired
+  appearance: PropTypes.oneOf(['default', 'tasks-list']).isRequired,
+  tracking: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
 }
 
 export default Stopwatch

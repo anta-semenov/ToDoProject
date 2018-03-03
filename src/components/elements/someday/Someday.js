@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import './Someday.less'
 
@@ -8,11 +9,11 @@ const Someday = ({ appearance = 'default', checked = false, dimmed = false, disa
 )
 
 Someday.propTypes = {
-  appearance: React.PropTypes.oneOf(['task-info', 'tasks-list', 'default']),
-  checked: React.PropTypes.bool,
-  dimmed: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  onClick: React.PropTypes.func.isRequired
+  appearance: PropTypes.oneOf(['task-info', 'tasks-list', 'default']),
+  checked: PropTypes.bool,
+  dimmed: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func.isRequired
 }
 
 export default Someday

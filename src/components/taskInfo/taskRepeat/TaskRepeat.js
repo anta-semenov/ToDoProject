@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import './TaskRepeat.less'
 import RepeatIcon from './repeatIcon/RepeatIcon'
@@ -34,8 +35,8 @@ const TaskRepeat = ({repeat, onRepeatChange}) => {
 }
 
 TaskRepeat.propTypes = {
-  repeat: React.PropTypes.object,
-  onRepeatChange: React.PropTypes.func.isRequired
+  repeat: PropTypes.object,
+  onRepeatChange: PropTypes.func.isRequired
 }
 
 export default TaskRepeat

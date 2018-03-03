@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { DropTarget } from 'react-dnd'
 import { TASK, SECTION } from '../../../constants/dndTypes'
@@ -22,8 +23,8 @@ class DropScrollTarget extends React.Component {
 }
 
 DropScrollTarget.propTypes = {
-  scrollCallback: React.PropTypes.func.isRequired,
-  className: React.PropTypes.string
+  scrollCallback: PropTypes.func.isRequired,
+  className: PropTypes.string
 }
 
 export default DropTarget([TASK, SECTION], scrollTarget, collect)(DropScrollTarget)

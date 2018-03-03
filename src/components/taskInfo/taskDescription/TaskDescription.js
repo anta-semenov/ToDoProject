@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { Editor, convertToRaw } from 'draft-js'
 import { Map } from 'immutable'
@@ -65,11 +66,11 @@ export default class TaskDescription extends React.Component {
 }
 
 TaskDescription.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  description: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.instanceOf(Map)
+  id: PropTypes.string.isRequired,
+  description: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Map)
   ]),
-  onChange: React.PropTypes.func,
-  onBlur: React.PropTypes.func
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
 }

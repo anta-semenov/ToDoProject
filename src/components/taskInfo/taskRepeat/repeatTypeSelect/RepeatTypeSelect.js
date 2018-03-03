@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import './RepeatTypeSelect.less'
 import {DAYS, WEEKS, MONTHS} from '../../../../constants/repeatTypes'
@@ -15,8 +16,8 @@ const RepeatTypeSelect = ({value, onChange}) => (
 )
 
 RepeatTypeSelect.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  onChange: React.PropTypes.func.isRequired
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default RepeatTypeSelect

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import { findDOMNode } from 'react-dom'
 import shallowCompare from 'react-addons-shallow-compare'
@@ -129,17 +130,17 @@ class NavigationTitle extends React.Component {
 }
 
 NavigationTitle.propTypes = {
-  type: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  id: React.PropTypes.string,
-  index: React.PropTypes.number,
+  type: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  index: PropTypes.number,
 
-  onItemClick: React.PropTypes.func.isRequired,
-  changeOrder: React.PropTypes.func,
-  endDrag: React.PropTypes.func,
+  onItemClick: PropTypes.func.isRequired,
+  changeOrder: PropTypes.func,
+  endDrag: PropTypes.func,
 
-  active: React.PropTypes.bool.isRequired,
-  count: React.PropTypes.number
+  active: PropTypes.bool.isRequired,
+  count: PropTypes.number
 }
 
 export default flow(
