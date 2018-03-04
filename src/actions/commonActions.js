@@ -44,7 +44,6 @@ export const login = (type) => (dispatch) => {
   )
 }
 
-export const logoutThunk = () => api.unAuth()
 export const recieveAuth = (userData, clientId) => (dispatch) => {
   dispatch({ type: actionTypes.RECIEVE_AUTH, userData, clientId })
   dispatch(requestData())

@@ -1,7 +1,9 @@
-import Auth from '../components/auth/Auth'
-import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import { login, logoutThunk } from '../actions/commonActions'
+import { connect } from 'react-redux'
+import Auth from '../components/auth/Auth'
+import { unAuth } from '../backend/firebase/api'
+
+import { login } from '../actions/commonActions'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,9 +17,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     login: (type) => dispatch(login(type)),
-    logout: () => {      
+    logout: () => {
       browserHistory.push('/')
-      dispatch(logoutThunk())
+      unAuth()
     }
   }
 }
