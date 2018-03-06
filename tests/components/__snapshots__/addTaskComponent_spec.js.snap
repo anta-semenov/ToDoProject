@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddTask component tests Should invoke setSearchQuery callback and clear the AddTextfield value when button click event occur 1`] = `
+<AddTask
+  addTask={[MockFunction]}
+  hasFocus={false}
+  isSectionEmpty={false}
+  setSearchQuery={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "add",
+        ],
+      ],
+    }
+  }
+>
+  <div
+    className="add-task"
+  >
+    <input
+      className="add-task__textfield"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      placeholder="New Task"
+      type="text"
+    />
+    <button
+      className="add-task__button"
+      onClick={[Function]}
+    >
+      <span
+        className="add-task__button-text"
+      >
+        Add Task
+      </span>
+    </button>
+  </div>
+</AddTask>
+`;
+
+exports[`AddTask component tests Should render textfield and button 1`] = `
+<AddTask
+  addTask={[MockFunction]}
+  hasFocus={false}
+  isSectionEmpty={false}
+  setSearchQuery={[MockFunction]}
+>
+  <div
+    className="add-task"
+  >
+    <input
+      className="add-task__textfield"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      placeholder="New Task"
+      type="text"
+    />
+    <button
+      className="add-task__button"
+      onClick={[Function]}
+    >
+      <span
+        className="add-task__button-text"
+      >
+        Add Task
+      </span>
+    </button>
+  </div>
+</AddTask>
+`;

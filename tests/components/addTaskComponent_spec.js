@@ -1,70 +1,43 @@
 import React from 'react'
-import { renderIntoDocument, scryRenderedDOMComponentsWithTag, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
+import { mount } from 'enzyme'
 
 import AddTask from '../../src/components/tasks/addTask/AddTask'
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 describe('AddTask component tests', () => {
-  test('Should render textfield', () => {
-    const addTaskTextfieldClassName = 'add-task__textfield'
-    const addTaskComponent = renderIntoDocument(<AddTask />)
-    const addTaskTextfield = scryRenderedDOMComponentsWithTag(addTaskComponent, 'input')
-
-    expect(addTaskTextfield.length).toBe(1)
-    expect(addTaskTextfield[0].className).toBe(addTaskTextfieldClassName)
+  it('Should render textfield and button', () => {
+    const addTaskComponent = mount(<AddTask addTask={jest.fn()} setSearchQuery={jest.fn()} />)
+    expect(addTaskComponent).toMatchSnapshot()
   })
-  test('Should render "Add Task" button', () => {
-    const addTaskButtonClassName = 'add-task__button'
-    const addTaskButtonText = 'Add Task'
-    const addTaskComponent = renderIntoDocument(<AddTask />)
-    const addTaskButton = scryRenderedDOMComponentsWithTag(addTaskComponent, 'button')
+  it('Should invoke addTask callback and clear the AddTextfield value when button click event occur', () => {
+    const addTask = jest.fn()
+    const addTaskComponent = mount(<AddTask addTask={addTask} setSearchQuery={jest.fn()} />)
 
-    expect(addTaskButton.length).toBe(1)
-    expect(addTaskButton[0].className).toBe(addTaskButtonClassName)
-    expect(addTaskButton[0].textContent).toBe(addTaskButtonText)
+    addTaskComponent.find('.add-task__button-text').simulate('click')
+    expect(addTask).toHaveBeenCalled()
   })
-  test(
-    'Should invoke addTask callback and clear the AddTextfield value when button click event occur',
-    () => {
-      let newTaskTitle = ''
-      const callback = newTitle => newTaskTitle = newTitle
+  it('Should invoke setSearchQuery callback and clear the AddTextfield value when button click event occur', () => {
+    const addTask = jest.fn()
+    const setSearchQuery = jest.fn()
+    const addTaskComponent = mount(<AddTask addTask={addTask} setSearchQuery={setSearchQuery} />)
 
-      const taskTitle = 'New Task'
-      const addTaskButtonClassName = 'add-task__button'
-      const addTaskTextfieldClassName = 'add-task__textfield'
-      const addTaskComponent = renderIntoDocument(<AddTask addTask={callback} setSearchQuery={() => {}}/>)
-      const addTaskTextfield = findRenderedDOMComponentWithClass(addTaskComponent, addTaskTextfieldClassName)
-      const addTaskButton = findRenderedDOMComponentWithClass(addTaskComponent, addTaskButtonClassName)
+    addTaskComponent.find('input').simulate('change', { target: { value: 'add' } })
+    expect(addTaskComponent).toMatchSnapshot()
+    expect(setSearchQuery).toHaveBeenCalledWith('add')
 
-      expect(addTaskTextfield.value).toBe('')
-      addTaskTextfield.value = taskTitle
-      Simulate.change(addTaskTextfield)
-      expect(addTaskTextfield.value).toBe('New Task')
-      expect(newTaskTitle).toBe('')
-      Simulate.click(addTaskButton)
-      expect(addTaskTextfield.value).toBe('')
-      expect(newTaskTitle).toBe(taskTitle)
-    }
-  )
+    addTaskComponent.find('.add-task__button-text').simulate('click')
+    expect(addTask).toHaveBeenCalled()
+    expect(setSearchQuery).toHaveBeenCalledWith('')
+  })
 
-  test(
-    'Should invoke addTask callback and clear the AddTextfield value when enter is hitted',
-    () => {
-      let newTaskTitle = ''
-      const callback = newTitle => newTaskTitle = newTitle
+  it('Should invoke addTask callback and clear the AddTextfield value when enter is hitted', () => {
+    const addTask = jest.fn()
+    const addTaskComponent = mount(<AddTask addTask={addTask} setSearchQuery={jest.fn()} />)
 
-      const taskTitle = 'New Task'
-      const addTaskTextfieldClassName = 'add-task__textfield'
-      const addTaskComponent = renderIntoDocument(<AddTask addTask={callback} setSearchQuery={() => {}}/>)
-      const addTaskTextfield = findRenderedDOMComponentWithClass(addTaskComponent, addTaskTextfieldClassName)
-
-      expect(addTaskTextfield.value).toBe('')
-      addTaskTextfield.value = taskTitle
-      Simulate.change(addTaskTextfield)
-      expect(addTaskTextfield.value).toBe('New Task')
-      expect(newTaskTitle).toBe('')
-      Simulate.keyDown(addTaskTextfield, {key: 'Enter', keyCode: 13, which: 13})
-      expect(addTaskTextfield.value).toBe('')
-      expect(newTaskTitle).toBe(taskTitle)
-    }
-  )
+    addTaskComponent.find('input').simulate('keyDown', { key: 'Enter', keyCode: 13, which: 13 })
+    expect(addTask).toHaveBeenCalled()
+  })
 })
