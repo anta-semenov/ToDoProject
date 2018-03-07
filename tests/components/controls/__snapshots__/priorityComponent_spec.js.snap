@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Priority Should render priority component with right classes for default props 1`] = `
+<div
+  className="priority priority--none priority--default"
+>
+  <div
+    className="priority-level priority-level--none"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--max"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--high"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--medium"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--low"
+    onClick={[Function]}
+  />
+</div>
+`;
+
+exports[`Priority Should render priority with right classes for custom props 1`] = `
+<div
+  className="priority priority--medium priority--task-info is-disabled"
+>
+  <div
+    className="priority-level priority-level--none"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--max"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--high"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--medium"
+    onClick={[Function]}
+  />
+  <div
+    className="priority-level priority-level--low"
+    onClick={[Function]}
+  />
+</div>
+`;

@@ -1,23 +1,21 @@
 import React from 'react'
-import { createRenderer } from 'react-addons-test-utils'
+import { shallow } from 'enzyme'
 import Today from '../../../src/components/elements/today/Today'
-
-const shallowRenderer = createRenderer()
 
 describe('Today component', () => {
   test('Should render component with right default classes', () => {
-    shallowRenderer.render(<Today />)
-    const today = shallowRenderer.getRenderOutput()
-
-    expect(today.props.className).toBe('today today--default')
+    const closeBtn = shallow(<Today onClick={jest.fn()} />)
+    expect(closeBtn).toMatchSnapshot()
   })
   test('Should render component with right classes for passed props', () => {
-    shallowRenderer.render(<Today checked={true} appearance={'task-info'} dimmed={true} />)
-    const today1 = shallowRenderer.getRenderOutput()
-    expect(today1.props.className).toBe('today today--task-info is-checked is-dimmed')
+    const closeBtn1 = shallow(
+      <Today checked={true} appearance={'task-info'} dimmed={true} onClick={jest.fn()} />
+    )
+    expect(closeBtn1).toMatchSnapshot()
 
-    shallowRenderer.render(<Today appearance={'tasks-list'} disabled={true}  />)
-    const today2 = shallowRenderer.getRenderOutput()
-    expect(today2.props.className).toBe('today today--tasks-list is-disabled')
+    const closeBtn2 = shallow(
+      <Today appearance={'tasks-list'} disabled={true} onClick={jest.fn()} />
+    )
+    expect(closeBtn2).toMatchSnapshot()
   })
 })

@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation Should render correct component tree 1`] = `
+<Navigation
+  addNew={[Function]}
+  authStatus="AUTH_SUCESS"
+  dataStatus="DATA_RECIEVED"
+  groups={
+    Immutable.List [
+      Immutable.Map {
+        "type": "BASIC",
+        "items": Immutable.List [
+          Immutable.Map {
+            "type": "inbox",
+            "title": "Inbox",
+            "active": true,
+            "count": 3,
+          },
+          Immutable.Map {
+            "type": "today",
+            "title": "Today",
+            "active": false,
+            "count": 1,
+          },
+          Immutable.Map {
+            "type": "next",
+            "title": "Next",
+            "active": false,
+          },
+        ],
+      },
+      Immutable.Map {
+        "type": "CONTEXTS",
+        "title": "Contexts",
+        "items": Immutable.List [
+          Immutable.Map {
+            "type": "CONTEXT",
+            "title": "Context 1",
+            "id": "cf1sobz3s0oc",
+            "active": true,
+            "count": 4,
+            "editing": false,
+          },
+          Immutable.Map {
+            "type": "CONTEXT",
+            "title": "Context 2",
+            "id": "cf1sobz3s0ol",
+            "active": false,
+            "count": 10,
+            "editing": false,
+          },
+        ],
+        "onItemClick": [MockFunction],
+        "onStopEditing": [MockFunction],
+        "addNewTitle": "+ context",
+        "addNew": [MockFunction],
+      },
+    ]
+  }
+  onItemClick={[Function]}
+  onStopEditing={[Function]}
+>
+  <div
+    className="navigation"
+  >
+    <_class2
+      className="nav-scroll nav-scroll--up"
+      scrollCallback={[Function]}
+    />
+    <ul
+      className="nav"
+    >
+      <_class
+        addNew={[Function]}
+        items={
+          Immutable.List [
+            Immutable.Map {
+              "type": "inbox",
+              "title": "Inbox",
+              "active": true,
+              "count": 3,
+            },
+            Immutable.Map {
+              "type": "today",
+              "title": "Today",
+              "active": false,
+              "count": 1,
+            },
+            Immutable.Map {
+              "type": "next",
+              "title": "Next",
+              "active": false,
+            },
+          ]
+        }
+        key="0"
+        onItemClick={[Function]}
+        onStopEditing={[Function]}
+        type="BASIC"
+      >
+        <div
+          className="nav-group"
+        />
+      </_class>
+      <_class
+        addNew={[Function]}
+        addNewTitle="+ context"
+        items={
+          Immutable.List [
+            Immutable.Map {
+              "type": "CONTEXT",
+              "title": "Context 1",
+              "id": "cf1sobz3s0oc",
+              "active": true,
+              "count": 4,
+              "editing": false,
+            },
+            Immutable.Map {
+              "type": "CONTEXT",
+              "title": "Context 2",
+              "id": "cf1sobz3s0ol",
+              "active": false,
+              "count": 10,
+              "editing": false,
+            },
+          ]
+        }
+        key="1"
+        onItemClick={[Function]}
+        onStopEditing={[Function]}
+        title="Contexts"
+        type="CONTEXTS"
+      >
+        <div
+          className="nav-group"
+        />
+      </_class>
+    </ul>
+    <_class2
+      className="nav-scroll nav-scroll--down"
+      scrollCallback={[Function]}
+    />
+  </div>
+</Navigation>
+`;

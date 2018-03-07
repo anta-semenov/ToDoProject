@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { renderIntoDocument, createRenderer } from 'react-addons-test-utils'
+import { mount } from 'enzyme'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
@@ -9,22 +9,26 @@ import { AUTH_SUCESS } from '../../src/constants/authStatus'
 
 import Navigation from '../../src/components/navigation/Navigation'
 
-const shallowRenderer = createRenderer()
-
 describe('Navigation', () => {
-  Navigation.__Rewire__('NavigationGroup', class extends Component {
-    render() {
-      return <div className='nav-group' />
+  Navigation.__Rewire__(
+    'NavigationGroup',
+    class extends Component {
+      render() {
+        return <div className="nav-group" />
+      }
     }
-  })
-  Navigation.__Rewire__('DropScrollTarget', class extends Component {
-    render() {
-      return null
+  )
+  Navigation.__Rewire__(
+    'DropScrollTarget',
+    class extends Component {
+      render() {
+        return null
+      }
     }
-  })
-  const testClickOnItem = () => {}
-  const testAddNew = () => {}
-  const testStopEditing = () => {}
+  )
+  const testClickOnItem = jest.fn()
+  const testAddNew = jest.fn()
+  const testStopEditing = jest.fn()
 
   const testProps = {
     dataStatus: DATA_RECIEVED,
@@ -75,7 +79,7 @@ describe('Navigation', () => {
         ],
         onItemClick: testClickOnItem,
         onStopEditing: testStopEditing,
-        addNewTitle:'+ context',
+        addNewTitle: '+ context',
         addNew: testAddNew
       }
     ]),
@@ -83,49 +87,8 @@ describe('Navigation', () => {
     addNew: () => {},
     onStopEditing: () => {}
   }
-  test('Should render correct amount of groups', () => {
-    shallowRenderer.render(<Navigation {...testProps} />)
-    const navigation = shallowRenderer.getRenderOutput()
-
-    expect(navigation.props.children.length).toBe(3)
-    expect(navigation.props.children[1].props.children.length).toBe(2)
-  })
-
-  test('Should pass correct props to groupComponents', () => {
-    const navGroupsProps = []
-
-    const onItemClickCallback = () => {return 1}
-    const addNewCallback = () => {return 2}
-    const onStopEditingCallback = () => {return 3}
-
-    testProps.onItemClick = onItemClickCallback
-    testProps.addNew = addNewCallback
-    testProps.onStopEditing = onStopEditingCallback
-
-    Navigation.__Rewire__('NavigationGroup', class extends Component {
-      render() {
-        navGroupsProps.push(this.props)
-        return null
-      }
-    })
-
-    renderIntoDocument(<Navigation {...testProps} />)
-
-    expect(navGroupsProps.length).toBe(2)
-    expect(navGroupsProps[0].type).toBe(navGroupTypes.BASIC)
-    expect(navGroupsProps[0].items.size).toBe(3)
-    expect(navGroupsProps[1].type).toBe(navGroupTypes.CONTEXTS)
-    expect(navGroupsProps[1].title).toBe(sectionNames.CONTEXTS)
-    expect(navGroupsProps[1].items.size).toBe(2)
-    expect(navGroupsProps[0].nextContextID).toBe(undefined)
-    expect(navGroupsProps[0].nextProjectID).toBe(undefined)
-    expect(navGroupsProps[0].onItemClick).toBe(onItemClickCallback)
-    expect(navGroupsProps[0].addNew).toBe(addNewCallback)
-    expect(navGroupsProps[0].onStopEditing).toBe(onStopEditingCallback)
-    expect(navGroupsProps[1].nextContextID).toBe(undefined)
-    expect(navGroupsProps[1].nextProjectID).toBe(undefined)
-    expect(navGroupsProps[1].onItemClick).toBe(onItemClickCallback)
-    expect(navGroupsProps[1].addNew).toBe(addNewCallback)
-    expect(navGroupsProps[1].onStopEditing).toBe(onStopEditingCallback)
+  test('Should render correct component tree', () => {
+    const navigation = mount(<Navigation {...testProps} />)
+    expect(navigation).toMatchSnapshot()
   })
 })

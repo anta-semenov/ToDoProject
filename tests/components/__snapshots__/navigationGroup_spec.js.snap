@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation Group renders correct component tree 1`] = `
+<li
+  className="nav-group"
+>
+  <div
+    className="nav-group__title"
+  >
+    <div
+      className="nav-group__title-text"
+    >
+      Contexts
+    </div>
+    <div
+      className="nav-group__add-button"
+      onClick={[Function]}
+    />
+  </div>
+  <ul
+    className="nav-group__list"
+  >
+    <NavigationItem
+      active={true}
+      changeOrder={[Function]}
+      count={4}
+      editing={false}
+      endDrag={[Function]}
+      id="cf1sobz3s0o2"
+      index={0}
+      key="CONTEXT-cf1sobz3s0o2"
+      onItemClick={[Function]}
+      onStopEditing={[Function]}
+      title="Context 1"
+      type="CONTEXT"
+    />
+    <NavigationItem
+      active={false}
+      changeOrder={[Function]}
+      count={10}
+      editing={false}
+      endDrag={[Function]}
+      id="cf1sobz3s0o5"
+      index={1}
+      key="CONTEXT-cf1sobz3s0o5"
+      onItemClick={[Function]}
+      onStopEditing={[Function]}
+      title="Context 2"
+      type="CONTEXT"
+    />
+  </ul>
+</li>
+`;

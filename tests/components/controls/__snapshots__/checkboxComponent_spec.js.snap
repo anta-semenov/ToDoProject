@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox component Should render component with right classes for passed props 1`] = `
+<div
+  className="checkbox checkbox--task-info is-dimmed is-checked"
+  onClick={[Function]}
+>
+  <svg
+    className="checkbox__checkmark"
+    viewBox="0 0 17 14"
+  >
+    <path
+      className="checkbox__checkmark-path"
+      d="M15.0328152,0.000721764681 C13.8445596,0.691568051 12.2970639,2.12852833 11.2746114,3.04044543 C9.22970639,4.86427962 7.26770294,6.77101537 5.33333333,8.70538498 L1.46459413,5.3340551 L-1.5720758e-13,6.77101537 C2.12780656,8.89882194 4.42141623,11.1924316 6.30051813,13.5689428 C8.70466321,9.61730208 12.6286701,3.95236252 16,0.967906566 C15.8894646,0.746835754 15.4196891,-0.0269120868 15.0328152,0.000721764681 Z"
+    />
+  </svg>
+</div>
+`;
+
+exports[`Checkbox component Should render component with right default classes 1`] = `
+<div
+  className="checkbox checkbox--default"
+  onClick={[Function]}
+>
+  <svg
+    className="checkbox__checkmark"
+    viewBox="0 0 17 14"
+  >
+    <path
+      className="checkbox__checkmark-path"
+      d="M15.0328152,0.000721764681 C13.8445596,0.691568051 12.2970639,2.12852833 11.2746114,3.04044543 C9.22970639,4.86427962 7.26770294,6.77101537 5.33333333,8.70538498 L1.46459413,5.3340551 L-1.5720758e-13,6.77101537 C2.12780656,8.89882194 4.42141623,11.1924316 6.30051813,13.5689428 C8.70466321,9.61730208 12.6286701,3.95236252 16,0.967906566 C15.8894646,0.746835754 15.4196891,-0.0269120868 15.0328152,0.000721764681 Z"
+    />
+  </svg>
+</div>
+`;

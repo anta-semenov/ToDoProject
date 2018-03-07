@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CloseBtn component Should render component with right class for empty appearance prop 1`] = `
+<div
+  className="close close--default"
+  onClick={[Function]}
+  title="Close"
+>
+  <div
+    className="close__sign"
+  />
+</div>
+`;
+
+exports[`CloseBtn component Should render right class for particular appearance prop 1`] = `
+<div
+  className="close close--task-info"
+  onClick={[Function]}
+  title="Close"
+>
+  <div
+    className="close__sign"
+  />
+</div>
+`;

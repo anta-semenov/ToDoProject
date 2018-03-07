@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
-import { renderIntoDocument, createRenderer } from 'react-addons-test-utils'
+import React from 'react'
+import { shallow } from 'enzyme'
 import { fromJS } from 'immutable'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 import * as navGroupTypes from '../../src/constants/navGroupTypes'
 
 import NavigationGroup from '../../src/components/navigationGroup/NavigationGroup'
-
-const shallowRenderer = createRenderer()
 
 describe('Navigation Group', () => {
   const testGroup = {
@@ -33,52 +31,12 @@ describe('Navigation Group', () => {
     ]),
     onItemClick: () => {},
     onStopEditing: () => {},
-    addNewTitle:'+ context',
+    addNewTitle: '+ context',
     addNew: () => {}
   }
 
-  describe('Correct render', () => {
-    test('Should render group title', () => {
-      shallowRenderer.render(<NavigationGroup {...testGroup} />)
-      const group = shallowRenderer.getRenderOutput()
-
-      expect(group.props.children[0].props.children[0]).toEqual(<div className='nav-group__title-text' >{sectionNames.CONTEXTS}</div>)
-    })
-    test('Should render correct count of items', () => {
-      shallowRenderer.render(<NavigationGroup {...testGroup} />)
-      const group = shallowRenderer.getRenderOutput()
-
-      expect(group.props.children[1].props.children.size).toBe(2)
-    })
-    test('Should pass correct props to navigation items', () => {
-      let itemElementProps
-      NavigationGroup.__Rewire__('NavigationItem', class extends Component {
-        render() {
-          itemElementProps = this.props
-          return(
-            null
-          )
-        }
-      })
-
-      const itemClickCallback = () => {return 1}
-      const itemStopEditCallback = () => {return 2}
-
-      testGroup.onItemClick = itemClickCallback
-      testGroup.onStopEditing = itemStopEditCallback
-
-      renderIntoDocument(<NavigationGroup {...testGroup} />)
-
-      NavigationGroup.__ResetDependency__('NavigationItem')
-
-      expect(itemElementProps.type).toBe(sectionTypes.CONTEXT)
-      expect(itemElementProps.title).toBe('Context 2')
-      expect(itemElementProps.id).toBe('cf1sobz3s0o5')
-      expect(itemElementProps.active).toBe(false)
-      expect(itemElementProps.count).toBe(10)
-      expect(itemElementProps.editing).toBe(false)
-      expect(itemElementProps.onItemClick).toBe(itemClickCallback)
-      expect(itemElementProps.onStopEditing).toBe(itemStopEditCallback)
-    })
+  it('renders correct component tree', () => {
+    const group = shallow(<NavigationGroup {...testGroup} />)
+    expect(group).toMatchSnapshot()
   })
 })
