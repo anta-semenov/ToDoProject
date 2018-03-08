@@ -1,5 +1,5 @@
 import React from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
+import { mount } from 'enzyme'
 import * as sectionTypes from '../../src/constants/sectionTypes'
 import * as sectionNames from '../../src/constants/sectionNames'
 
@@ -36,33 +36,23 @@ const testItem2 = {
 
 describe('Navigation Item', () => {
   describe('Active item class', () => {
-    test('Active element should has "is-active" class', () => {
-      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testItem1} />)
-      const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
-
-      expect(itemElement.className).toContain('is-active')
+    it('Active element should has "is-active" class', () => {
+      const itemComponent = mount(<NavigationTitleClass {...testItem1} />)
+      expect(itemComponent).toMatchSnapshot()
     })
-    test('Inactive element shouldn\'t has "is-active" class', () => {
-      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testItem2} />)
-      const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
-
-      expect(itemElement.className).not.toContain('is-active')
+    it('Inactive element shouldn\'t has "is-active" class', () => {
+      const itemComponent = mount(<NavigationTitleClass {...testItem2} />)
+      expect(itemComponent).toMatchSnapshot()
     })
   })
 
   describe('Render not editing component', () => {
-    test('Should render component', () => {
-      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testItem1}/>)
-      const titleElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__title')
-      const countElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__count')
-      const editElements = scryRenderedDOMComponentsWithClass(itemComponent, 'nav-item__input')
-
-      expect(titleElement.textContent).toBe(sectionNames.NEXT)
-      expect(countElement.textContent).toBe('4')
-      expect(editElements.length).toBe(0)
+    it('Should render component', () => {
+      const itemComponent = mount(<NavigationTitleClass {...testItem1} />)
+      expect(itemComponent).toMatchSnapshot()
     })
-    test('Should invoke callback when clicked with type', () => {
-      let callbackParametr1 = ''
+    it('Should invoke callback when clicked with type', () => {
+      const onItemClick = jest.fn()
       const testProps = {
         key: 0,
         type: sectionTypes.NEXT,
@@ -70,24 +60,18 @@ describe('Navigation Item', () => {
         active: true,
         count: 4,
         editing: false,
-        onItemClick: (type) => callbackParametr1 = type,
+        onItemClick,
         connectDropTarget,
         connectDragSource,
         connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testProps}/>)
-      const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
-
-      expect(callbackParametr1).toBe('')
-
-      Simulate.click(itemElement)
-
-      expect(callbackParametr1).toBe(sectionTypes.NEXT)
+      const itemComponent = mount(<NavigationTitleClass {...testProps} />)
+      itemComponent.find('.nav-item').simulate('click')
+      expect(onItemClick).toHaveBeenCalledWith(sectionTypes.NEXT, undefined)
     })
-    test('Should invoke callback when clicked with type and id', () => {
-      let callbackParametr1 = ''
-      let callbackParametr2 = -12
+    it('Should invoke callback when clicked with type and id', () => {
+      const onItemClick = jest.fn()
       const testProps = {
         key: 'PROJECT-bh52ogy5s0fm',
         type: sectionTypes.PROJECT,
@@ -96,30 +80,20 @@ describe('Navigation Item', () => {
         active: true,
         count: 4,
         editing: false,
-        onItemClick: (type, id) => {
-          callbackParametr1 = type
-          callbackParametr2 = id
-        },
+        onItemClick,
         connectDropTarget,
         connectDragSource,
         connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationTitleClass {...testProps}/>)
-      const itemElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item')
-
-      expect(callbackParametr1).toBe('')
-      expect(callbackParametr2).toBe(-12)
-
-      Simulate.click(itemElement)
-
-      expect(callbackParametr1).toBe(sectionTypes.PROJECT)
-      expect(callbackParametr2).toBe('bh52ogy5s0fm')
+      const itemComponent = mount(<NavigationTitleClass {...testProps} />)
+      itemComponent.find('.nav-item').simulate('click')
+      expect(onItemClick).toHaveBeenCalledWith(sectionTypes.PROJECT, 'bh52ogy5s0fm')
     })
   })
 
   describe('Render editing component', () => {
-    test('Should render editing component', () => {
+    it('Should render editing component', () => {
       const editingProps = {
         key: 'PROJECT-bh52ogy5s0fm',
         type: sectionTypes.PROJECT,
@@ -134,48 +108,11 @@ describe('Navigation Item', () => {
         connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationTextfield {...editingProps}/>)
-      const titleElement = scryRenderedDOMComponentsWithClass(itemComponent, 'nav-item__title')
-      const countElement = scryRenderedDOMComponentsWithClass(itemComponent, 'nav-item__count')
-      const editElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__input')
-
-      expect(titleElement.length).toBe(0)
-      expect(countElement.length).toBe(0)
-      expect(editElement.textContent).toBe('')
-      expect(editElement._attributes.placeholder._valueForAttrModified).toBe('Some project')
+      const itemComponent = mount(<NavigationTextfield {...editingProps} />)
+      expect(itemComponent).toMatchSnapshot()
     })
-    test(
-      'Should invoke calback with type, id and new title when press enter',
-      () => {
-        let item = undefined
-        const editingProps = {
-          key: 'PROJECT-bh52ogy5s0fm',
-          type: sectionTypes.PROJECT,
-          title: 'Some project',
-          id: 'bh52ogy5s0fm',
-          active: false,
-          count: 4,
-          editing: true,
-          onStopEditing: (callback) => {item = callback},
-          connectDropTarget,
-          connectDragSource,
-          connectDragPreview
-        }
-
-        const itemComponent = renderIntoDocument(<NavigationTextfield {...editingProps}/>)
-        const editElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__input')
-        editElement.value = 'test'
-
-        Simulate.keyDown(editElement, {keyCode:13})
-
-        expect(item.type).toBe(sectionTypes.PROJECT)
-        expect(item.id).toBe('bh52ogy5s0fm')
-        expect(item.newTitle).toBe('test')
-      }
-    )
-
-    test('Should invoke calback with type and id only when press esc', () => {
-      let item = undefined
+    it('Should invoke calback with type, and id and new title when press enter', () => {
+      const onStopEditing = jest.fn()
       const editingProps = {
         key: 'PROJECT-bh52ogy5s0fm',
         type: sectionTypes.PROJECT,
@@ -184,22 +121,53 @@ describe('Navigation Item', () => {
         active: false,
         count: 4,
         editing: true,
-        onStopEditing: (callback) => {item = callback},
+        onStopEditing,
         connectDropTarget,
         connectDragSource,
         connectDragPreview
       }
 
-      const itemComponent = renderIntoDocument(<NavigationTextfield {...editingProps}/>)
-      const editElement = findRenderedDOMComponentWithClass(itemComponent, 'nav-item__input')
-      editElement.value = 'test'
+      const itemComponent = mount(<NavigationTextfield {...editingProps} />)
+      const input = itemComponent.find('.nav-item__input').getDOMNode()
+      input.value = 'test'
 
-      Simulate.keyDown(editElement, {keyCode:27})
-
-      expect(item.type).toBe(sectionTypes.PROJECT)
-      expect(item.id).toBe('bh52ogy5s0fm')
-      expect(item.newTitle).not.toBeTruthy()
+      itemComponent
+        .find('.nav-item__input')
+        .simulate('keyDown', { key: 'Enter', keyCode: 13, which: 13 })
+      expect(onStopEditing).toHaveBeenCalledWith({
+        type: sectionTypes.PROJECT,
+        id: 'bh52ogy5s0fm',
+        newTitle: 'test'
+      })
     })
+    it('Should invoke calback with type and id only when press esc', () => {
+      const onStopEditing = jest.fn()
+      const editingProps = {
+        key: 'PROJECT-bh52ogy5s0fm',
+        type: sectionTypes.PROJECT,
+        title: 'Some project',
+        id: 'bh52ogy5s0fm',
+        active: false,
+        count: 4,
+        editing: true,
+        onStopEditing,
+        connectDropTarget,
+        connectDragSource,
+        connectDragPreview
+      }
 
+      const itemComponent = mount(<NavigationTextfield {...editingProps} />)
+      const input = itemComponent.find('.nav-item__input').getDOMNode()
+      input.value = 'test'
+
+      itemComponent
+        .find('.nav-item__input')
+        .simulate('keyDown', { key: 'Esc', keyCode: 27, which: 27 })
+
+      expect(onStopEditing).toHaveBeenCalledWith({
+        type: sectionTypes.PROJECT,
+        id: 'bh52ogy5s0fm'
+      })
+    })
   })
 })

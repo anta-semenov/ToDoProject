@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation Item Active item class Active element should has "is-active" class 1`] = `
+<NavigationTitle
+  active={true}
+  connectDragPreview={[Function]}
+  connectDragSource={[Function]}
+  connectDropTarget={[Function]}
+  count={4}
+  editing={false}
+  onItemClick={[Function]}
+  title="Next"
+  type="next"
+>
+  <Motion
+    defaultStyle={
+      Object {
+        "translateY": 0,
+      }
+    }
+    style={
+      Object {
+        "translateY": Object {
+          "damping": 26,
+          "precision": 0.01,
+          "stiffness": 170,
+          "val": 0,
+        },
+      }
+    }
+  >
+    <li
+      className="nav-item is-active"
+      onClick={[Function]}
+      style={
+        Object {
+          "transform": "translateY(NaNpx)",
+        }
+      }
+    >
+      <span
+        className="nav-item__title"
+      >
+        Next
+      </span>
+      <span
+        className="nav-item__count"
+      >
+        4
+      </span>
+    </li>
+  </Motion>
+</NavigationTitle>
+`;
+
+exports[`Navigation Item Active item class Inactive element shouldn't has "is-active" class 1`] = `
+<NavigationTitle
+  active={false}
+  connectDragPreview={[Function]}
+  connectDragSource={[Function]}
+  connectDropTarget={[Function]}
+  editing={false}
+  onItemClick={[Function]}
+  title="Next"
+  type="next"
+>
+  <Motion
+    defaultStyle={
+      Object {
+        "translateY": 0,
+      }
+    }
+    style={
+      Object {
+        "translateY": Object {
+          "damping": 26,
+          "precision": 0.01,
+          "stiffness": 170,
+          "val": 0,
+        },
+      }
+    }
+  >
+    <li
+      className="nav-item"
+      onClick={[Function]}
+      style={
+        Object {
+          "transform": "translateY(NaNpx)",
+        }
+      }
+    >
+      <span
+        className="nav-item__title"
+      >
+        Next
+      </span>
+    </li>
+  </Motion>
+</NavigationTitle>
+`;
+
+exports[`Navigation Item Render editing component Should render editing component 1`] = `
+<NavigationItem
+  active={false}
+  connectDragPreview={[Function]}
+  connectDragSource={[Function]}
+  connectDropTarget={[Function]}
+  count={4}
+  editing={true}
+  id="bh52ogy5s0fm"
+  onItemClick={[Function]}
+  title="Some project"
+  type="PROJECT"
+>
+  <li>
+    <input
+      className="nav-item__input"
+      onBlur={[Function]}
+      onKeyDown={[Function]}
+      placeholder="Some project"
+      type="text"
+    />
+  </li>
+</NavigationItem>
+`;
+
+exports[`Navigation Item Render not editing component Should render component 1`] = `
+<NavigationTitle
+  active={true}
+  connectDragPreview={[Function]}
+  connectDragSource={[Function]}
+  connectDropTarget={[Function]}
+  count={4}
+  editing={false}
+  onItemClick={[Function]}
+  title="Next"
+  type="next"
+>
+  <Motion
+    defaultStyle={
+      Object {
+        "translateY": 0,
+      }
+    }
+    style={
+      Object {
+        "translateY": Object {
+          "damping": 26,
+          "precision": 0.01,
+          "stiffness": 170,
+          "val": 0,
+        },
+      }
+    }
+  >
+    <li
+      className="nav-item is-active"
+      onClick={[Function]}
+      style={
+        Object {
+          "transform": "translateY(NaNpx)",
+        }
+      }
+    >
+      <span
+        className="nav-item__title"
+      >
+        Next
+      </span>
+      <span
+        className="nav-item__count"
+      >
+        4
+      </span>
+    </li>
+  </Motion>
+</NavigationTitle>
+`;
