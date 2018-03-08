@@ -179,17 +179,19 @@ describe('Tasks Selectors', () => {
           context: testContexts,
           order: testOrder
         })
-        const groups = fromJS([{
-          items: [
-            {
-              id: 'b41sogy3s0oc',
-              title: 'Test task 0',
-              completed: false,
-              today: false,
-              priority: PRIORITY_NONE
-            }
-          ]
-        }])
+        const groups = fromJS([
+          {
+            items: [
+              {
+                id: 'b41sogy3s0oc',
+                title: 'Test task 0',
+                completed: false,
+                today: false,
+                priority: PRIORITY_NONE
+              }
+            ]
+          }
+        ])
         const props = { section: sectionTypes.INBOX }
         expect(getTasksGroups(state, props)).toEqual(groups)
       })
@@ -206,25 +208,27 @@ describe('Tasks Selectors', () => {
             }
           }
         })
-        const groups = fromJS([{
-          items: [
-            {
-              id: 'b41sogy3s0om',
-              title: 'Test task 0',
-              completed: false,
-              today: false,
-              priority: PRIORITY_NONE,
-              contexts: List(['b07x7v4pu3e'])
-            },
-            {
-              id: 'b41sogy3s0on',
-              title: 'Test task 1',
-              completed: true,
-              today: true,
-              priority: PRIORITY_NONE
-            }
-          ]
-        }])
+        const groups = fromJS([
+          {
+            items: [
+              {
+                id: 'b41sogy3s0om',
+                title: 'Test task 0',
+                completed: false,
+                today: false,
+                priority: PRIORITY_NONE,
+                contexts: List(['b07x7v4pu3e'])
+              },
+              {
+                id: 'b41sogy3s0on',
+                title: 'Test task 1',
+                completed: true,
+                today: true,
+                priority: PRIORITY_NONE
+              }
+            ]
+          }
+        ])
         const props = { section: sectionTypes.INBOX }
         expect(getTasksGroups(state, props)).toEqual(groups)
       })
@@ -305,25 +309,27 @@ describe('Tasks Selectors', () => {
             }
           }
         })
-        const groups = fromJS([{
-          items: [
-            {
-              id: 'b41sogy3s0om',
-              title: 'Test task 0',
-              completed: false,
-              today: false,
-              priority: PRIORITY_NONE,
-              contexts: List(['b07x7v4pu3e'])
-            },
-            {
-              id: 'b41sogy3s0oo',
-              title: 'Test task 2',
-              completed: true,
-              today: true,
-              priority: PRIORITY_NONE
-            }
-          ]
-        }])
+        const groups = fromJS([
+          {
+            items: [
+              {
+                id: 'b41sogy3s0om',
+                title: 'Test task 0',
+                completed: false,
+                today: false,
+                priority: PRIORITY_NONE,
+                contexts: List(['b07x7v4pu3e'])
+              },
+              {
+                id: 'b41sogy3s0oo',
+                title: 'Test task 2',
+                completed: true,
+                today: true,
+                priority: PRIORITY_NONE
+              }
+            ]
+          }
+        ])
         const props = { section: sectionTypes.NEXT }
         expect(getTasksGroups(state, props)).toEqual(groups)
       })
@@ -431,32 +437,34 @@ describe('Tasks Selectors', () => {
             }
           }
         })
-        const groups = fromJS([{
-          items: [
-            {
-              id: 'b41sogy3s0om',
-              title: 'Test task 0',
-              completed: false,
-              today: false,
-              priority: PRIORITY_NONE,
-              contexts: List(['b07x7v4pu3e'])
-            },
-            {
-              id: 'b41sogy3s0on',
-              title: 'Test task 1',
-              completed: true,
-              today: true,
-              priority: PRIORITY_NONE
-            },
-            {
-              id: 'b41sogy3s0op',
-              title: 'Test task 3',
-              completed: true,
-              today: false,
-              priority: PRIORITY_NONE
-            }
-          ]
-        }])
+        const groups = fromJS([
+          {
+            items: [
+              {
+                id: 'b41sogy3s0om',
+                title: 'Test task 0',
+                completed: false,
+                today: false,
+                priority: PRIORITY_NONE,
+                contexts: List(['b07x7v4pu3e'])
+              },
+              {
+                id: 'b41sogy3s0on',
+                title: 'Test task 1',
+                completed: true,
+                today: true,
+                priority: PRIORITY_NONE
+              },
+              {
+                id: 'b41sogy3s0op',
+                title: 'Test task 3',
+                completed: true,
+                today: false,
+                priority: PRIORITY_NONE
+              }
+            ]
+          }
+        ])
         const props = { section: sectionTypes.NEXT }
         expect(getTasksGroups(state, props)).toEqual(groups)
       })
@@ -526,32 +534,34 @@ describe('Tasks Selectors', () => {
             }
           }
         })
-        const groups = fromJS([{
-          items: [
-            {
-              id: 'b41sogy3s0on',
-              title: 'Test task 1',
-              completed: true,
-              today: true,
-              priority: PRIORITY_NONE
-            },
-            {
-              id: 'b41sogy3s0op',
-              title: 'Test task 3',
-              completed: true,
-              today: false,
-              priority: PRIORITY_NONE
-            },
-            {
-              id: 'b41sogy3s0oq',
-              title: 'Test task 4',
-              completed: true,
-              today: false,
-              priority: PRIORITY_NONE,
-              project: 'bh52ogy5s0fm'
-            }
-          ]
-        }])
+        const groups = fromJS([
+          {
+            items: [
+              {
+                id: 'b41sogy3s0on',
+                title: 'Test task 1',
+                completed: true,
+                today: true,
+                priority: PRIORITY_NONE
+              },
+              {
+                id: 'b41sogy3s0op',
+                title: 'Test task 3',
+                completed: true,
+                today: false,
+                priority: PRIORITY_NONE
+              },
+              {
+                id: 'b41sogy3s0oq',
+                title: 'Test task 4',
+                completed: true,
+                today: false,
+                priority: PRIORITY_NONE,
+                project: 'bh52ogy5s0fm'
+              }
+            ]
+          }
+        ])
         const props = { section: 'bh52ogy5s0fm' }
         expect(getTasksGroups(state, props)).toEqual(groups)
       })
@@ -626,7 +636,7 @@ describe('Tasks Selectors', () => {
             ]
           }
         ])
-        const props = { section: 'cf1sobz3s0oc'}
+        const props = { section: 'cf1sobz3s0oc' }
         expect(getTasksGroups(state, props)).toEqual(groups)
       })
       test('Should return latent tasks for CONTEXT', () => {
@@ -688,7 +698,7 @@ describe('Tasks Selectors', () => {
             ]
           }
         ])
-        const props = { section: 'cf1sobz3s0oc'}
+        const props = { section: 'cf1sobz3s0oc' }
         expect(getTasksGroups(state, props)).toEqual(groups)
       })
       test('Should return undefined for no tasks for CONTEXT', () => {
@@ -698,7 +708,7 @@ describe('Tasks Selectors', () => {
           context: testContexts,
           order: testOrder
         })
-        const props = { section: 'cf1sobz3s0o1'}
+        const props = { section: 'cf1sobz3s0o1' }
         expect(getTasksGroups(state, props)).toBeUndefined()
       })
     })
@@ -734,40 +744,39 @@ describe('Tasks Selectors', () => {
           }
         }
       })
-      const groups = fromJS([{
-        items: [
-          {
-            id: 'b41sogy3s0om',
-            title: 'Test task 0',
-            completed: true,
-            today: false,
-            priority: PRIORITY_NONE,
-            contexts: List(['b07x7v4pu3e'])
-          }
-        ]
-      }])
+      const groups = fromJS([
+        {
+          items: [
+            {
+              id: 'b41sogy3s0om',
+              title: 'Test task 0',
+              completed: true,
+              today: false,
+              priority: PRIORITY_NONE,
+              contexts: List(['b07x7v4pu3e'])
+            }
+          ]
+        }
+      ])
 
       expect(getTasksGroups(state)).toEqual(groups)
     })
   })
-  test(
-    'Should return the same object is not related part of state had changed',
-    () => {
-      const state1 = fromJS({
-        task: testTasks1,
-        project: testProjects,
-        context: testContexts,
-        order: testOrder
-      })
-      const state2 = state1.setIn(['uiState', 'searchQuery'], 're')
-      const props = { section: sectionTypes.TODAY }
-      expect(getTasksGroups(state1, props)).toBe(getTasksGroups(state2, props))
-    }
-  )
+  test('Should return the same object is not related part of state had changed', () => {
+    const state1 = fromJS({
+      task: testTasks1,
+      project: testProjects,
+      context: testContexts,
+      order: testOrder
+    })
+    const state2 = state1.setIn(['uiState', 'searchQuery'], 're')
+    const props = { section: sectionTypes.TODAY }
+    expect(getTasksGroups(state1, props)).toBe(getTasksGroups(state2, props))
+  })
 })
 
 describe('getFilteredTasks selector', () => {
-  test('should return filtered task groups', () => {
+  it('should return filtered task groups', () => {
     const state = fromJS({
       task: testTasks1,
       project: testProjects,
@@ -798,5 +807,17 @@ describe('getFilteredTasks selector', () => {
       }
     ])
     expect(getFilteredTasks(state, { section: sectionTypes.NEXT })).toEqual(groups)
+  })
+  it('return undefined if there is no tasks', () => {
+    const state = fromJS({
+      task: {},
+      project: testProjects,
+      context: testContexts,
+      order: testOrder,
+      uiState: {
+        searchQuery: 'task 1'
+      }
+    })
+    expect(getFilteredTasks(state, { section: sectionTypes.NEXT })).toBeUndefined()
   })
 })
