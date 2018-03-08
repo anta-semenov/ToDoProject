@@ -1,24 +1,34 @@
 import React from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
-
+import { shallow } from 'enzyme'
 import TaskInfo from '../../src/components/taskInfo/TaskInfo'
 
 describe('TaskInfo component', () => {
+  const props = {
+    onTaskCheckboxClick: () => {},
+    onTaskTodayClick: () => {},
+    onPriorityClick: () => {},
+    onTitleChange: () => {},
+    onDescriptionChange: () => {},
+    onProjectChange: () => {},
+    onContextClick: () => {},
+    onDateChange: () => {},
+    onCloseClick: () => {},
+    onTaskSomedayClick: () => {},
+    onTaskDeleteClick: () => {}
+  }
   describe('Delete Task', () => {
     test('Should render delete task button', () => {
-      const taskInfoComponent = renderIntoDocument(<TaskInfo id={'b41sogy3s0o2'} />)
-      const deleteBtn = findRenderedDOMComponentWithClass(taskInfoComponent, 'task-info__delete')
-      expect(deleteBtn.className).toBe('task-info__delete')
+      const taskInfoComponent = shallow(<TaskInfo id={'b41sogy3s0o2'} {...props} />)
+      expect(taskInfoComponent).toMatchSnapshot()
     })
     test('Should handle click on delete task button', () => {
-      let id = -1
-      const callback = () => {id = 1}
-      const taskInfoComponent = renderIntoDocument(<TaskInfo id={'b41sogy3s0o2'} onTaskDeleteClick={callback} />)
-      const deleteBtn = findRenderedDOMComponentWithClass(taskInfoComponent, 'task-info__delete')
+      const onTaskDeleteClick = jest.fn()
+      const taskInfoComponent = shallow(
+        <TaskInfo id={'b41sogy3s0o2'} {...props} onTaskDeleteClick={onTaskDeleteClick} />
+      )
+      taskInfoComponent.find('.task-info__delete').simulate('click')
 
-      expect(id).toBe(-1)
-      Simulate.click(deleteBtn)
-      expect(id).toBe(1)
+      expect(onTaskDeleteClick).toHaveBeenCalled()
     })
   })
 })

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskGroup component tests Should render group name if it has one 1`] = `
+<li
+  className="task-group"
+>
+  <div
+    className="task-group__title"
+  >
+    Test group
+  </div>
+  <TransitionMotion
+    defaultStyles={Array []}
+    didLeave={[Function]}
+    styles={Array []}
+    willEnter={[Function]}
+    willLeave={[Function]}
+  />
+</li>
+`;

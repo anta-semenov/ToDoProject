@@ -1,6 +1,6 @@
 import React from 'react'
 import { fromJS, Set } from 'immutable'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass, Simulate } from 'react-addons-test-utils'
+import { shallow } from 'enzyme'
 
 import TaskContexts from '../../src/components/taskInfo/taskContexts/TaskContexts'
 
@@ -17,47 +17,42 @@ const contexts = fromJS({
 const taskContexts = Set(['a23sogy3s0oq'])
 
 describe('TaskContexts component', () => {
-  test('Should render component without contexts', () => {
+  it('Should render component without contexts', () => {
     const contexts = fromJS({})
-    const contextsComponent1 = renderIntoDocument(<TaskContexts />)
-    const emptyContexts1 = findRenderedDOMComponentWithClass(contextsComponent1, 'contexts__empty-list')
-    const contextsComponent2 = renderIntoDocument(<TaskContexts contexts={contexts} />)
-    const emptyContexts2 = findRenderedDOMComponentWithClass(contextsComponent2, 'contexts__empty-list')
-    expect(emptyContexts1.className).toBe('contexts__empty-list')
-    expect(emptyContexts2.className).toBe('contexts__empty-list')
+    const contextsComponent1 = shallow(<TaskContexts onContextClick={() => {}} />)
+    const contextsComponent2 = shallow(
+      <TaskContexts contexts={contexts} onContextClick={() => {}} />
+    )
+    expect(contextsComponent1).toMatchSnapshot()
+    expect(contextsComponent2).toMatchSnapshot()
   })
-  test('Should render component with no task contexts', () => {
-    const contextsComponent = renderIntoDocument(<TaskContexts contexts={contexts} />)
-    const contextsElement = findRenderedDOMComponentWithClass(contextsComponent, 'contexts')
-    const contextElements = scryRenderedDOMComponentsWithClass(contextsComponent, 'context')
-
-    expect(contextsElement.className).toBe('contexts')
-    expect(contextElements.length).toBe(2)
-    expect(contextElements[0].className).toContain('context')
-    expect(contextElements[0].textContent).toBe('test context 1')
-    expect(contextElements[1].className).toContain('context')
-    expect(contextElements[1].textContent).toBe('test context 2')
+  it('Should render component with no task contexts', () => {
+    const contextsComponent = shallow(
+      <TaskContexts contexts={contexts} onContextClick={() => {}} />
+    )
+    expect(contextsComponent).toMatchSnapshot()
   })
-  test('Should render components with task context', () => {
-    const contextsComponent = renderIntoDocument(<TaskContexts contexts={contexts} taskContexts={taskContexts} />)
-    const contextsElement = findRenderedDOMComponentWithClass(contextsComponent, 'contexts')
-    const contextElements = scryRenderedDOMComponentsWithClass(contextsComponent, 'context')
-
-    expect(contextsElement.className).toBe('contexts')
-    expect(contextElements.length).toBe(2)
-    expect(contextElements[0].className).toContain('context')
-    expect(contextElements[0].textContent).toBe('test context 1')
-    expect(contextElements[1].className).to.include('context').toContain('is-active')
-    expect(contextElements[1].textContent).toBe('test context 2')
+  it('Should render components with task context', () => {
+    const contextsComponent = shallow(
+      <TaskContexts contexts={contexts} taskContexts={taskContexts} onContextClick={() => {}} />
+    )
+    expect(contextsComponent).toMatchSnapshot()
   })
-  test('Should handle context click', () => {
-    let id = ''
-    const callback = (contextId) => id = contextId
-    const contextsComponent = renderIntoDocument(<TaskContexts contexts={contexts} taskContexts={taskContexts} onContextClick={callback}/>)
-    const contextElements = scryRenderedDOMComponentsWithClass(contextsComponent, 'context')
-
-    expect(id).toBe('')
-    Simulate.click(contextElements[0])
+  it('Should handle context click', () => {
+    let id
+    const onContextClick = newId => (id = newId)
+    const contextsComponent = shallow(
+      <TaskContexts
+        contexts={contexts}
+        taskContexts={taskContexts}
+        onContextClick={onContextClick}
+      />
+    )
+    expect(id).toBeUndefined()
+    contextsComponent
+      .find('.context')
+      .first()
+      .simulate('click')
     expect(id).toBe('a21sogy3s0oq')
   })
 })

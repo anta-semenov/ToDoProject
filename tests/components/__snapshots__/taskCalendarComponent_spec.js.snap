@@ -1,0 +1,576 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskCalendar Component Component Should render all elements of component: navigation with prev and next button, title and weekday names. Also it should render dates 1`] = `
+<div
+  className="calendar"
+>
+  <div
+    className="calendar__header"
+  >
+    <div
+      className="calendar__nav"
+    >
+      <button
+        className="calendar__prev is-disabled"
+        onClick={[Function]}
+      >
+        <div
+          className="calendar__prev-sign"
+        />
+      </button>
+      <div
+        className="calendar__title"
+      >
+        <div
+          className="calendar__month"
+        >
+          March
+        </div>
+        <div
+          className="calendar__year"
+        >
+          2018
+        </div>
+      </div>
+      <button
+        className="calendar__next"
+        onClick={[Function]}
+      >
+        <div
+          className="calendar__next-sign"
+        />
+      </button>
+    </div>
+    <div
+      className="calendar__day-names"
+    >
+      <div
+        className="calendar__day-name"
+        key="Mo"
+      >
+        Mo
+      </div>
+      <div
+        className="calendar__day-name"
+        key="Tu"
+      >
+        Tu
+      </div>
+      <div
+        className="calendar__day-name"
+        key="We"
+      >
+        We
+      </div>
+      <div
+        className="calendar__day-name"
+        key="Th"
+      >
+        Th
+      </div>
+      <div
+        className="calendar__day-name"
+        key="Fr"
+      >
+        Fr
+      </div>
+      <div
+        className="calendar__day-name"
+        key="Sa"
+      >
+        Sa
+      </div>
+      <div
+        className="calendar__day-name"
+        key="Su"
+      >
+        Su
+      </div>
+    </div>
+  </div>
+  <div
+    className="calendar__body"
+  >
+    <div
+      className="calendar__week"
+      key="0"
+    >
+      <div
+        className="calendar__day
+                    is-prev-month
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1519621200000"
+        onClick={[Function]}
+      >
+        26
+      </div>
+      <div
+        className="calendar__day
+                    is-prev-month
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1519707600000"
+        onClick={[Function]}
+      >
+        27
+      </div>
+      <div
+        className="calendar__day
+                    is-prev-month
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1519794000000"
+        onClick={[Function]}
+      >
+        28
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1519880400000"
+        onClick={[Function]}
+      >
+        1
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1519966800000"
+        onClick={[Function]}
+      >
+        2
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1520053200000"
+        onClick={[Function]}
+      >
+        3
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1520139600000"
+        onClick={[Function]}
+      >
+        4
+      </div>
+    </div>
+    <div
+      className="calendar__week"
+      key="1"
+    >
+      <div
+        className="calendar__day
+                    
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1520226000000"
+        onClick={[Function]}
+      >
+        5
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    is-before-today
+                    
+                    
+                  "
+        key="1520312400000"
+        onClick={[Function]}
+      >
+        6
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    is-today
+                    
+                  "
+        key="1520398800000"
+        onClick={[Function]}
+      >
+        7
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1520485200000"
+        onClick={[Function]}
+      >
+        8
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1520571600000"
+        onClick={[Function]}
+      >
+        9
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1520658000000"
+        onClick={[Function]}
+      >
+        10
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1520744400000"
+        onClick={[Function]}
+      >
+        11
+      </div>
+    </div>
+    <div
+      className="calendar__week"
+      key="2"
+    >
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1520827200000"
+        onClick={[Function]}
+      >
+        12
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1520913600000"
+        onClick={[Function]}
+      >
+        13
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521000000000"
+        onClick={[Function]}
+      >
+        14
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521086400000"
+        onClick={[Function]}
+      >
+        15
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521172800000"
+        onClick={[Function]}
+      >
+        16
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521259200000"
+        onClick={[Function]}
+      >
+        17
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521345600000"
+        onClick={[Function]}
+      >
+        18
+      </div>
+    </div>
+    <div
+      className="calendar__week"
+      key="3"
+    >
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521432000000"
+        onClick={[Function]}
+      >
+        19
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521518400000"
+        onClick={[Function]}
+      >
+        20
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521604800000"
+        onClick={[Function]}
+      >
+        21
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521691200000"
+        onClick={[Function]}
+      >
+        22
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521777600000"
+        onClick={[Function]}
+      >
+        23
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521864000000"
+        onClick={[Function]}
+      >
+        24
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1521950400000"
+        onClick={[Function]}
+      >
+        25
+      </div>
+    </div>
+    <div
+      className="calendar__week"
+      key="4"
+    >
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1522036800000"
+        onClick={[Function]}
+      >
+        26
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1522123200000"
+        onClick={[Function]}
+      >
+        27
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1522209600000"
+        onClick={[Function]}
+      >
+        28
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1522296000000"
+        onClick={[Function]}
+      >
+        29
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1522382400000"
+        onClick={[Function]}
+      >
+        30
+      </div>
+      <div
+        className="calendar__day
+                    
+                    
+                    
+                    
+                    
+                  "
+        key="1522468800000"
+        onClick={[Function]}
+      >
+        31
+      </div>
+      <div
+        className="calendar__day
+                    
+                    is-next-month
+                    
+                    
+                    
+                  "
+        key="1522555200000"
+        onClick={[Function]}
+      >
+        1
+      </div>
+    </div>
+  </div>
+</div>
+`;

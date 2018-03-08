@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskProject Component Should render component with projects, but without selected project 1`] = `
+<TaskProject
+  onProjectChange={[Function]}
+  projects={
+    Immutable.Map {
+      "bh52ogy5s0fm": Immutable.Map {
+        "id": "bh52ogy5s0fm",
+        "title": "Test project 0",
+        "completed": false,
+      },
+      "bh52ogy5s0f1": Immutable.Map {
+        "id": "bh52ogy5s0f1",
+        "title": "Test project 1",
+        "completed": false,
+      },
+    }
+  }
+>
+  <div
+    className="projects"
+  >
+    <div
+      className="projects__title"
+    >
+      Project
+    </div>
+    <select
+      className="projects__selector"
+      onChange={[Function]}
+      value=""
+    >
+      <option
+        value=""
+      >
+        No Project
+      </option>
+      <option
+        key="bh52ogy5s0fm"
+        value="bh52ogy5s0fm"
+      >
+        Test project 0
+      </option>
+      <option
+        key="bh52ogy5s0f1"
+        value="bh52ogy5s0f1"
+      >
+        Test project 1
+      </option>
+    </select>
+  </div>
+</TaskProject>
+`;
+
+exports[`TaskProject Component Should render component with selected project 1`] = `
+<TaskProject
+  onProjectChange={[Function]}
+  projects={
+    Immutable.Map {
+      "bh52ogy5s0fm": Immutable.Map {
+        "id": "bh52ogy5s0fm",
+        "title": "Test project 0",
+        "completed": false,
+      },
+      "bh52ogy5s0f1": Immutable.Map {
+        "id": "bh52ogy5s0f1",
+        "title": "Test project 1",
+        "completed": false,
+      },
+    }
+  }
+  taskProject="bh52ogy5s0fm"
+>
+  <div
+    className="projects"
+  >
+    <div
+      className="projects__title"
+    >
+      Project
+    </div>
+    <select
+      className="projects__selector is-selected"
+      onChange={[Function]}
+      value="bh52ogy5s0fm"
+    >
+      <option
+        value=""
+      >
+        No Project
+      </option>
+      <option
+        key="bh52ogy5s0fm"
+        value="bh52ogy5s0fm"
+      >
+        Test project 0
+      </option>
+      <option
+        key="bh52ogy5s0f1"
+        value="bh52ogy5s0f1"
+      >
+        Test project 1
+      </option>
+    </select>
+  </div>
+</TaskProject>
+`;
+
+exports[`TaskProject Component Should render component without projects 1`] = `
+<TaskProject
+  onProjectChange={[Function]}
+>
+  <div
+    className="projects"
+  >
+    <div
+      className="projects__title"
+    >
+      Project
+    </div>
+    <div
+      className="projects__empty-list"
+    >
+      You haven't create any projects yet.
+    </div>
+  </div>
+</TaskProject>
+`;
+
+exports[`TaskProject Component Should render component without projects 2`] = `
+<TaskProject
+  onProjectChange={[Function]}
+  projects={Immutable.Map {}}
+>
+  <div
+    className="projects"
+  >
+    <div
+      className="projects__title"
+    >
+      Project
+    </div>
+    <div
+      className="projects__empty-list"
+    >
+      You haven't create any projects yet.
+    </div>
+  </div>
+</TaskProject>
+`;

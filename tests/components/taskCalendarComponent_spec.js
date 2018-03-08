@@ -1,7 +1,11 @@
 import React from 'react'
-import { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass } from 'react-addons-test-utils'
+import { shallow } from 'enzyme'
 import { List, fromJS } from 'immutable'
-import TaskCalendar, { weekdayRow, monthWeeksList, weekdayNamesRow } from '../../src/components/taskInfo/taskCalendar/TaskCalendar'
+import TaskCalendar, {
+  weekdayRow,
+  monthWeeksList,
+  weekdayNamesRow
+} from '../../src/components/taskInfo/taskCalendar/TaskCalendar'
 import { WEEKDAY_SHORT_NAMES } from '../../src/constants/date'
 
 describe('TaskCalendar Component', () => {
@@ -20,22 +24,19 @@ describe('TaskCalendar Component', () => {
         ])
         expect(weekdayRow(startDate1)).toEqual(week1)
       })
-      test(
-        'Should return correct list for startDate: Date(2016, 4, 1), weekStart: 2',
-        () => {
-          const startDate2 = new Date(2016, 4, 1)
-          const week2 = List([
-            new Date(2016, 3, 26),
-            new Date(2016, 3, 27),
-            new Date(2016, 3, 28),
-            new Date(2016, 3, 29),
-            new Date(2016, 3, 30),
-            new Date(2016, 4, 1),
-            new Date(2016, 4, 2)
-          ])
-          expect(weekdayRow(startDate2, 2)).toEqual(week2)
-        }
-      )
+      test('Should return correct list for startDate: Date(2016, 4, 1), weekStart: 2', () => {
+        const startDate2 = new Date(2016, 4, 1)
+        const week2 = List([
+          new Date(2016, 3, 26),
+          new Date(2016, 3, 27),
+          new Date(2016, 3, 28),
+          new Date(2016, 3, 29),
+          new Date(2016, 3, 30),
+          new Date(2016, 4, 1),
+          new Date(2016, 4, 2)
+        ])
+        expect(weekdayRow(startDate2, 2)).toEqual(week2)
+      })
     })
     describe('monthWeeksList', () => {
       test('Should return correct list for May of 2016', () => {
@@ -208,62 +209,38 @@ describe('TaskCalendar Component', () => {
       })
     })
     describe('weekdayNamesRow', () => {
-      test(
-        'Should return correct list of weekday names for weekstart at Monday (1)',
-        () => {
-          const weekdayNames = List([
-            'Mo',
-            'Tu',
-            'We',
-            'Th',
-            'Fr',
-            'Sa',
-            'Su'
-          ])
-          expect(weekdayNamesRow()).toEqual(weekdayNames)
-        }
-      )
-      test(
-        'Should return correct list of weekday names for weekstart at Wednesday (3)',
-        () => {
-          const weekdayNames = List([
-            'We',
-            'Th',
-            'Fr',
-            'Sa',
-            'Su',
-            'Mo',
-            'Tu'
-          ])
-          expect(weekdayNamesRow(WEEKDAY_SHORT_NAMES, 3)).toEqual(weekdayNames)
-        }
-      )
+      test('Should return correct list of weekday names for weekstart at Monday (1)', () => {
+        const weekdayNames = List(['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'])
+        expect(weekdayNamesRow()).toEqual(weekdayNames)
+      })
+      test('Should return correct list of weekday names for weekstart at Wednesday (3)', () => {
+        const weekdayNames = List(['We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu'])
+        expect(weekdayNamesRow(WEEKDAY_SHORT_NAMES, 3)).toEqual(weekdayNames)
+      })
     })
   })
   describe('Component', () => {
-    test(
-      'Should render all elements of component: navigation with prev and next button, title and weekday names. Also it should render dates',
-      () => {
-        const calendarComponent = renderIntoDocument(<TaskCalendar id={0} />)
-        const calendarNavigation = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__nav')
-        const calendarMonth = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__month')
-        const calendarYear = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__year')
-        const prevBtn = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__prev')
-        const nextBtn = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__next')
-        const weekdayNames = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__day-names')
-        const weekdayNameArray = scryRenderedDOMComponentsWithClass(calendarComponent, 'calendar__day-name')
-        const calendarDayArray = scryRenderedDOMComponentsWithClass(calendarComponent, 'calendar__day')
-
-        expect(calendarNavigation.className).toEqual('calendar__nav')
-        expect(calendarMonth.className).toEqual('calendar__month')
-        expect(calendarYear.className).toEqual('calendar__year')
-        expect(prevBtn.className).toContain('calendar__prev')
-        expect(nextBtn.className).toEqual('calendar__next')
-        expect(weekdayNames.className).toEqual('calendar__day-names')
-        expect(weekdayNameArray.length).toEqual(7)
-        expect(calendarDayArray.length).toBeGreaterThan(27)
-        expect(calendarDayArray.length).toBeLessThan(43)
-      }
-    )
+    test('Should render all elements of component: navigation with prev and next button, title and weekday names. Also it should render dates', () => {
+      const calendarComponent = shallow(<TaskCalendar id="djsdag23" onChange={() => {}} />)
+      expect(calendarComponent).toMatchSnapshot()
+      // const calendarNavigation = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__nav')
+      // const calendarMonth = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__month')
+      // const calendarYear = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__year')
+      // const prevBtn = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__prev')
+      // const nextBtn = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__next')
+      // const weekdayNames = findRenderedDOMComponentWithClass(calendarComponent, 'calendar__day-names')
+      // const weekdayNameArray = scryRenderedDOMComponentsWithClass(calendarComponent, 'calendar__day-name')
+      // const calendarDayArray = scryRenderedDOMComponentsWithClass(calendarComponent, 'calendar__day')
+      //
+      // expect(calendarNavigation.className).toEqual('calendar__nav')
+      // expect(calendarMonth.className).toEqual('calendar__month')
+      // expect(calendarYear.className).toEqual('calendar__year')
+      // expect(prevBtn.className).toContain('calendar__prev')
+      // expect(nextBtn.className).toEqual('calendar__next')
+      // expect(weekdayNames.className).toEqual('calendar__day-names')
+      // expect(weekdayNameArray.length).toEqual(7)
+      // expect(calendarDayArray.length).toBeGreaterThan(27)
+      // expect(calendarDayArray.length).toBeLessThan(43)
+    })
   })
 })

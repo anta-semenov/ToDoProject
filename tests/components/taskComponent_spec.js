@@ -1,9 +1,8 @@
 import React from 'react'
 import { fromJS } from 'immutable'
-import { renderIntoDocument, findRenderedDOMComponentWithTag, findRenderedDOMComponentWithClass, Simulate } from 'react-addons-test-utils'
+import { shallow, mount } from 'enzyme'
 import { TaskClass as Task } from '../../src/components/tasks/task/Task'
 import * as priorityLevels from '../../src/constants/priorityLevels'
-import { DATE_FORMAT } from '../../src/constants/defaults'
 
 const testTasks = fromJS([
   {
@@ -14,216 +13,270 @@ const testTasks = fromJS([
     description: 'Make Tutorial on oficial react website',
     priority: priorityLevels.PRIORITY_MEDIUM,
     date: new Date(2015, 4, 15),
-    connectDragPreview: (element) => element,
-    connectDragSource:  (element) => element
+    connectDragPreview: element => element,
+    connectDragSource: element => element
   },
   {
     id: 'b41sogy3s0o1',
     title: 'Explore Redux',
     completed: false,
     today: false,
-    connectDragPreview: (element) => element,
-    connectDragSource:  (element) => element
+    connectDragPreview: element => element,
+    connectDragSource: element => element
   }
 ])
 
 const mockDragFunctions = {
-  connectDragPreview: (element) => element,
-  connectDragSource:  (element) => element
+  connectDragPreview: element => element,
+  connectDragSource: element => element
+}
+const props = {
+  id: '37897hjkdha',
+  title: 'test title',
+  someday: true,
+  onTaskClick: () => {},
+  onTaskCheckboxClick: () => {},
+  onTaskTodayClick: () => {},
+  onTaskPriorityClick: () => {},
+  onTaskTrackingClick: () => {},
+  addTaskToProject: () => {},
+  addTaskContext: () => {}
 }
 
 describe('Task component', () => {
-  test('Should render Task component with active and completed classes', () => {
-    const taskComponent = renderIntoDocument(<Task active={true} completed={true} {...mockDragFunctions}/>)
-    const taskElement = findRenderedDOMComponentWithTag(taskComponent, 'li')
-
-    expect(taskElement.className).toContain('task')
-      .and.toContain('is-active')
-      .and.toContain('is-completed')
+  it('Should render Task component with active and completed classes', () => {
+    const taskComponent = shallow(
+      <Task {...props} active={true} completed={true} {...mockDragFunctions} />
+    )
+    expect(taskComponent).toMatchSnapshot()
   })
-  test(
-    'Should render Task component without active and completed classes',
-    () => {
-      const taskClass = 'task'
-      const activeClass = 'is-active'
-      const completedClass = 'is-completed'
-      const taskComponent = renderIntoDocument(<Task active={false} completed={false} {...mockDragFunctions}/>)
-      const taskElement = findRenderedDOMComponentWithTag(taskComponent, 'li')
-
-      expect(taskElement.className).toContain(taskClass)
-      expect(taskElement.className).not.toContain(activeClass)
-      expect(taskElement.className).not.toContain(completedClass)
-    }
-  )
+  it('Should render Task component without active and completed classes', () => {
+    const taskComponent = shallow(
+      <Task {...props} active={false} completed={false} {...mockDragFunctions} />
+    )
+    expect(taskComponent).toMatchSnapshot()
+  })
   describe('Checkbox', () => {
-    test('Should render complete checkbox', () => {
-      const checkboxClass = 'checkbox'
-      const taskComponent = renderIntoDocument(<Task completed={testTasks.get(0).get('completed')} {...mockDragFunctions} />)
-      const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
-
-      expect(checkboxComponent.className).toContain('is-checked')
+    const checkboxClass = '.checkbox'
+    it('Should render complete checkbox', () => {
+      const taskComponent = mount(
+        <Task {...props} completed={testTasks.get(0).get('completed')} {...mockDragFunctions} />
+      )
+      const checkboxComponent = taskComponent.find(checkboxClass)
+      expect(checkboxComponent).toMatchSnapshot()
     })
-    test('Should render uncomplete checkbox', () => {
-      const checkboxClass = 'checkbox'
-      const taskComponent = renderIntoDocument(<Task completed={testTasks.get(1).get('completed')} {...mockDragFunctions} />)
-      const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
-
-      expect(checkboxComponent.className).not.toContain('is-checked')
+    it('Should render uncomplete checkbox', () => {
+      const taskComponent = mount(
+        <Task {...props} completed={testTasks.get(1).get('completed')} {...mockDragFunctions} />
+      )
+      const checkboxComponent = taskComponent.find(checkboxClass)
+      expect(checkboxComponent).toMatchSnapshot()
     })
-    test('Should invoke complete callback when change event occurs', () => {
-      const checkboxClass = 'checkbox'
+    it('Should invoke complete callback when change event occurs', () => {
+      // const checkboxClass = 'checkbox'
       let checkedId = -12
       let checkStatus = true
-      const callback = (id, status) => {checkedId = id, checkStatus = status}
-
-      const taskComponent = renderIntoDocument(
+      const callback = (id, status) => {
+        checkedId = id
+        checkStatus = status
+      }
+      const taskComponent = mount(
         <Task
-        completed={testTasks.getIn([0, 'completed'])}
-        id={testTasks.getIn([0, 'id'])}
-        onTaskCheckboxClick = {callback}
-        {...mockDragFunctions}
+          {...props}
+          completed={testTasks.getIn([0, 'completed'])}
+          id={testTasks.getIn([0, 'id'])}
+          onTaskCheckboxClick={callback}
+          {...mockDragFunctions}
         />
       )
-      const checkboxComponent = findRenderedDOMComponentWithClass(taskComponent, checkboxClass)
-
+      const checkboxComponent = taskComponent.find(checkboxClass).first()
       expect(checkedId).toBe(-12)
       expect(checkStatus).toBe(true)
 
-      Simulate.click(checkboxComponent)
+      checkboxComponent.simulate('click')
       expect(checkedId).toBe('b41sogy3s0o0')
       expect(checkStatus).toBe(false)
     })
   })
   describe('Today', () => {
-    test('Should render checked today toggle', () => {
-      const todayClass = 'today'
-      const taskComponent = renderIntoDocument(<Task today={testTasks.get(0).get('today')} {...mockDragFunctions} />)
-      const todayToggle = findRenderedDOMComponentWithClass(taskComponent, todayClass)
-
-      expect(todayToggle.className).toContain('is-checked')
+    const todayClass = '.today'
+    it('Should render checked today toggle', () => {
+      const taskComponent = mount(
+        <Task {...props} today={testTasks.get(0).get('today')} {...mockDragFunctions} />
+      )
+      const checkboxComponent = taskComponent.find(todayClass)
+      expect(checkboxComponent).toMatchSnapshot()
     })
-    test('Should render unchecked today toggle', () => {
-      const todayClass = 'today'
-      const taskComponent = renderIntoDocument(<Task today={testTasks.get(1).get('today')} {...mockDragFunctions} />)
-      const todayToggle = findRenderedDOMComponentWithClass(taskComponent, todayClass)
-
-      expect(todayToggle.className).not.toContain('is-checked')
+    it('Should render unchecked today toggle', () => {
+      const taskComponent = mount(
+        <Task {...props} today={testTasks.get(1).get('today')} {...mockDragFunctions} />
+      )
+      const checkboxComponent = taskComponent.find(todayClass)
+      expect(checkboxComponent).toMatchSnapshot()
     })
-    test('Should invoke today callback when click occurs', () => {
+    it('Should invoke today callback when click occurs', () => {
       let callbackId = -12
       let callbackStatus = true
-      const callback = (id, status) => {callbackId = id, callbackStatus = status}
-      const todayClass = 'today'
-      const taskComponent = renderIntoDocument(<Task today={testTasks.get(0).get('today')} id={testTasks.get(0).get('id')} onTaskTodayClick={callback} {...mockDragFunctions} />)
-      const todayToggle = findRenderedDOMComponentWithClass(taskComponent, todayClass)
+      const callback = (id, status) => {
+        callbackId = id
+        callbackStatus = status
+      }
+      const taskComponent = mount(
+        <Task
+          {...props}
+          today={testTasks.get(0).get('today')}
+          id={testTasks.get(0).get('id')}
+          onTaskTodayClick={callback}
+          {...mockDragFunctions}
+        />
+      )
 
       expect(callbackId).toBe(-12)
       expect(callbackStatus).toBe(true)
-      Simulate.click(todayToggle)
+
+      taskComponent.find(todayClass).simulate('click')
       expect(callbackId).toBe(testTasks.get(0).get('id'))
       expect(callbackStatus).toBe(!testTasks.get(0).get('today'))
     })
   })
   describe('Priority', () => {
-    test('Should invoke callback when click on priority level', () => {
+    it('Should invoke callback when click on priority level', () => {
       let priority = ''
       let callbackId = -12
       const callback = (id, priorityLevel) => {
         callbackId = id
         priority = priorityLevel
       }
-      const priorityLevelNoneClass = 'priority-level--none'
-      const priorityLevelLowClass = 'priority-level--low'
-      const priorityLevelMediumClass = 'priority-level--medium'
-      const priorityLevelHighClass = 'priority-level--high'
-      const priorityLevelMaxClass = 'priority-level--max'
+      const priorityLevelNoneClass = '.priority-level--none'
+      const priorityLevelLowClass = '.priority-level--low'
+      const priorityLevelMediumClass = '.priority-level--medium'
+      const priorityLevelHighClass = '.priority-level--high'
+      const priorityLevelMaxClass = '.priority-level--max'
 
-      const taskComponentNone = renderIntoDocument(<Task id={'b41sogy3s0o0'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentLow = renderIntoDocument(<Task id={'b41sogy3s0o1'}  onTaskPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentMedium = renderIntoDocument(<Task id={'b41sogy3s0o2'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentHigh = renderIntoDocument(<Task id={'b41sogy3s0o3'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
-      const taskComponentMax = renderIntoDocument(<Task id={'b41sogy3s0o4'} onTaskPriorityClick={callback} {...mockDragFunctions} />)
+      const taskComponentNone = mount(
+        <Task
+          {...props}
+          id={'b41sogy3s0o0'}
+          onTaskPriorityClick={callback}
+          {...mockDragFunctions}
+        />
+      )
+      const taskComponentLow = mount(
+        <Task
+          {...props}
+          id={'b41sogy3s0o1'}
+          onTaskPriorityClick={callback}
+          {...mockDragFunctions}
+        />
+      )
+      const taskComponentMedium = mount(
+        <Task
+          {...props}
+          id={'b41sogy3s0o2'}
+          onTaskPriorityClick={callback}
+          {...mockDragFunctions}
+        />
+      )
+      const taskComponentHigh = mount(
+        <Task
+          {...props}
+          id={'b41sogy3s0o3'}
+          onTaskPriorityClick={callback}
+          {...mockDragFunctions}
+        />
+      )
+      const taskComponentMax = mount(
+        <Task
+          {...props}
+          id={'b41sogy3s0o4'}
+          onTaskPriorityClick={callback}
+          {...mockDragFunctions}
+        />
+      )
 
-      const priorityLevelComponentNone = findRenderedDOMComponentWithClass(taskComponentNone, priorityLevelNoneClass)
-      const priorityLevelComponentLow = findRenderedDOMComponentWithClass(taskComponentLow, priorityLevelLowClass)
-      const priorityLevelComponentMedium = findRenderedDOMComponentWithClass(taskComponentMedium, priorityLevelMediumClass)
-      const priorityLevelComponentHigh= findRenderedDOMComponentWithClass(taskComponentHigh, priorityLevelHighClass)
-      const priorityLevelComponentMax = findRenderedDOMComponentWithClass(taskComponentMax, priorityLevelMaxClass)
+      const priorityLevelComponentNone = taskComponentNone.find(priorityLevelNoneClass)
+      const priorityLevelComponentLow = taskComponentLow.find(priorityLevelLowClass)
+      const priorityLevelComponentMedium = taskComponentMedium.find(priorityLevelMediumClass)
+      const priorityLevelComponentHigh = taskComponentHigh.find(priorityLevelHighClass)
+      const priorityLevelComponentMax = taskComponentMax.find(priorityLevelMaxClass)
 
       expect(priority).toBe('')
       expect(callbackId).toBe(-12)
 
-      Simulate.click(priorityLevelComponentNone)
+      priorityLevelComponentNone.simulate('click')
       expect(priority).toBe(priorityLevels.PRIORITY_NONE)
       expect(callbackId).toBe('b41sogy3s0o0')
 
-      Simulate.click(priorityLevelComponentLow)
+      priorityLevelComponentLow.simulate('click')
       expect(priority).toBe(priorityLevels.PRIORITY_LOW)
       expect(callbackId).toBe('b41sogy3s0o1')
 
-      Simulate.click(priorityLevelComponentMedium)
+      priorityLevelComponentMedium.simulate('click')
       expect(priority).toBe(priorityLevels.PRIORITY_MEDIUM)
       expect(callbackId).toBe('b41sogy3s0o2')
 
-      Simulate.click(priorityLevelComponentHigh)
+      priorityLevelComponentHigh.simulate('click')
       expect(priority).toBe(priorityLevels.PRIORITY_HIGH)
       expect(callbackId).toBe('b41sogy3s0o3')
 
-      Simulate.click(priorityLevelComponentMax)
+      priorityLevelComponentMax.simulate('click')
       expect(priority).toBe(priorityLevels.PRIORITY_MAX)
       expect(callbackId).toBe('b41sogy3s0o4')
     })
   })
   describe('Task Body', () => {
-    test('Should render task title', () => {
-      const titleClass = 'task__title'
-      const taskComponent = renderIntoDocument(<Task title={testTasks.get(0).get('title')} {...mockDragFunctions} />)
-      const titleComponent = findRenderedDOMComponentWithClass(taskComponent, titleClass)
-
-      expect(titleComponent.textContent).toBe(testTasks.get(0).get('title'))
+    const titleClass = '.task__title'
+    it('Should render task title', () => {
+      const taskComponent = mount(
+        <Task {...props} title={testTasks.get(0).get('title')} {...mockDragFunctions} />
+      )
+      const titleComponent = taskComponent.find(titleClass)
+      expect(titleComponent).toMatchSnapshot()
     })
-    test('Should render task description', () => {
-      const descriptionClass = 'task__description'
-      const taskComponent = renderIntoDocument(<Task description={testTasks.get(0).get('description')} {...mockDragFunctions} />)
-      const descriptionComponent = findRenderedDOMComponentWithClass(taskComponent, descriptionClass)
-
-      expect(descriptionComponent.textContent).toBe(testTasks.get(0).get('description'))
+    it('Should render task description', () => {
+      const taskComponent = shallow(
+        <Task {...props} description={testTasks.get(0).get('description')} {...mockDragFunctions} />
+      )
+      expect(taskComponent.find('.task__description')).toMatchSnapshot()
     })
-    test('Should render task date', () => {
-      const dateClass = 'task__date'
-      const taskComponent = renderIntoDocument(<Task date={testTasks.get(0).get('date')} {...mockDragFunctions} />)
-      const dateComponent = findRenderedDOMComponentWithClass(taskComponent, dateClass)
-
-      expect(dateComponent.textContent).toBe(testTasks.get(0).get('date').toLocaleDateString('en-US', DATE_FORMAT))
+    it('Should render task date', () => {
+      const taskComponent = shallow(
+        <Task {...props} date={testTasks.get(0).get('date')} {...mockDragFunctions} />
+      )
+      expect(taskComponent.find('.task__date')).toMatchSnapshot()
     })
-    test(
-      'Should invoke callback when click on task body, title, description or date occurs',
-      () => {
-        let callbackId = -12
-        const callback = id => callbackId = id
-        const bodyClass = 'task__body'
-        const titleClass = 'task__title'
-        const descriptionClass = 'task__description'
+    it('Should invoke callback when click on task body, title, description or date occurs', () => {
+      let callbackId = -12
+      const callback = id => (callbackId = id)
 
-        const taskComponent = renderIntoDocument(<Task id={'b41sogy3s0o0'} title={testTasks.get(0).get('title')} description={testTasks.get(0).get('description')} date={testTasks.get(0).get('date')} onTaskClick={callback} {...mockDragFunctions} />)
-        const bodyComponent = findRenderedDOMComponentWithClass(taskComponent, bodyClass)
-        const titleComponent = findRenderedDOMComponentWithClass(taskComponent, titleClass)
-        const descriptionComponent = findRenderedDOMComponentWithClass(taskComponent, descriptionClass)
+      const taskComponent = mount(
+        <Task
+          {...props}
+          id={'b41sogy3s0o0'}
+          title={testTasks.get(0).get('title')}
+          description={testTasks.get(0).get('description')}
+          date={testTasks.get(0).get('date')}
+          onTaskClick={callback}
+          {...mockDragFunctions}
+        />
+      )
+      const bodyComponent = taskComponent.find('.task__body')
+      const titleComponent = taskComponent.find('.task__title')
+      const descriptionComponent = taskComponent.find('.task__description')
 
-        expect(callbackId).toBe(-12)
-        Simulate.click(bodyComponent)
-        expect(callbackId).toBe('b41sogy3s0o0')
+      expect(callbackId).toBe(-12)
+      bodyComponent.simulate('click')
+      expect(callbackId).toBe('b41sogy3s0o0')
 
-        callbackId = -12
-        expect(callbackId).toBe(-12)
-        Simulate.click(titleComponent)
-        expect(callbackId).toBe('b41sogy3s0o0')
+      callbackId = -12
+      expect(callbackId).toBe(-12)
+      titleComponent.simulate('click')
+      expect(callbackId).toBe('b41sogy3s0o0')
 
-        callbackId = -12
-        expect(callbackId).toBe(-12)
-        Simulate.click(descriptionComponent)
-        expect(callbackId).toBe('b41sogy3s0o0')
-      }
-    )
+      callbackId = -12
+      expect(callbackId).toBe(-12)
+      descriptionComponent.simulate('click')
+      expect(callbackId).toBe('b41sogy3s0o0')
+    })
   })
 })

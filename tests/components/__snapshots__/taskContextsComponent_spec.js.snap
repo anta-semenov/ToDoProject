@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskContexts component Should render component with no task contexts 1`] = `
+<div
+  className="contexts"
+>
+  <div
+    className="contexts__title"
+  >
+    Contexts
+  </div>
+  <div
+    className="contexts__list"
+  >
+    <div
+      className="context "
+      key="a21sogy3s0oq"
+      onClick={[Function]}
+    >
+      test context 1
+    </div>
+    <div
+      className="context "
+      key="a23sogy3s0oq"
+      onClick={[Function]}
+    >
+      test context 2
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TaskContexts component Should render component without contexts 1`] = `
+<div
+  className="contexts"
+>
+  <div
+    className="contexts__title"
+  >
+    Contexts
+  </div>
+  <div
+    className="contexts__empty-list"
+  >
+    You haven't create any context yet.
+  </div>
+</div>
+`;
+
+exports[`TaskContexts component Should render component without contexts 2`] = `
+<div
+  className="contexts"
+>
+  <div
+    className="contexts__title"
+  >
+    Contexts
+  </div>
+  <div
+    className="contexts__empty-list"
+  >
+    You haven't create any context yet.
+  </div>
+</div>
+`;
+
+exports[`TaskContexts component Should render components with task context 1`] = `
+<div
+  className="contexts"
+>
+  <div
+    className="contexts__title"
+  >
+    Contexts
+  </div>
+  <div
+    className="contexts__list"
+  >
+    <div
+      className="context "
+      key="a21sogy3s0oq"
+      onClick={[Function]}
+    >
+      test context 1
+    </div>
+    <div
+      className="context is-active"
+      key="a23sogy3s0oq"
+      onClick={[Function]}
+    >
+      test context 2
+    </div>
+  </div>
+</div>
+`;

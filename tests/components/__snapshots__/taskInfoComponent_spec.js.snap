@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskInfo component Delete Task Should render delete task button 1`] = `
+<div
+  className="task-info"
+>
+  <CloseBtn
+    appearance="task-info"
+    onClick={[Function]}
+  />
+  <div
+    className="task-info__content"
+  >
+    <div
+      className="task-info__controls"
+    >
+      <Checkbox
+        appearance="task-info"
+        checked={false}
+        dimmed={false}
+        onChange={[Function]}
+      />
+      <Today
+        appearance="task-info"
+        onClick={[Function]}
+      />
+      <Someday
+        appearance="task-info"
+        onClick={[Function]}
+      />
+      <Priority
+        appearance="task-info"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      className="task-info__body"
+    >
+      <div
+        className="task-info__body-top"
+      >
+        <TaskTitle
+          id="b41sogy3s0o2"
+          onBlur={[Function]}
+          onChange={[Function]}
+        />
+        <TaskDescription
+          id="b41sogy3s0o2"
+          onBlur={[Function]}
+          onChange={[Function]}
+        />
+        <TaskProject
+          onProjectChange={[Function]}
+        />
+        <TaskContexts
+          onContextClick={[Function]}
+        />
+        <TaskCalendar
+          id="b41sogy3s0o2"
+          onChange={[Function]}
+        />
+        <TaskRepeat
+          onRepeatChange={[Function]}
+        />
+      </div>
+      <button
+        className="task-info__delete"
+        onClick={[Function]}
+        tabIndex="0"
+      >
+        Delete task
+      </button>
+    </div>
+  </div>
+</div>
+`;
