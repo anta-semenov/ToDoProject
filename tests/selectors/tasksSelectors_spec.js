@@ -280,6 +280,7 @@ describe('Tasks Selectors', () => {
           },
           {
             title: 'Test project 0',
+            id: 'bh52ogy5s0fm',
             items: [
               {
                 id: 'b41sogy3s0oj',
@@ -408,6 +409,7 @@ describe('Tasks Selectors', () => {
           },
           {
             title: 'Test project 0',
+            id: 'bh52ogy5s0fm',
             items: [
               {
                 id: 'b41sogy3s0oj',
@@ -623,6 +625,7 @@ describe('Tasks Selectors', () => {
           },
           {
             title: 'Test project 0',
+            id: 'bh52ogy5s0fm',
             items: [
               {
                 id: 'b41sogy3s0oj',
@@ -685,6 +688,7 @@ describe('Tasks Selectors', () => {
           },
           {
             title: 'Test project 0',
+            id: 'bh52ogy5s0fm',
             items: [
               {
                 id: 'b41sogy3s0oj',

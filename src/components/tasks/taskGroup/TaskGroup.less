@@ -9,6 +9,14 @@
   .small__title();
   margin: 0 0 5px 5px;
   color: @color-font-medium;
+
+  &.is-clickable {
+    cursor: pointer;
+
+    &:hover {
+      color: @color-font-basic;
+    }
+  }
 }
 .task-group__list {
   position: relative;

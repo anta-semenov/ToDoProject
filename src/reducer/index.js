@@ -97,6 +97,7 @@ const groupTasksByProject = (tasks, projects) => {
     projects.filter(project => groupedTasks.has(project.get('id'))).map(project => {
       return fromJS({
         title: project.get('title'),
+        id: project.get('id'),
         items: groupedTasks.get(project.get('id'), fromJS({})).toList()
       })
     })
