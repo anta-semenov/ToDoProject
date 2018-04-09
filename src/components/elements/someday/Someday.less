@@ -2,15 +2,8 @@
 
 .someday {
   position: relative;
-
-  transition: @transition-basic;
   cursor: pointer;
   flex-shrink: 0;
-  color: @color-border-gray;
-
-  &:hover {
-    color: @color-border-dark-gray;
-  }
 
   &.is-disabled {
     pointer-events: none;
@@ -21,27 +14,35 @@
     opacity: 0.3;
   }
 
-  &.is-checked {
-    color: #000000;
-  }
-
   &.someday--default {
     margin: 0;
     width: 16px;
     height: 16px;
-    &::after {
-      width: 12px;
-      height: 12px;
-    }
   }
   &.someday--task-info {
     margin: 0 0 8px 0;
     width: 16px;
     height: 16px;
   }
-  &.someday--tasks-list {
-    margin: 0 6px 0 0;
+}
+
+.someday__icon {
+  fill: @color-border-dark-gray;
+  transition: fill @transition-basic;
+
+  &.someday__icon--task-info {
     width: 16px;
     height: 16px;
+  }
+
+  &:hover,
+  .someday:hover & {
+    fill: @color-border-darkest-gray;
+  }
+  &.is-checked {
+    fill: @color-accent;
+  }
+  .someday:hover &.is-checked {
+    fill: @color-dark-accent;
   }
 }
