@@ -2,8 +2,9 @@
 @import '../../../styles/commonStyles.less';
 
 .add-task {
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  top: 75px;
+  z-index: 5;
   margin: 0 0 35px 0;
   max-width: @size-max-width-tasks;
   width: 100%;
@@ -83,7 +84,8 @@
   outline: none;
   border-left: 1px solid @color-border-light-gray;
   cursor: pointer;
-  transition: border-color @transition-basic, color @transition-basic, background-color @transition-basic;
+  transition: border-color @transition-basic, color @transition-basic,
+    background-color @transition-basic;
 
   .add-task.has-focus & {
     border-color: @color-border-light-gray;
