@@ -2,7 +2,7 @@ import { fromJS, List } from 'immutable'
 import * as actionTypes from '../constants/actionTypes'
 import { NEW_TASK_TITLE } from '../constants/defaults'
 import { PRIORITY_NONE } from '../constants/priorityLevels'
-import SOMEDAY_WAITING_PERIOD from '../constants/defaults'
+import {SOMEDAY_WAITING_PERIOD} from '../constants/defaults'
 
 const task = (state = fromJS({}), action) => {
   switch (action.type) {
@@ -169,7 +169,7 @@ const setState = (state, newState) => newState.has('task') ? newState.get('task'
 
 const processState = (state) => state.map(item => item.withMutations(task => {
   //check if someday has expired
-  if (task.get('someday') && (task.get('somedayDate', 0) + SOMEDAY_WAITING_PERIOD) <= Date.now()) {
+  if (task.get('someday') && (task.get('somedayDate', 0) + SOMEDAY_WAITING_PERIOD <= Date.now())) {
     task.set('someday', false)
   }
   //check today date
